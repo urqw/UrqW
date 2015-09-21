@@ -20,6 +20,11 @@ function Parser() {
 
             // комментарий
             if (line.substr(0, 1) != ';') {
+
+                if (line.indexOf('=') > 0) {
+
+                }
+
                 line = line.split(' ');
 
                 var operand = line[0];
@@ -31,6 +36,7 @@ function Parser() {
                 }
 
                 switch (operand) {
+                    case 'p':
                     case 'pln':
                         text.push(command);
                         break;
