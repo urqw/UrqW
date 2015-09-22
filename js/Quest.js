@@ -16,6 +16,16 @@ function Quest(text) {
     this.labels = [];
 
     /**
+     * @type {Array}
+     */
+    this.items = [];
+
+    /**
+     * @type {Object}
+     */
+    this.vars = {};
+
+    /**
      * @type {string}
      */
     this.quest = text.replace(/^[\n\r]+|[\n\r]+$/g,'').split(/[\n\r]+/);
@@ -35,7 +45,14 @@ function Quest(text) {
      * строка по номеру
      */
     this.get = function(i) {
-        return this.quest[i].trim();
+        var line = this.quest[i];
+
+        // вырезать комментарий
+        if (line.indexOf(';') != -1) {
+            line = line.substring(0, line.indexOf(';'));
+        }
+
+        return line.trim();
     };
 
     /**
@@ -44,7 +61,7 @@ function Quest(text) {
      * @param {string} label
      */
     this.to = function(label) {
-        this.position = this.labels[label];
+        this.position = this.labels[label.toLowerCase()] - 1;
 
         return this.next();
     };
@@ -58,9 +75,46 @@ function Quest(text) {
          */
         for (var i = 0; i < this.quest.length; i++) {
             if (this.get(i).substr(0, 1) == ':') {
-                this.labels[this.get(i).substr(1)] = i;
+                this.labels[this.get(i).substr(1).toLowerCase()] = i;
             }
         }
+    };
+
+    /**
+     * @param name
+     * @param {int} count
+     */
+    this.addItem = function(name, count) {
+        this.items[name] = this.items[name] + count;
+    };
+
+    /**
+     * @param name
+     * @param {int} count
+     */
+    this.removeItem = function(name, count) {
+        this.items[name] = this.items[name] - count;
+    };
+
+    /**
+     *
+     * @param {String} variable
+     * @param {*} value
+     */
+    this.setVar = function(variable, value) {
+        this.vars[variable] = value;
+    };
+
+    /**
+     * @param variable
+     * @returns {*}
+     */
+    this.getVar = function(variable) {
+        if (this.vars[variable] != undefined) {
+            return this.vars[variable];
+        }
+
+        return false;
     }
 }
 

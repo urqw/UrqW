@@ -49,11 +49,15 @@ $(function() {
         responce = P.parse(Game);
 
         $.each(responce.text, function (index, value) {
-            textField.text(textField.text() + value);
+            textField.append($('<div>').addClass('text').text(value[0] + ' '));
+
+            if (value[0]) {
+                textField.append('<div class="clearfix">');
+            }
         });
 
         $.each(responce.buttons, function (index, value) {
-            var button = $('<button class="button" data-label="' + value.label + '">').text(value.desc);
+            var button = $('<button class="list-group-item button" data-label="' + value.label + '">').text(value.desc);
             buttonField.append(button);
         });
 

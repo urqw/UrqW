@@ -7,3 +7,47 @@
 button {
     display: block;
 }
+
+p {
+    text-indent: 20px;
+    display: inline;
+}
+
+#buttons {
+    margin-top: 10px;
+}
+
+div.text {
+    text-indent: 20px;
+    line-height: 22px;
+}
+
+
+
+.container {
+    width: auto;
+    max-width: 680px;
+    padding: 0 15px;
+}
+.container .text-muted {
+    margin: 20px 0;
+}
+
+
+/** footer */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 30px;
+}
+.footer {
+    height: 30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: right;
+}
