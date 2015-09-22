@@ -40,6 +40,12 @@ function Parser() {
      * @param line
      */
     this.parseLine = function(line) {
+        if (line.indexOf(' & ') != -1) {
+            this.parseLine(line.substring(0, line.indexOf(' & ')).trim());
+            this.parseLine(line.substring(line.indexOf(' & ') + 1).trim());
+
+            return;
+        }
 
         // открыть #$
         while (line.indexOf('#') != -1 && line.indexOf('$') != -1) {
@@ -80,11 +86,22 @@ function Parser() {
                 Game.addItem(item.trim(), quantity);
                 break;
             case 'if':
-                var cond = line.substring(line.indexOf('if ') + 3, line.indexOf('then'));
-                var then = line.substring(line.indexOf('then ') + 5);
+                var cond = line.substring(line.indexOf('if ') + 3, line.indexOf(' then '));
+
+                if (line.indexOf(' else ') == -1) {
+                    var then = line.substring(line.indexOf(' then ') + 6);
+                    var els = false;
+                } else {
+                    var then = line.substring(line.indexOf(' then ') + 6, line.indexOf(' else '));
+                    var els = line.substring(line.indexOf(' else ') + 6);
+                }
 
                 if (new Expression(cond).calc()) {
                     this.parseLine(then);
+                } else {
+                    if (els) {
+                        this.parseLine(els);
+                    }
                 }
 
                 break;

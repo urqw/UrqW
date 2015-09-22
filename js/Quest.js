@@ -114,7 +114,7 @@ function Quest(text) {
             return this.vars[variable];
         }
 
-        return false;
+        return 0;
     }
 }
 
