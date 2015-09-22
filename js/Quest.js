@@ -38,14 +38,7 @@ function Quest(text) {
      * следующая строка
      */
     this.next = function() {
-        return this.get(++this.position);
-    };
-
-    /**
-     * строка по номеру
-     */
-    this.get = function(i) {
-        var line = this.quest[i];
+        var line = this.get(++this.position);
 
         // вырезать комментарий
         if (line.indexOf(';') != -1) {
@@ -53,6 +46,13 @@ function Quest(text) {
         }
 
         return line.trim();
+    };
+
+    /**
+     * строка по номеру
+     */
+    this.get = function(i) {
+        return this.quest[i];
     };
 
     /**
@@ -75,7 +75,7 @@ function Quest(text) {
          */
         for (var i = 0; i < this.quest.length; i++) {
             if (this.get(i).substr(0, 1) == ':') {
-                this.labels[this.get(i).substr(1).toLowerCase()] = i;
+                this.labels[this.get(i).substr(1).toLowerCase().trim()] = i;
             }
         }
     };
