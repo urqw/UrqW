@@ -41,11 +41,6 @@ function Parser() {
      */
     this.parseLine = function(line) {
 
-        // вырезать комментарий
-        if (line.indexOf(';') != -1) {
-            line = line.substring(0, line.indexOf(';'));
-        }
-
         // открыть #$
         while (line.indexOf('#') != -1 && line.indexOf('$') != -1) {
             var exp = line.substring(line.lastIndexOf('#') + 1, line.indexOf('$'));
@@ -97,8 +92,10 @@ function Parser() {
                 Game.to(command);
                 break;
             case 'p':
+                this.text.push([command, false]);
+                break;
             case 'pln':
-                this.text.push(command);
+                this.text.push([command, true]);
                 break;
             case 'btn':
                 var btn = command.split(',');
@@ -110,15 +107,15 @@ function Parser() {
                 });
                 break;
             default:
+                //  это мат выражение?
+                if (line.indexOf('=') > 0) {
+                    var variable = line.substring(0, line.indexOf('='));
+                    var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
+                    Game.setVar(variable, value);
+                }
+
                 console.log('Unknown operand: ' + operand + ' ignored');
                 break;
-        }
-
-        //  это мат выражение?
-        if (line.indexOf('=') > 0) {
-            var variable = line.substring(0, line.indexOf('='));
-            var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
-            Game.setVar(variable, value);
         }
     }
 }

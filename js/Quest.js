@@ -45,7 +45,14 @@ function Quest(text) {
      * строка по номеру
      */
     this.get = function(i) {
-        return this.quest[i].trim();
+        var line = this.quest[i];
+
+        // вырезать комментарий
+        if (line.indexOf(';') != -1) {
+            line = line.substring(0, line.indexOf(';'));
+        }
+
+        return line.trim();
     };
 
     /**
