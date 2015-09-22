@@ -19,7 +19,7 @@ function Parser() {
     this.parse = function(Game) {
         var line;
 
-        while (line = Game.next()) {
+        while ((line = Game.next()) !== false) {
             // остановиться
             if (this.stop) {
                 break;
