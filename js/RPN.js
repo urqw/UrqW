@@ -43,43 +43,25 @@ function Expression(str) {
 
             token.push(this.expr[i]);
 
-            if (this.expr[i] == '=') {
-                if (this.expr[i + 1] == '=') {
+            if (this.expr[i] == '=' && this.expr[i + 1] == '=') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == '<') {
-                if (this.expr[i + 1] == '=') {
+            } else if (this.expr[i] == '<' && this.expr[i + 1] == '=') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == '<') {
-                if (this.expr[i + 1] == '>') {
+            } else if (this.expr[i] == '<' && this.expr[i + 1] == '>') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == '>') {
-                if (this.expr[i + 1] == '=') {
+            } else if (this.expr[i] == '>' && this.expr[i + 1] == '=') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == '!') {
-                if (this.expr[i + 1] == '=') {
+            } else if (this.expr[i] == '!' && this.expr[i + 1] == '=') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == '&') {
-                if (this.expr[i + 1] == '&') {
+            } else if (this.expr[i] == '&' && this.expr[i + 1] == '&') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == '|') {
-                if (this.expr[i + 1] == '|') {
+            } else if (this.expr[i] == '|' && this.expr[i + 1] == '|') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == 'o') {
-                if (this.expr[i + 1] == 'r' && this.expr[i + 2] == ' ') {
+            } else if (this.expr[i] == 'o' && this.expr[i + 1] == 'r' && this.expr[i + 2] == ' ') {
                     token.push(this.expr[++i]);
-                }
-            } else if (this.expr[i] == 'a') {
-                if (this.expr[i + 1] == 'n' && this.expr[i + 2] == 'd' && this.expr[i + 3] == ' ') {
+            } else if (this.expr[i] == 'a' && this.expr[i + 1] == 'n' && this.expr[i + 2] == 'd' && this.expr[i + 3] == ' ') {
                     token.push(this.expr[++i]);
                     token.push(this.expr[++i]);
-                }
             }
 
             token = token.join('');
@@ -136,6 +118,10 @@ function Expression(str) {
                     i++;
 
                     if (i >= this.expr.length) break;
+                }
+
+                if (token.length > 0) {
+                    i--;
                 }
 
                 exitStack.push(Game.getVar(token.join('')));
