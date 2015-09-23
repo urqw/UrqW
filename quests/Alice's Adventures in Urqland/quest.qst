@@ -454,7 +454,7 @@ end
 :Glava1_les_derevo
 pln 	Я возле большой сосны. Возле дерева стоит табличка с предупреждающей надписью "ОСТОРОЖНО: ХИТРЫЙ ЛАТЫШСКИЙ КОЙОТ" и стрелка, указывающая наверх.
 pln С дерева свисает верёвка с колокольчиком. Наверное это звонок.
-if govorila_s_krolikom<>2 and govorila_s_gnomom<>2 then btn Glava1_les_derevo2, Позвонить else Glava1_les_derevo3, Позвонить
+if govorila_s_krolikom<>2 and govorila_s_gnomom<>2 then btn Glava1_les_derevo2, Позвонить else btn Glava1_les_derevo3, Позвонить
 btn Glava1_les_znak, Уйти
 end
 

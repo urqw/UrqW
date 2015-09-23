@@ -155,7 +155,7 @@ function Parser() {
                         var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
                         Game.setVar(variable, value);
                     } else {
-                        console.log('Unknown operand: ' + operand + ' ignored (line: ' + line);
+                        console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
                     }
             }
         }

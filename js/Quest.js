@@ -45,7 +45,7 @@ function Quest(text) {
             line = line.substring(0, line.indexOf(';'));
         }
 
-        return line.trim();
+        return line.replace(/\t/g, ' ').trim();
     };
 
     /**
