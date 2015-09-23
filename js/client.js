@@ -50,8 +50,24 @@ $(function() {
 
     $(document).keypress(function(){
         if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
-            $('#anykey').hide();
+            $('#info').hide();
             play();
+        }
+    });
+
+    $('#input_enter').on('click', function() {
+        if (GlobalParser.status == GlobalParser.STATUS_INPUT) {
+            var input = $('#input');
+            if (input.find('input').val() != '') {
+                input.hide();
+
+                //todo нехорошо так делать
+                Game.setVar(GlobalParser.inf, input.find('input').val());
+
+                play();
+            } else {
+                input.addClass('has-error');
+            }
         }
     });
 
@@ -63,16 +79,39 @@ $(function() {
 
         GlobalParser.parse(Game);
 
+        drawText();
         if (GlobalParser.status == GlobalParser.STATUS_END) {
-            drawText();
             drawButtons();
             drawInventory();
-
             lock = false;
         } else if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
-            drawText();
+            $('#info').text('[нажмите любую клавишу]');
+            $('#info').show();
+        } else if (GlobalParser.status == GlobalParser.STATUS_INPUT) {
+            $('#input').removeClass('has-error');
+            $('#input').find('input').val('');
+            $('#input').show();
+        } else if (GlobalParser.status == GlobalParser.STATUS_PAUSE) {
+            var wait = GlobalParser.inf;
+            $('#info').show();
 
-            $('#anykey').show();
+            var interval = setInterval(function() {
+                wait = wait - 50;
+                if (wait <= 0) {
+                    clearInterval(interval);
+                    $('#info').hide();
+                    play();
+                }
+                refreshTimer();
+            }, 50);
+
+            function refreshTimer() {
+                $('#info').text('[пауза ' + wait + ' ]');
+            }
+
+        } else if (GlobalParser.status == GlobalParser.STATUS_QUIT) {
+            $('#info').text('[игра закончена]');
+            $('#info').show();
         }
     }
 

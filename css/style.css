@@ -17,10 +17,9 @@ p {
     margin-top: 10px;
 }
 
-#anykey {
-    margin-top: 10px;
+#info {
+    text-align: center;
 }
-
 
 div.text {
     text-indent: 20px;

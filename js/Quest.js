@@ -125,6 +125,8 @@ function Quest(text) {
      * @param {*} value
      */
     this.setVar = function(variable, value) {
+        variable = variable.trim();
+
         if (variable.substr(0, 4) == 'inv_') {
             variable = variable.substr(4);
 
