@@ -61,9 +61,11 @@ function Quest(text) {
      * @param {string} label
      */
     this.to = function(label) {
-        this.position = this.labels[label.toLowerCase()] - 1;
+        this.setVar('count_' + label, this.getVar('count_' + label) + 1);
 
-        return this.next();
+        if (this.labels[label.toLowerCase()] !== undefined) {
+            this.position = this.labels[label.toLowerCase()] ;
+        }
     };
 
     /**
@@ -85,7 +87,12 @@ function Quest(text) {
      * @param {int} count
      */
     this.addItem = function(name, count) {
-        this.items[name] = this.items[name] + count;
+        if (this.items[name] == undefined) {
+            this.items[name] = 0;
+        }
+
+        this.items[name] = this.items[name] + parseInt(count);
+        this.setVar(name, this.items[name]);
     };
 
     /**
@@ -94,15 +101,15 @@ function Quest(text) {
      */
     this.removeItem = function(name, count) {
         this.items[name] = this.items[name] - count;
+        this.setVar(name, this.items[name]);
     };
 
     /**
-     *
      * @param {String} variable
      * @param {*} value
      */
     this.setVar = function(variable, value) {
-        this.vars[variable] = value;
+        this.vars[variable.toLowerCase()] = value;
     };
 
     /**
@@ -110,6 +117,12 @@ function Quest(text) {
      * @returns {*}
      */
     this.getVar = function(variable) {
+        variable = variable.toLowerCase();
+
+        if (variable.substr(0, 4) == 'inv_') {
+            variable = variable.substr(4);
+        }
+
         if (this.vars[variable] != undefined) {
             return this.vars[variable];
         }

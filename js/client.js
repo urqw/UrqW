@@ -38,6 +38,8 @@ $(function() {
      * start the game
      */
     function play() {
+        lock = true;
+
         var textField = $('#textfield');
         var buttonField = $('#buttons');
 
@@ -48,20 +50,32 @@ $(function() {
 
         responce = P.parse(Game);
 
-        $.each(responce.text, function (index, value) {
-            textField.append($('<div>').addClass('text').text(value[0] + ' '));
+        if (responce.status == P.STATUS_END) {
+            $.each(responce.text, function (index, value) {
+                textField.append($('<div>').addClass('text').text(value[0] + ' '));
 
-            if (value[0]) {
-                textField.append('<div class="clearfix">');
-            }
-        });
+                if (value[0]) {
+                    textField.append('<div class="clearfix">');
+                }
+            });
 
-        $.each(responce.buttons, function (index, value) {
-            var button = $('<button class="list-group-item button" data-label="' + value.label + '">').text(value.desc);
-            buttonField.append(button);
-        });
+            $.each(responce.buttons, function (index, value) {
+                var button = $('<button class="list-group-item button" data-label="' + value.label + '">').text(value.desc);
+                buttonField.append(button);
+            });
 
-        lock = false;
+            lock = false;
+        } else if (responce.status == P.STATUS_ANYKEY) {
+            $.each(responce.text, function (index, value) {
+                textField.append($('<div>').addClass('text').text(value[0] + ' '));
+
+                if (value[0]) {
+                    textField.append('<div class="clearfix">');
+                }
+            });
+
+            $('#anykey').show();
+        }
     }
 
     $('body').on('click', '.button', function() {

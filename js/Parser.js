@@ -4,14 +4,20 @@
 
 
 /**
- *
- *
  * @constructor
  */
+
+
 function Parser() {
+    this.STATUS_NEXT = 0;
+    this.STATUS_END = 1;
+    this.STATUS_ANYKEY = 2;
+    this.STATUS_PAUSE = 3;
+    this.STATUS_INPUT = 4;
+
     this.text = [];
     this.buttons = [];
-    this.stop = false;
+    this.inf = false;
 
     /**
      * @param {Quest} Game
@@ -19,18 +25,17 @@ function Parser() {
     this.parse = function(Game) {
         var line;
 
-        while ((line = Game.next()) !== false) {
-            // остановиться
-            if (this.stop) {
-                break;
-            }
+        this.status = this.STATUS_NEXT;
 
+        while ((line = Game.next()) !== false && (this.status == this.STATUS_NEXT)) {
             this.parseLine(line);
         }
 
         return {
+            status: this.status,
             text: this.text,
-            buttons: this.buttons
+            buttons: this.buttons,
+            sysinf: this.inf
         }
     };
 
@@ -40,100 +45,135 @@ function Parser() {
      * @param line
      */
     this.parseLine = function(line) {
-        if (line.indexOf(' & ') != -1) {
-            this.parseLine(line.substring(0, line.indexOf(' & ')).trim());
-            this.parseLine(line.substring(line.indexOf(' & ') + 1).trim());
-
-            return;
-        }
-
-        // открыть #$
-        while (line.indexOf('#') != -1 && line.indexOf('$') != -1) {
-            var exp = line.substring(line.lastIndexOf('#') + 1, line.indexOf('$'));
-            line = line.slice(0, line.lastIndexOf('#')) + new Expression(exp).calc() + line.slice(line.indexOf('$') + 1);
-        }
-
-        var expl = line.split(' ');
-
         // просмотреть список известных операторов
+        var expl = line.split(' ');
         var operand = expl[0].toLowerCase().trim();
         var command = expl.slice(1).join(' ').trim();
 
         if (operand == 'end') {
-            this.stop = true;
+            this.status = this.STATUS_END;
+            return;
+        } else if (operand == 'anykey') {
+            this.status = this.STATUS_ANYKEY;
+            return;
+        } else if (operand == 'pause') {
+            this.inf = parseInt(command(command));
+            this.status = this.STATUS_PAUSE;
+            return;
+        } else if (operand == 'input') {
+            this.status = this.STATUS_INPUT;
             return;
         }
 
-        switch (operand) {
-            case 'inv-':
-                var item = command.split(',');
-                var quantity = 1;
-                if (item.length > 1) {
-                    quantity = parseInt(item[0]);
-                    item = item.join(',');
+        if (operand == 'if') {
+            var cond = line.substring(line.indexOf('if ') + 3, line.indexOf(' then '));
+
+            var then;
+            var els;
+            if (line.indexOf(' else ') == -1) {
+                then = line.substring(line.indexOf(' then ') + 6);
+                els = false;
+            } else {
+                then = line.substring(line.indexOf(' then ') + 6, line.indexOf(' else '));
+                els = line.substring(line.indexOf(' else ') + 6);
+            }
+
+            if (new Expression(this.openTags(cond)).calc()) {
+                this.parseLine(then);
+            } else {
+                if (els) {
+                    this.parseLine(els);
                 }
+            }
+        } else {
+            //todo 
+            line = this.prepareLine(line);
+            expl = line.split(' ');
+            operand = expl[0].toLowerCase().trim();
+            command = expl.slice(1).join(' ').trim();
 
-                Game.removeItem(item.trim(), quantity);
-                break;
-            case 'inv+':
-                item = command.split(',');
-                quantity = 1;
-                if (item.length > 1) {
-                    quantity = parseInt(item[0]);
-                    item = item.join(',');
-                }
 
-                Game.addItem(item.trim(), quantity);
-                break;
-            case 'if':
-                var cond = line.substring(line.indexOf('if ') + 3, line.indexOf(' then '));
-
-                if (line.indexOf(' else ') == -1) {
-                    var then = line.substring(line.indexOf(' then ') + 6);
-                    var els = false;
-                } else {
-                    var then = line.substring(line.indexOf(' then ') + 6, line.indexOf(' else '));
-                    var els = line.substring(line.indexOf(' else ') + 6);
-                }
-
-                if (new Expression(cond).calc()) {
-                    this.parseLine(then);
-                } else {
-                    if (els) {
-                        this.parseLine(els);
+            switch (operand) {
+                case 'inv-':
+                    var item = command.split(',');
+                    var quantity = 1;
+                    if (item.length > 1) {
+                        quantity = parseInt(item[0]);
+                        item = item.join(',');
                     }
-                }
 
-                break;
-            case 'goto':
-                Game.to(command);
-                break;
-            case 'p':
-                this.text.push([command, false]);
-                break;
-            case 'pln':
-                this.text.push([command, true]);
-                break;
-            case 'btn':
-                var btn = command.split(',');
-                var label = btn[0];
-                var desc = btn.slice(1).join(',');
-                this.buttons.push({
-                    label: label,
-                    desc: desc
-                });
-                break;
-            default:
-                //  это мат выражение?
-                if (line.indexOf('=') > 0) {
-                    var variable = line.substring(0, line.indexOf('='));
-                    var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
-                    Game.setVar(variable, value);
-                }
+                    Game.removeItem(item.trim(), quantity);
+                    break;
+                case 'inv+':
+                    item = command.split(',');
+                    quantity = 1;
+                    if (item.length > 1) {
+                        quantity = parseInt(item[0]);
+                        item = item[1];
+                    }
 
-                console.log('Unknown operand: ' + operand + ' ignored');
-                break;
+                    Game.addItem(item.toString().trim(), quantity);
+                    break;
+                case 'goto':
+                    Game.to(command);
+                    break;
+                case 'p':
+                case 'print':
+                    this.text.push([command, false]);
+                    break;
+                case 'pln':
+                case 'println':
+                    this.text.push([command, true]);
+                    break;
+                case 'btn':
+                    var btn = command.split(',');
+                    var label = btn[0];
+                    var desc = btn.slice(1).join(',');
+                    this.buttons.push({
+                        label: label,
+                        desc: desc
+                    });
+                    break;
+                default:
+                    //  это выражение?
+                    if (line.indexOf('=') > 0) {
+                        var variable = line.substring(0, line.indexOf('='));
+                        var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
+                        Game.setVar(variable, value);
+                    }
+
+                    console.log('Unknown operand: ' + operand + ' ignored');
+                    break;
+            }
         }
+
+    };
+
+    this.prepareLine = function (line) {
+        if (line.indexOf('&') != -1) {
+            this.parseLine(line.substring(0, line.indexOf('&')).trim());
+            this.parseLine(line.substring(line.indexOf('&') + 1).trim());
+
+            return '';
+        }
+
+        return this.openTags(line);
+    };
+
+    this.openTags = function (line) {
+        // открыть #$
+        while (line.indexOf('#') != -1 && line.indexOf('$') != -1) {
+            var exp = line.substring(line.lastIndexOf('#') + 1, line.indexOf('$'));
+
+            // рудимент для совместимости
+            if (exp[0] == '%') {
+                exp = exp.substr(1);
+            }
+
+            line = line.slice(0, line.lastIndexOf('#')) + new Expression(exp).calc() + line.slice(line.indexOf('$') + 1);
+        }
+
+        return line;
     }
 }
 
