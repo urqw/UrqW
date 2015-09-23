@@ -94,6 +94,12 @@ function Parser() {
 
 
             switch (operand) {
+                case 'invkill':
+                    Game.invkill(command.length >0 ? command : null);
+                    break;
+                case 'perkill':
+                    Game.perkill();
+                    break;
                 case 'inv-':
                     var item = command.split(',');
                     var quantity = 1;

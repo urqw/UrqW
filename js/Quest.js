@@ -87,6 +87,8 @@ function Quest(text) {
      * @param {int} count
      */
     this.addItem = function(name, count) {
+        count = parseInt(count);
+
         if (this.items[name] == undefined) {
             this.items[name] = 0;
         }
@@ -100,8 +102,22 @@ function Quest(text) {
      * @param {int} count
      */
     this.removeItem = function(name, count) {
+        count = parseInt(count);
+
         this.items[name] = this.items[name] - count;
         this.setVar(name, this.items[name]);
+    };
+
+    /**
+     *
+     * @param name
+     * @param {int} count
+     */
+    this.setItem = function (name, count) {
+        count = parseInt(count);
+
+        this.items[name] = count;
+        this.setVar(name, count);
     };
 
     /**
@@ -109,7 +125,13 @@ function Quest(text) {
      * @param {*} value
      */
     this.setVar = function(variable, value) {
-        this.vars[variable.toLowerCase()] = value;
+        if (variable.substr(0, 4) == 'inv_') {
+            variable = variable.substr(4);
+
+            this.setItem(variable, value);
+        } else {
+            this.vars[variable.toLowerCase()] = value;
+        }
     };
 
     /**
@@ -128,6 +150,34 @@ function Quest(text) {
         }
 
         return 0;
-    }
+    };
+
+    /**
+     * удаление переменных
+     */
+    this.perkill = function() {
+        var me = this;
+        me.vars = {};
+
+        $.each(me.items, function(index, value) {
+            me.setVar(index, parseInt(value));
+        });
+    };
+
+    /**
+     * удаление предметов
+     * @param {String} item
+     */
+    this.invkill = function(item) {
+        var me = this;
+
+        if (item != null) {
+            me.setItem(item, 0);
+        } else {
+            $.each(me.items, function(index, value) {
+                me.setItem(index, 0);
+            });
+        }
+    };
 }
 
