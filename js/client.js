@@ -13,13 +13,12 @@ $(function() {
 
     if (window.location.hash.length > 0) {
         $.ajax({
-            url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
+            url: 'quests/' + window.location.hash.substr(1) + '/qduest.qst',
             dataType: "text",
-            contentType: "text/plain; charset=windows-1251",
-            success: function() {
+            contentType: "text/plain; charset=windows-1251"
+        }).done(function(msg) {
+            $('#loading').hide();
 
-            }
-        }).success(function(msg) {
             Game = new Quest(msg);
             Game.init();
 
@@ -29,7 +28,13 @@ $(function() {
             GlobalParser = new Parser();
 
             play();
+        }).fail(function () {
+            $('#loading').hide();
+            $('#choose-game').show();
         });
+    } else {
+        $('#loading').hide();
+        $('#choose-game').show();
     }
 
     /**
