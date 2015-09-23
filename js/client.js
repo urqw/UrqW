@@ -7,6 +7,7 @@
  */
 Game = null;
 lock = true;
+GlobalParser = null;
 
 $(function() {
 
@@ -29,9 +30,29 @@ $(function() {
             $('#choose-game').hide();
             $('#game').show();
 
+            GlobalParser = new Parser();
+
             play();
         };
         reader.readAsText(file, 'CP1251');
+    });
+
+    $('body').on('click', '.button', function() {
+        if (lock) return;
+
+        $('#textfield').empty();
+        $('#buttons').empty();
+
+        Game.to($(this).data('label'));
+
+        play();
+    });
+
+    $(document).keypress(function(){
+        if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
+            $('#anykey').hide();
+            play();
+        }
     });
 
     /**
@@ -40,64 +61,58 @@ $(function() {
     function play() {
         lock = true;
 
-        var textField = $('#textfield');
-        var buttonField = $('#buttons');
+        GlobalParser.parse(Game);
 
-        textField.empty();
-        buttonField.empty();
-
-        var P = new Parser();
-
-        responce = P.parse(Game);
-
-        if (responce.status == P.STATUS_END) {
-            $.each(responce.text, function (index, value) {
-                textField.append($('<div>').addClass('text').text(value[0] + ' '));
-
-                if (value[0]) {
-                    textField.append('<div class="clearfix">');
-                }
-            });
-
-            $.each(responce.buttons, function (index, value) {
-                var button = $('<button class="list-group-item button" data-label="' + value.label + '">').text(value.desc);
-                buttonField.append(button);
-            });
-
-            var inventory =  $('#inventory');
-
-            inventory.empty();
-            var have_items = false;
-
-            // обновляем список предметов
-            $.each(Game.items, function(index, value) {
-                inventory.append('<li><a href="#">' + index + ' (' + value + ')</a></li>');
-                have_items = true;
-            });
-
-            if (!have_items) {
-                $('#inventory').append('<li><a href="#">(Пусто)</a></li>');
-            }
+        if (GlobalParser.status == GlobalParser.STATUS_END) {
+            drawText();
+            drawButtons();
+            drawInventory();
 
             lock = false;
-        } else if (responce.status == P.STATUS_ANYKEY) {
-            $.each(responce.text, function (index, value) {
-                textField.append($('<div>').addClass('text').text(value[0] + ' '));
-
-                if (value[0]) {
-                    textField.append('<div class="clearfix">');
-                }
-            });
+        } else if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
+            drawText();
 
             $('#anykey').show();
         }
     }
 
-    $('body').on('click', '.button', function() {
-        if (lock) return;
+    function drawText() {
+        var textField = $('#textfield');
 
-        Game.to($(this).data('label'));
+        while (GlobalParser.text.length > 0) {
+            var text = GlobalParser.text.shift();
 
-        play();
-    });
+            textField.append($('<div>').addClass('text').text(text[0] + ' '));
+
+            if (text[1]) {
+                textField.append('<div class="clearfix">');
+            }
+        }
+    }
+
+    function drawButtons() {
+        var buttonField = $('#buttons');
+
+        while (GlobalParser.buttons.length > 0) {
+            var button = GlobalParser.buttons.shift();
+            buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+        }
+    }
+
+    function drawInventory() {
+        var inventory =  $('#inventory');
+
+        inventory.empty();
+        var have_items = false;
+
+        // обновляем список предметов
+        $.each(Game.items, function(index, value) {
+            inventory.append('<li><a href="#">' + index + ' (' + value + ')</a></li>');
+            have_items = true;
+        });
+
+        if (!have_items) {
+            inventory.append('<li><a href="#">(Пусто)</a></li>');
+        }
+    }
 });
