@@ -14,6 +14,7 @@ function Parser() {
     this.STATUS_ANYKEY = 2;
     this.STATUS_PAUSE = 3;
     this.STATUS_INPUT = 4;
+    this.STATUS_QUIT = 5;
 
     this.text = [];
     this.buttons = [];
@@ -50,21 +51,6 @@ function Parser() {
         var operand = expl[0].toLowerCase().trim();
         var command = expl.slice(1).join(' ').trim();
 
-        if (operand == 'end') {
-            this.status = this.STATUS_END;
-            return;
-        } else if (operand == 'anykey') {
-            this.status = this.STATUS_ANYKEY;
-            return;
-        } else if (operand == 'pause') {
-            this.inf = parseInt(command(command));
-            this.status = this.STATUS_PAUSE;
-            return;
-        } else if (operand == 'input') {
-            this.status = this.STATUS_INPUT;
-            return;
-        }
-
         if (operand == 'if') {
             var cond = line.substring(line.indexOf('if ') + 3, line.indexOf(' then '));
 
@@ -94,6 +80,29 @@ function Parser() {
 
 
             switch (operand) {
+                case 'end':
+                    this.status = this.STATUS_END;
+                    return;
+                case 'anykey':
+                    this.status = this.STATUS_ANYKEY;
+                    return;
+                case 'pause':
+                    this.inf = parseInt(command);
+                    this.status = this.STATUS_PAUSE;
+                    return;
+                case 'input':
+                    this.inf = command;
+                    this.status = this.STATUS_INPUT;
+                    return;
+                case 'quit':
+                    this.status = this.STATUS_QUIT;
+                    return;
+                case 'invkill':
+                    Game.invkill(command.length >0 ? command : null);
+                    break;
+                case 'perkill':
+                    Game.perkill();
+                    break;
                 case 'inv-':
                     var item = command.split(',');
                     var quantity = 1;
@@ -134,6 +143,11 @@ function Parser() {
                         desc: desc
                     });
                     break;
+
+                //рудименты далее
+                case 'instr':
+                    line = command;
+                    // no break here
                 default:
                     //  это выражение?
                     if (line.indexOf('=') > 0) {

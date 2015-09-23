@@ -17,6 +17,10 @@ p {
     margin-top: 10px;
 }
 
+#info {
+    text-align: center;
+}
+
 div.text {
     text-indent: 20px;
     line-height: 22px;
