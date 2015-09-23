@@ -11,31 +11,49 @@ GlobalParser = null;
 
 $(function() {
 
-    if (window.location.hash.length > 0) {
-        $.ajax({
-            url: 'quests/' + window.location.hash.substr(1) + '/qduest.qst',
-            dataType: "text",
-            contentType: "text/plain; charset=windows-1251"
-        }).done(function(msg) {
-            $('#loading').hide();
+    function loadFromHash() {
+        $('#loading').show();
+        $('#choose-game').hide();
 
-            Game = new Quest(msg);
-            Game.init();
+        if (window.location.hash.length > 0) {
+            $.ajax({
+                url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
+                dataType: "text",
+                contentType: "text/plain; charset=windows-1251"
+            }).done(function(msg) {
+                $('#loading').hide();
 
-            $('#choose-game').hide();
-            $('#game').show();
+                Game = new Quest(msg);
+                Game.init();
 
-            GlobalParser = new Parser();
+                $('#choose-game').hide();
+                $('#game').show();
 
-            play();
-        }).fail(function () {
+                GlobalParser = new Parser();
+
+                play();
+            }).fail(function () {
+                $('#loading').hide();
+                $('#choose-game').show();
+            });
+        } else {
             $('#loading').hide();
             $('#choose-game').show();
-        });
+        }
+    }
+
+    if (window.location.hash.length > 0) {
+        loadFromHash();
     } else {
         $('#loading').hide();
         $('#choose-game').show();
     }
+
+    $('.gamelink').on('click', function() {
+        window.location.hash = $(this).data('game');
+        loadFromHash();
+        return false;
+    });
 
     /**
      * read file when change file-control
