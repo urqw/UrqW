@@ -140,6 +140,11 @@ function Parser() {
                         desc: desc
                     });
                     break;
+
+                //рудименты далее
+                case 'instr':
+                    line = command;
+                    // no break here
                 default:
                     //  это выражение?
                     if (line.indexOf('=') > 0) {
