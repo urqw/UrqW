@@ -19,7 +19,7 @@ function Parser() {
     this.text = [];
     this.buttons = [];
     this.inf = false;
-    this.proc_position = 0;
+    this.proc_position = [];
 
     /**
      * @param {Quest} Game
@@ -30,8 +30,10 @@ function Parser() {
         this.status = this.STATUS_NEXT;
 
         while ((this.status == this.STATUS_NEXT) && ((line = Game.next()) !== false)) {
+    //        console.log('play: ' + line);
             this.parseLine(line);
         }
+   //     console.log(' --- ');
 
         return {
             status: this.status,
@@ -79,14 +81,16 @@ function Parser() {
             command = expl.slice(1).join(' ').trim();
 
             switch (operand) {
+                case 'forget_proc':
+                    this.proc_position = [];
+                    break;
                 case 'proc':
-                    this.proc_position =  Game.position;
+                    this.proc_position.push(Game.position);
                     Game.to(command);
                     break;
                 case 'end':
-                    if (this.proc_position > 0) {
-                        Game.position = this.proc_position;
-                        this.proc_position = 0;
+                    if (this.proc_position.length > 0) {
+                        Game.position = this.proc_position.pop();
                     } else {
                         this.status = this.STATUS_END;
                     }
@@ -119,7 +123,7 @@ function Parser() {
                         item = item.join(',');
                     }
 
-                    Game.removeItem(item.trim(), quantity);
+                    Game.removeItem(item.toString().trim(), quantity);
                     break;
                 case 'inv+':
                     item = command.split(',');
