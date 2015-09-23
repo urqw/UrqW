@@ -28,7 +28,7 @@ function Parser() {
 
         this.status = this.STATUS_NEXT;
 
-        while ((line = Game.next()) !== false && (this.status == this.STATUS_NEXT)) {
+        while ((this.status == this.STATUS_NEXT) && ((line = Game.next()) !== false)) {
             this.parseLine(line);
         }
 
