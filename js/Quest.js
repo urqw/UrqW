@@ -60,8 +60,10 @@ function Quest(text) {
      *
      * @param {string} label
      */
-    this.to = function(label) {
-        this.setVar('count_' + label, this.getVar('count_' + label) + 1);
+    this.to = function(label, incrCount) {
+        if (incrCount === true) {
+            this.setVar('count_' + label, this.getVar('count_' + label) + 1);
+        }
 
         if (this.labels[label.toLowerCase()] !== undefined) {
             this.position = this.labels[label.toLowerCase()] ;

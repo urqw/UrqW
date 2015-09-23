@@ -19,6 +19,7 @@ function Parser() {
     this.text = [];
     this.buttons = [];
     this.inf = false;
+    this.proc_position = 0;
 
     /**
      * @param {Quest} Game
@@ -39,7 +40,6 @@ function Parser() {
             sysinf: this.inf
         }
     };
-
 
     /**
      *
@@ -78,10 +78,18 @@ function Parser() {
             operand = expl[0].toLowerCase().trim();
             command = expl.slice(1).join(' ').trim();
 
-
             switch (operand) {
+                case 'proc':
+                    this.proc_position =  Game.position;
+                    Game.to(command);
+                    break;
                 case 'end':
-                    this.status = this.STATUS_END;
+                    if (this.proc_position > 0) {
+                        Game.position = this.proc_position;
+                        this.proc_position = 0;
+                    } else {
+                        this.status = this.STATUS_END;
+                    }
                     return;
                 case 'anykey':
                     this.status = this.STATUS_ANYKEY;

@@ -87,15 +87,21 @@ $(function() {
         $('#textfield').empty();
         $('#buttons').empty();
 
-        Game.to($(this).data('label'));
+        Game.to($(this).data('label'), true);
 
         play();
     });
 
-    $(document).keypress(function(){
+    $(document).keypress(function(e){
         if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
             $('#info').hide();
             play();
+        }
+    });
+
+    $('#input').find('input').keypress(function(e){
+        if (GlobalParser.status == GlobalParser.STATUS_INPUT && e.keyCode == 13) {
+            $('#input_enter').click();
         }
     });
 
