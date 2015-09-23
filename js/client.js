@@ -11,26 +11,49 @@ GlobalParser = null;
 
 $(function() {
 
-    if (window.location.hash.length > 0) {
-        $.ajax({
-            url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
-            dataType: "text",
-            contentType: "text/plain; charset=windows-1251",
-            success: function() {
+    function loadFromHash() {
+        $('#loading').show();
+        $('#choose-game').hide();
 
-            }
-        }).success(function(msg) {
-            Game = new Quest(msg);
-            Game.init();
+        if (window.location.hash.length > 0) {
+            $.ajax({
+                url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
+                dataType: "text",
+                contentType: "text/plain; charset=windows-1251"
+            }).done(function(msg) {
+                $('#loading').hide();
 
-            $('#choose-game').hide();
-            $('#game').show();
+                Game = new Quest(msg);
+                Game.init();
 
-            GlobalParser = new Parser();
+                $('#choose-game').hide();
+                $('#game').show();
 
-            play();
-        });
+                GlobalParser = new Parser();
+
+                play();
+            }).fail(function () {
+                $('#loading').hide();
+                $('#choose-game').show();
+            });
+        } else {
+            $('#loading').hide();
+            $('#choose-game').show();
+        }
     }
+
+    if (window.location.hash.length > 0) {
+        loadFromHash();
+    } else {
+        $('#loading').hide();
+        $('#choose-game').show();
+    }
+
+    $('.gamelink').on('click', function() {
+        window.location.hash = $(this).data('game');
+        loadFromHash();
+        return false;
+    });
 
     /**
      * read file when change file-control
@@ -64,15 +87,67 @@ $(function() {
         $('#textfield').empty();
         $('#buttons').empty();
 
-        Game.to($(this).data('label'));
+        Game.to($(this).data('label'), true);
 
         play();
     });
 
-    $(document).keypress(function(){
+    $(document).keypress(function(e){
         if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
             $('#info').hide();
             play();
+        } else if (GlobalParser.status == GlobalParser.STATUS_END) {
+            if (e.keyCode == 13) {
+                $('#buttons').find('button').each(function(index) {
+                    if ($(this).hasClass('active')) {
+                        $(this).click();
+                    }
+                });
+            }
+
+            if (e.keyCode == 38 || e.keyCode == 40) {
+
+
+                var buttonField = $('#buttons');
+                var active = 0;
+                buttonField.find('button').each(function(index) {
+                    if ($(this).hasClass('active')) {
+                        active = index;
+                    }
+                });
+            }
+
+            var toActive;
+
+            if (e.keyCode == 38) {
+                toActive = active - 1;
+                if (toActive < 0) toActive = buttonField.find('button').length - 1;
+
+                buttonField.find('button').each(function(index) {
+                    if (index == toActive) {
+                        $(this).addClass('active');
+                    } else {
+                        $(this).removeClass('active');
+                    }
+                });
+            } else if (e.keyCode == 40) {
+                toActive = active + 1;
+                if (toActive > buttonField.find('button').length - 1) toActive = 0;
+
+                buttonField.find('button').each(function(index) {
+                    if (index == toActive) {
+                        $(this).addClass('active');
+                    } else {
+                        $(this).removeClass('active');
+                    }
+                });
+            }
+        }
+    });
+
+    $('#input').find('input').keypress(function(e){
+        if (GlobalParser.status == GlobalParser.STATUS_INPUT && e.keyCode == 13) {
+            $('#input_enter').click();
         }
     });
 
@@ -112,6 +187,7 @@ $(function() {
             $('#input').removeClass('has-error');
             $('#input').find('input').val('');
             $('#input').show();
+            $('#input').find('input').focus();
         } else if (GlobalParser.status == GlobalParser.STATUS_PAUSE) {
             var wait = GlobalParser.inf;
             $('#info').show();

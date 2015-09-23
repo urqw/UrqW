@@ -19,6 +19,7 @@ function Parser() {
     this.text = [];
     this.buttons = [];
     this.inf = false;
+    this.proc_position = 0;
 
     /**
      * @param {Quest} Game
@@ -28,7 +29,7 @@ function Parser() {
 
         this.status = this.STATUS_NEXT;
 
-        while ((line = Game.next()) !== false && (this.status == this.STATUS_NEXT)) {
+        while ((this.status == this.STATUS_NEXT) && ((line = Game.next()) !== false)) {
             this.parseLine(line);
         }
 
@@ -39,7 +40,6 @@ function Parser() {
             sysinf: this.inf
         }
     };
-
 
     /**
      *
@@ -78,10 +78,18 @@ function Parser() {
             operand = expl[0].toLowerCase().trim();
             command = expl.slice(1).join(' ').trim();
 
-
             switch (operand) {
+                case 'proc':
+                    this.proc_position =  Game.position;
+                    Game.to(command);
+                    break;
                 case 'end':
-                    this.status = this.STATUS_END;
+                    if (this.proc_position > 0) {
+                        Game.position = this.proc_position;
+                        this.proc_position = 0;
+                    } else {
+                        this.status = this.STATUS_END;
+                    }
                     return;
                 case 'anykey':
                     this.status = this.STATUS_ANYKEY;
@@ -155,7 +163,7 @@ function Parser() {
                         var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
                         Game.setVar(variable, value);
                     } else {
-                        console.log('Unknown operand: ' + operand + ' ignored (line: ' + line);
+                        console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
                     }
             }
         }
