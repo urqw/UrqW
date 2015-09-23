@@ -11,6 +11,28 @@ GlobalParser = null;
 
 $(function() {
 
+    if (window.location.hash.length > 0) {
+        $.ajax({
+            method: 'POST',
+            url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
+            dataType: "text",
+            contentType: "text/plain; charset=windows-1251",
+            success: function() {
+
+            }
+        }).success(function(msg) {
+            Game = new Quest(msg);
+            Game.init();
+
+            $('#choose-game').hide();
+            $('#game').show();
+
+            GlobalParser = new Parser();
+
+            play();
+        });
+    }
+
     /**
      * read file when change file-control
      */
