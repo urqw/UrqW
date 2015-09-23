@@ -16,9 +16,9 @@ function Quest(text) {
     this.labels = [];
 
     /**
-     * @type {Array}
+     * @type {Object}
      */
-    this.items = [];
+    this.items = {};
 
     /**
      * @type {Object}

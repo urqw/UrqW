@@ -86,7 +86,7 @@ function Parser() {
                 }
             }
         } else {
-            //todo 
+            //todo
             line = this.prepareLine(line);
             expl = line.split(' ');
             operand = expl[0].toLowerCase().trim();
@@ -140,10 +140,9 @@ function Parser() {
                         var variable = line.substring(0, line.indexOf('='));
                         var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
                         Game.setVar(variable, value);
+                    } else {
+                        console.log('Unknown operand: ' + operand + ' ignored (line: ' + line);
                     }
-
-                    console.log('Unknown operand: ' + operand + ' ignored');
-                    break;
             }
         }
 

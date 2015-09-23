@@ -64,6 +64,21 @@ $(function() {
                 buttonField.append(button);
             });
 
+            var inventory =  $('#inventory');
+
+            inventory.empty();
+            var have_items = false;
+
+            // обновляем список предметов
+            $.each(Game.items, function(index, value) {
+                inventory.append('<li><a href="#">' + index + ' (' + value + ')</a></li>');
+                have_items = true;
+            });
+
+            if (!have_items) {
+                $('#inventory').append('<li><a href="#">(Пусто)</a></li>');
+            }
+
             lock = false;
         } else if (responce.status == P.STATUS_ANYKEY) {
             $.each(responce.text, function (index, value) {
