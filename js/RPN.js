@@ -167,11 +167,20 @@ function Expression(str) {
                         break;
                     case '==':
                     case '=':
-                        result = b == a;
+                        if ((typeof b == 'string') && (typeof a == 'string')) {
+                            result = b.toLowerCase() == a.toLowerCase();
+                        } else {
+                            result = b == a;
+                        }
                         break;
                     case '!=':
                     case '<>':
-                        result = b != a;
+                        if ((typeof b == 'string') && (typeof a == 'string')) {
+                            result = b.toLowerCase() != a.toLowerCase();
+                        } else {
+                            result = b != a;
+                        }
+
                         break;
                     case '>':
                         result = b > a;
