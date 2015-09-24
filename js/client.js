@@ -327,12 +327,13 @@ $(function() {
     $('body').on('click', '.item_use', function() {
         if (lock) return;
 
-        $('#textfield').empty();
-        $('#buttons').empty();
-
         var loc = $(this).data('loc');
 
         if (loc !== undefined) {
+
+            $('#textfield').empty();
+            $('#buttons').empty();
+
             GlobalParser.proc_position.push(Game.getLabel(Game.currentLoc));
             GlobalParser.flow++;
             GlobalParser.flowStack[GlobalParser.flow] = [];
