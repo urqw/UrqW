@@ -86,7 +86,26 @@ $(function() {
         $('#textfield').empty();
         $('#buttons').empty();
 
-        Game.to($(this).data('label'), true);
+        var label = $(this).data('label');
+
+        // common todo рефакторить
+        var common_label;
+        if (Game.getVar('common') !== 0) {
+            common_label = 'common_' + Game.getVar('common');
+        } else {
+            common_label = 'common';
+        }
+
+        if (Game.labels[common_label] != undefined) {
+            if (Game.getLabel(label) !== false) {
+                GlobalParser.proc_position.push(Game.getLabel(label) );
+                GlobalParser.flow++;
+                GlobalParser.flowStack[GlobalParser.flow] = [];
+                Game.to(common_label);
+            }
+        } else {
+            Game.to(label, true);
+        }
 
         play();
     });
@@ -230,7 +249,7 @@ $(function() {
 
         while (GlobalParser.buttons.length > 0) {
             var button = GlobalParser.buttons.shift();
-            if (Game.labels[button.label.toLowerCase()] == undefined) {
+            if (Game.getLabel(button.label) === false) {
                 buttonField.append($('<button class="list-group-item disabled">').text(button.desc + ' // phantom'));
             } else {
                 buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));

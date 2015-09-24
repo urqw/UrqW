@@ -39,6 +39,20 @@ function Quest(text) {
      * @type {number}
      */
     this.position = 0;
+
+    /**
+     * @param {String} label
+     */
+    this.getLabel = function(label) {
+        label = label.toLowerCase();
+
+        if (this.labels[label] !== undefined) {
+            return this.labels[label];
+        } else {
+            return false;
+        }
+    };
+
     /**
      * следующая строка
      */
