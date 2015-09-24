@@ -59,6 +59,7 @@ function Quest(text) {
      * прыгнуть на метку
      *
      * @param {string} label
+     * @param {bool} incrCount
      */
     this.to = function(label, incrCount) {
         if (incrCount === true) {
@@ -67,6 +68,9 @@ function Quest(text) {
 
         if (this.labels[label.toLowerCase()] !== undefined) {
             this.position = this.labels[label.toLowerCase()] ;
+            return true;
+        } else {
+            return false;
         }
     };
 
