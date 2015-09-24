@@ -19,7 +19,11 @@ function Parser() {
     this.text = [];
     this.buttons = [];
     this.inf = false;
+
     this.proc_position = [];
+    this.flow = 0;
+    this.flowStack = [];
+    this.flowStack[this.flow] = [];
 
     /**
      * @param {Quest} Game
@@ -29,9 +33,16 @@ function Parser() {
 
         this.status = this.STATUS_NEXT;
 
-        while ((this.status == this.STATUS_NEXT) && ((line = Game.next()) !== false)) {
+        while ((this.status == this.STATUS_NEXT)) {
     //        console.log('play: ' + line);
-            this.parseLine(line);
+
+            if (this.flowStack[this.flow].length == 0 && ((line = Game.next()) !== false)) {
+                this.parseLine(line);
+            }
+
+            while (this.flowStack[this.flow].length > 0 && this.status == this.STATUS_NEXT) {
+                this.parseLine(this.flowStack[this.flow].pop());
+            }
         }
    //     console.log(' --- ');
 
@@ -82,15 +93,24 @@ function Parser() {
 
             switch (operand) {
                 case 'forget_proc':
+                    this.flowStack[0] = this.flowStack[this.flow];
                     this.proc_position = [];
+                    this.flow = 0;
                     break;
                 case 'proc':
                     this.proc_position.push(Game.position);
-                    Game.to(command);
+                    if (Game.to(command)) {
+                        this.flow++;
+                        this.flowStack[this.flow] = [];
+                    } else {
+                        this.proc_position.pop();
+                    }
                     break;
                 case 'end':
                     if (this.proc_position.length > 0) {
+                        this.flowStack[this.flow].pop();
                         Game.position = this.proc_position.pop();
+                        this.flow--;
                     } else {
                         this.status = this.STATUS_END;
                     }
@@ -176,10 +196,9 @@ function Parser() {
 
     this.prepareLine = function (line) {
         if (line.indexOf('&') != -1) {
-            this.parseLine(line.substring(0, line.indexOf('&')).trim());
-            this.parseLine(line.substring(line.indexOf('&') + 1).trim());
+            this.flowStack[this.flow].push(line.substring(line.indexOf('&') + 1).trim());
 
-            return '';
+            line = line.substring(0, line.indexOf('&')).trim();
         }
 
         return this.openTags(line);
