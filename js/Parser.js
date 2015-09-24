@@ -116,6 +116,7 @@ function Parser() {
                     }
                     return;
                 case 'anykey':
+                    this.inf = command;
                     this.status = this.STATUS_ANYKEY;
                     return;
                 case 'pause':

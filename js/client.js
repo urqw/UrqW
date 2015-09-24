@@ -10,7 +10,6 @@ lock = true;
 GlobalParser = null;
 
 $(function() {
-
     function loadFromHash() {
         $('#loading').show();
         $('#choose-game').hide();
@@ -87,13 +86,40 @@ $(function() {
         $('#textfield').empty();
         $('#buttons').empty();
 
-        Game.to($(this).data('label'), true);
+        var label = $(this).data('label');
+
+        // common todo рефакторить
+        var common_label;
+        if (Game.getVar('common') !== 0) {
+            common_label = 'common_' + Game.getVar('common');
+        } else {
+            common_label = 'common';
+        }
+
+        if (Game.labels[common_label] != undefined) {
+            if (Game.getLabel(label) !== false) {
+                GlobalParser.proc_position.push(Game.getLabel(label));
+                GlobalParser.flow++;
+                GlobalParser.flowStack[GlobalParser.flow] = [];
+                Game.to(common_label);
+            }
+        } else {
+            Game.to(label, true);
+        }
+
+        Game.previousLoc = Game.currentLoc;
+        Game.currentLoc = label;
 
         play();
     });
 
     $(document).keypress(function(e){
         if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
+
+            if (GlobalParser.inf.length > 0) {
+                Game.setVar(GlobalParser.inf, e.keyCode);
+            }
+
             $('#info').hide();
             play();
         } else if (GlobalParser.status == GlobalParser.STATUS_END) {
@@ -231,7 +257,11 @@ $(function() {
 
         while (GlobalParser.buttons.length > 0) {
             var button = GlobalParser.buttons.shift();
-            buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+            if (Game.getLabel(button.label) === false) {
+                buttonField.append($('<button class="list-group-item disabled">').text(button.desc + ' // phantom'));
+            } else {
+                buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+            }
         }
     }
 
@@ -239,16 +269,78 @@ $(function() {
         var inventory =  $('#inventory');
 
         inventory.empty();
-        var have_items = false;
+        inventory.append(drawItem('inv', 1));
 
         // обновляем список предметов
-        $.each(Game.items, function(index, value) {
-            inventory.append('<li><a href="#">' + index + ' (' + value + ')</a></li>');
-            have_items = true;
+        $.each(Game.items, function(itemName, quantity) {
+            inventory.append(drawItem(itemName, quantity));
         });
 
-        if (!have_items) {
-            inventory.append('<li><a href="#">(Пусто)</a></li>');
+        if (inventory.find('> li').length == 0) {
+            inventory.append('<li><a href="#" class="item_use">(Пусто)</a></li>');
         }
     }
+
+    /**
+     * @param {String} itemName
+     * @param {int} quantity
+     */
+    function drawItem(itemName, quantity) {
+
+        var actions = [];
+
+        $.each(Game.useLabels, function(index, value) {
+            if (itemName.toLowerCase() == index.substr(4, itemName.length).toLowerCase()) {
+                var actionName = index.substr(itemName.length + 5);
+
+                if (actionName == '') {
+                    actionName = 'Осмотреть';
+                }
+
+                actions.push([actionName, value]);
+            }
+        });
+
+        if (actions.length == 0 && itemName != 'inv') {
+            return '<li><a href="#" class="item_use">' + itemName + ' (' + quantity + ')</a></li>';
+        } else if (actions.length > 0)  {
+
+            if (itemName == 'inv') {
+                itemName = 'Инвентарь';
+            }
+
+            var li = $('<li>').addClass('dropdown-submenu').append($('<a href="#" class="item_use">').text(itemName));
+            var ul = $('<ul class="dropdown-menu">');
+            var li2 = $('<li class="menu-item">')
+
+            for (var i = 0; i < actions.length; i++) {
+                li2.append($('<a href="#" class="item_use" data-loc="' + actions[i][1] + '">').text(actions[i][0]));
+            }
+
+            ul.append(li2);
+            li.append(ul);
+
+            return li;
+        }
+    }
+
+    $('body').on('click', '.item_use', function() {
+        if (lock) return;
+
+        $('#textfield').empty();
+        $('#buttons').empty();
+
+        var loc = $(this).data('loc');
+
+        if (loc !== undefined) {
+            GlobalParser.proc_position.push(Game.getLabel(Game.currentLoc));
+            GlobalParser.flow++;
+            GlobalParser.flowStack[GlobalParser.flow] = [];
+            Game.position = loc;
+
+            play();
+        }
+
+        return false;
+    });
 });

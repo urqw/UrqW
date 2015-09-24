@@ -11,9 +11,14 @@
 function Quest(text) {
 
     /**
-     * @type {Array}
+     * @type {Object}
      */
-    this.labels = [];
+    this.labels = {};
+
+    /**
+     * @type {Object}
+     */
+    this.useLabels = {};
 
     /**
      * @type {Object}
@@ -28,17 +33,38 @@ function Quest(text) {
     /**
      * @type {string}
      */
-    this.quest = text.replace(/^[\n\r]+|[\n\r]+$/g,'').split(/[\n\r]+/);
+    this.quest = text.replace(/\/\*[^.]*\*\//g,'').replace(/^[\n\r]+|[\n\r]+$/g,'').split(/[\n\r]+/);
 
     /**
      * @type {number}
      */
     this.position = 0;
+
+    this.currentLoc = '';
+    this.previousLoc = '';
+
+    /**
+     * @param {String} label
+     */
+    this.getLabel = function(label) {
+        label = label.toLowerCase();
+
+        if (this.labels[label] !== undefined) {
+            return this.labels[label];
+        } else {
+            return false;
+        }
+    };
+
     /**
      * следующая строка
      */
     this.next = function() {
         var line = this.get(++this.position);
+
+        if (!line) {
+            return false;
+        }
 
         // вырезать комментарий
         if (line.indexOf(';') != -1) {
@@ -52,7 +78,11 @@ function Quest(text) {
      * строка по номеру
      */
     this.get = function(i) {
-        return this.quest[i];
+        if (this.quest[i] != undefined) {
+            return this.quest[i];
+        } else  {
+            return false;
+        }
     };
 
     /**
@@ -62,9 +92,13 @@ function Quest(text) {
      * @param {bool} incrCount
      */
     this.to = function(label, incrCount) {
+/*
         if (incrCount === true) {
+*/
             this.setVar('count_' + label, this.getVar('count_' + label) + 1);
+/*
         }
+*/
 
         if (this.labels[label.toLowerCase()] !== undefined) {
             this.position = this.labels[label.toLowerCase()] ;
@@ -82,8 +116,19 @@ function Quest(text) {
          * Собираем метки
          */
         for (var i = 0; i < this.quest.length; i++) {
-            if (this.get(i).substr(0, 1) == ':') {
-                this.labels[this.get(i).substr(1).toLowerCase().trim()] = i;
+            var str = this.get(i);
+
+            if (str.substr(0, 1) == ':') {
+                if ((this.currentLoc.length == 0) && (this.previousLoc.length == 0)) {
+                    this.currentLoc = str.substr(1).toLowerCase().trim();
+                    this.previousLoc = str.substr(1).toLowerCase().trim();
+                }
+
+                if (str.substr(0, 5) == ':use_') {
+                    this.useLabels[str.substr(1).toLowerCase().trim()] = i;
+                } else {
+                    this.labels[str.substr(1).toLowerCase().trim()] = i;
+                }
             }
         }
     };
@@ -151,6 +196,12 @@ function Quest(text) {
 
         if (variable.substr(0, 4) == 'inv_') {
             variable = variable.substr(4);
+        }
+
+        if (variable == 'rnd') {
+            return Math.random().toFixed(2);
+        } else if (variable.substr(0, 3) == 'rnd') {
+            return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
         }
 
         if (this.vars[variable] != undefined) {
