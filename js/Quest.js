@@ -40,6 +40,9 @@ function Quest(text) {
      */
     this.position = 0;
 
+    this.currentLoc = '';
+    this.previousLoc = '';
+
     /**
      * @param {String} label
      */
@@ -116,6 +119,11 @@ function Quest(text) {
             var str = this.get(i);
 
             if (str.substr(0, 1) == ':') {
+                if ((this.currentLoc.length == 0) && (this.previousLoc.length == 0)) {
+                    this.currentLoc = str.substr(1).toLowerCase().trim();
+                    this.previousLoc = str.substr(1).toLowerCase().trim();
+                }
+
                 if (str.substr(0, 5) == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
                 } else {
@@ -188,6 +196,12 @@ function Quest(text) {
 
         if (variable.substr(0, 4) == 'inv_') {
             variable = variable.substr(4);
+        }
+
+        if (variable == 'rnd') {
+            return Math.random().toFixed(2);
+        } else if (variable.substr(0, 3) == 'rnd') {
+            return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
         }
 
         if (this.vars[variable] != undefined) {
