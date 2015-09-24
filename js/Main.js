@@ -26,6 +26,8 @@ GlobalClient = null;
 
 
 $(function() {
+    $('#something_wrong').hide();
+
     /**
      * Инициализация
      */
@@ -42,18 +44,9 @@ $(function() {
         if (window.location.hash.length > 0) {
             $.ajax({
                 url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
-                dataType: "text",
-                contentType: "text/plain; charset=windows-1251"
+                dataType: "text"
             }).done(function(msg) {
-                $('#loading').hide();
-
-                Game = new Quest(msg);
-                Game.init();
-
-                $('#choose-game').hide();
-                $('#game').show();
-
-                GlobalClient.play();
+                start(msg);
             }).fail(function () {
                 $('#loading').hide();
                 $('#choose-game').show();
@@ -67,12 +60,7 @@ $(function() {
     /**
      * Попробуем загрузить квест если в хеше что-то есть
      */
-    if (window.location.hash.length > 0) {
-        loadFromHash();
-    } else {
-        $('#loading').hide();
-        $('#choose-game').show();
-    }
+    loadFromHash();
 
     /**
      * Выбор игры из списка
@@ -80,6 +68,7 @@ $(function() {
     $('.gamelink').on('click', function() {
         window.location.hash = $(this).data('game');
         loadFromHash();
+
         return false;
     });
 
@@ -96,14 +85,25 @@ $(function() {
         // read file to global variable and start quest
         var reader = new FileReader();
         reader.onload = function() {
-            Game = new Quest(reader.result);
-            Game.init();
-
-            $('#choose-game').hide();
-            $('#game').show();
-
-            GlobalClient.play();
+            start(reader.result);
         };
         reader.readAsText(file, 'CP1251');
     });
+
+    /**
+     * Запуск
+     *
+     * @param {String} msg
+     */
+    function start(msg) {
+        $('#loading').hide();
+
+        Game = new Quest(msg);
+        Game.init();
+
+        $('#choose-game').hide();
+        $('#game').show();
+
+        GlobalClient.play();
+    }
 });
