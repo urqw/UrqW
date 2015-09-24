@@ -11,9 +11,14 @@
 function Quest(text) {
 
     /**
-     * @type {Array}
+     * @type {Object}
      */
-    this.labels = [];
+    this.labels = {};
+
+    /**
+     * @type {Object}
+     */
+    this.useLabels = {};
 
     /**
      * @type {Object}
@@ -40,6 +45,10 @@ function Quest(text) {
     this.next = function() {
         var line = this.get(++this.position);
 
+        if (!line) {
+            return false;
+        }
+
         // вырезать комментарий
         if (line.indexOf(';') != -1) {
             line = line.substring(0, line.indexOf(';'));
@@ -52,7 +61,11 @@ function Quest(text) {
      * строка по номеру
      */
     this.get = function(i) {
-        return this.quest[i];
+        if (this.quest[i] != undefined) {
+            return this.quest[i];
+        } else  {
+            return false;
+        }
     };
 
     /**
@@ -62,9 +75,13 @@ function Quest(text) {
      * @param {bool} incrCount
      */
     this.to = function(label, incrCount) {
+/*
         if (incrCount === true) {
+*/
             this.setVar('count_' + label, this.getVar('count_' + label) + 1);
+/*
         }
+*/
 
         if (this.labels[label.toLowerCase()] !== undefined) {
             this.position = this.labels[label.toLowerCase()] ;
@@ -82,8 +99,14 @@ function Quest(text) {
          * Собираем метки
          */
         for (var i = 0; i < this.quest.length; i++) {
-            if (this.get(i).substr(0, 1) == ':') {
-                this.labels[this.get(i).substr(1).toLowerCase().trim()] = i;
+            var str = this.get(i);
+
+            if (str.substr(0, 1) == ':') {
+                if (str.substr(0, 5) == ':use_') {
+                    this.useLabels[str.substr(1).toLowerCase().trim()] = i;
+                } else {
+                    this.labels[str.substr(1).toLowerCase().trim()] = i;
+                }
             }
         }
     };

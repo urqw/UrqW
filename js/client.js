@@ -10,7 +10,6 @@ lock = true;
 GlobalParser = null;
 
 $(function() {
-
     function loadFromHash() {
         $('#loading').show();
         $('#choose-game').hide();
@@ -231,7 +230,11 @@ $(function() {
 
         while (GlobalParser.buttons.length > 0) {
             var button = GlobalParser.buttons.shift();
-            buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+            if (Game.labels[button.label.toLowerCase()] == undefined) {
+                buttonField.append($('<button class="list-group-item disabled">').text(button.desc + ' // phantom'));
+            } else {
+                buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+            }
         }
     }
 
