@@ -2,7 +2,6 @@
  * @author narmiel
  */
 
-
 /**
  * @param {string} str выражение
  *

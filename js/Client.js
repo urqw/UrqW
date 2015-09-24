@@ -2,7 +2,6 @@
  * @author narmiel
  */
 
-
 /**
  * @constructor
  */
@@ -44,13 +43,8 @@ function Client() {
                     $('#info').hide();
                     me.play();
                 }
-                refreshTimer();
-            }, 50);
-
-            function refreshTimer() {
                 $('#info').text('[пауза ' + wait + ' ]');
-            }
-
+            }, 50);
         } else if (GlobalParser.status == GlobalParser.STATUS_QUIT) {
             $('#info').text('[игра закончена]');
             $('#info').show();
@@ -108,7 +102,6 @@ function Client() {
             inventory.append('<li><a href="#" class="item_use">(Пусто)</a></li>');
         }
     };
-
 
     /**
      * @param {String} itemName
