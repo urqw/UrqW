@@ -71,7 +71,7 @@ function Quest(text) {
             line = line.substring(0, line.indexOf(';'));
         }
 
-        return line.replace(/\t/g, ' ').trim();
+        return line.replace(/\t/g, ' ');
     };
 
     /**
@@ -92,6 +92,8 @@ function Quest(text) {
      * @param {bool} incrCount
      */
     this.to = function(label, incrCount) {
+        label = label.toString();
+
 /*
         if (incrCount === true) {
 */

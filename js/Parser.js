@@ -56,6 +56,7 @@ function Parser() {
      * @param line
      */
     this.parseLine = function(line) {
+        line = line.trim();
         // просмотреть список известных операторов
         var expl = line.split(' ');
         var operand = expl[0].toLowerCase().trim();
