@@ -124,7 +124,11 @@ function Client() {
         });
 
         if (actions.length == 0 && itemName != 'inv') {
-            return '<li><a href="#" class="item_use">' + itemName + ' (' + quantity + ')</a></li>';
+            if (quantity > 1) {
+                itemName = itemName + ' (' + quantity + ')';
+            }
+
+            return '<li><a href="#" class="item_use">' + itemName + '</a></li>';
         } else if (actions.length > 0)  {
 
             if (itemName == 'inv') {
