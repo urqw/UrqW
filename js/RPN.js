@@ -111,7 +111,7 @@ function Expression(str) {
             } else {
                 token = [];
 
-                while (' ><?=/^&*!|()+-'.indexOf(this.expr[i]) == -1) {
+                while ('><?=/^&*!|()+-'.indexOf(this.expr[i]) == -1) {
                     token.push(this.expr[i]);
 
                     i++;

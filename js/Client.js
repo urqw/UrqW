@@ -129,6 +129,10 @@ function Client() {
 
             if (itemName == 'inv') {
                 itemName = 'Инвентарь';
+            } else {
+                if (quantity > 1) {
+                    itemName = itemName + ' (' + quantity + ')';
+                }
             }
 
             var li = $('<li>').addClass('dropdown-submenu').append($('<a href="#" class="item_use">').text(itemName));

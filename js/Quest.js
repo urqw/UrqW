@@ -144,8 +144,13 @@ function Quest(text) {
             this.items[name] = 0;
         }
 
-        this.items[name] = this.items[name] + parseInt(count);
+        this.items[name] = this.items[name] + count;
         this.setVar(name, this.items[name]);
+
+        if (this.items[name] <= 0) {
+            delete this.items[name];
+            this.setVar(name, 0);
+        }
     };
 
     /**
@@ -155,8 +160,17 @@ function Quest(text) {
     this.removeItem = function(name, count) {
         count = parseInt(count);
 
+        if (this.items[name] == undefined) {
+            this.items[name] = 0;
+        }
+
         this.items[name] = this.items[name] - count;
         this.setVar(name, this.items[name]);
+
+        if (this.items[name] <= 0) {
+            delete this.items[name];
+            this.setVar(name, 0);
+        }
     };
 
     /**
@@ -169,6 +183,11 @@ function Quest(text) {
 
         this.items[name] = count;
         this.setVar(name, count);
+
+        if (this.items[name] <= 0) {
+            delete this.items[name];
+            this.setVar(name, 0);
+        }
     };
 
     /**
