@@ -15,7 +15,7 @@ function Expression(str) {
      * токенолизатор
      */
     this.tokenize = function (str) {
-        return str.split(/( AND | OR |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(\))/gi);
+        return str.split(/( AND | OR |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\))/gi);
     };
 
     /**
@@ -32,6 +32,8 @@ function Expression(str) {
 
         for (var i = 0; i < this.expr.length; i++) {
             var token = this.expr[i].trim();
+
+            if (token.length == 0) continue;
 
             // если число
             if (!isNaN(token.replace(',', '.').replace(' ', ''))) {
