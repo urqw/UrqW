@@ -4,32 +4,16 @@
  * Управление квеста пользователем (события)
  */
 $(function() {
+    var buttonField = $('#buttons');
+    var textfield = $('#textfield');
+    var inventory = $('#inventory');
 
     /**
      * Отлов нажатия клавиш
      */
-    $(document).keypress(function(e){
-        if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
-
-            if (GlobalParser.inf.length > 0) {
-                Game.setVar(GlobalParser.inf, e.keyCode);
-            }
-
-            $('#info').hide();
-            GlobalClient.play();
-        } else if (GlobalParser.status == GlobalParser.STATUS_END) {
-            if (e.keyCode == 13) {
-                $('#buttons').find('button').each(function(index) {
-                    if ($(this).hasClass('active')) {
-                        $(this).click();
-                    }
-                });
-            }
-
+    $(document).keydown(function(e){
+        if (GlobalParser.status == GlobalParser.STATUS_END) {
             if (e.keyCode == 38 || e.keyCode == 40) {
-
-
-                var buttonField = $('#buttons');
                 var active = 0;
                 buttonField.find('button').each(function(index) {
                     if ($(this).hasClass('active')) {
@@ -66,14 +50,35 @@ $(function() {
         }
     });
 
+    $(document).keypress(function(e){
+        if (GlobalParser.status == GlobalParser.STATUS_END) {
+            if (e.keyCode == 13) {
+                buttonField.find('button').each(function(index) {
+                    if ($(this).hasClass('active')) {
+                        $(this).click();
+                    }
+                });
+            }
+        }
+
+        if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
+            if (GlobalParser.inf.length > 0) {
+                Game.setVar(GlobalParser.inf, e.keyCode);
+            }
+
+            $('#info').hide();
+            GlobalClient.play();
+        }
+    });
+
     /**
      * Нажатие на btn
      */
-    $('body').on('click', '.button', function() {
+    buttonField.on('click', '.button', function() {
         if (lock) return;
 
-        $('#textfield').empty();
-        $('#buttons').empty();
+        textfield.empty();
+        buttonField.empty();
 
         var label = $(this).data('label');
 
@@ -133,15 +138,15 @@ $(function() {
     /**
      * Использование предметов
      */
-    $('body').on('click', '.item_use', function() {
+    inventory.on('click', '.item_use', function() {
         if (lock) return;
 
         var loc = $(this).data('loc');
 
         if (loc !== undefined) {
 
-            $('#textfield').empty();
-            $('#buttons').empty();
+            textfield.empty();
+            buttonField.empty();
 
             GlobalParser.proc_position.push(Game.getLabel(Game.currentLoc));
             GlobalParser.flow++;
