@@ -9,7 +9,19 @@
  */
 function Expression(str) {
 
-    this.expr = str;
+    /**
+     * @return {Array}
+     *
+     * токенолизатор
+     */
+    this.tokenize = function (str) {
+        return str.split(/( AND | OR |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(\))/gi);
+    };
+
+    /**
+     * @type {Array}
+     */
+    this.expr = this.tokenize(str);
 
     /**
      * @returns {Array}
@@ -19,53 +31,13 @@ function Expression(str) {
         var operStack = [];
 
         for (var i = 0; i < this.expr.length; i++) {
-            if (this.expr[i] == ' ') continue;
-            var token = [];
+            var token = this.expr[i].trim();
 
             // если число
-            if (!isNaN(this.expr[i])) {
+            if (!isNaN(token.replace(',', '.').replace(' ', ''))) {
                 // считываем всё число дальше
-
-                while (' 0123456789,.'.indexOf(this.expr[i]) != -1) {
-                    token.push(this.expr[i]);
-
-                    i++;
-
-                    if (i >= this.expr.length) break;
-                }
-
-                exitStack.push(parseFloat(token.join('').replace(',', '.')));
-
-                i--;
-                continue;
-            }
-
-            token.push(this.expr[i]);
-
-            if (this.expr[i] == '=' && this.expr[i + 1] == '=') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == '<' && this.expr[i + 1] == '=') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == '<' && this.expr[i + 1] == '>') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == '>' && this.expr[i + 1] == '=') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == '!' && this.expr[i + 1] == '=') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == '&' && this.expr[i + 1] == '&') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == '|' && this.expr[i + 1] == '|') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == 'o' && this.expr[i + 1] == 'r' && this.expr[i + 2] == ' ') {
-                    token.push(this.expr[++i]);
-            } else if (this.expr[i] == 'a' && this.expr[i + 1] == 'n' && this.expr[i + 2] == 'd' && this.expr[i + 3] == ' ') {
-                    token.push(this.expr[++i]);
-                    token.push(this.expr[++i]);
-            }
-
-            token = token.join('');
-
-            if (this.getPriority(token) > 0) {
+                exitStack.push(parseFloat(token.replace(',', '.').replace(' ', '')));
+            } else if (this.getPriority(token) > 0) {
                 if (token == '(') {
                     operStack.push(token);
                 } else if (token == ')') {
@@ -82,48 +54,12 @@ function Expression(str) {
 
                     operStack.push(token);
                 }
-            } else if (token == '\'') {
-                token = [];
-                i++;
-
-                while ('\''.indexOf(this.expr[i]) == -1) {
-                    token.push(this.expr[i]);
-
-                    i++;
-
-                    if (i >= this.expr.length) break;
+            } else if (token.substr(0, 1) == '\'' || token.substr(0, 1) == '\"') {
+                if (token.substr(-1, 1) == '\'' || token.substr(-1, 1) == '\"') {
+                    exitStack.push(token.substr(1, (token.length - 2)));
                 }
-
-                exitStack.push(token.join(''));
-            } else if (token == '\"') {
-                token = [];
-                i++;
-
-                while ('\"'.indexOf(this.expr[i]) == -1) {
-                    token.push(this.expr[i]);
-
-                    i++;
-
-                    if (i >= this.expr.length) break;
-                }
-
-                exitStack.push(token.join(''));
             } else {
-                token = [];
-
-                while ('><?=/^&*!|()+-'.indexOf(this.expr[i]) == -1) {
-                    token.push(this.expr[i]);
-
-                    i++;
-
-                    if (i >= this.expr.length) break;
-                }
-
-                if (token.length > 0) {
-                    i--;
-                }
-
-                exitStack.push(Game.getVar(token.join('')));
+                exitStack.push(Game.getVar(token));
             }
         }
 
