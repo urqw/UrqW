@@ -138,14 +138,7 @@ function Quest(text) {
      * @param {int} count
      */
     this.addItem = function(name, count) {
-        count = parseInt(count);
-
-        if (this.items[name] == undefined) {
-            this.items[name] = 0;
-        }
-
-        this.items[name] = this.items[name] + parseInt(count);
-        this.setVar(name, this.items[name]);
+        return this.setItem(name, this.getItem(name) + parseInt(count));
     };
 
     /**
@@ -153,10 +146,7 @@ function Quest(text) {
      * @param {int} count
      */
     this.removeItem = function(name, count) {
-        count = parseInt(count);
-
-        this.items[name] = this.items[name] - count;
-        this.setVar(name, this.items[name]);
+        return this.setItem(name, this.getItem(name) - parseInt(count));
     };
 
     /**
@@ -167,8 +157,22 @@ function Quest(text) {
     this.setItem = function (name, count) {
         count = parseInt(count);
 
-        this.items[name] = count;
-        this.setVar(name, count);
+        if (count <= 0) {
+            delete this.items[name];
+            this.setVar(name, 0);
+        } else {
+            this.items[name] = count;
+            this.setVar(name, count);
+        }
+    };
+
+    /**
+     *
+     * @param name
+     * @return {int}
+     */
+    this.getItem = function (name) {
+        return (this.items[name] == undefined) ? 0 : this.items[name];
     };
 
     /**

@@ -2,12 +2,9 @@
  * @author narmiel
  */
 
-
 /**
  * @constructor
  */
-
-
 function Parser() {
     this.STATUS_NEXT = 0;
     this.STATUS_END = 1;
