@@ -139,7 +139,7 @@ function Parser() {
                     var quantity = 1;
                     if (item.length > 1) {
                         quantity = parseInt(item[0]);
-                        item = item.join(',');
+                        item = item[1];
                     }
 
                     Game.removeItem(item.toString().trim(), quantity);
