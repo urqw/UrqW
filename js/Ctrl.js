@@ -12,7 +12,7 @@ $(function() {
      * Отлов нажатия клавиш
      */
     $(document).keydown(function(e){
-        if (GlobalParser.status == GlobalParser.STATUS_END) {
+        if (GlobalPlayer.status == PLAYER_STATUS_END) {
             if (e.keyCode == 38 || e.keyCode == 40) {
                 var active = 0;
                 buttonField.find('button').each(function(index) {
@@ -51,7 +51,7 @@ $(function() {
     });
 
     $(document).keypress(function(e){
-        if (GlobalParser.status == GlobalParser.STATUS_END) {
+        if (GlobalPlayer.status == PLAYER_STATUS_END) {
             if (e.keyCode == 13) {
                 buttonField.find('button').each(function(index) {
                     if ($(this).hasClass('active')) {
@@ -61,13 +61,13 @@ $(function() {
             }
         }
 
-        if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
-            if (GlobalParser.inf.length > 0) {
-                Game.setVar(GlobalParser.inf, e.keyCode);
+        if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
+            if (GlobalPlayer.inf.length > 0) {
+                Game.setVar(GlobalPlayer.inf, e.keyCode);
             }
 
             $('#info').hide();
-            GlobalClient.play();
+            GlobalPlayer.play();
         }
     });
 
@@ -75,7 +75,7 @@ $(function() {
      * Нажатие на btn
      */
     buttonField.on('click', '.button', function() {
-        if (lock) return;
+        if (GlobalPlayer.lock) return;
 
         textfield.empty();
         buttonField.empty();
@@ -92,26 +92,26 @@ $(function() {
 
         if (Game.labels[common_label] != undefined) {
             if (Game.getLabel(label) !== false) {
-                GlobalParser.proc_position.push(Game.getLabel(label));
-                GlobalParser.flow++;
-                GlobalParser.flowStack[GlobalParser.flow] = [];
-                Game.to(common_label);
+                GlobalPlayer.proc_position.push(Game.getLabel(label));
+                GlobalPlayer.flow++;
+                GlobalPlayer.flowStack[GlobalPlayer.flow] = [];
+                GlobalPlayer.to(common_label);
             }
         } else {
-            Game.to(label, true);
+            GlobalPlayer.to(label, true);
         }
 
         Game.previousLoc = Game.currentLoc;
         Game.currentLoc = label;
 
-        GlobalClient.play();
+        GlobalPlayer.play();
     });
 
     /**
      * Инпут ввод (интер)
      */
     $('#input').find('input').keypress(function(e){
-        if (GlobalParser.status == GlobalParser.STATUS_INPUT && e.keyCode == 13) {
+        if (GlobalPlayer.status == PLAYER_STATUS_INPUT && e.keyCode == 13) {
             $('#input_enter').click();
         }
     });
@@ -120,15 +120,15 @@ $(function() {
      * Инпут ввод (кнопка)
      */
     $('#input_enter').on('click', function() {
-        if (GlobalParser.status == GlobalParser.STATUS_INPUT) {
+        if (GlobalPlayer.status == PLAYER_STATUS_INPUT) {
             var input = $('#input');
             if (input.find('input').val() != '') {
                 input.hide();
 
                 //todo нехорошо так делать
-                Game.setVar(GlobalParser.inf, input.find('input').val());
+                Game.setVar(GlobalPlayer.inf, input.find('input').val());
 
-                GlobalClient.play();
+                GlobalPlayer.play();
             } else {
                 input.addClass('has-error');
             }
@@ -139,21 +139,20 @@ $(function() {
      * Использование предметов
      */
     inventory.on('click', '.item_use', function() {
-        if (lock) return;
+        if (GlobalPlayer.lock) return;
 
         var loc = $(this).data('loc');
 
         if (loc !== undefined) {
-
             textfield.empty();
             buttonField.empty();
 
-            GlobalParser.proc_position.push(Game.getLabel(Game.currentLoc));
-            GlobalParser.flow++;
-            GlobalParser.flowStack[GlobalParser.flow] = [];
+            GlobalPlayer.proc_position.push(Game.getLabel(Game.currentLoc));
+            GlobalPlayer.flow++;
+            GlobalPlayer.flowStack[GlobalPlayer.flow] = [];
             Game.position = loc;
 
-            GlobalClient.play();
+            GlobalPlayer.play();
         }
 
         return false;

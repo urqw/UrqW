@@ -16,7 +16,7 @@ function Expression(str) {
      */
     this.tokenize = function (str) {
         str = ' ' + str + ' ';
-        str = str.replace(' not ', '  not  '); // пока так
+        str = str.replace(' not ', '  not  '); // пока так (чтобы not мог прилипать ко всему)
         return str.split(/( AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\)|!)/gi);
     };
 

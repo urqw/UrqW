@@ -14,26 +14,22 @@ function Client() {
     /**
      * play the game
      */
-    me.play = function () {
-        lock = true;
-
-        GlobalParser.parse(Game);
-
+    this.render = function (data) {
         me.drawText();
-        if (GlobalParser.status == GlobalParser.STATUS_END) {
+        if (data.status == PLAYER_STATUS_END) {
             me.drawButtons();
             me.drawInventory();
-            lock = false;
-        } else if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
+            GlobalPlayer.lock = false;
+        } else if (data.status == PLAYER_STATUS_ANYKEY) {
             $('#info').text('[нажмите любую клавишу]');
             $('#info').show();
-        } else if (GlobalParser.status == GlobalParser.STATUS_INPUT) {
+        } else if (data.status == PLAYER_STATUS_INPUT) {
             $('#input').removeClass('has-error');
             $('#input').find('input').val('');
             $('#input').show();
             $('#input').find('input').focus();
-        } else if (GlobalParser.status == GlobalParser.STATUS_PAUSE) {
-            var wait = GlobalParser.inf;
+        } else if (data.status == PLAYER_STATUS_PAUSE) {
+            var wait = data.inf;
             $('#info').show();
 
             var interval = setInterval(function() {
@@ -45,7 +41,7 @@ function Client() {
                 }
                 $('#info').text('[пауза ' + wait + ' ]');
             }, 50);
-        } else if (GlobalParser.status == GlobalParser.STATUS_QUIT) {
+        } else if (data.status == PLAYER_STATUS_QUIT) {
             $('#info').text('[игра закончена]');
             $('#info').show();
         }
@@ -54,11 +50,11 @@ function Client() {
     /**
      * Нарисовать текст
      */
-    me.drawText = function () {
+    this.drawText = function () {
         var textField = $('#textfield');
 
-        while (GlobalParser.text.length > 0) {
-            var text = GlobalParser.text.shift();
+        while (GlobalPlayer.text.length > 0) {
+            var text = GlobalPlayer.text.shift();
 
             textField.append($('<div>').addClass('text').text(text[0] + ' '));
 
@@ -71,11 +67,11 @@ function Client() {
     /**
      * Нарисовать кнопки
      */
-    me.drawButtons = function () {
+    this.drawButtons = function () {
         var buttonField = $('#buttons');
 
-        while (GlobalParser.buttons.length > 0) {
-            var button = GlobalParser.buttons.shift();
+        while (GlobalPlayer.buttons.length > 0) {
+            var button = GlobalPlayer.buttons.shift();
             if (Game.getLabel(button.label) === false) {
                 buttonField.append($('<button class="list-group-item disabled">').text(button.desc + ' // phantom'));
             } else {
@@ -87,7 +83,7 @@ function Client() {
     /**
      * Нарисовать инвентарь
      */
-    me.drawInventory = function () {
+    this.drawInventory = function () {
         var inventory =  $('#inventory');
 
         inventory.empty();
@@ -107,7 +103,7 @@ function Client() {
      * @param {String} itemName
      * @param {int} quantity
      */
-    me.drawItem = function (itemName, quantity) {
+    this.drawItem = function (itemName, quantity) {
 
         var actions = [];
 

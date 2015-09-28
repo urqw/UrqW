@@ -11,6 +11,11 @@
 function Quest(text) {
 
     /**
+     * @type {boolean}
+     */
+    this.locked = false;
+
+    /**
      * @type {Object}
      */
     this.labels = {};
@@ -40,17 +45,32 @@ function Quest(text) {
      */
     this.position = 0;
 
+    /**
+     * @type {string}
+     */
+    this.realCurrentLoc = '';
+
+    /**
+     * @type {string}
+     */
     this.currentLoc = '';
+
+    /**
+     * @type {string}
+     */
     this.previousLoc = '';
 
     /**
      * @param {String} label
      */
     this.getLabel = function(label) {
-        label = label.toLowerCase();
+        label = label.toString().toLowerCase();
 
         if (this.labels[label] !== undefined) {
-            return this.labels[label];
+            return {
+                name: label,
+                pos: this.labels[label]
+            };
         } else {
             return false;
         }
@@ -81,31 +101,6 @@ function Quest(text) {
         if (this.quest[i] != undefined) {
             return this.quest[i];
         } else  {
-            return false;
-        }
-    };
-
-    /**
-     * прыгнуть на метку
-     *
-     * @param {string} label
-     * @param {bool} incrCount
-     */
-    this.to = function(label, incrCount) {
-        label = label.toString();
-
-/*
-        if (incrCount === true) {
-*/
-            this.setVar('count_' + label, this.getVar('count_' + label) + 1);
-/*
-        }
-*/
-
-        if (this.labels[label.toLowerCase()] !== undefined) {
-            this.position = this.labels[label.toLowerCase()] ;
-            return true;
-        } else {
             return false;
         }
     };
@@ -217,32 +212,5 @@ function Quest(text) {
         return 0;
     };
 
-    /**
-     * удаление переменных
-     */
-    this.perkill = function() {
-        var me = this;
-        me.vars = {};
-
-        $.each(me.items, function(index, value) {
-            me.setVar(index, parseInt(value));
-        });
-    };
-
-    /**
-     * удаление предметов
-     * @param {String} item
-     */
-    this.invkill = function(item) {
-        var me = this;
-
-        if (item != null) {
-            me.setItem(item, 0);
-        } else {
-            $.each(me.items, function(index, value) {
-                me.setItem(index, 0);
-            });
-        }
-    };
 }
 

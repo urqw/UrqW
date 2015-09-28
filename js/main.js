@@ -10,29 +10,13 @@
 Game = null;
 
 /**
- * @type {boolean}
+ * @type {Player}
  */
-lock = true;
-
-/**
- * @type {Parser}
- */
-GlobalParser = null;
-
-/**
- * @type {Client}
- */
-GlobalClient = null;
+GlobalPlayer = null;
 
 
 $(function() {
     $('#something_wrong').hide();
-
-    /**
-     * Инициализация
-     */
-    GlobalClient = new Client();
-    GlobalParser = new Parser();
 
     /**
      * Загрузить из хеша
@@ -101,9 +85,11 @@ $(function() {
         Game = new Quest(msg);
         Game.init();
 
+        GlobalPlayer = new Player;
+
         $('#choose-game').hide();
         $('#game').show();
 
-        GlobalClient.play();
+        GlobalPlayer.play();
     }
 });
