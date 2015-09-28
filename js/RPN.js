@@ -15,7 +15,9 @@ function Expression(str) {
      * токенолизатор
      */
     this.tokenize = function (str) {
-        return str.split(/( AND | OR |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\))/gi);
+        str = ' ' + str + ' ';
+        str = str.replace(' not ', '  not  '); // пока так
+        return str.split(/( AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\)|!)/gi);
     };
 
     /**
@@ -29,14 +31,23 @@ function Expression(str) {
     this.toRPN = function () {
         var exitStack = [];
         var operStack = [];
+        var last = null;
 
         for (var i = 0; i < this.expr.length; i++) {
             var token = this.expr[i].trim();
 
             if (token.length == 0) continue;
 
-            // если число
-            if (!isNaN(token.replace(',', '.').replace(' ', ''))) {
+            // если отрицательное число
+            if (token == '-' && (this.getPriority(last) > 1 || last == null)) {
+
+                do {
+                    token = this.expr[++i].trim();
+                } while(token.length == 0);
+
+                exitStack.push(-parseFloat(token.replace(',', '.').replace(' ', '')));
+                // если число
+            } else if (!isNaN(token.replace(',', '.').replace(' ', ''))) {
                 // считываем всё число дальше
                 exitStack.push(parseFloat(token.replace(',', '.').replace(' ', '')));
             } else if (this.getPriority(token) > 0) {
@@ -63,6 +74,8 @@ function Expression(str) {
             } else {
                 exitStack.push(Game.getVar(token));
             }
+
+            last = token;
         }
 
         while (operStack.length > 0) {
@@ -86,59 +99,64 @@ function Expression(str) {
 
             if (this.getPriority(token) > 0) {
                 var result;
-                var a = temp.pop();
-                var b = temp.pop();
 
-                switch (token) {
-                    case '*':
-                        result = b * a;
-                        break;
-                    case '/':
-                        result = b / a;
-                        break;
-                    case '+':
-                        result = b + a;
-                        break;
-                    case '-':
-                        result = b - a;
-                        break;
-                    case '==':
-                    case '=':
-                        if ((typeof b == 'string') && (typeof a == 'string')) {
-                            result = b.toLowerCase() == a.toLowerCase();
-                        } else {
-                            result = b == a;
-                        }
-                        break;
-                    case '!=':
-                    case '<>':
-                        if ((typeof b == 'string') && (typeof a == 'string')) {
-                            result = b.toLowerCase() != a.toLowerCase();
-                        } else {
-                            result = b != a;
-                        }
+                if (token == '!' || token == 'not') {
+                    result = !temp.pop();
+                } else {
+                    var a = temp.pop();
+                    var b = temp.pop();
 
-                        break;
-                    case '>':
-                        result = b > a;
-                        break;
-                    case '<':
-                        result = b < a;
-                        break;
-                    case '>=':
-                        result = b >= a;
-                        break;
-                    case '<=':
-                        result = b <= a;
-                        break;
-                    case '&&':
-                    case 'and':
-                        result = b && a;
-                        break;
-                    case '||':
-                    case 'or':
-                        result = b || a;
-                        break;
+                    switch (token) {
+                        case '*':
+                            result = b * a;
+                            break;
+                        case '/':
+                            result = b / a;
+                            break;
+                        case '+':
+                            result = b + a;
+                            break;
+                        case '-':
+                            result = b - a;
+                            break;
+                        case '==':
+                        case '=':
+                            if ((typeof b == 'string') && (typeof a == 'string')) {
+                                result = b.toLowerCase() == a.toLowerCase();
+                            } else {
+                                result = b == a;
+                            }
+                            break;
+                        case '!=':
+                        case '<>':
+                            if ((typeof b == 'string') && (typeof a == 'string')) {
+                                result = b.toLowerCase() != a.toLowerCase();
+                            } else {
+                                result = b != a;
+                            }
+
+                            break;
+                        case '>':
+                            result = b > a;
+                            break;
+                        case '<':
+                            result = b < a;
+                            break;
+                        case '>=':
+                            result = b >= a;
+                            break;
+                        case '<=':
+                            result = b <= a;
+                            break;
+                        case '&&':
+                        case 'and':
+                            result = b && a;
+                            break;
+                        case '||':
+                        case 'or':
+                            result = b || a;
+                            break;
+                    }
                 }
 
                 temp.push(result);
@@ -156,6 +174,9 @@ function Expression(str) {
      */
     this.getPriority = function (operand) {
         switch (operand) {
+            case 'not':
+            case '!':
+                return 15;
             case '*':
             case '/':
                 return 14;
