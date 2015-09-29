@@ -30,7 +30,7 @@ $(function() {
                 url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
                 dataType: "text"
             }).done(function(msg) {
-                start(msg);
+                start(msg, window.location.hash.substr(1));
             }).fail(function () {
                 $('#loading').hide();
                 $('#choose-game').show();
@@ -69,7 +69,7 @@ $(function() {
         // read file to global variable and start quest
         var reader = new FileReader();
         reader.onload = function() {
-            start(reader.result);
+            start(reader.result, file.name);
         };
         reader.readAsText(file, 'CP1251');
     });
@@ -77,12 +77,15 @@ $(function() {
     /**
      * Запуск
      *
-     * @param {String} msg
+     * @param {String} msg тело квеста
+     * @param {String} name имя игры или файла
      */
-    function start(msg) {
+    function start(msg, name) {
         $('#loading').hide();
 
         Game = new Quest(msg);
+        Game.name = name;
+
         Game.init();
 
         GlobalPlayer = new Player;

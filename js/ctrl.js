@@ -7,6 +7,28 @@ $(function() {
     var buttonField = $('#buttons');
     var textfield = $('#textfield');
     var inventory = $('#inventory');
+    var save = $('#save');
+    var returnToGame = $('#return_to_game');
+
+    /**
+     * Нажатие на сохранение
+     */
+    save.on('click', function() {
+        if (GlobalPlayer.lock) return false;
+
+        $('#game').hide();
+        $('#saveslots').show();
+    });
+
+    /**
+     * Нажатие на сохранение
+     */
+    returnToGame.on('click', function() {
+        if (GlobalPlayer.lock) return false;
+
+        $('#saveslots').hide();
+        $('#game').show();
+    });
 
     /**
      * Нажатие на btn

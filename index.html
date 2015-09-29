@@ -18,7 +18,7 @@
     <script src="js/Parser.js"></script>
     <script src="js/RPN.js"></script>
     <script src="js/Client.js"></script>
-    <script src="js/Ctrl.js"></script>
+    <script src="js/ctrl.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body>
@@ -61,29 +61,42 @@
     </div>
 
     <div id="game" style="display: none">
-        <div class="container">
-            <div class="page-header text-right">
-                <div class="btn-group">
-                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Инвентарь <span class="caret"></span>
-                    </button>
-                    <ul id="inventory" class="dropdown-menu dropdown-menu-left">
-                        <li><a href="#" class="item_use">(Пусто)</a></li>
-                    </ul>
-                </div>
+        <div class="page-header text-right">
+            <button id="save" class="btn btn-default btn-sm" type="button">
+                Сохранение
+            </button>
+            <div class="btn-group">
+                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Инвентарь <span class="caret"></span>
+                </button>
+                <ul id="inventory" class="dropdown-menu dropdown-menu-left">
+                    <li><a href="#" class="item_use">(Пусто)</a></li>
+                </ul>
             </div>
-            <div id="textfield"></div>
-            <div class="list-group" id="buttons"></div>
+        </div>
+        <div id="textfield"></div>
+        <div class="list-group" id="buttons"></div>
 
-            <div id="input" class="input-group" style="display: none;">
-                <input type="text" class="form-control" placeholder="Введите что-нибудь">
+        <div id="input" class="input-group" style="display: none;">
+            <input type="text" class="form-control" placeholder="Введите что-нибудь">
                 <span class="input-group-btn">
                   <button id="input_enter" class="btn btn-default" type="button">Ок</button>
                 </span>
-            </div>
-            <div id="info" style="display: none;" class="well well-sm"></div>
+        </div>
+        <div id="info" style="display: none;" class="well well-sm"></div>
+    </div>
+
+    <div id="saveslots"  style="display: none">
+        <div class="page-header text-right">
+            <button id="return_to_game" class="btn btn-default btn-sm" type="button">
+                Назад к игре
+            </button>
         </div>
 
+        <div class="list-group">
+            <button class="list-group-item button" data-slot="1">Сохранить в пустой слот 1</button>
+            <button class="list-group-item button" data-slot="2">Сохранить в пустой слот 1</button>
+        </div>
     </div>
 </div>
 

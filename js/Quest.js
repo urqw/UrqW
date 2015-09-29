@@ -11,6 +11,11 @@
 function Quest(text) {
 
     /**
+     * @type {string} имя игры или файла для сохранения
+     */
+    this.name = '';
+
+    /**
      * @type {boolean}
      */
     this.locked = false;
@@ -117,6 +122,7 @@ function Quest(text) {
 
             if (str.substr(0, 1) == ':') {
                 if ((this.currentLoc.length == 0) && (this.previousLoc.length == 0)) {
+                    this.realCurrentLoc = str.substr(1).toLowerCase().trim();
                     this.currentLoc = str.substr(1).toLowerCase().trim();
                     this.previousLoc = str.substr(1).toLowerCase().trim();
                 }
@@ -216,5 +222,35 @@ function Quest(text) {
         return 0;
     };
 
+    /**
+     * сохранение
+     *
+     * @param {int} slot
+     */
+    this.save = function(slot) {
+        localStorage.setItem(this.name + slot.toString(), JSON.stringify({
+            items: this.items,
+            vars: this.vars,
+            position: this.position,
+            realCurrentLoc: this.realCurrentLoc,
+            currentLoc: this.currentLoc,
+            previousLoc: this.previousLoc
+        }));
+    };
+
+    /**
+     * загрузка
+     *
+     * @param {int} slot
+     */
+    this.load = function(slot) {
+        var data = JSON.parse(localStorage.getItem(this.name + slot.toString()));
+        this.items = data.items;
+        this.vars = data.vars;
+        this.position = data.position;
+        this.realCurrentLoc = data.realCurrentLoc;
+        this.currentLoc = data.currentLoc;
+        this.previousLoc = data.previousLoc;
+    };
 }
 
