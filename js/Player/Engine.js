@@ -99,6 +99,8 @@ Player.prototype.forgetProc = function() {
  * @param {String} inf
  */
 Player.prototype.anykey = function(inf) {
+    if (Game.locked) return false;
+
     this.inf = inf;
     this.status = PLAYER_STATUS_ANYKEY;
 };
@@ -107,6 +109,8 @@ Player.prototype.anykey = function(inf) {
  * @param {int} inf
  */
 Player.prototype.pause = function(inf) {
+    if (Game.locked) return false;
+
     this.inf = inf;
     this.status = PLAYER_STATUS_PAUSE;
 };
@@ -115,6 +119,8 @@ Player.prototype.pause = function(inf) {
  * @param {String} inf
  */
 Player.prototype.input = function(inf) {
+    if (Game.locked) return false;
+
     this.inf = inf;
     this.status = PLAYER_STATUS_INPUT;
 };
