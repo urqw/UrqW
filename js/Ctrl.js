@@ -9,6 +9,39 @@ $(function() {
     var inventory = $('#inventory');
 
     /**
+     * Нажатие на btn
+     */
+    buttonField.on('click', '.button', function() {
+        if (GlobalPlayer.lock) return false;
+
+        var label = $(this).data('label');
+
+        if (label != null) {
+            textfield.empty();
+            buttonField.empty();
+
+            GlobalPlayer.btnAction(label);
+        }
+    });
+
+    /**
+     * Использование предметов
+     */
+    inventory.on('click', '.item_use', function() {
+        if (GlobalPlayer.lock) return false;
+
+        var label = $(this).data('label');
+
+        if (label !== undefined) {
+            textfield.empty();
+            buttonField.empty();
+
+            GlobalPlayer.useAction(label);
+        }
+
+        return false;
+    });
+    /**
      * Отлов нажатия клавиш
      */
     $(document).keydown(function(e){
@@ -67,44 +100,8 @@ $(function() {
             }
 
             $('#info').hide();
-            GlobalPlayer.play();
+            GlobalPlayer.continue();
         }
-    });
-
-    /**
-     * Нажатие на btn
-     */
-    buttonField.on('click', '.button', function() {
-        if (GlobalPlayer.lock) return;
-
-        textfield.empty();
-        buttonField.empty();
-
-        var label = $(this).data('label');
-
-        // common todo рефакторить
-        var common_label;
-        if (Game.getVar('common') !== 0) {
-            common_label = 'common_' + Game.getVar('common');
-        } else {
-            common_label = 'common';
-        }
-
-        if (Game.labels[common_label] != undefined) {
-            if (Game.getLabel(label) !== false) {
-                GlobalPlayer.proc_position.push(Game.getLabel(label));
-                GlobalPlayer.flow++;
-                GlobalPlayer.flowStack[GlobalPlayer.flow] = [];
-                GlobalPlayer.to(common_label);
-            }
-        } else {
-            GlobalPlayer.to(label, true);
-        }
-
-        Game.previousLoc = Game.currentLoc;
-        Game.currentLoc = label;
-
-        GlobalPlayer.play();
     });
 
     /**
@@ -128,33 +125,11 @@ $(function() {
                 //todo нехорошо так делать
                 Game.setVar(GlobalPlayer.inf, input.find('input').val());
 
-                GlobalPlayer.play();
+                GlobalPlayer.continue();
             } else {
                 input.addClass('has-error');
             }
         }
     });
 
-    /**
-     * Использование предметов
-     */
-    inventory.on('click', '.item_use', function() {
-        if (GlobalPlayer.lock) return;
-
-        var loc = $(this).data('loc');
-
-        if (loc !== undefined) {
-            textfield.empty();
-            buttonField.empty();
-
-            GlobalPlayer.proc_position.push(Game.getLabel(Game.currentLoc));
-            GlobalPlayer.flow++;
-            GlobalPlayer.flowStack[GlobalPlayer.flow] = [];
-            Game.position = loc;
-
-            GlobalPlayer.play();
-        }
-
-        return false;
-    });
 });

@@ -31,7 +31,7 @@ function Expression(str) {
     this.toRPN = function () {
         var exitStack = [];
         var operStack = [];
-        var last = null;
+        var lastTokenIsOperator = null;
 
         for (var i = 0; i < this.expr.length; i++) {
             var token = this.expr[i].trim();
@@ -39,7 +39,7 @@ function Expression(str) {
             if (token.length == 0) continue;
 
             // если отрицательное число
-            if (token == '-' && (this.getPriority(last) > 1 || last == null)) {
+            if (lastTokenIsOperator && token == '-') {
 
                 do {
                     token = this.expr[++i].trim();
@@ -75,7 +75,7 @@ function Expression(str) {
                 exitStack.push(Game.getVar(token));
             }
 
-            last = token;
+            lastTokenIsOperator = (this.getPriority(token) > 1);
         }
 
         while (operStack.length > 0) {

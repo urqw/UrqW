@@ -87,9 +87,15 @@ $(function() {
 
         GlobalPlayer = new Player;
 
+        GlobalPlayer.Client.crtlInfo = $('#info');
+        GlobalPlayer.Client.crtlInput = $('#input');
+        GlobalPlayer.Client.crtlButtonField = $('#buttons');
+        GlobalPlayer.Client.crtlTextField = $('#textfield');
+        GlobalPlayer.Client.crtlInventory = $('#inventory');
+
         $('#choose-game').hide();
         $('#game').show();
 
-        GlobalPlayer.play();
+        GlobalPlayer.continue();
     }
 });

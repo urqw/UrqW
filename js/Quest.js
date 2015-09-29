@@ -123,9 +123,9 @@ function Quest(text) {
 
                 if (str.substr(0, 5) == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
-                } else {
-                    this.labels[str.substr(1).toLowerCase().trim()] = i;
                 }
+
+                this.labels[str.substr(1).toLowerCase().trim()] = i;
             }
         }
     };
@@ -152,6 +152,8 @@ function Quest(text) {
      * @param {int} count
      */
     this.setItem = function (name, count) {
+        if (Game.locked) return false;
+
         count = parseInt(count);
 
         if (count <= 0) {
@@ -177,6 +179,8 @@ function Quest(text) {
      * @param {*} value
      */
     this.setVar = function(variable, value) {
+        if (Game.locked) return false;
+
         variable = variable.trim();
 
         if (variable.substr(0, 4) == 'inv_') {

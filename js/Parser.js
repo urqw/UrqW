@@ -46,39 +46,15 @@ function Parser() {
             command = expl.slice(1).join(' ').trim();
 
             switch (operand) {
-                case 'forget_proc':
-                    this.flowStack[0] = this.flowStack[this.flow];
-                    this.proc_position = [];
-                    this.flow = 0;
-                    break;
-                case 'proc':
-                    GlobalPlayer.proc();
-                    break;
-                case 'end':
-                    GlobalPlayer.end();
-                    return;
-                case 'anykey':
-                    this.inf = command;
-                    this.status = PLAYER_STATUS_ANYKEY;
-                    return;
-                case 'pause':
-                    this.inf = parseInt(command);
-                    this.status = PLAYER_STATUS_PAUSE;
-                    return;
-                case 'input':
-                    this.inf = command;
-                    this.status = PLAYER_STATUS_INPUT;
-                    return;
-                case 'quit':
-                    this.status = PLAYER_STATUS_QUIT;
-                    return;
-                case 'invkill':
-
-                    GlobalPlayer.invkill(command.length >0 ? command : null);
-                    break;
-                case 'perkill':
-                    GlobalPlayer.perkill();
-                    break;
+                case 'forget_proc': return GlobalPlayer.forgetProc();
+                case 'proc': return GlobalPlayer.proc(command);
+                case 'end': return GlobalPlayer.end();
+                case 'anykey': return GlobalPlayer.anykey(command);
+                case 'pause': return GlobalPlayer.pause(parseInt(command));
+                case 'input': return GlobalPlayer.input(command);
+                case 'quit': return GlobalPlayer.quit();
+                case 'invkill': return GlobalPlayer.invkill(command.length >0 ? command : null);
+                case 'perkill': return GlobalPlayer.perkill();
                 case 'inv-':
                     var item = command.split(',');
                     var quantity = 1;
@@ -87,8 +63,7 @@ function Parser() {
                         item = item[1];
                     }
 
-                    Game.removeItem(item.toString().trim(), quantity);
-                    break;
+                    return GlobalPlayer.invRemove(item.toString().trim(), quantity);
                 case 'inv+':
                     item = command.split(',');
                     quantity = 1;
@@ -97,29 +72,16 @@ function Parser() {
                         item = item[1];
                     }
 
-                    Game.addItem(item.toString().trim(), quantity);
-                    break;
-                case 'goto':
-                    GlobalPlayer.to(command);
-                    break;
+                    return GlobalPlayer.invAdd(item.toString().trim(), quantity);
+                case 'goto': return GlobalPlayer.goto(command);
                 case 'p':
-                case 'print':
-                    this.text.push([command, false]);
-                    break;
+                case 'print': return GlobalPlayer.print(command, false);
                 case 'pln':
-                case 'println':
-                    this.text.push([command, true]);
-                    break;
+                case 'println': return GlobalPlayer.print(command, true);
                 case 'btn':
                     var btn = command.split(',');
-                    var label = btn[0];
-                    var desc = btn.slice(1).join(',');
-                    this.buttons.push({
-                        label: label,
-                        desc: desc
-                    });
-                    break;
 
+                    return GlobalPlayer.btn(btn[0].trim(), btn.slice(1).join(',').trim());
                 //рудименты далее
                 case 'instr':
                     line = command;
@@ -147,8 +109,7 @@ function Parser() {
      */
     this.prepareLine = function (line) {
         if (line.indexOf('&') != -1) {
-            this.flowStack[this.flow].push(line.substring(line.indexOf('&') + 1).trim());
-
+            GlobalPlayer.flowAdd(line.substring(line.indexOf('&') + 1).trim());
             line = line.substring(0, line.indexOf('&')).trim();
         }
 
