@@ -114,7 +114,7 @@ function Player() {
         Game.previousLoc = Game.currentLoc;
         Game.currentLoc = labelName;
 
-        this.goto(labelName);
+        this.goto(labelName, 'btn');
 
         this.continue();
     };
@@ -135,7 +135,7 @@ function Player() {
         }
 
         Game.locked = true;
-        this.goto(tmpLoc);
+        this.goto(tmpLoc, 'return');
         this.continue();
         Game.locked = false;
     };

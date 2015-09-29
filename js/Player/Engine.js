@@ -8,12 +8,15 @@
  * прыгнуть на метку
  *
  * @param {string} labelName
+ * @param {string} type
  */
-Player.prototype.goto = function(labelName) {
+Player.prototype.goto = function(labelName, type) {
     var label = Game.getLabel(labelName);
 
     if (label) {
-        Game.realCurrentLoc = label.name;
+        if (type != 'proc') {
+            Game.realCurrentLoc = label.name;
+        }
 
         Game.setVar('count_' + label.name, Game.getVar('count_' + label) + 1);
         Game.position = label.pos ;
@@ -57,11 +60,8 @@ Player.prototype.invkill = function(item) {
  */
 Player.prototype.proc = function(label) {
     this.procPosition.push(Game.position);
-    var tmpLoc = Game.realCurrentLoc;
 
-    if (this.goto(label)) {
-        Game.realCurrentLoc = tmpLoc;
-
+    if (this.goto(label, 'proc')) {
         this.flow++;
         this.flowStack[this.flow] = [];
 

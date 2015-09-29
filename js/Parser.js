@@ -73,7 +73,7 @@ function Parser() {
                     }
 
                     return GlobalPlayer.invAdd(item.toString().trim(), quantity);
-                case 'goto': return GlobalPlayer.goto(command);
+                case 'goto': return GlobalPlayer.goto(command, 'goto');
                 case 'p':
                 case 'print': return GlobalPlayer.print(command, false);
                 case 'pln':
