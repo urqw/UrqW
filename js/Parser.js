@@ -85,13 +85,19 @@ function Parser() {
                 //рудименты далее
                 case 'instr':
                     line = command;
+
+                    if (line.indexOf('=') > 0) {
+                        Game.setVar(line.substring(0, line.indexOf('=')), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                    }
+
                     // no break here
+                    break;
+
+                // если ничего не помогло^w^w^w не оператор
                 default:
                     //  это выражение?
                     if (line.indexOf('=') > 0) {
-                        var variable = line.substring(0, line.indexOf('='));
-                        var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
-                        Game.setVar(variable, value);
+                        Game.setVar(line.substring(0, line.indexOf('=')), new Expression(line.substr(line.indexOf('=') + 1)).calc());
                     } else {
                         console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
                     }
