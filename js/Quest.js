@@ -53,6 +53,11 @@ function Quest(text) {
     /**
      * @type {string}
      */
+    this.firstLabel = '';
+
+    /**
+     * @type {string}
+     */
     this.realCurrentLoc = '';
 
     /**
@@ -121,18 +126,21 @@ function Quest(text) {
             var str = this.get(i);
 
             if (str.substr(0, 1) == ':') {
-                if ((this.currentLoc.length == 0) && (this.previousLoc.length == 0)) {
-                    this.realCurrentLoc = str.substr(1).toLowerCase().trim();
-                    this.currentLoc = str.substr(1).toLowerCase().trim();
-                    this.previousLoc = str.substr(1).toLowerCase().trim();
-                }
-
                 if (str.substr(0, 5) == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
                 }
 
                 this.labels[str.substr(1).toLowerCase().trim()] = i;
             }
+        }
+
+        for (var key in this.labels) {
+            this.firstLabel = key;
+            this.realCurrentLoc = key;
+            this.currentLoc = key;
+            this.previousLoc = key;
+
+            break;
         }
     };
 
@@ -228,7 +236,10 @@ function Quest(text) {
      * @param {int} slot
      */
     this.save = function(slot) {
-        localStorage.setItem(this.name + slot.toString(), JSON.stringify({
+        var Datetime = new Date();
+
+        localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
+        localStorage.setItem(this.name + '_' + slot.toString() + '_data', JSON.stringify({
             items: this.items,
             vars: this.vars,
             position: this.position,
@@ -244,7 +255,7 @@ function Quest(text) {
      * @param {int} slot
      */
     this.load = function(slot) {
-        var data = JSON.parse(localStorage.getItem(this.name + slot.toString()));
+        var data = JSON.parse(localStorage.getItem(this.name + '_' + slot.toString() + '_data'));
         this.items = data.items;
         this.vars = data.vars;
         this.position = data.position;
