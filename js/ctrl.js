@@ -17,6 +17,26 @@ $(function() {
         if (GlobalPlayer.lock) return false;
 
         $('#game').hide();
+
+        $('#saveslots').find('.list-group').empty();
+
+        for(var i = 1; i <= 10; i++) {
+            var btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
+            var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
+
+            if (lsname === null) {
+                btn.text('(Пустой слот сохранения)');
+            } else {
+                btn.text(lsname);
+            }
+            $('#saveslots').find('.list-group').append(btn);
+        }
+
+        $('#saveslots').find('.savebtn').on('click', function() {
+            Game.save($(this).data('slot'));
+            returnToGame.click();
+        });
+
         $('#saveslots').show();
     });
 
@@ -38,7 +58,39 @@ $(function() {
 
         var label = $(this).data('label');
 
-        if (label != null) {
+        if (label == '#load$') {
+            $('#game').hide();
+
+            $('#saveslots').find('.list-group').empty();
+
+            for(var i = 1; i <= 10; i++) {
+                var btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
+                var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
+
+                if (lsname === null) {
+                    btn.text('(Пустой слот сохранения)').prop('disabled', true);
+                } else {
+                    btn.text(lsname);
+                }
+                $('#saveslots').find('.list-group').append(btn);
+            }
+
+            $('#saveslots').find('.savebtn').on('click', function() {
+                textfield.empty();
+                buttonField.empty();
+
+                Game.load($(this).data('slot'));
+                Game.locked = true;
+                GlobalPlayer.goto(Game.realCurrentLoc, 'return');
+
+                returnToGame.click();
+
+                GlobalPlayer.continue();
+                Game.locked = false;
+            });
+
+            $('#saveslots').show();
+        } else if (label != null) {
             textfield.empty();
             buttonField.empty();
 

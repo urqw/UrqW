@@ -18,7 +18,11 @@ Player.prototype.goto = function(labelName, type) {
             Game.realCurrentLoc = label.name;
         }
 
-        Game.setVar('count_' + label.name, Game.getVar('count_' + label) + 1);
+        // todo контанты блять
+        if (type == 'btn' || type == 'goto' || type == 'proc') {
+            Game.setVar('count_' + label.name, Game.getVar('count_' + label) + 1);
+        }
+
         Game.position = label.pos ;
 
         return true;

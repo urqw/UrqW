@@ -43,6 +43,13 @@ function Player() {
 
         this.play();
 
+        if (Game.realCurrentLoc == Game.firstLabel) {
+            this.buttons.unshift({
+                label: '#load$',
+                desc: 'Загрузить игру'
+            });
+        }
+
         this.Client.render({
             status: this.status,
             text: this.text,
@@ -111,12 +118,11 @@ function Player() {
 
         this.common();
 
-        Game.previousLoc = Game.currentLoc;
-        Game.currentLoc = labelName;
-
-        this.goto(labelName, 'btn');
-
-        this.continue();
+        if (this.goto(labelName, 'btn')) {
+            Game.previousLoc = Game.currentLoc;
+            Game.currentLoc = labelName;
+            this.continue();
+        }
     };
 
     /**

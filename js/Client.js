@@ -92,8 +92,13 @@ function Client() {
     this.drawButtons = function () {
         while (GlobalPlayer.buttons.length > 0) {
             var button = GlobalPlayer.buttons.shift();
+            var buttonCtrl = $('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc);
 
-            this.crtlButtonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+            if (button.label == '#load$') {
+                buttonCtrl.addClass('list-group-item-warning');
+            }
+
+            this.crtlButtonField.append(buttonCtrl);
         }
     };
 
