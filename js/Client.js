@@ -7,63 +7,81 @@
  */
 function Client() {
     /**
+     * @type {*|jQuery|HTMLElement}
+     */
+    this.crtlInfo;
+
+    /**
+     * @type {*|jQuery|HTMLElement}
+     */
+    this.crtlInput;
+
+    /**
+     * @type {*|jQuery|HTMLElement}
+     */
+    this.crtlButtonField;
+
+    /**
+     * @type {*|jQuery|HTMLElement}
+     */
+    this.crtlTextField;
+
+    /**
+     * @type {*|jQuery|HTMLElement}
+     */
+    this.crtlInventory;
+
+    /**
      * @type {Client}
      */
     var me = this;
 
     /**
-     * play the game
+     * render
      */
-    me.play = function () {
-        lock = true;
-
-        GlobalParser.parse(Game);
-
+    this.render = function (data) {
         me.drawText();
-        if (GlobalParser.status == GlobalParser.STATUS_END) {
+        if (data.status == PLAYER_STATUS_END) {
             me.drawButtons();
             me.drawInventory();
-            lock = false;
-        } else if (GlobalParser.status == GlobalParser.STATUS_ANYKEY) {
-            $('#info').text('[нажмите любую клавишу]');
-            $('#info').show();
-        } else if (GlobalParser.status == GlobalParser.STATUS_INPUT) {
-            $('#input').removeClass('has-error');
-            $('#input').find('input').val('');
-            $('#input').show();
-            $('#input').find('input').focus();
-        } else if (GlobalParser.status == GlobalParser.STATUS_PAUSE) {
-            var wait = GlobalParser.inf;
-            $('#info').show();
+        } else if (data.status == PLAYER_STATUS_ANYKEY) {
+            this.crtlInfo.text('[нажмите любую клавишу]');
+            this.crtlInfo.show();
+        } else if (data.status == PLAYER_STATUS_INPUT) {
+            this.crtlInput.removeClass('has-error');
+            this.crtlInput.find('input').val('');
+            this.crtlInput.show();
+            this.crtlInput.find('input').focus();
+        } else if (data.status == PLAYER_STATUS_PAUSE) {
+            var wait = data.inf;
+            this.crtlInfo.show();
 
             var interval = setInterval(function() {
                 wait = wait - 50;
                 if (wait <= 0) {
                     clearInterval(interval);
-                    $('#info').hide();
-                    me.play();
+                    me.crtlInfo.hide();
+                    GlobalPlayer.continue();
                 }
-                $('#info').text('[пауза ' + wait + ' ]');
+                me.crtlInfo.text('[пауза ' + wait + ' ]');
             }, 50);
-        } else if (GlobalParser.status == GlobalParser.STATUS_QUIT) {
-            $('#info').text('[игра закончена]');
-            $('#info').show();
+        } else if (data.status == PLAYER_STATUS_QUIT) {
+            this.crtlInfo.text('[игра закончена]');
+            this.crtlInfo.show();
         }
     };
 
     /**
      * Нарисовать текст
      */
-    me.drawText = function () {
-        var textField = $('#textfield');
+    this.drawText = function () {
+        while (GlobalPlayer.text.length > 0) {
+            var text = GlobalPlayer.text.shift();
 
-        while (GlobalParser.text.length > 0) {
-            var text = GlobalParser.text.shift();
-
-            textField.append($('<div>').addClass('text').text(text[0] + ' '));
+            this.crtlTextField.append($('<div>').addClass('text').text(text[0] + ' '));
 
             if (text[1]) {
-                textField.append('<div class="clearfix">');
+                this.crtlTextField.append('<div class="clearfix">');
             }
         }
     };
@@ -71,35 +89,33 @@ function Client() {
     /**
      * Нарисовать кнопки
      */
-    me.drawButtons = function () {
-        var buttonField = $('#buttons');
+    this.drawButtons = function () {
+        while (GlobalPlayer.buttons.length > 0) {
+            var button = GlobalPlayer.buttons.shift();
+            var buttonCtrl = $('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc);
 
-        while (GlobalParser.buttons.length > 0) {
-            var button = GlobalParser.buttons.shift();
-            if (Game.getLabel(button.label) === false) {
-                buttonField.append($('<button class="list-group-item disabled">').text(button.desc + ' // phantom'));
-            } else {
-                buttonField.append($('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc));
+            if (button.label == '#load$') {
+                buttonCtrl.addClass('list-group-item-warning');
             }
+
+            this.crtlButtonField.append(buttonCtrl);
         }
     };
 
     /**
      * Нарисовать инвентарь
      */
-    me.drawInventory = function () {
-        var inventory =  $('#inventory');
-
-        inventory.empty();
-        inventory.append(me.drawItem('inv', 1));
+    this.drawInventory = function () {
+        this.crtlInventory.empty();
+        this.crtlInventory.append(me.drawItem('inv', 1));
 
         // обновляем список предметов
         $.each(Game.items, function(itemName, quantity) {
-            inventory.append(me.drawItem(itemName, quantity));
+            me.crtlInventory.append(me.drawItem(itemName, quantity));
         });
 
-        if (inventory.find('> li').length == 0) {
-            inventory.append('<li><a href="#" class="item_use">(Пусто)</a></li>');
+        if (this.crtlInventory.find('> li').length == 0) {
+            this.crtlInventory.append('<li><a href="#" class="item_use">(Пусто)</a></li>');
         }
     };
 
@@ -107,7 +123,7 @@ function Client() {
      * @param {String} itemName
      * @param {int} quantity
      */
-    me.drawItem = function (itemName, quantity) {
+    this.drawItem = function (itemName, quantity) {
 
         var actions = [];
 
@@ -119,7 +135,7 @@ function Client() {
                     actionName = 'Осмотреть';
                 }
 
-                actions.push([actionName, value]);
+                actions.push([actionName, index]);
             }
         });
 
@@ -141,10 +157,10 @@ function Client() {
 
             var li = $('<li>').addClass('dropdown-submenu').append($('<a href="#" class="item_use">').text(itemName));
             var ul = $('<ul class="dropdown-menu">');
-            var li2 = $('<li class="menu-item">')
+            var li2 = $('<li class="menu-item">');
 
             for (var i = 0; i < actions.length; i++) {
-                li2.append($('<a href="#" class="item_use" data-loc="' + actions[i][1] + '">').text(actions[i][0]));
+                li2.append($('<a href="#" class="item_use" data-label="' + actions[i][1] + '">').text(actions[i][0]));
             }
 
             ul.append(li2);

@@ -11,6 +11,16 @@
 function Quest(text) {
 
     /**
+     * @type {string} имя игры или файла для сохранения
+     */
+    this.name = '';
+
+    /**
+     * @type {boolean}
+     */
+    this.locked = false;
+
+    /**
      * @type {Object}
      */
     this.labels = {};
@@ -40,17 +50,37 @@ function Quest(text) {
      */
     this.position = 0;
 
+    /**
+     * @type {string}
+     */
+    this.firstLabel = '';
+
+    /**
+     * @type {string}
+     */
+    this.realCurrentLoc = '';
+
+    /**
+     * @type {string}
+     */
     this.currentLoc = '';
+
+    /**
+     * @type {string}
+     */
     this.previousLoc = '';
 
     /**
      * @param {String} label
      */
     this.getLabel = function(label) {
-        label = label.toLowerCase();
+        label = label.toString().toLowerCase();
 
         if (this.labels[label] !== undefined) {
-            return this.labels[label];
+            return {
+                name: label,
+                pos: this.labels[label]
+            };
         } else {
             return false;
         }
@@ -86,31 +116,6 @@ function Quest(text) {
     };
 
     /**
-     * прыгнуть на метку
-     *
-     * @param {string} label
-     * @param {bool} incrCount
-     */
-    this.to = function(label, incrCount) {
-        label = label.toString();
-
-/*
-        if (incrCount === true) {
-*/
-            this.setVar('count_' + label, this.getVar('count_' + label) + 1);
-/*
-        }
-*/
-
-        if (this.labels[label.toLowerCase()] !== undefined) {
-            this.position = this.labels[label.toLowerCase()] ;
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
      * инициализация
      */
     this.init = function() {
@@ -121,17 +126,21 @@ function Quest(text) {
             var str = this.get(i);
 
             if (str.substr(0, 1) == ':') {
-                if ((this.currentLoc.length == 0) && (this.previousLoc.length == 0)) {
-                    this.currentLoc = str.substr(1).toLowerCase().trim();
-                    this.previousLoc = str.substr(1).toLowerCase().trim();
-                }
-
                 if (str.substr(0, 5) == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
-                } else {
-                    this.labels[str.substr(1).toLowerCase().trim()] = i;
                 }
+
+                this.labels[str.substr(1).toLowerCase().trim()] = i;
             }
+        }
+
+        for (var key in this.labels) {
+            this.firstLabel = key;
+            this.realCurrentLoc = key;
+            this.currentLoc = key;
+            this.previousLoc = key;
+
+            break;
         }
     };
 
@@ -157,6 +166,8 @@ function Quest(text) {
      * @param {int} count
      */
     this.setItem = function (name, count) {
+        if (Game.locked) return false;
+
         count = parseInt(count);
 
         if (count <= 0) {
@@ -182,6 +193,8 @@ function Quest(text) {
      * @param {*} value
      */
     this.setVar = function(variable, value) {
+        if (Game.locked) return false;
+
         variable = variable.trim();
 
         if (variable.substr(0, 4) == 'inv_') {
@@ -218,31 +231,37 @@ function Quest(text) {
     };
 
     /**
-     * удаление переменных
+     * сохранение
+     *
+     * @param {int} slot
      */
-    this.perkill = function() {
-        var me = this;
-        me.vars = {};
+    this.save = function(slot) {
+        var Datetime = new Date();
 
-        $.each(me.items, function(index, value) {
-            me.setVar(index, parseInt(value));
-        });
+        localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
+        localStorage.setItem(this.name + '_' + slot.toString() + '_data', JSON.stringify({
+            items: this.items,
+            vars: this.vars,
+            position: this.position,
+            realCurrentLoc: this.realCurrentLoc,
+            currentLoc: this.currentLoc,
+            previousLoc: this.previousLoc
+        }));
     };
 
     /**
-     * удаление предметов
-     * @param {String} item
+     * загрузка
+     *
+     * @param {int} slot
      */
-    this.invkill = function(item) {
-        var me = this;
-
-        if (item != null) {
-            me.setItem(item, 0);
-        } else {
-            $.each(me.items, function(index, value) {
-                me.setItem(index, 0);
-            });
-        }
+    this.load = function(slot) {
+        var data = JSON.parse(localStorage.getItem(this.name + '_' + slot.toString() + '_data'));
+        this.items = data.items;
+        this.vars = data.vars;
+        this.position = data.position;
+        this.realCurrentLoc = data.realCurrentLoc;
+        this.currentLoc = data.currentLoc;
+        this.previousLoc = data.previousLoc;
     };
 }
 

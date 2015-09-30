@@ -6,56 +6,12 @@
  * @constructor
  */
 function Parser() {
-    this.STATUS_NEXT = 0;
-    this.STATUS_END = 1;
-    this.STATUS_ANYKEY = 2;
-    this.STATUS_PAUSE = 3;
-    this.STATUS_INPUT = 4;
-    this.STATUS_QUIT = 5;
-
-    this.text = [];
-    this.buttons = [];
-    this.inf = false;
-
-    this.proc_position = [];
-    this.flow = 0;
-    this.flowStack = [];
-    this.flowStack[this.flow] = [];
-
-    /**
-     * @param {Quest} Game
-     */
-    this.parse = function(Game) {
-        var line;
-
-        this.status = this.STATUS_NEXT;
-
-        while ((this.status == this.STATUS_NEXT)) {
-    //        console.log('play: ' + line);
-
-            if (this.flowStack[this.flow].length == 0 && ((line = Game.next()) !== false)) {
-                this.parseLine(line);
-            }
-
-            while (this.flowStack[this.flow].length > 0 && this.status == this.STATUS_NEXT) {
-                this.parseLine(this.flowStack[this.flow].pop());
-            }
-        }
-   //     console.log(' --- ');
-
-        return {
-            status: this.status,
-            text: this.text,
-            buttons: this.buttons,
-            sysinf: this.inf
-        }
-    };
 
     /**
      *
      * @param line
      */
-    this.parseLine = function(line) {
+    this.parse = function(line) {
         line = line.trim();
         // просмотреть список известных операторов
         var expl = line.split(' ');
@@ -76,10 +32,10 @@ function Parser() {
             }
 
             if (new Expression(this.openTags(cond)).calc()) {
-                this.parseLine(then);
+                this.parse(then);
             } else {
                 if (els) {
-                    this.parseLine(els);
+                    this.parse(els);
                 }
             }
         } else {
@@ -90,50 +46,15 @@ function Parser() {
             command = expl.slice(1).join(' ').trim();
 
             switch (operand) {
-                case 'forget_proc':
-                    this.flowStack[0] = this.flowStack[this.flow];
-                    this.proc_position = [];
-                    this.flow = 0;
-                    break;
-                case 'proc':
-                    this.proc_position.push(Game.position);
-                    if (Game.to(command)) {
-                        this.flow++;
-                        this.flowStack[this.flow] = [];
-                    } else {
-                        this.proc_position.pop();
-                    }
-                    break;
-                case 'end':
-                    if (this.proc_position.length > 0) {
-                        this.flowStack[this.flow].pop();
-                        Game.position = this.proc_position.pop();
-                        this.flow--;
-                    } else {
-                        this.status = this.STATUS_END;
-                    }
-                    return;
-                case 'anykey':
-                    this.inf = command;
-                    this.status = this.STATUS_ANYKEY;
-                    return;
-                case 'pause':
-                    this.inf = parseInt(command);
-                    this.status = this.STATUS_PAUSE;
-                    return;
-                case 'input':
-                    this.inf = command;
-                    this.status = this.STATUS_INPUT;
-                    return;
-                case 'quit':
-                    this.status = this.STATUS_QUIT;
-                    return;
-                case 'invkill':
-                    Game.invkill(command.length >0 ? command : null);
-                    break;
-                case 'perkill':
-                    Game.perkill();
-                    break;
+                case 'forget_proc': return GlobalPlayer.forgetProc();
+                case 'proc': return GlobalPlayer.proc(command);
+                case 'end': return GlobalPlayer.end();
+                case 'anykey': return GlobalPlayer.anykey(command);
+                case 'pause': return GlobalPlayer.pause(parseInt(command));
+                case 'input': return GlobalPlayer.input(command);
+                case 'quit': return GlobalPlayer.quit();
+                case 'invkill': return GlobalPlayer.invkill(command.length >0 ? command : null);
+                case 'perkill': return GlobalPlayer.perkill();
                 case 'inv-':
                     var item = command.split(',');
                     var quantity = 1;
@@ -142,8 +63,7 @@ function Parser() {
                         item = item[1];
                     }
 
-                    Game.removeItem(item.toString().trim(), quantity);
-                    break;
+                    return GlobalPlayer.invRemove(item.toString().trim(), quantity);
                 case 'inv+':
                     item = command.split(',');
                     quantity = 1;
@@ -152,39 +72,32 @@ function Parser() {
                         item = item[1];
                     }
 
-                    Game.addItem(item.toString().trim(), quantity);
-                    break;
-                case 'goto':
-                    Game.to(command);
-                    break;
+                    return GlobalPlayer.invAdd(item.toString().trim(), quantity);
+                case 'goto': return GlobalPlayer.goto(command, 'goto');
                 case 'p':
-                case 'print':
-                    this.text.push([command, false]);
-                    break;
+                case 'print': return GlobalPlayer.print(command, false);
                 case 'pln':
-                case 'println':
-                    this.text.push([command, true]);
-                    break;
+                case 'println': return GlobalPlayer.print(command, true);
                 case 'btn':
                     var btn = command.split(',');
-                    var label = btn[0];
-                    var desc = btn.slice(1).join(',');
-                    this.buttons.push({
-                        label: label,
-                        desc: desc
-                    });
-                    break;
 
+                    return GlobalPlayer.btn(btn[0].trim(), btn.slice(1).join(',').trim());
                 //рудименты далее
                 case 'instr':
                     line = command;
+
+                    if (line.indexOf('=') > 0) {
+                        Game.setVar(line.substring(0, line.indexOf('=')), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                    }
+
                     // no break here
+                    break;
+
+                // если ничего не помогло^w^w^w не оператор
                 default:
                     //  это выражение?
                     if (line.indexOf('=') > 0) {
-                        var variable = line.substring(0, line.indexOf('='));
-                        var value = new Expression(line.substr(line.indexOf('=') + 1)).calc();
-                        Game.setVar(variable, value);
+                        Game.setVar(line.substring(0, line.indexOf('=')), new Expression(line.substr(line.indexOf('=') + 1)).calc());
                     } else {
                         console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
                     }
@@ -193,16 +106,29 @@ function Parser() {
 
     };
 
+    /**
+     * Разбиваем по &
+     *
+     * @param line
+     *
+     * @returns {String}
+     */
     this.prepareLine = function (line) {
         if (line.indexOf('&') != -1) {
-            this.flowStack[this.flow].push(line.substring(line.indexOf('&') + 1).trim());
-
+            GlobalPlayer.flowAdd(line.substring(line.indexOf('&') + 1).trim());
             line = line.substring(0, line.indexOf('&')).trim();
         }
 
         return this.openTags(line);
     };
 
+    /**
+     * Открываем #$, #%$
+     *
+     * @param {String} line
+     *
+     * @returns {String}
+     */
     this.openTags = function (line) {
         // открыть #$
         while (line.indexOf('#') != -1 && line.indexOf('$') != -1) {
@@ -217,6 +143,6 @@ function Parser() {
         }
 
         return line;
-    }
+    };
 }
 
