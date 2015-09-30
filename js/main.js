@@ -50,7 +50,7 @@ $(function() {
      * Выбор игры из списка
      */
     $('.gamelink').on('click', function() {
-        window.location.hash = $(this).data('game');
+        window.location.hash = encodeURIComponent($(this).data('game'));
         loadFromHash();
 
         return false;
