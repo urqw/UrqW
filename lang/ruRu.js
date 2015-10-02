@@ -2,6 +2,6 @@
  * @author narmiel
  */
 
-ruRU = [
+lang = [
 
 ];
