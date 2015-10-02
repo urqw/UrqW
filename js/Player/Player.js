@@ -43,13 +43,6 @@ function Player() {
 
         this.play();
 
-        if (Game.realCurrentLoc == Game.firstLabel) {
-            this.buttons.unshift({
-                label: '#load$',
-                desc: 'Загрузить игру'
-            });
-        }
-
         this.Client.render({
             status: this.status,
             text: this.text,

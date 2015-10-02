@@ -86,6 +86,13 @@ Player.prototype.end = function() {
         Game.position = this.procPosition.pop();
         this.flow--;
     } else {
+        if (Game.realCurrentLoc == Game.firstLabel) {
+            this.buttons.unshift({
+                label: '#load$',
+                desc: 'Загрузить игру'
+            });
+        }
+
         this.status = PLAYER_STATUS_END;
     }
 };
