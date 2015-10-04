@@ -78,7 +78,7 @@ function Client() {
         while (GlobalPlayer.text.length > 0) {
             var text = GlobalPlayer.text.shift();
 
-            this.crtlTextField.append($('<div>').addClass('text').text(text[0] + ' '));
+            this.crtlTextField.append($('<div>').addClass('text').html(text[0] + ' '));
 
             if (text[1]) {
                 this.crtlTextField.append('<div class="clearfix">');
