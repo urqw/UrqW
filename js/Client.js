@@ -36,10 +36,21 @@ function Client() {
      */
     var me = this;
 
+    var noRendered = true;
     /**
      * render
      */
     this.render = function (data) {
+
+        if (noRendered) {
+            GlobalPlayer.buttons.unshift({
+                label: '#load$',
+                desc: 'Загрузить игру'
+            });
+
+            noRendered = false;
+        }
+
         me.drawText();
         if (data.status == PLAYER_STATUS_END) {
             me.drawButtons();
@@ -78,7 +89,7 @@ function Client() {
         while (GlobalPlayer.text.length > 0) {
             var text = GlobalPlayer.text.shift();
 
-            this.crtlTextField.append($('<div>').addClass('text').text(text[0] + ' '));
+            this.crtlTextField.append($('<div>').addClass('text').html(text[0] + ' '));
 
             if (text[1]) {
                 this.crtlTextField.append('<div class="clearfix">');
@@ -160,8 +171,8 @@ function Client() {
             var li2 = $('<li class="menu-item">');
 
             for (var i = 0; i < actions.length; i++) {
-                li2.append($('<a href="#" class="item_use" data-label="' + actions[i][1] + '">').text(actions[i][0]));
-            }
+                li2.append($('<a href="#" class="item_use">').attr('data-label', actions[i][1]).text(actions[i][0]));
+            };
 
             ul.append(li2);
             li.append(ul);

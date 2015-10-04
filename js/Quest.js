@@ -53,11 +53,6 @@ function Quest(text) {
     /**
      * @type {string}
      */
-    this.firstLabel = '';
-
-    /**
-     * @type {string}
-     */
     this.realCurrentLoc = '';
 
     /**
@@ -126,7 +121,7 @@ function Quest(text) {
             var str = this.get(i);
 
             if (str.substr(0, 1) == ':') {
-                if (str.substr(0, 5) == ':use_') {
+                if (str.substr(0, 5).toLowerCase() == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
                 }
 
@@ -135,7 +130,6 @@ function Quest(text) {
         }
 
         for (var key in this.labels) {
-            this.firstLabel = key;
             this.realCurrentLoc = key;
             this.currentLoc = key;
             this.previousLoc = key;

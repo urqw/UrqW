@@ -43,12 +43,14 @@ function Player() {
 
         this.play();
 
-        this.Client.render({
-            status: this.status,
-            text: this.text,
-            buttons: this.buttons,
-            inf: this.inf
-        });
+        if (this.status != PLAYER_STATUS_NEXT) {
+            this.Client.render({
+                status: this.status,
+                text: this.text,
+                buttons: this.buttons,
+                inf: this.inf
+            });
+        }
 
         this.lock = (this.status != PLAYER_STATUS_END);
     };
