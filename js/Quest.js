@@ -126,7 +126,7 @@ function Quest(text) {
             var str = this.get(i);
 
             if (str.substr(0, 1) == ':') {
-                if (str.substr(0, 5) == ':use_') {
+                if (str.substr(0, 5).toLowerCase() == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
                 }
 
