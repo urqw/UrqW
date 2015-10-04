@@ -53,11 +53,6 @@ function Quest(text) {
     /**
      * @type {string}
      */
-    this.firstLabel = '';
-
-    /**
-     * @type {string}
-     */
     this.realCurrentLoc = '';
 
     /**
@@ -135,7 +130,6 @@ function Quest(text) {
         }
 
         for (var key in this.labels) {
-            this.firstLabel = key;
             this.realCurrentLoc = key;
             this.currentLoc = key;
             this.previousLoc = key;

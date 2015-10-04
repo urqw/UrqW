@@ -36,10 +36,21 @@ function Client() {
      */
     var me = this;
 
+    var noRendered = true;
     /**
      * render
      */
     this.render = function (data) {
+
+        if (noRendered) {
+            GlobalPlayer.buttons.unshift({
+                label: '#load$',
+                desc: 'Загрузить игру'
+            });
+
+            noRendered = false;
+        }
+
         me.drawText();
         if (data.status == PLAYER_STATUS_END) {
             me.drawButtons();
