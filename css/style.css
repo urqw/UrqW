@@ -22,9 +22,14 @@ p {
 }
 
 div.text {
-    text-indent: 20px;
     line-height: 22px;
+    display: inline;
 }
+
+div.clearfix + div.text, #textfield div.text:first-child {
+    padding-left: 20px;
+}
+
 
 #inventory {
     right: 0;

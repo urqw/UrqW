@@ -172,7 +172,7 @@ function Client() {
 
             for (var i = 0; i < actions.length; i++) {
                 li2.append($('<a href="#" class="item_use">').attr('data-label', actions[i][1]).text(actions[i][0]));
-            };
+            }
 
             ul.append(li2);
             li.append(ul);
