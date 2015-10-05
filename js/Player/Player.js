@@ -114,8 +114,9 @@ function Player() {
         this.common();
 
         if (this.goto(labelName, 'btn')) {
-            Game.previousLoc = Game.currentLoc;
-            Game.currentLoc = labelName;
+            Game.setVar('previous_loc', Game.getVar('current_loc'));
+            Game.setVar('current_loc', labelName);
+
             this.continue();
         }
     };
