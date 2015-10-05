@@ -170,7 +170,7 @@ $(function() {
 
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             if (GlobalPlayer.inf.length > 0) {
-                Game.setVar(GlobalPlayer.inf, e.keyCode);
+                GlobalPlayer.setVar(GlobalPlayer.inf, e.keyCode);
             }
 
             $('#info').hide();
@@ -196,8 +196,7 @@ $(function() {
             if (input.find('input').val() != '') {
                 input.hide();
 
-                //todo нехорошо так делать
-                Game.setVar(GlobalPlayer.inf, input.find('input').val());
+                GlobalPlayer.setVar(GlobalPlayer.inf, input.find('input').val());
 
                 GlobalPlayer.continue();
             } else {

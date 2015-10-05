@@ -8,11 +8,14 @@ var PLAYER_STATUS_ANYKEY = 2;
 var PLAYER_STATUS_PAUSE = 3;
 var PLAYER_STATUS_INPUT = 4;
 var PLAYER_STATUS_QUIT = 5;
+var PLAYER_STATUS_WAITING = 6;
 
 /**
  * @constructor
  */
 function Player() {
+    var me = this;
+
     this.Parser = new Parser();
     this.Client = new Client();
 
@@ -53,6 +56,15 @@ function Player() {
         }
 
         this.lock = (this.status != PLAYER_STATUS_END);
+
+        if (this.status == PLAYER_STATUS_WAITING) {
+            var interval = setInterval(function() {
+                if (me.status != PLAYER_STATUS_WAITING) {
+                    clearInterval(interval);
+                    me.continue()
+                }
+            }, 100);
+        }
     };
 
     /**
@@ -142,5 +154,42 @@ function Player() {
         Game.locked = false;
     };
 
+
+    /**
+     * @inheritDoc
+     */
+    this.setVar = function(variable, value) {
+        if (Game.locked) return false;
+
+        if (variable.toLowerCase() === 'image') {
+            var file;
+
+            if (files[value] !== undefined) {
+                file = files[value];
+            } else if (files[value + '.png'] !== undefined) {
+                file = files[value + '.png'];
+            } else if (files[value + '.jpg'] !== undefined) {
+                file = files[value + '.jpg'];
+            } else if (files[value + '.gif'] !== undefined) {
+                file = files[value + '.gif'];
+            }
+
+            if (file) {
+                this.status = PLAYER_STATUS_WAITING;
+                me = this;
+                // read file to global variable and start quest
+                var reader = new FileReader();
+                reader.onload = function() {
+                    me.print($('<img>').attr('src', reader.result).prop('outerHTML'), true);
+                    me.status = PLAYER_STATUS_NEXT;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        variable = variable.trim();
+
+        Game.setVar(variable, value);
+    };
 }
 
