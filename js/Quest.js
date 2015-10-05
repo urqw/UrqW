@@ -176,11 +176,7 @@ function Quest(text) {
      * @param {*} value
      */
     this.setVar = function(variable, value) {
-        if (Game.locked) return false;
-
-        variable = variable.trim();
-
-        if (variable.substr(0, 4) == 'inv_') {
+        if (variable.substr(0, 4).toLowerCase() == 'inv_') {
             variable = variable.substr(4);
 
             this.setItem(variable, value);

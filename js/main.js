@@ -14,6 +14,10 @@ Game = null;
  */
 GlobalPlayer = null;
 
+/**
+ * Files
+ */
+files = {};
 
 $(function() {
     $('#something_wrong').hide();
@@ -60,18 +64,28 @@ $(function() {
      * Read file when change file-control
      */
     $('#quest').on('change', function(e) {
-        var file = e.target.files[0];
+        var qst = null;
 
-        if (!file) {
+        for (var i =0; i < e.target.files.length; i++) {
+            if (qst == null && e.target.files[i].name.split('.').pop() == 'qst') {
+                qst = e.target.files[i];
+            } else {
+                files[e.target.files[i].name] = e.target.files[i];
+
+//                objectURL = window.URL.createObjectURL(e.target.files[i]);
+            }
+        }
+
+        if (!qst) {
             return;
         }
 
         // read file to global variable and start quest
         var reader = new FileReader();
         reader.onload = function() {
-            start(reader.result, file.name);
+            start(reader.result, qst.name);
         };
-        reader.readAsText(file, 'CP1251');
+        reader.readAsText(qst, 'CP1251');
     });
 
     /**

@@ -87,7 +87,7 @@ function Parser() {
                     line = command;
 
                     if (line.indexOf('=') > 0) {
-                        Game.setVar(line.substring(0, line.indexOf('=')), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                        GlobalPlayer.setVar(line.substring(0, line.indexOf('=')), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
                     }
 
                     // no break here
@@ -97,7 +97,7 @@ function Parser() {
                 default:
                     //  это выражение?
                     if (line.indexOf('=') > 0) {
-                        Game.setVar(line.substring(0, line.indexOf('=')), new Expression(line.substr(line.indexOf('=') + 1)).calc());
+                        GlobalPlayer.setVar(line.substring(0, line.indexOf('=')), new Expression(line.substr(line.indexOf('=') + 1)).calc());
                     } else {
                         console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
                     }

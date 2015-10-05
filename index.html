@@ -26,20 +26,23 @@
 
 <div class="container">
     <div id="something_wrong">
-        <h2>Что-то пошло не так</h2>
+        <h3>Что-то пошло не так</h3>
     </div>
 
     <div id="loading" class="page-header" style="display: none;">
-        <h2>Подождите...</h2>
+        <h3>Подождите...</h3>
     </div>
 
     <div id="choose-game" style="display: none;">
         <div class="page-header">
-            <h2>Выберите игру</h2>
+            <h3>Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h3>
         </div>
 
         <div class="form-group">
-            <input id="quest" type="file">
+            <input id="quest" type="file" multiple>
+        </div>
+        <div class="page-header">
+            <h3>Или выберите игру из списка:</h3>
         </div>
 
         <div class="list-group">
