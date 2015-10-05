@@ -131,8 +131,10 @@ function Parser() {
      */
     this.openTags = function (line) {
 
-        line = line.replace('#/$', '<br>');
-        line = line.replace('#$', ' ');
+        line = line.replace(/\#\/\$/g, '<br>');
+        line = line.replace(/\#\%\/\$/g, '<br>');
+        line = line.replace(/\#\$/g, ' ');
+        line = line.replace(/\#\%\$/g, ' ');
 
         // открыть #$
         while (line.indexOf('#') != -1 && line.indexOf('$') != -1) {
