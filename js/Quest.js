@@ -56,16 +56,6 @@ function Quest(text) {
     this.realCurrentLoc = '';
 
     /**
-     * @type {string}
-     */
-    this.currentLoc = '';
-
-    /**
-     * @type {string}
-     */
-    this.previousLoc = '';
-
-    /**
      * @param {String} label
      */
     this.getLabel = function(label) {
@@ -131,9 +121,8 @@ function Quest(text) {
 
         for (var key in this.labels) {
             this.realCurrentLoc = key;
-            this.currentLoc = key;
-            this.previousLoc = key;
-
+            this.setVar('current_loc', key);
+            this.setVar('previous_loc', key);
             break;
         }
     };
@@ -237,9 +226,7 @@ function Quest(text) {
             items: this.items,
             vars: this.vars,
             position: this.position,
-            realCurrentLoc: this.realCurrentLoc,
-            currentLoc: this.currentLoc,
-            previousLoc: this.previousLoc
+            realCurrentLoc: this.realCurrentLoc
         }));
     };
 
@@ -254,8 +241,6 @@ function Quest(text) {
         this.vars = data.vars;
         this.position = data.position;
         this.realCurrentLoc = data.realCurrentLoc;
-        this.currentLoc = data.currentLoc;
-        this.previousLoc = data.previousLoc;
     };
 }
 
