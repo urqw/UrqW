@@ -164,7 +164,9 @@ function Player() {
         if (variable.toLowerCase() === 'image') {
 
             if (files === null) {
-                this.print($('<img>').attr('src', 'quests/' + Game.name + '/' + value).prop('outerHTML'), true);
+                if (value) {
+                    this.print($('<img>').attr('src', 'quests/' + Game.name + '/' + value).prop('outerHTML'), true);
+                }
             } else {
                 var file;
 
