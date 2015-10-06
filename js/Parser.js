@@ -48,6 +48,7 @@ function Parser() {
             command = expl.slice(1).join(' ').trim();
 
             switch (operand) {
+                case 'cls': return GlobalPlayer.cls();
                 case 'forget_proc': return GlobalPlayer.forgetProc();
                 case 'proc': return GlobalPlayer.proc(command);
                 case 'end': return GlobalPlayer.end();

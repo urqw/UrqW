@@ -143,17 +143,20 @@ function Player() {
 
         var tmpLoc = Game.realCurrentLoc;
 
+        Game.realCurrentLoc = null;
+
         if (this.proc(labelName)) {
             this.forgetProc();
             this.continue();
         }
 
-        Game.locked = true;
-        this.goto(tmpLoc, 'return');
-        this.continue();
-        Game.locked = false;
+        if (Game.realCurrentLoc === null) {
+            Game.locked = true;
+            this.goto(tmpLoc, 'return');
+            this.continue();
+            Game.locked = false;
+        }
     };
-
 
     /**
      * @inheritDoc
