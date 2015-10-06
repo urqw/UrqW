@@ -162,28 +162,33 @@ function Player() {
         if (Game.locked) return false;
 
         if (variable.toLowerCase() === 'image') {
-            var file;
 
-            if (files[value] !== undefined) {
-                file = files[value];
-            } else if (files[value + '.png'] !== undefined) {
-                file = files[value + '.png'];
-            } else if (files[value + '.jpg'] !== undefined) {
-                file = files[value + '.jpg'];
-            } else if (files[value + '.gif'] !== undefined) {
-                file = files[value + '.gif'];
-            }
+            if (files === null) {
+                this.print($('<img>').attr('src', 'quests/' + Game.name + '/' + value).prop('outerHTML'), true);
+            } else {
+                var file;
 
-            if (file) {
-                this.status = PLAYER_STATUS_WAITING;
-                me = this;
-                // read file to global variable and start quest
-                var reader = new FileReader();
-                reader.onload = function() {
-                    me.print($('<img>').attr('src', reader.result).prop('outerHTML'), true);
-                    me.status = PLAYER_STATUS_NEXT;
-                };
-                reader.readAsDataURL(file);
+                if (files[value] !== undefined) {
+                    file = files[value];
+                } else if (files[value + '.png'] !== undefined) {
+                    file = files[value + '.png'];
+                } else if (files[value + '.jpg'] !== undefined) {
+                    file = files[value + '.jpg'];
+                } else if (files[value + '.gif'] !== undefined) {
+                    file = files[value + '.gif'];
+                }
+
+                if (file) {
+                    this.status = PLAYER_STATUS_WAITING;
+                    me = this;
+                    // read file to global variable and start quest
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        me.print($('<img>').attr('src', reader.result).prop('outerHTML'), true);
+                        me.status = PLAYER_STATUS_NEXT;
+                    };
+                    reader.readAsDataURL(file);
+                }
             }
         }
 

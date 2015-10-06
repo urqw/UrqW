@@ -31,7 +31,9 @@ function Parser() {
                 els = line.substring(line.indexOf(' else ') + 6);
             }
 
-            if (new Expression(this.openTags(cond)).calc()) {
+            var conditionResult = new Expression(this.openTags(cond)).calc();
+
+            if (conditionResult === true || conditionResult > 0) {
                 this.parse(then);
             } else {
                 if (els) {
