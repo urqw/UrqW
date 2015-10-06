@@ -17,7 +17,7 @@ function Expression(str) {
     this.tokenize = function (str) {
         str = ' ' + str + ' ';
         str = str.replace(/ not /g, '  not  '); // пока так (чтобы not мог прилипать ко всему)
-        return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\)|!)/gi);
+        return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\))/gi);
     };
 
     /**
@@ -106,7 +106,7 @@ function Expression(str) {
             if (this.getPriority(token) > 0) {
                 var result;
 
-                if (token == '!' || token == 'not') {
+                if (/*token == '!' ||*/ token == 'not') {
                     var variable = temp.pop();
 
                     result = !(variable === true || variable > 0);

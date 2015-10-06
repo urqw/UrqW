@@ -20,10 +20,14 @@ Player.prototype.goto = function(labelName, type) {
 
         // todo контанты блять
         if (type == 'btn' || type == 'goto' || type == 'proc') {
-            Game.setVar('count_' + label.name, Game.getVar('count_' + label.name) + 1);
+            if (Game.getVar('mode') == 'ripurq') {
+                Game.setVar(label.name, Game.getVar(label.name) + 1);
+            } else {
+                Game.setVar('count_' + label.name, Game.getVar('count_' + label.name) + 1);
+            }
         }
 
-        Game.position = label.pos ;
+        Game.position = label.pos;
 
         return true;
     }
@@ -40,6 +44,14 @@ Player.prototype.perkill = function() {
     $.each(Game.items, function(index, value) {
         Game.setVar(index, parseInt(value));
     });
+};
+
+/**
+ * cls
+ */
+Player.prototype.cls = function() {
+    this.text = [];
+    this.buttons = [];
 };
 
 /**
