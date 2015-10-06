@@ -20,7 +20,7 @@ Player.prototype.goto = function(labelName, type) {
 
         // todo контанты блять
         if (type == 'btn' || type == 'goto' || type == 'proc') {
-            if (Game.getVar('mode') == 'ripurq') {
+            if (Game.getVar('urq_mode') == 'ripurq') {
                 Game.setVar(label.name, Game.getVar(label.name) + 1);
             } else {
                 Game.setVar('count_' + label.name, Game.getVar('count_' + label.name) + 1);
