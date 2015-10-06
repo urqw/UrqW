@@ -17,7 +17,7 @@ GlobalPlayer = null;
 /**
  * Files
  */
-files = {};
+files = null;
 
 $(function() {
     $('#something_wrong').hide();
@@ -64,6 +64,7 @@ $(function() {
      * Read file when change file-control
      */
     $('#quest').on('change', function(e) {
+        files = {};
         var qst = null;
 
         for (var i =0; i < e.target.files.length; i++) {

@@ -16,8 +16,8 @@ function Expression(str) {
      */
     this.tokenize = function (str) {
         str = ' ' + str + ' ';
-        str = str.replace(' not ', '  not  '); // пока так (чтобы not мог прилипать ко всему)
-        return str.split(/( AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\)|!)/gi);
+        str = str.replace(/ not /g, '  not  '); // пока так (чтобы not мог прилипать ко всему)
+        return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\)|!)/gi);
     };
 
     /**
@@ -45,11 +45,11 @@ function Expression(str) {
                     token = this.expr[++i].trim();
                 } while(token.length == 0);
 
-                exitStack.push(-parseFloat(token.replace(',', '.').replace(' ', '')));
+                exitStack.push(-parseFloat(token.replace(',', '.').replace(/ /g, '')));
                 // если число
-            } else if (!isNaN(token.replace(',', '.').replace(' ', ''))) {
+            } else if (!isNaN(token.replace(',', '.').replace(/ /g, ''))) {
                 // считываем всё число дальше
-                exitStack.push(parseFloat(token.replace(',', '.').replace(' ', '')));
+                exitStack.push(parseFloat(token.replace(',', '.').replace(/ /g, '')));
             } else if (this.getPriority(token) > 0) {
                 if (token == '(') {
                     operStack.push(token);
@@ -67,12 +67,18 @@ function Expression(str) {
 
                     operStack.push(token);
                 }
-            } else if (token.substr(0, 1) == '\'' || token.substr(0, 1) == '\"') {
-                if (token.substr(-1, 1) == '\'' || token.substr(-1, 1) == '\"') {
-                    exitStack.push(token.substr(1, (token.length - 2)));
-                }
             } else {
-                exitStack.push(Game.getVar(token));
+                var variable = Game.getVar(token);
+
+                if (variable === 0) {
+                    if (token.substr(0, 1) == '\'' || token.substr(0, 1) == '\"') {
+                        if (token.substr(-1, 1) == '\'' || token.substr(-1, 1) == '\"') {
+                            variable = token.substr(1, (token.length - 2));
+                        }
+                    }
+                }
+
+                exitStack.push(variable);
             }
 
             lastTokenIsOperator = (this.getPriority(token) > 1);
@@ -95,13 +101,15 @@ function Expression(str) {
         var temp = [];
 
         for (var i = 0; i < stack.length; i++) {
-            token = stack[i];
+            var token = stack[i];
 
             if (this.getPriority(token) > 0) {
                 var result;
 
                 if (token == '!' || token == 'not') {
-                    result = !temp.pop();
+                    var variable = temp.pop();
+
+                    result = !(variable === true || variable > 0);
                 } else {
                     var a = temp.pop();
                     var b = temp.pop();
@@ -150,11 +158,11 @@ function Expression(str) {
                             break;
                         case '&&':
                         case 'and':
-                            result = b && a;
+                            result = (b === true || b > 0) && (a === true || a > 0)
                             break;
                         case '||':
                         case 'or':
-                            result = b || a;
+                            result = (b === true || b > 0) || (a === true || a > 0)
                             break;
                     }
                 }
