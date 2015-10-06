@@ -207,7 +207,7 @@ function Quest(text) {
             var count = variable.split(' ')[0];
             if (!isNaN(count)) {
                 variable = variable.split(' ').slice(1).join(' ').trim()
-                return this.vars[variable] > count;
+                return this.vars[variable] >= count;
             }
         }
 
