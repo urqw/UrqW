@@ -50,7 +50,7 @@ div.clearfix + div.text, #textfield div.text:first-child {
     padding: 0 15px;
 }
 .container .text-muted {
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 
