@@ -20,7 +20,7 @@ Player.prototype.goto = function(labelName, type) {
 
         // todo контанты блять
         if (type == 'btn' || type == 'goto' || type == 'proc') {
-            Game.setVar('count_' + label.name, Game.getVar('count_' + label) + 1);
+            Game.setVar('count_' + label.name, Game.getVar('count_' + label.name) + 1);
         }
 
         Game.position = label.pos ;

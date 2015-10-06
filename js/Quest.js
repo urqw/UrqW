@@ -202,6 +202,15 @@ function Quest(text) {
             return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
         }
 
+        // Для выражений вроде "1 деньги"
+        if (variable.split(' ').length > 1) {
+            var count = variable.split(' ')[0];
+            if (!isNaN(count)) {
+                variable = variable.split(' ').slice(1).join(' ').trim()
+                return this.vars[variable] > count;
+            }
+        }
+
         if (this.vars[variable] != undefined) {
             return this.vars[variable];
         }

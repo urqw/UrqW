@@ -80,8 +80,8 @@ body {
 /** submenu */
 
 .dropdown-menu {
-      min-width: 0;
-  }
+    min-width: 0;
+}
 
 .dropdown-submenu {
     position:relative;
