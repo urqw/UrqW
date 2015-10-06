@@ -197,7 +197,7 @@ function Quest(text) {
         }
 
         if (variable == 'rnd') {
-            return Math.random().toFixed(2);
+            return Math.random();
         } else if (variable.substr(0, 3) == 'rnd') {
             return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
         }
