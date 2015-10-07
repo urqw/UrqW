@@ -9,6 +9,8 @@ var PLAYER_STATUS_PAUSE = 3;
 var PLAYER_STATUS_INPUT = 4;
 var PLAYER_STATUS_QUIT = 5;
 
+var gameMusic;
+
 /**
  * @constructor
  */
@@ -174,6 +176,27 @@ function Player() {
                 }
 
                 me.print($('<img>').attr('src', file).prop('outerHTML'), true);
+            }
+        } else if (variable.toLowerCase() === 'music') {
+            if (value) {
+                if (files === null) {
+                    gameMusic = new Audio('quests/' + Game.name + '/' + value);
+                } else {
+                    gameMusic = new Audio(files[value]);
+                }
+
+                if (gameMusic) {
+                    gameMusic.addEventListener('ended', function() {
+                        gameMusic.currentTime = 0;
+                        gameMusic.play();
+                    }, false);
+
+                    gameMusic.play();
+                }
+            } else {
+                if (gameMusic) {
+                    gameMusic.pause();
+                }
             }
         }
 

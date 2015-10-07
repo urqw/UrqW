@@ -47,7 +47,16 @@ function Parser() {
             operand = expl[0].toLowerCase().trim();
             command = expl.slice(1).join(' ').trim();
 
+            if (operand[0] == ':') return;
+
             switch (operand) {
+                case 'play':
+                    if (files === null) {
+                        (new Audio('quests/' + Game.name + '/' + value).play());
+                    } else {
+                        (new Audio(files[command])).play();
+                    }
+                    break;
                 case 'cls': return GlobalPlayer.cls();
                 case 'forget_proc': return GlobalPlayer.forgetProc();
                 case 'proc': return GlobalPlayer.proc(command);
