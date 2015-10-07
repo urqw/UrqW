@@ -103,7 +103,8 @@ function Player() {
 
         if (this.proc(commonLabel)) {
             this.forgetProc();
-            this.continue();
+            this.lock = true;
+            this.play();
         }
     };
 
@@ -113,6 +114,9 @@ function Player() {
      * @returns {boolean}
      */
     this.btnAction = function(labelName) {
+        this.buttons = [];
+        this.text = [];
+
         if (this.lock) return false;
 
         this.common();
@@ -133,13 +137,17 @@ function Player() {
     this.useAction = function(labelName) {
         if (this.lock) return false;
 
+        this.buttons = [];
+        this.text = [];
+
         var tmpLoc = Game.realCurrentLoc;
 
         Game.realCurrentLoc = null;
 
         if (this.proc(labelName)) {
             this.forgetProc();
-            this.continue();
+            this.lock = true;
+            this.play();
         }
 
         if (Game.realCurrentLoc === null) {

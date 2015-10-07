@@ -64,10 +64,11 @@ function Client() {
             this.crtlInput.show();
             this.crtlInput.find('input').focus();
         } else if (data.status == PLAYER_STATUS_PAUSE) {
-            var wait = data.inf;
-            var interval = setInterval(function() {
-                clearInterval(interval);
+            me.drawButtons();
+            me.drawInventory();
 
+            var wait = data.inf;
+            setTimeout(function() {
                 if (GlobalPlayer.status == PLAYER_STATUS_PAUSE) {
                     GlobalPlayer.continue();
                 }
@@ -82,8 +83,8 @@ function Client() {
      * Нарисовать текст
      */
     this.drawText = function () {
-        while (GlobalPlayer.text.length > 0) {
-            var text = GlobalPlayer.text.shift();
+        $.each(GlobalPlayer.text, function(index, text) {
+
             var div = $('<div>').addClass('text').html(text[0] + ' ');
             div.find('img').each(function(index) {
                 if (files === null) {
@@ -93,28 +94,28 @@ function Client() {
                 }
             });
 
-            this.crtlTextField.append(div);
+            me.crtlTextField.append(div);
 
             if (text[1]) {
-                this.crtlTextField.append('<div class="clearfix">');
+                me.crtlTextField.append('<div class="clearfix">');
             }
-        }
+
+        });
     };
 
     /**
      * Нарисовать кнопки
      */
     this.drawButtons = function () {
-        while (GlobalPlayer.buttons.length > 0) {
-            var button = GlobalPlayer.buttons.shift();
+        $.each(GlobalPlayer.buttons, function(index, button) {
             var buttonCtrl = $('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc);
 
             if (button.label == '#load$') {
                 buttonCtrl.addClass('list-group-item-warning');
             }
 
-            this.crtlButtonField.append(buttonCtrl);
-        }
+            me.crtlButtonField.append(buttonCtrl);
+        });
     };
 
     /**
