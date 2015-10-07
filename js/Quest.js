@@ -75,15 +75,19 @@ function Quest(text) {
      * следующая строка
      */
     this.next = function() {
-        var line = this.get(++this.position);
+        var line = this.get(this.position);
 
         if (!line) {
             return false;
         }
 
-        // вырезать комментарий
-        if (line.indexOf(';') != -1) {
-            line = line.substring(0, line.indexOf(';'));
+        this.position++;
+
+        if (this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq') {
+            // вырезать комментарий
+            if (line.indexOf(';') != -1) {
+                line = line.substring(0, line.indexOf(';'));
+            }
         }
 
         return line.replace(/\t/g, ' ');

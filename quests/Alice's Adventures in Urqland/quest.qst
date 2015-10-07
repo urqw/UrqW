@@ -1,3 +1,4 @@
+urq_mode="dosurq"
 :-1
 instr jl=Style_DOS_TextColor=15
 instr fl=Style_DOS_TextColor=7
