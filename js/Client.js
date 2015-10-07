@@ -65,17 +65,13 @@ function Client() {
             this.crtlInput.find('input').focus();
         } else if (data.status == PLAYER_STATUS_PAUSE) {
             var wait = data.inf;
-            this.crtlInfo.show();
-
             var interval = setInterval(function() {
-                wait = wait - 50;
-                if (wait <= 0) {
-                    clearInterval(interval);
-                    me.crtlInfo.hide();
+                clearInterval(interval);
+
+                if (GlobalPlayer.status == PLAYER_STATUS_PAUSE) {
                     GlobalPlayer.continue();
                 }
-                me.crtlInfo.text('[пауза ' + wait + ' ]');
-            }, 50);
+            }, wait);
         } else if (data.status == PLAYER_STATUS_QUIT) {
             this.crtlInfo.text('[игра закончена]');
             this.crtlInfo.show();

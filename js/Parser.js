@@ -52,7 +52,7 @@ function Parser() {
             switch (operand) {
                 case 'play':
                     if (files === null) {
-                        (new Audio('quests/' + Game.name + '/' + value).play());
+                        (new Audio('quests/' + Game.name + '/' + command).play());
                     } else {
                         (new Audio(files[command])).play();
                     }

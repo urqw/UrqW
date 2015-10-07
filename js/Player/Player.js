@@ -9,7 +9,7 @@ var PLAYER_STATUS_PAUSE = 3;
 var PLAYER_STATUS_INPUT = 4;
 var PLAYER_STATUS_QUIT = 5;
 
-var gameMusic;
+var gameMusic = new Audio();
 
 /**
  * @constructor
@@ -56,7 +56,7 @@ function Player() {
             });
         }
 
-        this.lock = (this.status != PLAYER_STATUS_END);
+        this.lock = !(this.status == PLAYER_STATUS_END || this.status == PLAYER_STATUS_PAUSE);
     };
 
     /**
@@ -178,25 +178,27 @@ function Player() {
                 me.print($('<img>').attr('src', file).prop('outerHTML'), true);
             }
         } else if (variable.toLowerCase() === 'music') {
-            if (value) {
-                if (files === null) {
-                    gameMusic = new Audio('quests/' + Game.name + '/' + value);
-                } else {
-                    gameMusic = new Audio(files[value]);
-                }
+            var file;
 
-                if (gameMusic) {
+            if (files === null) {
+                file = 'quests/' + Game.name + '/' + value;
+            } else {
+                file = files[value];
+            }
+
+            if (value) {
+                if (gameMusic.getAttribute('src') != file) {
+                    gameMusic.src = file;
+
                     gameMusic.addEventListener('ended', function() {
-                        gameMusic.currentTime = 0;
+                        gameMusic.src = file;
                         gameMusic.play();
                     }, false);
 
                     gameMusic.play();
                 }
             } else {
-                if (gameMusic) {
-                    gameMusic.pause();
-                }
+                gameMusic.pause();
             }
         }
 
