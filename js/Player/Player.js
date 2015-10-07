@@ -8,7 +8,6 @@ var PLAYER_STATUS_ANYKEY = 2;
 var PLAYER_STATUS_PAUSE = 3;
 var PLAYER_STATUS_INPUT = 4;
 var PLAYER_STATUS_QUIT = 5;
-var PLAYER_STATUS_WAITING = 6;
 
 /**
  * @constructor
@@ -56,15 +55,6 @@ function Player() {
         }
 
         this.lock = (this.status != PLAYER_STATUS_END);
-
-        if (this.status == PLAYER_STATUS_WAITING) {
-            var interval = setInterval(function() {
-                if (me.status != PLAYER_STATUS_WAITING) {
-                    clearInterval(interval);
-                    me.continue()
-                }
-            }, 100);
-        }
     };
 
     /**
@@ -168,7 +158,7 @@ function Player() {
 
             if (files === null) {
                 if (value) {
-                    this.print($('<img>').attr('src', 'quests/' + Game.name + '/' + value).prop('outerHTML'), true);
+                    this.print($('<img>').attr('src', value).prop('outerHTML'), true);
                 }
             } else {
                 var file;
@@ -183,17 +173,7 @@ function Player() {
                     file = files[value + '.gif'];
                 }
 
-                if (file) {
-                    this.status = PLAYER_STATUS_WAITING;
-                    me = this;
-                    // read file to global variable and start quest
-                    var reader = new FileReader();
-                    reader.onload = function() {
-                        me.print($('<img>').attr('src', reader.result).prop('outerHTML'), true);
-                        me.status = PLAYER_STATUS_NEXT;
-                    };
-                    reader.readAsDataURL(file);
-                }
+                me.print($('<img>').attr('src', file).prop('outerHTML'), true);
             }
         }
 

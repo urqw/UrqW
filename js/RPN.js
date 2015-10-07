@@ -31,7 +31,7 @@ function Expression(str) {
     this.toRPN = function () {
         var exitStack = [];
         var operStack = [];
-        var lastTokenIsOperator = null;
+        var lastTokenIsOperator = true;
 
         for (var i = 0; i < this.expr.length; i++) {
             var token = this.expr[i].trim();
