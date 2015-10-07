@@ -85,7 +85,12 @@ function Client() {
     this.drawText = function () {
         $.each(GlobalPlayer.text, function(index, text) {
 
-            var div = $('<div>').addClass('text').html(text[0] + ' ');
+            var div = $('<div>').html(text[0] + ' ');
+
+            if (div.find('*').length == 0) {
+                div.addClass('text');
+            }
+
             div.find('img').each(function(index) {
                 if (files === null) {
                     $(this).attr('src', 'quests/' + Game.name + '/' + $(this).attr('src'));

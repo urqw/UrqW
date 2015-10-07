@@ -168,7 +168,7 @@ function Player() {
 
             if (files === null) {
                 if (value) {
-                    this.print($('<img>').attr('src', value).prop('outerHTML'), true);
+                    this.print($('<img style="margin: 5px auto; display: block;">').attr('src', value).prop('outerHTML'), true);
                 }
             } else {
                 var file;
