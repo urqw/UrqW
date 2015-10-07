@@ -78,6 +78,8 @@ $(function() {
             $('#saveslots').find('.savebtn').on('click', function() {
                 textfield.empty();
                 buttonField.empty();
+                GlobalPlayer.text = [];
+                GlobalPlayer.buttons = [];
 
                 Game.load($(this).data('slot'));
                 Game.locked = true;

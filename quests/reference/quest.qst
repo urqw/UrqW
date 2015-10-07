@@ -1,7 +1,6 @@
 :menu
 invkill
 perkill
-music="ATKML.mp3"
 
 ;Style_BackColor=13290186
 ;Style_BackColor=14407896
@@ -19,7 +18,6 @@ btn mgfwstart, test
 btn minigamebridge, test
 btn fishing, test
 btn columnrealboom, test
-
 end
 
 :testitem
@@ -1298,7 +1296,7 @@ Play sword.mp3
 
 
 
-pln <div align="center"><img src="Running.gif" class="foto" alt="" border=”0?></a></div>
+pln <div align="center"><img src="Running.gif" class="foto" alt="" border="0"></a></div>
 
 
 btn mgbrigde1, Один
