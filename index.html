@@ -86,17 +86,24 @@
     </div>
 
     <div id="game" style="display: none">
-        <div class="page-header text-right">
-            <button id="save" class="btn btn-default btn-sm" type="button">
-                Сохранение
-            </button>
-            <div class="btn-group">
-                <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Инвентарь <span class="caret"></span>
+        <div class="row page-header">
+            <div class="col-xs-3">
+                <a href="index.html" class="btn btn-default btn-sm">
+                    Закрыть игру
+                </a>
+            </div>
+            <div class="col-xs-9 text-right">
+                <button id="save" class="btn btn-default btn-sm" type="button">
+                    Сохранение
                 </button>
-                <ul id="inventory" class="dropdown-menu dropdown-menu-left">
-                    <li><a href="#" class="item_use">(Пусто)</a></li>
-                </ul>
+                <div class="btn-group">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Инвентарь <span class="caret"></span>
+                    </button>
+                    <ul id="inventory" class="dropdown-menu dropdown-menu-left">
+                        <li><a href="#" class="item_use">(Пусто)</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div id="textfield"></div>
