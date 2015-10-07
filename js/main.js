@@ -71,9 +71,7 @@ $(function() {
             if (qst == null && e.target.files[i].name.split('.').pop() == 'qst') {
                 qst = e.target.files[i];
             } else {
-                files[e.target.files[i].name] = e.target.files[i];
-
-//                objectURL = window.URL.createObjectURL(e.target.files[i]);
+                readFile(e.target.files[i].name, e.target.files[i]);
             }
         }
 
@@ -88,6 +86,15 @@ $(function() {
         };
         reader.readAsText(qst, 'CP1251');
     });
+
+
+    function readFile(filename, file) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            files[filename] = reader.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
     /**
      * Запуск

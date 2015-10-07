@@ -139,17 +139,20 @@ function Parser() {
         line = line.replace(/\#\$/g, ' ');
         line = line.replace(/\#\%\$/g, ' ');
 
-        line = line.replace(/\#.+?\$/g, function(exp) {
 
-            // рудимент для совместимости
-            if (exp[1] == '%') {
-                return new Expression(exp.substr(2, (exp.length - 3))).calc();
-            } else if (exp[1] == '#') {
-                return '&#' + exp.substr(2, (exp.length - 3)) + ';';
-            } else {
-                return new Expression(exp.substr(1, (exp.length - 2))).calc();
-            }
-        });
+        while (line.match(/\#[^\#]+?\$/g)) {
+            line = line.replace(/\#[^\#]+?\$/g, function(exp) {
+
+                // рудимент для совместимости
+                if (exp[1] == '%') {
+                    return new Expression(exp.substr(2, (exp.length - 3))).calc();
+                } else if (exp[1] == '#') {
+                    return '&#' + exp.substr(2, (exp.length - 3)) + ';';
+                } else {
+                    return new Expression(exp.substr(1, (exp.length - 2))).calc();
+                }
+            });
+        }
 
         return line;
     };

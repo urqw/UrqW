@@ -88,8 +88,16 @@ function Client() {
     this.drawText = function () {
         while (GlobalPlayer.text.length > 0) {
             var text = GlobalPlayer.text.shift();
+            var div = $('<div>').addClass('text').html(text[0] + ' ');
+            div.find('img').each(function(index) {
+                if (files === null) {
+                    $(this).attr('src', 'quests/' + Game.name + '/' + $(this).attr('src'));
+                } else {
+                    $(this).attr('src', files[$(this).attr('src')]);
+                }
+            });
 
-            this.crtlTextField.append($('<div>').addClass('text').html(text[0] + ' '));
+            this.crtlTextField.append(div);
 
             if (text[1]) {
                 this.crtlTextField.append('<div class="clearfix">');
