@@ -43,7 +43,7 @@ function Quest(text) {
     /**
      * @type {string}
      */
-    this.quest = text.replace(/\/\*[^.]*\*\//g,'').replace(/^[\n\r]+|[\n\r]+$/g,'').split(/[\n\r]+/);
+    this.quest = text.replace(/^[\n\r]+|[\n\r]+$/g,'').replace(/\/\*[\s\S.]+?\*\//g,'').split(/[\n\r]+/);
 
     /**
      * @type {number}

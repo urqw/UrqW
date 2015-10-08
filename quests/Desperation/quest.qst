@@ -1,5 +1,4 @@
 :menu
-;xbtn <метка>,{оператор&оператор},<Название кнопки> 
 invkill
 perkill
 
@@ -21,16 +20,18 @@ f3mrthrposy=-9253
 Style_TextColor=1
 Style_BackColor=13290186
 
-;Style_BackColor=0
-;Instr Style_NonActiveText=Референс
-;Style_dos_textcolor=7
+/*
+Style_BackColor=0
+Instr Style_NonActiveText=Референс
+Style_dos_textcolor=7
+*/
 
 stdtgm=0
 pln Desperation.
 btn prolog2.1, Начать игру
-;btn k3fanabcf, Пролог
+/*btn k3fanabcf, Пролог*/
 btn mnauthor, Об авторе
-;btn pr1chars, Персонажи
+/*btn pr1chars, Персонажи*/
 btn notes, Примечания
 
 end
@@ -78,7 +79,7 @@ end
 
 
 :common
-if showmap=1 then html false & showmap=0
+if showmap=1 then showmap=0
 end
 
 
@@ -87,13 +88,15 @@ if "k1fstoreroomfake"=current_loc then strmisopen=1 & cls & inv- Лом & pln И
 end
 
 :Use_Инструменты_Использовать
-;instr wrgrm=
+/*instr wrgrm=*/
 
 if "k3fgtopdr"=current_loc and mangtwd=0 then mangtwd=1 & k3fgtnedtxtad=1 & cls & pln Достав инструменты, Джон начал разбирать электронный замок в надежде починить его. Но, сняв внешнюю панель, он понял, что на это уйдет как минимум пара часов, в тот же момент аварийное оповещение, в последний раз пронзительно пискнув, умолкло, и огромные створки внешнего шлюза разошлись, открывая выход в открытый космос. Джон зажмурился, чтобы не видеть, как пассажира вместе с незакрепленными предметами уносит в черную пустоту. & stdtgm=2 & inv-Инструменты & goto k3fgatewaypre1 else pln В своей сумке Джон хранил кучу различных инструментов, на случай какой-либо поломки.
 if "k3fgenerator"=current_loc and generatorrep=0 then cls & goto k3fgenrep
 
-;pln #%wrgrm$  
-;instr wrgrm=
+/*
+pln #%wrgrm$  
+instr wrgrm=
+*/
 end
 
 :Use_Красная ключ-карта_Использовать
@@ -116,9 +119,11 @@ end
 if "k3fmehroomfake"=current_loc and mehroomisopen=0 then cls & pln Джон провел картой по замку, и дверь с писком ушла в стену. & mehroomisopen=1 & inv- Карта доступа инженера & goto k3fmehroom else pln "С помощью нее можно попасть в мою обитель" - подумал Диллер.
 end
 
-;:Use_Ключ от столовой_Использовать
-;if "k2fdinnrfake"=current_loc and dinnroomisopen=0 then cls & pln 123321 открыл дверь & dinnroomisopen=1 & goto k2fdinnr & inv-Ключ от столовой else pln 123321 Джон ;повертел карточку в руках.
-;end
+/*
+:Use_Ключ от столовой_Использовать
+if "k2fdinnrfake"=current_loc and dinnroomisopen=0 then cls & pln 123321 открыл дверь & dinnroomisopen=1 & goto k2fdinnr & inv-Ключ от столовой else pln 123321 Джон ;повертел карточку в руках.
+end
+*/
 
 :Use_Дневник_Использовать
 redjoyr=1
@@ -189,7 +194,7 @@ if count_prshelf=0 then btn prshelf, Открыть шкаф с одеждой
 end
 
 :prliniq
-;pln 123321 взял
+/*pln 123321 взял*/
 inv+ Линейка
 goto prolog2.1
 end
@@ -370,7 +375,7 @@ heroposy=262
 
 if generatorrep=0 and count_k3fmehroom=1 then pln Мерцающий свет из коридора освещал часть комнаты, в самом помещении освещение полностью отсутствовало. Небольшой стол, высокий шкаф и дверь, ведущая к двигателю корабля, это все что смог разглядеть джон.
 if generatorrep=0 and count_k3fmehroom>1 and k1fmhrnentxt=0 then pln Джон вошел в комнату, луч света из коридора едва освещает комнату.
-;if generatorrep=1 and count_k3fmehroom>1 then pln 123321 комната освещена.
+/*if generatorrep=1 and count_k3fmehroom>1 then pln 123321 комната освещена.*/
 k1fmhrnentxt=0
 
 
@@ -514,7 +519,7 @@ if generatorrep=0 and count_k3fgenerator>1 then pln Войдя в отсек э�
 if generatorrep=1 and noneedtextgr=0 then pln Джон находится в комнате управления электроснабжением, приборы вибрируют и шумят, распределяя энергию по всему комплексу.
 noneedtextgr=0
 
-;if inv_Инструменты and count_k3fgenrep=0 then btn k3fgenrep, Починить
+/*if inv_Инструменты and count_k3fgenrep=0 then btn k3fgenrep, Починить */
 btn k3fkorC, Выйти в коридор
 end
 
@@ -522,7 +527,7 @@ end
 
 
 :k3fgenrep
-;if not inv_Инструменты then pln 123321 Необходимы инструменты. & goto k3fgenerator
+/*if not inv_Инструменты then pln 123321 Необходимы инструменты. & goto k3fgenerator */
 warr1x=80
 warr1y=-1000
 generatorrep=1
@@ -565,7 +570,7 @@ wassysls=1
 k1fnendtxtkb=1
 pln Взяв в руки оружие, Джон осторожно шагнул в комнату, но, осмотревшись, он не обнаружил ни капитана, ни каких-либо следов его пребывания здесь. "Странно... " - подумал Диллер и, подойдя к терминалу, набрал: "Джейд?", но не получив никакого ответа, вышел в коридор.
 goto k3fkorB
-;btn k3fkorB, Ввернуться в коридор В
+/*btn k3fkorB, Ввернуться в коридор В */
 end
 
 
@@ -601,7 +606,7 @@ if sawpassdeath=1 and mangtwd=0 then pln Джон стоит в стыковоч
 sawpassdeath=1
 
 if mangtwd=0 then btn k3fgtopdr, Осмотреть дверь шлюза
-;if count_k3fgttb=0 then btn k3fgttb, Осмотреть стол 
+/*if count_k3fgttb=0 then btn k3fgttb, Осмотреть стол  */
 btn k3fkorB, В коридор В
 end
 
@@ -613,12 +618,12 @@ if count_k3fgtopdr>1 then pln Электронная панель двери м�
 btn k3fgatewaypre1, Отойти
 end
 
-;:k3fgttb
-;pln 123321 взял
-;inv+ Красная ключ-карта
-;goto k3fgatewaypre1
-;end
-
+/*:k3fgttb
+pln 123321 взял
+inv+ Красная ключ-карта
+goto k3fgatewaypre1
+end
+*/
 :k3fendloc1
 
 music="capescape.mp3"
@@ -863,14 +868,14 @@ if strmisopen=0 then btn k1fstoreroomfake, В хранилище
 btn k1fcommlog, В командную рубку
 if count_k1fcbcsop=0 then btn k1fcabcap, В каюту капитана
 end
-
-;:k1fkorB
-;heroposx=470
-;heroposy=160
-;pln 123321 Коридор В
-;btn k1fcabincrew, Каюты экипажа
-;end
-
+/*
+:k1fkorB
+heroposx=470
+heroposy=160
+pln 123321 Коридор В
+btn k1fcabincrew, Каюты экипажа
+end
+*/
 :k1fcommlog
 heroposx=570
 heroposy=160
@@ -963,17 +968,18 @@ if knowpass=1 then pln Набрав код, Джон открыл сейф. Вн
 
 btn k1fcabincrew, Далее
 end
+/*
+:k1fcabcapso
+pln 123321 замок
+btn k1fcabcapso2, Открыть
+btn k1fcabcapsafe, Назад
+end
 
-;:k1fcabcapso
-;pln 123321 замок
-;btn k1fcabcapso2, Открыть
-;btn k1fcabcapsafe, Назад
-;end
-
-;:k1fcabcapso2
-;if knowpass=1 and tookweapon=0 then inv+ ОРУЖИЕ & tookweapon=1
-;goto k1fcabcapsafe
-;end
+:k1fcabcapso2
+if knowpass=1 and tookweapon=0 then inv+ ОРУЖИЕ & tookweapon=1
+goto k1fcabcapsafe
+end
+*/
 
 :k1fstoreroomfake
 p Дверь, ведущую в хранилище, заело, она была приоткрыта, но никак не реагировала на нажатие кнопок. 
@@ -986,8 +992,10 @@ heroposx=190
 heroposy=25
 pln Хранилище представляло собой небольшое, даже немного тесное, помещение, вдоль стены были расположены высокие стеллажи, но здесь для Джона ничего не представляло никакого интереса.
 
-;if count_k1fstoreroom>1 then pln 123321 ключ от столовой
-;if count_k1fstorerkey=0 then btn k1fstorerkey, Взять ключ-карту
+/*
+if count_k1fstoreroom>1 then pln 123321 ключ от столовой
+if count_k1fstorerkey=0 then btn k1fstorerkey, Взять ключ-карту
+*/
 
 btn k1fkorC, В коридор С
 
@@ -1000,12 +1008,13 @@ pln Дверь, ведущая к каютам экипажа, не работа
 goto k1fstoreroom
 end
 
-;:k1fstorerkey
-;inv+ Ключ от столовой
-;pln 123
-;goto k1fstoreroom
-;end
-
+/*
+:k1fstorerkey
+inv+ Ключ от столовой
+pln 123
+goto k1fstoreroom
+end
+*/
 
 ------------------------------ЭТАЖ 2--------------------------------------------
 :k2felevator
@@ -1081,15 +1090,17 @@ if count_k2fkorA>1 and wassysls<3 then pln Выйдя в широкий, дли�
 if wassysls=3 then pln Стены коридора перепачканы кровью, на полу в большой луже алой крови, лежит тело Джуди.
 
 btn k2fkorC, В коридор С
-;if dinnroomisopen=0 then btn k2fdinnrfake, В столовую
+/*if dinnroomisopen=0 then btn k2fdinnrfake, В столовую */
 if wassysls<3 then btn k2fdinnr, В столовую
 btn k2fcabpass, К пассажирским каютам
 end
 
-;:k2fdinnrfake
-;pln 123321 закрыто
-;btn k2fkorA, Назад
-;end
+/*
+:k2fdinnrfake
+pln 123321 закрыто
+btn k2fkorA, Назад
+end
+*/
 
 :k2fdinnr
 heroposx=130
@@ -1216,13 +1227,15 @@ if inv_Палец and count_k2finfinsfake=0 then btn k2finfinsfake, Присло
 btn k2fcabpass, К каютам
 end
 
-;:k2finfins
-;heroposx=590
-;heroposy=160
-;if count_k2finfins=1 then goto k2finfinsfake
-;pln 123321 лазарет
-;btn k2fcabpass, К каютам
-;end
+/*
+:k2finfins
+heroposx=590
+heroposy=160
+if count_k2finfins=1 then goto k2finfinsfake
+pln 123321 лазарет
+btn k2fcabpass, К каютам
+end
+*/
 
 :k2finfinsfake
 inv- Палец 
