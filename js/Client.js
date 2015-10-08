@@ -96,6 +96,10 @@ function Client() {
             if (div.find('*').length == 0) {
                 div.addClass('text');
             }
+            
+            if (text[2] !== 0) {
+                div.css('color', text[2]);
+            }
 
             div.find('img').each(function(index) {
                 if (files === null) {

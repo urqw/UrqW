@@ -181,6 +181,8 @@ function Player() {
             this.goto(tmpLoc, 'return');
             this.continue();
             Game.locked = false;
+        } else {
+            this.continue();
         }
     };
 
@@ -212,8 +214,15 @@ function Player() {
     this.setVar = function(variable, value) {
         if (Game.locked) return false;
 
+        if (variable.toLowerCase() === 'urq_mode') {
+            if (value == 'dosurq') {
+                $('body').css('background-color', 'black')
+            }
+        } else
+        if (variable.toLowerCase() === 'style_dos_textcolor') {
+            Game.setVar('style_textcolor', this.dosColorToHex(value));
+        } else 
         if (variable.toLowerCase() === 'image') {
-
             if (files === null) {
                 if (value) {
                     this.print($('<img style="margin: 5px auto; display: block;">').attr('src', value).prop('outerHTML'), true);
@@ -231,7 +240,7 @@ function Player() {
                     file = files[value + '.gif'];
                 }
 
-                me.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
+                this.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
             }
         } else if (variable.toLowerCase() === 'music') {
             this.playMusic(value, true);
@@ -244,6 +253,7 @@ function Player() {
 
     /**
      * @param {String} src
+     * @param {bool} loop
      */
     this.playMusic = function(src, loop) {
         var file;
@@ -269,6 +279,31 @@ function Player() {
             }
         } else {
             gameMusic.pause();
+        }
+    };
+
+    /**
+     * @param {int} value
+     */
+    this.dosColorToHex = function(value) {
+        switch (value) {
+            case 0: return 'Black';
+            case 1: return 'Blue';
+            case 2: return 'Green';
+            case 3: return 'Aqua';
+            case 4: return 'Red';
+            case 5: return 'Purple';
+            case 6: return 'Yellow';
+            case 7: return 'White';
+            case 8: return 'Gray';
+            case 9: return 'LightBlue';
+            case 10: return 'LightGreen';
+            case 11: return 'LightAqua';
+            case 12: return 'LightRed';
+            case 13: return 'LightPurple';
+            case 14: return 'LightYellow';
+            case 15: return 'LightBlue';
+            default: return 'Black';
         }
     }
 }
