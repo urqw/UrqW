@@ -43,10 +43,15 @@ function Player() {
      *
      */
     this.continue = function() {
-        this.lock = true;
-
         this.play();
 
+        this.fin();
+    };
+
+    /**
+     * рендер
+     */
+    this.fin = function() {
         if (this.status != PLAYER_STATUS_NEXT) {
             this.Client.render({
                 status: this.status,
@@ -62,6 +67,8 @@ function Player() {
      *
      */
     this.play = function() {
+        this.lock = true;
+
         var line;
 
         this.status = PLAYER_STATUS_NEXT;
@@ -102,7 +109,6 @@ function Player() {
 
         if (this.proc(commonLabel)) {
             this.forgetProc();
-            this.lock = true;
             this.play();
         }
     };
@@ -147,13 +153,7 @@ function Player() {
             this.Client.cls();
             this.continue();
         } else { // стоим на месте. Порисуем что ли.
-            this.Client.render({
-                status: this.status,
-                text: this.text,
-                buttons: this.buttons
-            });
-
-            this.lock = false;
+            this.fin();
         }
     };
 
@@ -172,7 +172,6 @@ function Player() {
 
         if (this.proc(labelName)) {
             this.forgetProc();
-            this.lock = true;
             this.play();
         }
 
@@ -182,7 +181,7 @@ function Player() {
             this.continue();
             Game.locked = false;
         } else {
-            this.continue();
+            this.fin();
         }
     };
 
@@ -287,23 +286,23 @@ function Player() {
      */
     this.dosColorToHex = function(value) {
         switch (value) {
-            case 0: return 'Black';
-            case 1: return 'Blue';
-            case 2: return 'Green';
-            case 3: return 'Aqua';
-            case 4: return 'Red';
-            case 5: return 'Purple';
-            case 6: return 'Yellow';
-            case 7: return 'White';
-            case 8: return 'Gray';
-            case 9: return 'LightBlue';
-            case 10: return 'LightGreen';
-            case 11: return 'LightAqua';
-            case 12: return 'LightRed';
-            case 13: return 'LightPurple';
-            case 14: return 'LightYellow';
-            case 15: return 'LightBlue';
-            default: return 'Black';
+            case 0: return '#000000';
+            case 1: return '#0000AA';
+            case 2: return '#00AA00';
+            case 3: return '#00AAAA';
+            case 4: return '#AA0000';
+            case 5: return '#AA00AA';
+            case 6: return '#AA5500';
+            case 7: return '#AAAAAA';
+            case 8: return '#555555';
+            case 9: return '#5555FF';
+            case 10: return '#55FF55';
+            case 11: return '#55FFFF';
+            case 12: return '#FF5555';
+            case 13: return '#FF55FF';
+            case 14: return '#FFFF55';
+            case 15: return '#FFFFFF';
+            default: return '#000000';
         }
     }
 }
