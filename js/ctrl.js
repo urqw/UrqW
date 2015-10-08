@@ -93,7 +93,7 @@ $(function() {
 
             $('#saveslots').show();
         } else {
-            var label = Game.getLabel(command);
+            var label = Game.getLabel(GlobalPlayer.Parser.openTags(command));
 
             if (label) {
                 GlobalPlayer.btnAction(label.name);
