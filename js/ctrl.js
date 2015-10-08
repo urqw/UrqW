@@ -184,7 +184,7 @@ $(function() {
     /**
      * Клики мышкой
      */
-    $(document).on('click', 'body:not(.button)', function(e){
+    $(document).on('click', '#textfield, #info', function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             if (GlobalPlayer.inf.length > 0) {
                 GlobalPlayer.setVar(GlobalPlayer.inf, e.keyCode);
