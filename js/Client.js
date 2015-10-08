@@ -93,7 +93,7 @@ function Client() {
         $.each(GlobalPlayer.text, function(index, text) {
             var div = $('<div>').html(text[0]);
 
-            if (div.find('*').length == 0) {
+            if (div.find('div, img').length == 0) {
                 div.addClass('text');
             }
             
