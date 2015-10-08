@@ -42,13 +42,8 @@ function Player() {
     /**
      *
      */
-    this.continue = function(clear) {
+    this.continue = function() {
         this.lock = true;
-
-        if (clear !== null) {
-            this.text = [];
-            this.buttons = [];
-        }
 
         this.play();
 
@@ -118,10 +113,10 @@ function Player() {
      * @returns {boolean}
      */
     this.btnAction = function(labelName) {
+        if (this.lock) return false;
+
         this.buttons = [];
         this.text = [];
-
-        if (this.lock) return false;
 
         this.common();
 
@@ -129,7 +124,7 @@ function Player() {
             Game.setVar('previous_loc', Game.getVar('current_loc'));
             Game.setVar('current_loc', labelName);
 
-            this.continue(false);
+            this.continue();
         }
     };
 
@@ -157,7 +152,7 @@ function Player() {
         if (Game.realCurrentLoc === null) {
             Game.locked = true;
             this.goto(tmpLoc, 'return');
-            this.continue(false);
+            this.continue();
             Game.locked = false;
         }
     };
