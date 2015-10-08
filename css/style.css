@@ -24,6 +24,9 @@ p {
 div.text {
     line-height: 22px;
     display: inline;
+}
+
+div.clearfix + div.text, #textfield div.text:first-child {
     padding-left: 20px;
 }
 

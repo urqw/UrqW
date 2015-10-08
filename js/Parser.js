@@ -12,11 +12,11 @@ function Parser() {
      * @param line
      */
     this.parse = function(line) {
-        line = line.trim();
+        line = line.replace(/^\s+/, '');
         // просмотреть список известных операторов
         var expl = line.split(' ');
         var operand = expl[0].toLowerCase().trim();
-        var command = expl.slice(1).join(' ').trim();
+        var command = expl.slice(1).join(' ');
 
         if (operand == 'if') {
             var cond = line.substring(line.indexOf('if ') + 3, line.indexOf(' then '));
@@ -45,7 +45,7 @@ function Parser() {
             line = this.prepareLine(line);
             expl = line.split(' ');
             operand = expl[0].toLowerCase().trim();
-            command = expl.slice(1).join(' ').trim();
+            command = expl.slice(1).join(' ');
 
             if (operand[0] == ':') return;
 
@@ -128,8 +128,8 @@ function Parser() {
      */
     this.prepareLine = function (line) {
         if (line.indexOf('&') != -1) {
-            GlobalPlayer.flowAdd(line.substring(line.indexOf('&') + 1).trim());
-            line = line.substring(0, line.indexOf('&')).trim();
+            GlobalPlayer.flowAdd(line.substring(line.indexOf('&') + 1));
+            line = line.substring(0, line.indexOf('&')).replace(/^\s+/, '');
         }
 
         return this.openTags(line);
