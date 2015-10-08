@@ -46,7 +46,10 @@ Player.prototype.goto = function(labelName, type) {
  * удаление переменных
  */
 Player.prototype.perkill = function() {
+    var urqMode = Game.getVar('urq_mode');
+    
     Game.vars = {};
+    Game.setVar('urq_mode', urqMode);
 
     $.each(Game.items, function(index, value) {
         Game.setVar(index, parseInt(value));
