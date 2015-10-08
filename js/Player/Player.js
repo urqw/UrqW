@@ -251,7 +251,7 @@ function Player() {
         if (files === null) {
             file = 'quests/' + Game.name + '/' + src;
         } else {
-            file = files[value];
+            file = files[src];
         }
 
         if (src) {
