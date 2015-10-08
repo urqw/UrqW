@@ -41,11 +41,8 @@ function Client() {
      * render
      */
     this.render = function (data) {
+        me.drawText();
         if (data.status == PLAYER_STATUS_END) {
-            me.drawText();
-            me.drawButtons();
-            me.drawInventory();
-
             if (noRendered) {
                 GlobalPlayer.buttons.unshift({
                     label: '#load$',
@@ -54,18 +51,18 @@ function Client() {
 
                 noRendered = false;
             }
+            
+            me.drawButtons();
+            me.drawInventory();
         } else if (data.status == PLAYER_STATUS_ANYKEY) {
-            me.drawText();
             this.crtlInfo.text('[нажмите любую клавишу]');
             this.crtlInfo.show();
         } else if (data.status == PLAYER_STATUS_INPUT) {
-            me.drawText();
             this.crtlInput.removeClass('has-error');
             this.crtlInput.find('input').val('');
             this.crtlInput.show();
             this.crtlInput.find('input').focus();
         } else if (data.status == PLAYER_STATUS_PAUSE) {
-            me.drawText();
             me.drawButtons();
             me.drawInventory();
 
@@ -76,7 +73,6 @@ function Client() {
                 }
             }, wait);
         } else if (data.status == PLAYER_STATUS_QUIT) {
-            me.drawText();
             this.crtlInfo.text('[игра закончена]');
             this.crtlInfo.show();
         }
