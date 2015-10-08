@@ -178,7 +178,7 @@ Player.prototype.invAdd = function(item, quantity) {
  * @param {bool} br
  */
 Player.prototype.print = function(text, br) {
-    this.text.push([text, br]);
+    this.text.push([text, br, Game.getVar('style_textcolor')]);
 };
 
 /**

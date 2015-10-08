@@ -43,10 +43,15 @@ function Player() {
      *
      */
     this.continue = function() {
-        this.lock = true;
-
         this.play();
 
+        this.fin();
+    };
+
+    /**
+     * рендер
+     */
+    this.fin = function() {
         if (this.status != PLAYER_STATUS_NEXT) {
             this.Client.render({
                 status: this.status,
@@ -62,6 +67,8 @@ function Player() {
      *
      */
     this.play = function() {
+        this.lock = true;
+
         var line;
 
         this.status = PLAYER_STATUS_NEXT;
@@ -102,7 +109,6 @@ function Player() {
 
         if (this.proc(commonLabel)) {
             this.forgetProc();
-            this.lock = true;
             this.play();
         }
     };
@@ -147,13 +153,7 @@ function Player() {
             this.Client.cls();
             this.continue();
         } else { // стоим на месте. Порисуем что ли.
-            this.Client.render({
-                status: this.status,
-                text: this.text,
-                buttons: this.buttons
-            });
-
-            this.lock = false;
+            this.fin();
         }
     };
 
@@ -172,7 +172,6 @@ function Player() {
 
         if (this.proc(labelName)) {
             this.forgetProc();
-            this.lock = true;
             this.play();
         }
 
@@ -181,6 +180,8 @@ function Player() {
             this.goto(tmpLoc, 'return');
             this.continue();
             Game.locked = false;
+        } else {
+            this.fin();
         }
     };
 
@@ -212,8 +213,15 @@ function Player() {
     this.setVar = function(variable, value) {
         if (Game.locked) return false;
 
+        if (variable.toLowerCase() === 'urq_mode') {
+            if (value == 'dosurq') {
+                $('body').css('background-color', 'black')
+            }
+        } else
+        if (variable.toLowerCase() === 'style_dos_textcolor') {
+            Game.setVar('style_textcolor', this.dosColorToHex(value));
+        } else 
         if (variable.toLowerCase() === 'image') {
-
             if (files === null) {
                 if (value) {
                     this.print($('<img style="margin: 5px auto; display: block;">').attr('src', value).prop('outerHTML'), true);
@@ -231,7 +239,7 @@ function Player() {
                     file = files[value + '.gif'];
                 }
 
-                me.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
+                this.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
             }
         } else if (variable.toLowerCase() === 'music') {
             this.playMusic(value, true);
@@ -244,6 +252,7 @@ function Player() {
 
     /**
      * @param {String} src
+     * @param {bool} loop
      */
     this.playMusic = function(src, loop) {
         var file;
@@ -269,6 +278,31 @@ function Player() {
             }
         } else {
             gameMusic.pause();
+        }
+    };
+
+    /**
+     * @param {int} value
+     */
+    this.dosColorToHex = function(value) {
+        switch (value) {
+            case 0: return '#000000';
+            case 1: return '#0000AA';
+            case 2: return '#00AA00';
+            case 3: return '#00AAAA';
+            case 4: return '#AA0000';
+            case 5: return '#AA00AA';
+            case 6: return '#AA5500';
+            case 7: return '#AAAAAA';
+            case 8: return '#555555';
+            case 9: return '#5555FF';
+            case 10: return '#55FF55';
+            case 11: return '#55FFFF';
+            case 12: return '#FF5555';
+            case 13: return '#FF55FF';
+            case 14: return '#FFFF55';
+            case 15: return '#FFFFFF';
+            default: return '#000000';
         }
     }
 }
