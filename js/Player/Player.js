@@ -42,8 +42,13 @@ function Player() {
     /**
      *
      */
-    this.continue = function() {
+    this.continue = function(clear) {
         this.lock = true;
+
+        if (clear !== null) {
+            this.text = [];
+            this.buttons = [];
+        }
 
         this.play();
 
@@ -125,7 +130,7 @@ function Player() {
             Game.setVar('previous_loc', Game.getVar('current_loc'));
             Game.setVar('current_loc', labelName);
 
-            this.continue();
+            this.continue(false);
         }
     };
 
@@ -153,7 +158,7 @@ function Player() {
         if (Game.realCurrentLoc === null) {
             Game.locked = true;
             this.goto(tmpLoc, 'return');
-            this.continue();
+            this.continue(false);
             Game.locked = false;
         }
     };
