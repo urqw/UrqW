@@ -56,8 +56,7 @@ function Player() {
             this.Client.render({
                 status: this.status,
                 text: this.text,
-                buttons: this.buttons,
-                inf: this.inf
+                buttons: this.buttons
             });
         }
 
@@ -191,33 +190,42 @@ function Player() {
                 me.print($('<img>').attr('src', file).prop('outerHTML'), true);
             }
         } else if (variable.toLowerCase() === 'music') {
-            var file;
-
-            if (files === null) {
-                file = 'quests/' + Game.name + '/' + value;
-            } else {
-                file = files[value];
-            }
-
-            if (value) {
-                if (gameMusic.getAttribute('src') != file) {
-                    gameMusic.src = file;
-
-                    gameMusic.addEventListener('ended', function() {
-                        gameMusic.src = file;
-                        gameMusic.play();
-                    }, false);
-
-                    gameMusic.play();
-                }
-            } else {
-                gameMusic.pause();
-            }
+            this.playMusic(value, true);
         }
 
         variable = variable.trim();
 
         Game.setVar(variable, value);
     };
+
+    /**
+     * @param {String} src
+     */
+    this.playMusic = function(src, loop) {
+        var file;
+
+        if (files === null) {
+            file = 'quests/' + Game.name + '/' + src;
+        } else {
+            file = files[value];
+        }
+
+        if (src) {
+            if (gameMusic.getAttribute('src') != file) {
+                gameMusic.src = file;
+
+                if (loop) {
+                    gameMusic.addEventListener('ended', function() {
+                        gameMusic.src = file;
+                        gameMusic.play();
+                    }, false);
+                }
+
+                gameMusic.play();
+            }
+        } else {
+            gameMusic.pause();
+        }
+    }
 }
 

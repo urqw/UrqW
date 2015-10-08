@@ -57,6 +57,8 @@ Player.prototype.perkill = function() {
 Player.prototype.cls = function() {
     this.text = [];
     this.buttons = [];
+
+    this.Client.cls();
 };
 
 /**
