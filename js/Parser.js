@@ -50,7 +50,7 @@ function Parser() {
             if (operand[0] == ':') return;
 
             switch (operand) {
-                case 'music':
+                case 'music': return GlobalPlayer.playMusic(command, false);
                 case 'play':
                     if (files === null) {
                         (new Audio('quests/' + Game.name + '/' + command).play());
