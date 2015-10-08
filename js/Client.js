@@ -91,7 +91,6 @@ function Client() {
      */
     this.drawText = function () {
         $.each(GlobalPlayer.text, function(index, text) {
-
             var div = $('<div>').html(text[0]);
 
             if (div.find('*').length == 0) {
@@ -113,6 +112,8 @@ function Client() {
             }
 
         });
+
+        GlobalPlayer.text = [];
     };
 
     /**
@@ -128,6 +129,8 @@ function Client() {
 
             me.crtlButtonField.append(buttonCtrl);
         });
+
+        GlobalPlayer.buttons = [];
     };
 
     /**
