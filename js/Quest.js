@@ -61,7 +61,7 @@ function Quest(text) {
     this.getLabel = function(label) {
         label = label.toString().toLowerCase();
 
-        if (this.labels[label] !== undefined) {
+        if (this.labels[label] != undefined) {
             return {
                 name: label,
                 pos: this.labels[label]
@@ -77,11 +77,11 @@ function Quest(text) {
     this.next = function() {
         var line = this.get(this.position);
 
+        this.position++;
+
         if (!line) {
             return false;
         }
-
-        this.position++;
 
         if (this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq') {
             // вырезать комментарий
@@ -111,10 +111,13 @@ function Quest(text) {
         /**
          * Собираем метки
          */
-        for (var i = 0; i < this.quest.length; i++) {
+        for (var i = this.quest.length -1; i >=0; i--) {
             var str = this.get(i);
 
-            if (str.substr(0, 1) == ':') {
+            if (str.substr(0, 1) == '_') {
+                this.quest[i - 1] = this.quest[i - 1] + str.substr(1);
+                this.quest[i] = '';
+            } else if (str.substr(0, 1) == ':') {
                 if (str.substr(0, 5).toLowerCase() == ':use_') {
                     this.useLabels[str.substr(1).toLowerCase().trim()] = i;
                 }
