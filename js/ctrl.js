@@ -56,9 +56,9 @@ $(function() {
     buttonField.on('click', '.button', function() {
         if (GlobalPlayer.lock) return false;
 
-        var label = $(this).data('label');
+        var command = $(this).data('command');
 
-        if (label == '#load$') {
+        if (command == '#load$') {
             $('#game').hide();
 
             $('#saveslots').find('.list-group').empty();
@@ -92,11 +92,14 @@ $(function() {
             });
 
             $('#saveslots').show();
-        } else if (label != null) {
-            textfield.empty();
-            buttonField.empty();
+        } else {
+            var label = Game.getLabel(command);
 
-            GlobalPlayer.btnAction(label);
+            if (label) {
+                GlobalPlayer.btnAction(label.name);
+            } else {
+                GlobalPlayer.xbtnAction(command);
+            }
         }
     });
 
@@ -109,9 +112,6 @@ $(function() {
         var label = $(this).data('label');
 
         if (label !== undefined) {
-            textfield.empty();
-            buttonField.empty();
-
             GlobalPlayer.useAction(label);
         }
 
@@ -172,12 +172,8 @@ $(function() {
         }
 
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
-            if (GlobalPlayer.inf.length > 0) {
-                GlobalPlayer.setVar(GlobalPlayer.inf, e.keyCode);
-            }
-
             $('#info').hide();
-            GlobalPlayer.continue();
+            GlobalPlayer.anykeyAction(e.keyCode);
         }
     });
 
@@ -186,12 +182,8 @@ $(function() {
      */
     $(document).on('click', '#textfield, #info', function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
-            if (GlobalPlayer.inf.length > 0) {
-                GlobalPlayer.setVar(GlobalPlayer.inf, e.keyCode);
-            }
-
             $('#info').hide();
-            GlobalPlayer.continue();
+            GlobalPlayer.anykeyAction(e.keyCode);
         }
     });
 
@@ -212,14 +204,12 @@ $(function() {
             var input = $('#input');
             if (input.find('input').val() != '') {
                 input.hide();
-
-                GlobalPlayer.setVar(GlobalPlayer.inf, input.find('input').val());
-
-                GlobalPlayer.continue();
+                
+                GlobalPlayer.inputAction(input.find('input').val());
             } else {
                 input.addClass('has-error');
             }
         }
     });
-
+    
 });

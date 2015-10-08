@@ -40,6 +40,12 @@ function Parser() {
                     this.parse(els);
                 }
             }
+
+        } else if (operand == 'btn') {
+            var xbtn = command.split(',');
+            var desc = this.prepareLine(xbtn.slice(1).join(',').trim());
+
+            return GlobalPlayer.btn(xbtn[0].trim(), desc);
         } else {
             //todo
             line = this.prepareLine(line);
@@ -116,7 +122,6 @@ function Parser() {
                     }
             }
         }
-
     };
 
     /**
@@ -154,8 +159,8 @@ function Parser() {
             return '&#' + exp.substr(2, (exp.length - 3)) + ';';
         });
 
-        while (line.match(/\#[^\#]+?\$/g)) {
-            line = line.replace(/\#[^\#]+?\$/g, function(exp) {
+        while (line.match(/\#[^\#]+?\$/)) {
+            line = line.replace(/\#[^\#]+?\$/, function(exp) {
                 // рудимент для совместимости
                 if (exp[1] == '%') {
                     return new Expression(exp.substr(2, (exp.length - 3))).calc();

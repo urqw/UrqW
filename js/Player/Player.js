@@ -108,15 +108,13 @@ function Player() {
     };
 
     /**
-     *
      * @param {String} labelName
      * @returns {boolean}
      */
     this.btnAction = function(labelName) {
         if (this.lock) return false;
 
-        this.buttons = [];
-        this.text = [];
+        this.cls();
 
         this.common();
 
@@ -129,15 +127,44 @@ function Player() {
     };
 
     /**
-     *
+     * @param {String} command
+     * @returns {boolean}
+     */
+    this.xbtnAction = function(command) {
+        if (this.lock) return false;
+        
+        this.lock = true;
+        
+        var tmpLoc = Game.realCurrentLoc;
+
+        this.Parser.parse(command);
+
+        while (this.flowStack[this.flow].length > 0) {
+            this.Parser.parse(this.flowStack[this.flow].pop());
+        }
+        
+        if (tmpLoc != Game.realCurrentLoc) { // сдвинулись! играем квест дальше
+            this.Client.cls();
+            this.continue();
+        } else { // стоим на месте. Порисуем что ли.
+            this.Client.render({
+                status: this.status,
+                text: this.text,
+                buttons: this.buttons
+            });
+
+            this.lock = false;
+        }
+    };
+
+    /**
      * @param {String} labelName
      * @returns {boolean}
      */
     this.useAction = function(labelName) {
         if (this.lock) return false;
 
-        this.buttons = [];
-        this.text = [];
+        this.cls();
 
         var tmpLoc = Game.realCurrentLoc;
 
@@ -155,6 +182,28 @@ function Player() {
             this.continue();
             Game.locked = false;
         }
+    };
+
+    /**
+     * @param {String} keycode
+     * @returns {boolean}
+     */
+    this.anykeyAction = function(keycode) {
+        if (this.inf.length > 0) {
+            this.setVar(this.inf, keycode);
+        }
+
+        GlobalPlayer.continue();
+    };
+
+    /**
+     * @param {String} value
+     * @returns {boolean}
+     */
+    this.inputAction = function(value) {
+        this.setVar(this.inf, value);
+
+        this.continue();
     };
 
     /**
@@ -182,7 +231,7 @@ function Player() {
                     file = files[value + '.gif'];
                 }
 
-                me.print($('<img>').attr('src', file).prop('outerHTML'), true);
+                me.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
             }
         } else if (variable.toLowerCase() === 'music') {
             this.playMusic(value, true);

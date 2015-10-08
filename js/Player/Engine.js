@@ -182,25 +182,13 @@ Player.prototype.print = function(text, br) {
 };
 
 /**
- * @param {String} labelName
+ * @param {String} command
  * @param {String} desc
  */
-Player.prototype.btn = function(labelName, desc) {
-    var btn;
-    var label = Game.getLabel(labelName);
-
-    if (label === false) {
-        btn = {
-            label: null,
-            desc: desc + ' //phantom'
-        };
-    } else {
-        btn = {
-            label: label.name,
-            desc: desc
-        };
-    }
-
-    this.buttons.push(btn);
+Player.prototype.btn = function(command, desc) {
+    this.buttons.push({
+        command: command,
+        desc: desc 
+    });
 };
 
