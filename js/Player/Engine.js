@@ -18,10 +18,12 @@ Player.prototype.goto = function(labelName, type) {
             Game.realCurrentLoc = label.name;
         }
 
-        if (type == 'goto') {
-            this.buttons = [];
-//            this.text = [];
-        }
+            if (type == 'goto') {
+                if (Game.getVar('urq_mode') == 'ripurq') {
+                    this.buttons = [];
+                }
+//              this.text = [];
+            }
 
         // todo контанты блять
         if (type == 'btn' || type == 'goto' || type == 'proc') {
