@@ -117,6 +117,7 @@ $(function() {
 
         return false;
     });
+
     /**
      * Отлов нажатия клавиш
      */
@@ -170,6 +171,20 @@ $(function() {
             }
         }
 
+        if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
+            if (GlobalPlayer.inf.length > 0) {
+                GlobalPlayer.setVar(GlobalPlayer.inf, e.keyCode);
+            }
+
+            $('#info').hide();
+            GlobalPlayer.continue();
+        }
+    });
+
+    /**
+     * Клики мышкой
+     */
+    $(document).on('click', function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             if (GlobalPlayer.inf.length > 0) {
                 GlobalPlayer.setVar(GlobalPlayer.inf, e.keyCode);
