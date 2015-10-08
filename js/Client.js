@@ -45,7 +45,7 @@ function Client() {
         if (data.status == PLAYER_STATUS_END) {
             if (noRendered) {
                 GlobalPlayer.buttons.unshift({
-                    label: '#load$',
+                    command: '#load$',
                     desc: 'Загрузить игру'
                 });
 
@@ -121,9 +121,9 @@ function Client() {
      */
     this.drawButtons = function () {
         $.each(GlobalPlayer.buttons, function(index, button) {
-            var buttonCtrl = $('<button class="list-group-item button" data-label="' + button.label + '">').text(button.desc);
+            var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').text(button.desc);
 
-            if (button.label == '#load$') {
+            if (button.command == '#load$') {
                 buttonCtrl.addClass('list-group-item-warning');
             }
 
