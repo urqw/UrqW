@@ -44,6 +44,12 @@ function Client() {
         me.drawText();
         if (data.status == PLAYER_STATUS_END) {
             if (noRendered) {
+                if (Game.getVar('urq_mode') == 'dosurq') {
+                    $('body').css('background-color', 'black');
+                    $("<style>.button { background-color: #000; }</style>")
+                        .appendTo(document.documentElement);
+                }
+
                 GlobalPlayer.buttons.unshift({
                     command: '#load$',
                     desc: 'Загрузить игру'
