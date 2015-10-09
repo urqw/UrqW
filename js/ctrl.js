@@ -58,7 +58,7 @@ $(function() {
 
         var command = $(this).data('command');
 
-        if (command == '#load$') {
+        if (command == 'urqw-load') {
             $('#game').hide();
 
             $('#saveslots').find('.list-group').empty();
