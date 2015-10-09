@@ -51,7 +51,7 @@ function Client() {
                 }
 
                 GlobalPlayer.buttons.unshift({
-                    command: '#load$',
+                    command: 'urqw-load',
                     desc: 'Загрузить игру'
                 });
 
@@ -133,7 +133,7 @@ function Client() {
         $.each(GlobalPlayer.buttons, function(index, button) {
             var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').text(button.desc);
 
-            if (button.command == '#load$') {
+            if (button.command == 'urqw-load') {
                 buttonCtrl.addClass('list-group-item-warning');
             }
 
