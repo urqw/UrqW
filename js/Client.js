@@ -41,10 +41,10 @@ function Client() {
      * render
      */
     this.render = function (data) {
-        var backColor;
+        var backColor = null;
         if (isNaN(Game.getVar('style_backcolor'))) {
             backColor = Game.getVar('style_backcolor');
-        } else {
+        } else if (Game.getVar('style_textcolor') > 0) {
             var red = (Game.getVar('style_backcolor') >> 16) & 0xFF;
             var green = (Game.getVar('style_backcolor') >> 8) & 0xFF;
             var blue = Game.getVar('style_backcolor') & 0xFF;
