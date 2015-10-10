@@ -19,6 +19,11 @@ GlobalPlayer = null;
  */
 files = null;
 
+/**
+ * 
+ */
+var mode;
+
 $(function() {
     $('#something_wrong').hide();
 
@@ -82,6 +87,7 @@ $(function() {
         // read file to global variable and start quest
         var reader = new FileReader();
         reader.onload = function() {
+            mode = $('#urq_mode').val();
             start(reader.result, qst.name);
         };
         reader.readAsText(qst, 'CP1251');
@@ -111,6 +117,8 @@ $(function() {
         Game.init();
 
         GlobalPlayer = new Player;
+        
+        if (mode) GlobalPlayer.setVar('urq_mode', mode)
 
         GlobalPlayer.Client.crtlInfo = $('#info');
         GlobalPlayer.Client.crtlInput = $('#input');
