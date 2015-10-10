@@ -41,14 +41,13 @@ function Client() {
      * render
      */
     this.render = function (data) {
+        var backColor = isNaN(Game.getVar('style_backcolor')) ? Game.getVar('style_backcolor') : '#' + Game.getVar('style_backcolor').toString(16);
+        
+        $('body').css('background-color', backColor);
+        
         me.drawText();
         if (data.status == PLAYER_STATUS_END) {
             if (noRendered) {
-                if (Game.getVar('urq_mode') == 'dosurq') {
-                    $('body').css('background-color', 'black');
-                    $("<style>.button { background-color: #000; }</style>")
-                        .appendTo(document.documentElement);
-                }
 
                 GlobalPlayer.buttons.unshift({
                     command: 'urqw-load',

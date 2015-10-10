@@ -52,6 +52,8 @@ function Player() {
      * рендер
      */
     this.fin = function() {
+        this.playMusic(Game.getVar('music'), true);
+
         if (this.status != PLAYER_STATUS_NEXT) {
             this.Client.render({
                 status: this.status,
@@ -215,7 +217,14 @@ function Player() {
 
         if (variable.toLowerCase() === 'style_dos_textcolor') {
             Game.setVar('style_textcolor', dosColorToHex(value));
-        } else 
+        } else
+        if (variable.toLowerCase() === 'urq_mode') {
+            if (value == 'dosurq') {
+                Game.setVar('style_backcolor', '#000');
+            }
+        } else
+
+        // todo переместить в рендер
         if (variable.toLowerCase() === 'image') {
             if (files === null) {
                 if (value) {
@@ -236,8 +245,6 @@ function Player() {
 
                 this.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
             }
-        } else if (variable.toLowerCase() === 'music') {
-            this.playMusic(value, true);
         }
 
         variable = variable.trim();
