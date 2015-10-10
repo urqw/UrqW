@@ -2,7 +2,6 @@ urq_mode="dosurq"
 :-1
 instr jl=Style_DOS_TextColor=15
 instr fl=Style_DOS_TextColor=7
-Style_BackColor=0
 #%jl$
 pln                      Alice's Adventures in Urqland
 #%fl$

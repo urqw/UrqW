@@ -183,7 +183,6 @@ function Expression(str) {
     this.getPriority = function (operand) {
         switch (operand) {
             case 'not':
-            case '!':
                 return 15;
             case '*':
             case '/':
