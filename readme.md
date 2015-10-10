@@ -18,6 +18,8 @@
  * пул реквесты с исправлениями
 
 ### Документация:
+ * http://narmiel.github.io/UrqW/docs/urql.html - описание urq language
 
 ### Ссылки:
  * http://urq.plut.info/ - сайт urq
+ * http://rilarhiv.ru/urq.htm - библиотека urq игр
