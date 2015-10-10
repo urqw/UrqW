@@ -181,10 +181,10 @@ Player.prototype.invAdd = function(item, quantity) {
  * @param {bool} br
  */
 Player.prototype.print = function(text, br) {
-    var textColor;
+    var textColor = null;
     if (isNaN(Game.getVar('style_textcolor'))) {
         textColor = Game.getVar('style_textcolor');
-    } else {
+    } else if (Game.getVar('style_textcolor') > 0) {
         var red = (Game.getVar('style_textcolor') >> 16) & 0xFF;
         var green = (Game.getVar('style_textcolor') >> 8) & 0xFF;
         var blue = Game.getVar('style_textcolor') & 0xFF;
