@@ -41,8 +41,17 @@ function Client() {
      * render
      */
     this.render = function (data) {
-        var backColor = isNaN(Game.getVar('style_backcolor')) ? Game.getVar('style_backcolor') : '#' + Game.getVar('style_backcolor').toString(16);
-        
+        var backColor;
+        if (isNaN(Game.getVar('style_backcolor'))) {
+            backColor = Game.getVar('style_backcolor');
+        } else {
+            var red = (Game.getVar('style_backcolor') >> 16) & 0xFF;
+            var green = (Game.getVar('style_backcolor') >> 8) & 0xFF;
+            var blue = Game.getVar('style_backcolor') & 0xFF;
+
+            backColor = 'rgb(' + blue + ', ' + green  + ', ' + red + ')';
+        }
+
         $('body').css('background-color', backColor);
         
         me.drawText();
