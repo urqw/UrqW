@@ -61,23 +61,23 @@ function Parser() {
         if (operand[0] == ':') return;
 
         switch (operand) {
-            case 'music': return GlobalPlayer.playMusic(command, false);
+            case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
             case 'play':
                 if (files === null) {
-                    (new Audio('quests/' + Game.name + '/' + command).play());
+                    (new Audio('quests/' + Game.name + '/' + command.toString().trim()).play());
                 } else {
-                    (new Audio(files[command])).play();
+                    (new Audio(files[command.toString().trim()])).play();
                 }
                 break;
             case 'cls': return GlobalPlayer.cls();
             case 'forget_proc': return GlobalPlayer.forgetProc();
-            case 'proc': return GlobalPlayer.proc(command);
+            case 'proc': return GlobalPlayer.proc(command.toString().trim());
             case 'end': return GlobalPlayer.end();
-            case 'anykey': return GlobalPlayer.anykey(command);
+            case 'anykey': return GlobalPlayer.anykey(command.toString().trim());
             case 'pause': return GlobalPlayer.pause(parseInt(command));
-            case 'input': return GlobalPlayer.input(command);
+            case 'input': return GlobalPlayer.input(command.toString().trim());
             case 'quit': return GlobalPlayer.quit();
-            case 'invkill': return GlobalPlayer.invkill(command.length >0 ? command : null);
+            case 'invkill': return GlobalPlayer.invkill(command.toString().trim().length > 0 ? command.toString().trim() : null);
             case 'perkill': return GlobalPlayer.perkill();
             case 'inv-':
                 var item = command.split(',');
@@ -97,7 +97,7 @@ function Parser() {
                 }
 
                 return GlobalPlayer.invAdd(item.toString().trim(), quantity);
-            case 'goto': return GlobalPlayer.goto(command, 'goto');
+            case 'goto': return GlobalPlayer.goto(command.toString().trim(), 'goto');
             case 'p':
             case 'print': return GlobalPlayer.print(command, false);
             case 'pln':

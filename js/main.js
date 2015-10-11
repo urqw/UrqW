@@ -26,6 +26,7 @@ var mode;
 
 $(function() {
     $('#something_wrong').hide();
+    $('#infopanel').show();
 
     /**
      * Загрузить из хеша
@@ -110,6 +111,7 @@ $(function() {
      */
     function start(msg, name) {
         $('#loading').hide();
+        $('#infopanel').hide();
 
         Game = new Quest(msg);
         Game.name = name;
@@ -118,7 +120,7 @@ $(function() {
 
         GlobalPlayer = new Player;
         
-        if (mode) GlobalPlayer.setVar('urq_mode', mode)
+        if (mode) GlobalPlayer.setVar('urq_mode', mode);
 
         GlobalPlayer.Client.crtlInfo = $('#info');
         GlobalPlayer.Client.crtlInput = $('#input');
