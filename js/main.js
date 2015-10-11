@@ -26,6 +26,7 @@ var mode;
 
 $(function() {
     $('#something_wrong').hide();
+    $('#infopanel').show();
 
     /**
      * Загрузить из хеша
@@ -110,6 +111,7 @@ $(function() {
      */
     function start(msg, name) {
         $('#loading').hide();
+        $('#infopanel').hide();
 
         Game = new Quest(msg);
         Game.name = name;

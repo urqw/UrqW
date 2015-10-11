@@ -105,7 +105,7 @@ function Player() {
     this.common = function() {
         var commonLabel = 'common';
 
-        if (Game.getVar('common') !== 0) {
+        if (Game.getVar('urq_mode') != 'ripurq' && Game.getVar('common') !== 0) {
             commonLabel = commonLabel + '_' + Game.getVar('common');
         }
 
