@@ -26,4 +26,8 @@ var dosColorToHex = function(value) {
         case 15: return '#FFFFFF';
         default: return '#000000';
     }
-}
+};
+
+var isFloat =function (n){
+    return n === Number(n) && n % 1 !== 0;
+};
