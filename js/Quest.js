@@ -114,7 +114,7 @@ function Quest(text) {
         for (var i = this.quest.length -1; i >=0; i--) {
             var str = this.get(i);
 
-            if (str.substr(0, 1) == '_') {
+            if (str.substr(0, 1) == '_' && str.substr(1, 1) != '_') {
                 this.quest[i - 1] = this.quest[i - 1] + str.substr(1);
                 this.quest[i] = '';
             } else if (str.substr(0, 1) == ':') {
