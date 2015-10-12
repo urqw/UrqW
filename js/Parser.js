@@ -153,7 +153,6 @@ function Parser() {
      * @returns {String}
      */
     this.openTags = function (line) {
-
         line = line.replace(/\#\/\$/g, '<br>');
         line = line.replace(/\#\%\/\$/g, '<br>');
         line = line.replace(/\#\$/g, ' ');
@@ -168,10 +167,14 @@ function Parser() {
             line = line.replace(/\#[^\#]+?\$/, function(exp) {
                 // рудимент для совместимости
                 if (exp[1] == '%') {
-                    return new Expression(exp.substr(2, (exp.length - 3))).calc();
+                    exp = exp.substr(2, (exp.length - 3));
+                    return new Expression().calc();
                 } else {
-                    return new Expression(exp.substr(1, (exp.length - 2))).calc();
+                    exp = exp.substr(1, (exp.length - 2));
                 }
+                var result = new Expression(exp).calc();
+
+                return isFloat(result) ? result.toFixed(2) : result;
             });
         }
 
