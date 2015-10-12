@@ -168,7 +168,6 @@ function Parser() {
                 // рудимент для совместимости
                 if (exp[1] == '%') {
                     exp = exp.substr(2, (exp.length - 3));
-                    return new Expression().calc();
                 } else {
                     exp = exp.substr(1, (exp.length - 2));
                 }
