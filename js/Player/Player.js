@@ -52,7 +52,7 @@ function Player() {
      * рендер
      */
     this.fin = function() {
-        this.playMusic(Game.getVar('music'), true);
+        if (Game.getVar('music')) this.playMusic(Game.getVar('music'), true);
 
         if (this.status != PLAYER_STATUS_NEXT) {
             this.Client.render({
