@@ -131,7 +131,6 @@ function Client() {
             if (text[1]) {
                 me.crtlTextField.append('<div class="clearfix">');
             }
-
         });
 
         GlobalPlayer.text = [];
@@ -196,9 +195,9 @@ function Client() {
         } else if (actions.length > 0)  {
 
             if (itemName == 'inv') {
-                itemName = 'Инвентарь';
-            } else {
-                if (quantity > 1) {
+                    itemName = 'Инвентарь';
+                } else {
+                    if (quantity > 1) {
                     itemName = itemName + ' (' + quantity + ')';
                 }
             }

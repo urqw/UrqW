@@ -194,17 +194,7 @@ function Parser() {
                 }
                 var result = new Expression(exp).calc();
                 
-                if (isFloat(result)) {
-                    result = result.toFixed(2);
-
-                } else if (isNaN(result)) {
-                        if ((result.substr(0, 1) == '\'' || result.substr(0, 1) == '\"') && (result.substr(-1, 1) == '\'' || result.substr(-1, 1) == '\"')) {
-                            result = result.substr(1, (result.length - 2));
-                        } 
-                }
-                
-                
-                return result;
+                return isFloat(result) ? result.toFixed(2) : result;
             });
         }
 
