@@ -111,7 +111,9 @@ function Quest(text) {
         this.labels = {};
         this.useLabels = {};
         this.items = {};
-        this.vars = {};
+        this.vars = {
+            'tokens_delim': '\ \,\"\?\!'
+        };
         this.position = 0;
         this.realCurrentLoc = '';
 
