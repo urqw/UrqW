@@ -63,11 +63,18 @@ function Parser() {
         switch (operand) {
             case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
             case 'play':
+                if (volume == 3) return;
+                
+                var Sound;
                 if (files === null) {
-                    (new Audio('quests/' + Game.name + '/' + command.toString().trim()).play());
+                    Sound = new Audio('quests/' + Game.name + '/' + command.toString().trim());
                 } else {
-                    (new Audio(files[command.toString().trim()])).play();
+                    Sound = new Audio(files[command.toString().trim()]);
                 }
+
+                Sound.volume = (volume == 1) ? 1 : 0.5;
+                Sound.play();
+                
                 break;
             case 'clsb': return GlobalPlayer.clsb();
             case 'cls': return GlobalPlayer.cls();
