@@ -3,18 +3,19 @@
  *
  * Управление квеста пользователем (события)
  */
+
+var volume = 1;
+
 $(function() {
     var buttonField = $('#buttons');
     var textfield = $('#textfield');
     var inventory = $('#inventory');
-    var save = $('#save');
-    var load = $('#load');
     var returnToGame = $('#return_to_game');
-
+    
     /**
      * Нажатие на сохранение
      */
-    save.on('click', function() {
+    $('#save').on('click', function() {
         if (GlobalPlayer.lock) return false;
 
         $('#game').hide();
@@ -42,8 +43,8 @@ $(function() {
 
         return false;
     });
-    
-    load.on('click', function() {
+
+    $('#load').on('click', function() {
         $('#game').hide();
 
         $('#saveslots').find('.list-group').empty();
@@ -78,6 +79,43 @@ $(function() {
 
         $('#saveslots').show();
         
+        return false;
+    });
+    
+    $('#mute').on('click', function () {
+        var span = $(this).find('span');
+        
+        if (volume == 1) {
+            volume = 2;
+            gameMusic.volume = 0.5;
+            span.removeClass('glyphicon-volume-up');
+            span.addClass('glyphicon-volume-down');
+        } else if (volume == 2) {
+            volume = 3;
+            gameMusic.volume = 0;
+            span.removeClass('glyphicon-volume-down');
+            span.addClass('glyphicon-volume-off');
+        } else if (volume == 3) {
+            volume = 1;
+            gameMusic.volume = 1;
+            span.removeClass('glyphicon-volume-off');
+            span.addClass('glyphicon-volume-up');
+        }
+        
+        return false;
+    });
+
+    $('#restart').on('click', function () {
+        if (confirm('Are you sure?')) {
+            textfield.empty();
+            buttonField.empty();
+            GlobalPlayer.text = [];
+            GlobalPlayer.buttons = [];
+
+            Game.init();
+            GlobalPlayer.continue();
+        }
+
         return false;
     });
 
