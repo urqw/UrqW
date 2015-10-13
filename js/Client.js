@@ -85,7 +85,21 @@ function Client() {
      * очистка экрана
      */
     this.cls = function() {
+        this.clst();
+        this.clsb();
+    };
+
+    /**
+     * очистка текста
+     */
+    this.clst = function() {
         this.crtlTextField.empty();
+    };
+
+    /**
+     * очистка кнопок
+     */
+    this.clsb = function() {
         this.crtlButtonField.empty();
     };
 

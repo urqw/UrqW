@@ -69,6 +69,7 @@ function Parser() {
                     (new Audio(files[command.toString().trim()])).play();
                 }
                 break;
+            case 'clsb': return GlobalPlayer.clsb();
             case 'cls': return GlobalPlayer.cls();
             case 'forget_proc': return GlobalPlayer.forgetProc();
             case 'proc': return GlobalPlayer.proc(command.toString().trim());

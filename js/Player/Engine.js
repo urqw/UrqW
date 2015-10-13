@@ -67,6 +67,15 @@ Player.prototype.cls = function() {
 };
 
 /**
+ * cls
+ */
+Player.prototype.clsb = function() {
+    this.buttons = [];
+
+    this.Client.clsb();
+};
+
+/**
  * удаление предметов
  *
  * @param {String} item
