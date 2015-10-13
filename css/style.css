@@ -40,6 +40,18 @@ div.clearfix + div.text, #textfield div.text:first-child {
     left: auto;
     text-align: right;
     min-width: 0;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    padding: 5px 0px;
+    margin: 0 0px 0px;
+    font-size: 14px;
+    list-style: outside none none;
+    background-color: #FFF;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
 }
 
 
@@ -74,8 +86,19 @@ body {
 
 /** submenu */
 
-.dropdown-menu {
+.dropdown-menu, .navbar-nav .open .dropdown-menu {
+    color: #333;
+    position: absolute;
     min-width: 0;
+    background-color: #FFF;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #333;
 }
 
 .dropdown-submenu {
@@ -108,4 +131,17 @@ body {
 }
 .dropdown-submenu:hover>a:before {
     border-right-color:#ffffff;
+}
+
+/* чтобы навбар не коллапсировал */
+.navbar-nav>li, .navbar-nav {
+    float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+    margin-right: 0 !important;
+}
+
+.navbar-right {
+    float: right!important;
 }
