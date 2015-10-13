@@ -36,7 +36,6 @@ function Client() {
      */
     var me = this;
 
-    var noRendered = true;
     /**
      * render
      */
@@ -56,16 +55,6 @@ function Client() {
         
         me.drawText();
         if (data.status == PLAYER_STATUS_END) {
-            if (noRendered) {
-
-                GlobalPlayer.buttons.unshift({
-                    command: 'urqw-load',
-                    desc: 'Загрузить игру'
-                });
-
-                noRendered = false;
-            }
-            
             me.drawButtons();
             me.drawInventory();
         } else if (data.status == PLAYER_STATUS_ANYKEY) {
@@ -140,10 +129,6 @@ function Client() {
     this.drawButtons = function () {
         $.each(GlobalPlayer.buttons, function(index, button) {
             var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').text(button.desc);
-
-            if (button.command == 'urqw-load') {
-                buttonCtrl.addClass('list-group-item-warning');
-            }
 
             me.crtlButtonField.append(buttonCtrl);
         });

@@ -8,6 +8,7 @@ $(function() {
     var textfield = $('#textfield');
     var inventory = $('#inventory');
     var save = $('#save');
+    var load = $('#load');
     var returnToGame = $('#return_to_game');
 
     /**
@@ -38,6 +39,46 @@ $(function() {
         });
 
         $('#saveslots').show();
+
+        return false;
+    });
+    
+    load.on('click', function() {
+        $('#game').hide();
+
+        $('#saveslots').find('.list-group').empty();
+
+        for(var i = 1; i <= 10; i++) {
+            var btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
+            var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
+
+            if (lsname === null) {
+                btn.text('(Пустой слот сохранения)').prop('disabled', true);
+            } else {
+                btn.text(lsname);
+            }
+            $('#saveslots').find('.list-group').append(btn);
+        }
+
+        $('#saveslots').find('.savebtn').on('click', function() {
+            textfield.empty();
+            buttonField.empty();
+            GlobalPlayer.text = [];
+            GlobalPlayer.buttons = [];
+
+            Game.load($(this).data('slot'));
+            Game.locked = true;
+            GlobalPlayer.goto(Game.realCurrentLoc, 'return');
+
+            returnToGame.click();
+
+            GlobalPlayer.continue();
+            Game.locked = false;
+        });
+
+        $('#saveslots').show();
+        
+        return false;
     });
 
     /**
@@ -58,48 +99,12 @@ $(function() {
 
         var command = $(this).data('command');
 
-        if (command == 'urqw-load') {
-            $('#game').hide();
+        var label = Game.getLabel(GlobalPlayer.Parser.openTags(command.toString()));
 
-            $('#saveslots').find('.list-group').empty();
-
-            for(var i = 1; i <= 10; i++) {
-                var btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
-                var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
-
-                if (lsname === null) {
-                    btn.text('(Пустой слот сохранения)').prop('disabled', true);
-                } else {
-                    btn.text(lsname);
-                }
-                $('#saveslots').find('.list-group').append(btn);
-            }
-
-            $('#saveslots').find('.savebtn').on('click', function() {
-                textfield.empty();
-                buttonField.empty();
-                GlobalPlayer.text = [];
-                GlobalPlayer.buttons = [];
-
-                Game.load($(this).data('slot'));
-                Game.locked = true;
-                GlobalPlayer.goto(Game.realCurrentLoc, 'return');
-
-                returnToGame.click();
-
-                GlobalPlayer.continue();
-                Game.locked = false;
-            });
-
-            $('#saveslots').show();
+        if (label) {
+            GlobalPlayer.btnAction(label.name);
         } else {
-            var label = Game.getLabel(GlobalPlayer.Parser.openTags(command.toString()));
-
-            if (label) {
-                GlobalPlayer.btnAction(label.name);
-            } else {
-                GlobalPlayer.xbtnAction(command);
-            }
+            GlobalPlayer.xbtnAction(command);
         }
     });
 

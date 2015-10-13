@@ -110,8 +110,13 @@ $(function() {
      * @param {String} name имя игры или файла
      */
     function start(msg, name) {
+        window.onbeforeunload = function(e) {
+            return 'confirm please';
+        };
+        
         $('#loading').hide();
         $('#infopanel').hide();
+        $('#logo').hide();
 
         Game = new Quest(msg);
         Game.name = name;
