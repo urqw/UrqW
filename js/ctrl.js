@@ -108,8 +108,8 @@ $(function() {
     $('#restart').on('click', function () {
         if (confirm('Are you sure?')) {
 
-            $('#info').crtlInfo.hide();
-            $('#input').crtlInput.hide();
+            $('#info').hide();
+            $('#input').hide();
             
             textfield.empty();
             buttonField.empty();
