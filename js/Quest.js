@@ -41,11 +41,6 @@ function Quest(text) {
     this.vars = {};
 
     /**
-     * @type {string}
-     */
-    this.quest = text.replace(/^[\n\r]+|[\n\r]+$/g,'').replace(/\/\*[\s\S.]+?\*\//g,'').split(/[\n\r]+/);
-
-    /**
      * @type {number}
      */
     this.position = 0;
@@ -54,6 +49,11 @@ function Quest(text) {
      * @type {string}
      */
     this.realCurrentLoc = '';
+
+    /**
+     * @type {string}
+     */
+    this.quest = text.replace(/^[\n\r]+|[\n\r]+$/g,'').replace(/\/\*[\s\S.]+?\*\//g,'').split(/[\n\r]+/);
 
     /**
      * @param {String} label
@@ -108,6 +108,13 @@ function Quest(text) {
      * инициализация
      */
     this.init = function() {
+        this.labels = {};
+        this.useLabels = {};
+        this.items = {};
+        this.vars = {};
+        this.position = 0;
+        this.realCurrentLoc = '';
+
         /**
          * Собираем метки
          */
