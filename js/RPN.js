@@ -174,7 +174,7 @@ function Expression(str) {
                 }
             }
         } else {
-            return stack;
+            return stack[0];
         }
         
         return temp.pop();
