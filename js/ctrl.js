@@ -107,6 +107,10 @@ $(function() {
 
     $('#restart').on('click', function () {
         if (confirm('Are you sure?')) {
+
+            $('#info').crtlInfo.hide();
+            $('#input').crtlInput.hide();
+            
             textfield.empty();
             buttonField.empty();
             GlobalPlayer.text = [];
