@@ -73,7 +73,7 @@ function Expression(str) {
                 if (variable === 0) {
                     if (token.substr(0, 1) == '\'' || token.substr(0, 1) == '\"') {
                         if (token.substr(-1, 1) == '\'' || token.substr(-1, 1) == '\"') {
-                            variable = token.substr(1, (token.length - 2));
+                            variable = token;
                         }
                     }
                 }
