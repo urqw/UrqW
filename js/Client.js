@@ -141,7 +141,7 @@ function Client() {
      */
     this.drawButtons = function () {
         $.each(GlobalPlayer.buttons, function(index, button) {
-            var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').text(button.desc);
+            var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').html(button.desc);
 
             me.crtlButtonField.append(buttonCtrl);
         });
