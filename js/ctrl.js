@@ -106,8 +106,7 @@ $(function() {
     });
 
     $('#restart').on('click', function () {
-        if (confirm('Are you sure?')) {
-
+        if (confirm('Перезапустить игру?')) {
             $('#info').hide();
             $('#input').hide();
             
@@ -115,6 +114,8 @@ $(function() {
             buttonField.empty();
             GlobalPlayer.text = [];
             GlobalPlayer.buttons = [];
+            
+            if (mode) GlobalPlayer.setVar('urq_mode', mode);
 
             Game.init();
             GlobalPlayer.continue();
@@ -220,7 +221,7 @@ $(function() {
 
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             $('#info').hide();
-            GlobalPlayer.anykeyAction(e.keyCode);
+            GlobalPlayer.anykeyAction(e.charCode);
         }
     });
 
@@ -230,7 +231,7 @@ $(function() {
     $(document).on('click', '#textfield, #info', function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             $('#info').hide();
-            GlobalPlayer.anykeyAction(e.keyCode);
+            GlobalPlayer.anykeyAction(e.charCode);
         }
     });
 

@@ -73,7 +73,7 @@ function Expression(str) {
                 if (variable === 0) {
                     if (token.substr(0, 1) == '\'' || token.substr(0, 1) == '\"') {
                         if (token.substr(-1, 1) == '\'' || token.substr(-1, 1) == '\"') {
-                            variable = token.substr(1, (token.length - 2));
+                            variable = token.substr(1, (token.length - 2));;
                         }
                     }
                 }
@@ -100,79 +100,83 @@ function Expression(str) {
 
         var temp = [];
 
-        for (var i = 0; i < stack.length; i++) {
-            var token = stack[i];
-
-            if (this.getPriority(token) > 0) {
-                var result;
-
-                if (/*token == '!' ||*/ token == 'not') {
-                    var variable = temp.pop();
-
-                    result = !(variable === true || variable > 0);
-                } else {
-                    var a = temp.pop();
-                    var b = temp.pop();
-
-                    switch (token) {
-                        case '*':
-                            result = b * a;
-                            break;
-                        case '/':
-                            result = b / a;
-                            break;
-                        case '+':
-                            result = b + a;
-                            break;
-                        case '-':
-                            result = b - a;
-                            break;
-                        case '==':
-                        case '=':
-                            if ((typeof b == 'string') && (typeof a == 'string')) {
-                                result = b.toLowerCase() == a.toLowerCase();
-                            } else {
-                                result = b == a;
-                            }
-                            break;
-                        case '!=':
-                        case '<>':
-                            if ((typeof b == 'string') && (typeof a == 'string')) {
-                                result = b.toLowerCase() != a.toLowerCase();
-                            } else {
-                                result = b != a;
-                            }
-
-                            break;
-                        case '>':
-                            result = b > a;
-                            break;
-                        case '<':
-                            result = b < a;
-                            break;
-                        case '>=':
-                            result = b >= a;
-                            break;
-                        case '<=':
-                            result = b <= a;
-                            break;
-                        case '&&':
-                        case 'and':
-                            result = (b === true || b > 0) && (a === true || a > 0)
-                            break;
-                        case '||':
-                        case 'or':
-                            result = (b === true || b > 0) || (a === true || a > 0)
-                            break;
+        if (stack.length > 1) {
+            for (var i = 0; i < stack.length; i++) {
+                var token = stack[i];
+    
+                if (this.getPriority(token) > 0) {
+                    var result;
+    
+                    if (/*token == '!' ||*/ token == 'not') {
+                        var variable = temp.pop();
+    
+                        result = !(variable === true || variable > 0);
+                    } else {
+                        var a = temp.pop();
+                        var b = temp.pop();
+    
+                        switch (token) {
+                            case '*':
+                                result = b * a;
+                                break;
+                            case '/':
+                                result = b / a;
+                                break;
+                            case '+':
+                                result = b + a;
+                                break;
+                            case '-':
+                                result = b - a;
+                                break;
+                            case '==':
+                            case '=':
+                                if ((typeof b == 'string') && (typeof a == 'string')) {
+                                    result = b.toLowerCase() == a.toLowerCase();
+                                } else {
+                                    result = b == a;
+                                }
+                                break;
+                            case '!=':
+                            case '<>':
+                                if ((typeof b == 'string') && (typeof a == 'string')) {
+                                    result = b.toLowerCase() != a.toLowerCase();
+                                } else {
+                                    result = b != a;
+                                }
+    
+                                break;
+                            case '>':
+                                result = b > a;
+                                break;
+                            case '<':
+                                result = b < a;
+                                break;
+                            case '>=':
+                                result = b >= a;
+                                break;
+                            case '<=':
+                                result = b <= a;
+                                break;
+                            case '&&':
+                            case 'and':
+                                result = (b === true || b > 0) && (a === true || a > 0)
+                                break;
+                            case '||':
+                            case 'or':
+                                result = (b === true || b > 0) || (a === true || a > 0)
+                                break;
+                        }
                     }
+    
+                    temp.push(result);
+                } else {
+                    temp.push(token);
                 }
-
-                temp.push(result);
-            } else {
-                temp.push(token);
             }
+        } else {
+            return stack[0];
         }
-
+        
         return temp.pop();
     };
 

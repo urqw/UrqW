@@ -61,6 +61,7 @@ function Parser() {
         if (operand[0] == ':') return;
 
         switch (operand) {
+            case 'image': return GlobalPlayer.image(command.toString().trim());
             case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
             case 'play':
                 if (volume == 3) return;
@@ -115,11 +116,23 @@ function Parser() {
 
                 return GlobalPlayer.btn(btn[0].trim(), btn.slice(1).join(',').trim());
             //рудименты далее
+            case 'tokens':
+                var reg = new RegExp('[' + ((Game.getVar('tokens_delim') == 'char') ? '' : Game.getVar('tokens_delim')).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + ']', 'gi');
+
+                var str = (new Expression(command.trim())).calc().split(reg);
+
+                GlobalPlayer.setVar('tokens_num', str.length);
+
+                for (var i = 0; i < str.length; i++) {
+                    GlobalPlayer.setVar('token' + (i + 1), str[i]);
+                }
+
+                break;
             case 'instr':
                 line = command;
 
                 if (line.indexOf('=') > 0) {
-                    GlobalPlayer.setVar(line.substring(0, line.indexOf('=')), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                    GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
                 }
 
                 // no break here
@@ -129,7 +142,7 @@ function Parser() {
             default:
                 //  это выражение?
                 if (line.indexOf('=') > 0) {
-                    GlobalPlayer.setVar(line.substring(0, line.indexOf('=')), new Expression(line.substr(line.indexOf('=') + 1)).calc());
+                    GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1)).calc());
                 } else {
                     console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
                 }
@@ -180,7 +193,7 @@ function Parser() {
                     exp = exp.substr(1, (exp.length - 2));
                 }
                 var result = new Expression(exp).calc();
-
+                
                 return isFloat(result) ? result.toFixed(2) : result;
             });
         }

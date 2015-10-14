@@ -215,6 +215,8 @@ function Player() {
     this.setVar = function(variable, value) {
         if (Game.locked) return false;
 
+        variable = variable.trim();
+
         if (variable.toLowerCase() === 'style_dos_textcolor') {
             Game.setVar('style_textcolor', dosColorToHex(value));
         } else
@@ -226,35 +228,41 @@ function Player() {
 
         // todo переместить в рендер
         if (variable.toLowerCase() === 'image') {
-            if (files === null) {
-                if (value) {
-                    this.print($('<img style="margin: 5px auto; display: block;">').attr('src', value).prop('outerHTML'), true);
-                }
-            } else {
-                var file;
-
+            var file = value;
+            if (files != null) {
                 if (files[value] !== undefined) {
-                    file = files[value];
+                    file = value;
                 } else if (files[value + '.png'] !== undefined) {
-                    file = files[value + '.png'];
+                    file = value + '.png';
                 } else if (files[value + '.jpg'] !== undefined) {
-                    file = files[value + '.jpg'];
+                    file = value + '.jpg';
                 } else if (files[value + '.gif'] !== undefined) {
-                    file = files[value + '.gif'];
+                    file = value + '.gif';
                 }
-
-                this.print($('<img style="margin: 5px auto; display: block;">').attr('src', file).prop('outerHTML'), true);
             }
+            
+            this.image(file);
         }
-
-        variable = variable.trim();
 
         Game.setVar(variable, value);
     };
 
     /**
      * @param {String} src
-     * @param {bool} loop
+     */
+    this.image = function(src) {
+        if (files === null) {
+            if (src) {
+                this.print($('<img style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
+            }
+        } else {
+            this.print($('<img style="margin: 5px auto; display: block;">').attr('src', files[src]).prop('outerHTML'), true);
+        }
+    };
+
+    /**
+     * @param {String} src
+     * @param {Boolean} loop
      */
     this.playMusic = function(src, loop) {
         var file;
