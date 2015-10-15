@@ -45,11 +45,11 @@ function Expression(str) {
                     token = this.expr[++i].trim();
                 } while(token.length == 0);
 
-                exitStack.push(-parseFloat(token.replace(',', '.').replace(/ /g, '')));
+                exitStack.push([-parseFloat(token.replace(',', '.').replace(/ /g, ''))]);
                 // если число
             } else if (!isNaN(token.replace(',', '.').replace(/ /g, ''))) {
                 // считываем всё число дальше
-                exitStack.push(parseFloat(token.replace(',', '.').replace(/ /g, '')));
+                exitStack.push([parseFloat(token.replace(',', '.').replace(/ /g, ''))]);
             } else if (this.getPriority(token) > 0) {
                 if (token == '(') {
                     operStack.push(token);
@@ -78,7 +78,7 @@ function Expression(str) {
                     }
                 }
 
-                exitStack.push(variable);
+                exitStack.push([variable]);
             }
 
             lastTokenIsOperator = (this.getPriority(token) > 1);
@@ -100,81 +100,77 @@ function Expression(str) {
 
         var temp = [];
 
-        if (stack.length > 1) {
-            for (var i = 0; i < stack.length; i++) {
-                var token = stack[i];
-    
-                if (this.getPriority(token) > 0) {
-                    var result;
-    
-                    if (/*token == '!' ||*/ token == 'not') {
-                        var variable = temp.pop();
-    
-                        result = !(variable === true || variable > 0);
-                    } else {
-                        var a = temp.pop();
-                        var b = temp.pop();
-    
-                        switch (token) {
-                            case '*':
-                                result = b * a;
-                                break;
-                            case '/':
-                                result = b / a;
-                                break;
-                            case '+':
-                                result = b + a;
-                                break;
-                            case '-':
-                                result = b - a;
-                                break;
-                            case '==':
-                            case '=':
-                                if ((typeof b == 'string') && (typeof a == 'string')) {
-                                    result = b.toLowerCase() == a.toLowerCase();
-                                } else {
-                                    result = b == a;
-                                }
-                                break;
-                            case '!=':
-                            case '<>':
-                                if ((typeof b == 'string') && (typeof a == 'string')) {
-                                    result = b.toLowerCase() != a.toLowerCase();
-                                } else {
-                                    result = b != a;
-                                }
-    
-                                break;
-                            case '>':
-                                result = b > a;
-                                break;
-                            case '<':
-                                result = b < a;
-                                break;
-                            case '>=':
-                                result = b >= a;
-                                break;
-                            case '<=':
-                                result = b <= a;
-                                break;
-                            case '&&':
-                            case 'and':
-                                result = (b === true || b > 0) && (a === true || a > 0)
-                                break;
-                            case '||':
-                            case 'or':
-                                result = (b === true || b > 0) || (a === true || a > 0)
-                                break;
-                        }
-                    }
-    
-                    temp.push(result);
+        for (var i = 0; i < stack.length; i++) {
+            var token = stack[i];
+
+            if (this.getPriority(token) > 0) {
+                var result;
+
+                if (/*token == '!' ||*/ token == 'not') {
+                    var variable = temp.pop();
+
+                    result = !(variable === true || variable > 0);
                 } else {
-                    temp.push(token);
+                    var a = temp.pop();
+                    var b = temp.pop();
+
+                    switch (token) {
+                        case '*':
+                            result = b * a;
+                            break;
+                        case '/':
+                            result = b / a;
+                            break;
+                        case '+':
+                            result = b + a;
+                            break;
+                        case '-':
+                            result = b - a;
+                            break;
+                        case '==':
+                        case '=':
+                            if ((typeof b == 'string') && (typeof a == 'string')) {
+                                result = b.toLowerCase() == a.toLowerCase();
+                            } else {
+                                result = b == a;
+                            }
+                            break;
+                        case '!=':
+                        case '<>':
+                            if ((typeof b == 'string') && (typeof a == 'string')) {
+                                result = b.toLowerCase() != a.toLowerCase();
+                            } else {
+                                result = b != a;
+                            }
+
+                            break;
+                        case '>':
+                            result = b > a;
+                            break;
+                        case '<':
+                            result = b < a;
+                            break;
+                        case '>=':
+                            result = b >= a;
+                            break;
+                        case '<=':
+                            result = b <= a;
+                            break;
+                        case '&&':
+                        case 'and':
+                            result = (b === true || b > 0) && (a === true || a > 0)
+                            break;
+                        case '||':
+                        case 'or':
+                            result = (b === true || b > 0) || (a === true || a > 0)
+                            break;
+                    }
                 }
+
+                temp.push(result);
+            } else {
+                temp.push(token[0]);
             }
-        } else {
-            return stack[0];
         }
         
         return temp.pop();
