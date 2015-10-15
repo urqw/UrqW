@@ -40,7 +40,16 @@ $(function() {
                 url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
                 dataType: "text"
             }).done(function(msg) {
-                start(msg, window.location.hash.substr(1));
+                $.ajax({
+                    url: 'quests/' + window.location.hash.substr(1) + '/style.css',
+                    dataType: "text"
+                }).complete(function(style) {
+                    if (style.status == 200) {
+                        $('#additionalstyle').find('style').empty();
+                        $('#additionalstyle').find('style').append(style.responseText);
+                    }
+                    start(msg, window.location.hash.substr(1));
+                });
             }).fail(function () {
                 $('#loading').hide();
                 $('#choose-game').show();
@@ -76,6 +85,8 @@ $(function() {
         for (var i =0; i < e.target.files.length; i++) {
             if (qst == null && e.target.files[i].name.split('.').pop() == 'qst') {
                 qst = e.target.files[i];
+            } else if (e.target.files[i].name == 'style.css') {
+                readStyle(e.target.files[i]);
             } else {
                 readFile(e.target.files[i].name, e.target.files[i]);
             }
@@ -89,18 +100,36 @@ $(function() {
         var reader = new FileReader();
         reader.onload = function() {
             mode = $('#urq_mode').val();
-            start(reader.result, qst.name);
+            setTimeout(function() {
+                start(reader.result, qst.name);
+            }, 200); // todo
         };
         reader.readAsText(qst, 'CP1251');
     });
 
-
+    /**
+     * @param filename
+     * @param file
+     */
     function readFile(filename, file) {
         var reader = new FileReader();
         reader.onload = function() {
             files[filename] = reader.result;
         };
         reader.readAsDataURL(file);
+    }
+
+    /**
+     * @param file
+     */
+    function readStyle(file) {
+        var style = new FileReader();
+        style.onload = function() {
+            $('#additionalstyle').find('style').empty();
+            $('#additionalstyle').find('style').append(style.result);
+        };
+
+        style.readAsText(file, 'CP1251');
     }
 
     /**

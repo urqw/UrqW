@@ -223,6 +223,7 @@ function Player() {
         if (variable.toLowerCase() === 'urq_mode') {
             if (value == 'dosurq') {
                 Game.setVar('style_backcolor', '#000');
+                Game.setVar('style_textcolor', '#FFF');
             }
         } else
 
