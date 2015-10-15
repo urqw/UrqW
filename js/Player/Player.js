@@ -226,7 +226,7 @@ function Player() {
             }
         } else
 
-        // todo переместить в рендер
+        // todo переместить
         if (variable.toLowerCase() === 'image') {
             var file = value;
             if (files != null) {
@@ -250,6 +250,7 @@ function Player() {
     /**
      * @param {String} src
      */
+        // todo переместить в клиента
     this.image = function(src) {
         if (files === null) {
             if (src) {

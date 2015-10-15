@@ -151,6 +151,20 @@ $(function() {
         }
     });
 
+    textfield.on('click', 'a.button', function() {
+        if (GlobalPlayer.lock) return false;
+
+        var command = $(this).data('command');
+
+        var label = Game.getLabel(GlobalPlayer.Parser.openTags(command.toString()));
+
+        if (label) {
+            GlobalPlayer.btnAction(label.name);
+        } else {
+            GlobalPlayer.xbtnAction(command);
+        }
+    });
+
     /**
      * Использование предметов
      */

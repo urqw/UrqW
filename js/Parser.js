@@ -108,9 +108,9 @@ function Parser() {
                 return GlobalPlayer.invAdd(item.toString().trim(), quantity);
             case 'goto': return GlobalPlayer.goto(command.toString().trim(), 'goto');
             case 'p':
-            case 'print': return GlobalPlayer.print(command, false);
+            case 'print':  return GlobalPlayer.print(this.openLinks(command), false);
             case 'pln':
-            case 'println': return GlobalPlayer.print(command, true);
+            case 'println': return GlobalPlayer.print(this.openLinks(command), true);
             case 'btn':
                 var btn = command.split(',');
 
@@ -158,9 +158,12 @@ function Parser() {
      * @returns {String}
      */
     this.prepareLine = function (line) {
-        if (line.indexOf('&') != -1) {
-            GlobalPlayer.flowAdd(line.substring(line.indexOf('&') + 1));
-            line = line.substring(0, line.indexOf('&')).replace(/^\s+/, '');
+        var pos = line.search(/(?:^|\]\])[^\[]*\&(.+)/);
+        
+        if (pos != -1) {
+            var match = line.match(/(?:^|\]\])[^\[]*\&(.+)/)[1];
+            GlobalPlayer.flowAdd(match);
+            line = line.substring(0, line.lastIndexOf(match) -1).replace(/^\s+/, '');
         }
 
         return this.openTags(line);
@@ -184,7 +187,7 @@ function Parser() {
             return '&#' + exp.substr(2, (exp.length - 3)) + ';';
         });
 
-        while (line.match(/\#[^\#]+?\$/)) {
+        while (line.search(/\#[^\#]+?\$/) != -1) {
             line = line.replace(/\#[^\#]+?\$/, function(exp) {
                 // рудимент для совместимости
                 if (exp[1] == '%') {
@@ -198,6 +201,35 @@ function Parser() {
             });
         }
 
+        return line;
+    };
+
+    /**
+     * @param {String} line
+     *
+     * @returns {String}
+     */
+    this.openLinks = function(line) {
+        while (line.search(/\[\[.+?\]\]/) != -1) {
+            line = line.replace(/\[\[.+?\]\]/, function(exp) {
+                var text;
+                var command;
+                exp = exp.substr(2, (exp.length - 4));
+                
+                if (exp.indexOf('|') > 0) {
+                    var exptmp = exp.split('|');
+                    command = exptmp.slice(1).join('|').trim();
+                    text = exptmp[0].trim();
+                } else {
+                    command = exp;
+                    text = exp;
+                }
+                
+                // todo отдавать клиенту, пусть сам рисует
+                return GlobalPlayer.Client.convertToLink(text, command);
+            });
+        }
+        
         return line;
     };
 }
