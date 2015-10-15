@@ -216,4 +216,13 @@ function Client() {
             return li;
         }
     };
+
+    /**
+     * превратить текст и комманду в <a> тег
+     * @param {String} text
+     * @param {String} command
+     */
+    this.convertToLink = function(text, command) {
+        return '<a data-command="' + command + '" class="button">' + text + '</a>';
+    }
 }
