@@ -158,12 +158,13 @@ function Parser() {
      * @returns {String}
      */
     this.prepareLine = function (line) {
-        var pos = line.search(/(?:^|\]\])[^\[]*\&(.+)/);
-        
+        var pos = line.replace(/\[\[.+?\]\]/g, function(exp) {
+            return exp.replace(/\&/g, ' ');
+        }).indexOf('&');
+
         if (pos != -1) {
-            var match = line.match(/(?:^|\]\])[^\[]*\&(.+)/)[1];
-            GlobalPlayer.flowAdd(match);
-            line = line.substring(0, line.lastIndexOf(match) -1).replace(/^\s+/, '');
+            GlobalPlayer.flowAdd(line.substring(pos + 1));
+            line = line.substring(0, pos).replace(/^\s+/, '');
         }
 
         return this.openTags(line);
@@ -225,7 +226,6 @@ function Parser() {
                     text = exp;
                 }
                 
-                // todo отдавать клиенту, пусть сам рисует
                 return GlobalPlayer.Client.convertToLink(text, command);
             });
         }
