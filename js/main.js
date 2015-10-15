@@ -100,7 +100,9 @@ $(function() {
         var reader = new FileReader();
         reader.onload = function() {
             mode = $('#urq_mode').val();
-            start(reader.result, qst.name);
+            setTimeout(function() {
+                start(reader.result, qst.name);
+            }, 200); // todo
         };
         reader.readAsText(qst, 'CP1251');
     });
