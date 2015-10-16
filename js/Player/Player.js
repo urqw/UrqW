@@ -142,8 +142,10 @@ function Player() {
         if (this.lock) return false;
         
         this.lock = true;
-        
+
         var tmpLoc = Game.realCurrentLoc;
+
+        Game.realCurrentLoc = null;
 
         this.Parser.parse(command);
 
@@ -151,10 +153,11 @@ function Player() {
             this.Parser.parse(this.flowStack[this.flow].pop());
         }
         
-        if (tmpLoc != Game.realCurrentLoc) { // сдвинулись! играем квест дальше
+        if (Game.realCurrentLoc !== null) { // сдвинулись! играем квест дальше
             this.Client.cls();
             this.continue();
         } else { // стоим на месте. Порисуем что ли.
+            Game.realCurrentLoc = tmpLoc;
             this.fin();
         }
     };
