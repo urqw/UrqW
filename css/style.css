@@ -34,6 +34,10 @@ div.clearfix + div.text, #textfield div.text:first-child {
     position: relative;
 }
 
+#textfield img {
+    max-width: 100%;
+}
+
 #textfield a.button {
     cursor: pointer;
 }

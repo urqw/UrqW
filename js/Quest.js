@@ -135,11 +135,15 @@ function Quest(text) {
             }
         }
 
-        for (var key in this.labels) {
-            this.realCurrentLoc = key;
-            this.setVar('current_loc', key);
-            this.setVar('previous_loc', key);
-            break;
+        for (var i = 0; i < this.quest.length; i++) {
+            if (str.substr(0, 1) == ':') {
+                var key = str.substr(1).toLowerCase().trim();
+                this.realCurrentLoc = key;
+                this.setVar('current_loc', key);
+                this.setVar('previous_loc', key);
+                
+                break;
+            }
         }
     };
 

@@ -119,10 +119,13 @@ function Client() {
             }
 
             div.find('img').each(function(index) {
-                if (files === null) {
-                    $(this).attr('src', 'quests/' + Game.name + '/' + $(this).attr('src'));
-                } else {
-                    $(this).attr('src', files[$(this).attr('src')]);
+                var src = $(this).attr('src');
+                if (src.indexOf('http://') == -1 && src.indexOf('https://') == -1) {
+                    if (files === null) {
+                        $(this).attr('src', 'quests/' + Game.name + '/' + src);
+                    } else {
+                        $(this).attr('src', files[src]);
+                    }
                 }
             });
 
@@ -141,7 +144,7 @@ function Client() {
      */
     this.drawButtons = function () {
         $.each(GlobalPlayer.buttons, function(index, button) {
-            var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').html(button.desc);
+            var buttonCtrl = $('<button class="list-group-item button">').attr('data-command', button.command).html(button.desc);
 
             me.crtlButtonField.append(buttonCtrl);
         });
@@ -223,6 +226,6 @@ function Client() {
      * @param {String} command
      */
     this.convertToLink = function(text, command) {
-        return '<a data-command="' + command + '" class="button">' + text + '</a>';
+        return "<a data-command='" + $("<div>").text(command).html() + "' class='button'>" + text + "</a>";
     }
 }
