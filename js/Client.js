@@ -144,7 +144,7 @@ function Client() {
      */
     this.drawButtons = function () {
         $.each(GlobalPlayer.buttons, function(index, button) {
-            var buttonCtrl = $('<button class="list-group-item button" data-command="' + button.command + '">').html(button.desc);
+            var buttonCtrl = $('<button class="list-group-item button">').attr('data-command', button.command).html(button.desc);
 
             me.crtlButtonField.append(buttonCtrl);
         });
@@ -226,6 +226,6 @@ function Client() {
      * @param {String} command
      */
     this.convertToLink = function(text, command) {
-        return '<a data-command="' + command + '" class="button">' + text + '</a>';
+        return "<a data-command='" + $("<div>").text(command).html() + "' class='button'>" + text + "</a>";
     }
 }
