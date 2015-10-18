@@ -113,7 +113,7 @@ function Player() {
             this.forgetProc();
             this.play();
         }
-    };
+   };
 
     /**
      * @param {String} labelName
@@ -127,9 +127,6 @@ function Player() {
         this.common();
 
         if (this.goto(labelName, 'btn')) {
-            Game.setVar('previous_loc', Game.getVar('current_loc'));
-            Game.setVar('current_loc', labelName);
-
             this.continue();
         }
     };
@@ -154,7 +151,6 @@ function Player() {
         }
         
         if (Game.realCurrentLoc !== null) { // сдвинулись! играем квест дальше
-            this.Client.cls();
             this.continue();
         } else { // стоим на месте. Порисуем что ли.
             Game.realCurrentLoc = tmpLoc;
