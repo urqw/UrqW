@@ -18,8 +18,8 @@ Player.prototype.goto = function(labelName, type) {
             Game.realCurrentLoc = label.name;
         }
 
-        // todo контанты (type == 'btn' || (Game.getVar('urq_mode') != 'doqurq' && type == 'goto'))
-        if (type == 'btn' ||  type == 'goto') {
+        // todo контанты 
+        if ((type == 'btn' || (Game.getVar('urq_mode') != 'doqurq' && type == 'goto'))) {
             Game.setVar('previous_loc', Game.getVar('current_loc'));
             Game.setVar('current_loc', labelName);
         }
@@ -76,6 +76,17 @@ Player.prototype.cls = function() {
  */
 Player.prototype.clsb = function() {
     this.buttons = [];
+    
+    for(var i = 0; i < this.text.length; i++) {
+        this.text[i][0] = this.text[i][0].replace(/\<a.+?\>.+?\<\/a\>/gi, function (match) {
+            var a = $(match);
+            if (a.hasClass('button')) {
+                return a.text();
+            } else {
+                return match;
+            }
+        });
+    }
 
     this.Client.clsb();
 };
