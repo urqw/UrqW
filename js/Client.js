@@ -107,6 +107,8 @@ function Client() {
      * Нарисовать текст
      */
     this.drawText = function () {
+        me.crtlTextField.empty();
+        
         $.each(GlobalPlayer.text, function(index, text) {
             var div = $('<div>').html(text[0]);
 
@@ -135,21 +137,19 @@ function Client() {
                 me.crtlTextField.append('<div class="clearfix">');
             }
         });
-
-        GlobalPlayer.text = [];
     };
 
     /**
      * Нарисовать кнопки
      */
     this.drawButtons = function () {
+        me.crtlButtonField.empty();
+        
         $.each(GlobalPlayer.buttons, function(index, button) {
             var buttonCtrl = $('<button class="list-group-item button">').attr('data-command', button.command).html(button.desc);
 
             me.crtlButtonField.append(buttonCtrl);
         });
-
-        GlobalPlayer.buttons = [];
     };
 
     /**
