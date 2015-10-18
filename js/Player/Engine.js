@@ -18,8 +18,8 @@ Player.prototype.goto = function(labelName, type) {
             Game.realCurrentLoc = label.name;
         }
 
-        // todo контанты (type == 'btn' || (Game.getVar('urq_mode') != 'doqurq' && type == 'goto'))
-        if (type == 'btn' ||  type == 'goto') {
+        // todo контанты 
+        if ((type == 'btn' || (Game.getVar('urq_mode') != 'doqurq' && type == 'goto'))) {
             Game.setVar('previous_loc', Game.getVar('current_loc'));
             Game.setVar('current_loc', labelName);
         }

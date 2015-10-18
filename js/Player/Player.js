@@ -137,11 +137,10 @@ function Player() {
      */
     this.xbtnAction = function(command) {
         if (this.lock) return false;
-        
-        this.lock = true;
+
+        this.common();
 
         var tmpLoc = Game.realCurrentLoc;
-
         Game.realCurrentLoc = null;
 
         this.Parser.parse(command);
@@ -152,7 +151,7 @@ function Player() {
         
         if (Game.realCurrentLoc !== null) { // сдвинулись! играем квест дальше
             this.continue();
-        } else { // стоим на месте. Порисуем что ли.
+        } else { // стоим на месте. Порисуем.
             Game.realCurrentLoc = tmpLoc;
             this.fin();
         }
