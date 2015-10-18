@@ -23,7 +23,14 @@ function Parser() {
 
             var then;
             var els;
-            if (line.indexOf(' else ') == -1) {
+            var ifline = line;
+            
+            // todo переделать на обратную польскую
+            if (ifline.indexOf(' if ') != -1) {
+                ifline = ifline.substring(0, ifline.indexOf(' if '))
+            }
+            
+            if (ifline.indexOf(' else ') == -1) {
                 then = line.substring(line.indexOf(' then ') + 6);
                 els = false;
             } else {

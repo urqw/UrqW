@@ -7,6 +7,7 @@
  * @param {int} value
  */
 var dosColorToHex = function(value) {
+    if (value > 15) value = value % 16;
     switch (value) {
         case 0: return '#000000';
         case 1: return '#0000AA';
