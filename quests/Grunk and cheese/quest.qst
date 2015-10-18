@@ -1,0 +1,247 @@
+:Start
+pln <h2><b>GRUNK AND CHEESE</b></h2>
+pln <i><a href="http://grunk.org/">By Admiral Jota</a></i>
+pln
+pln Grunk orc.
+pln
+pln Grunk big and green and wearing pants. That good: pants important.
+pln
+pln Grunk not just have pants. Grunk have helmet and boots and shirt and sword too. That because Grunk in army.
+pln
+pln Grunk have box, too. Grunk boss give box to Grunk. Tell Grunk, bring box to big castle at end of road.
+pln
+pln But it long road. Boss say there forest and town and other thing like that before Grunk find castle. So far, Grunk not see any of that yet. Just see lots and lots of road. And now it getting dark.
+pln
+pln Grunk get hungry, too.
+pln
+pln But that OK, because Grunk find farm! It not big farm, but it have house and field and barn. And it smell like cow. Mmm, tasty cow.
+pln
+pln Now Grunk wondering: Grunk [[go to house to get food|2]], or just [[go to field to find tasty cow|1]]?
+end
+:1
+pln Field easy to find. It big grassy place with fence around it. There gate, too. That good, because Grunk not good at climbing.
+pln
+pln Cow not so easy to find. Grunk smell cow, but not see cow. Maybe that because it too dark? Or maybe cow just better at climbing fence than Grunk.
+pln
+pln Grunk find fairy, though. Fairy glow in dark, so them easy to find. Fairy look like sprite, but more glowy. (Grunk know sprite. Him name "Villicent". Villicent know all about music. But this fairy not Villicent. It not even sprite. It not even talk to Grunk. It just fly away. Oh well.)
+pln
+pln But fairy leave behind mushroom circle. Grunk hungry, so Grunk take some mushroom. Put them in Grunk pocket for later. Now Grunk pocket so full of mushroom that them almost falling out. Maybe Grunk [[go look for cow some other place now, like by barn|3]]. Or maybe Grunk just [[eat mushroom|4]] instead.
+end
+:2
+pln House not very big. Grunk think that if there food in house, it  probably in kitchen room. That probably at back side of house, not front side. So Grunk go around back side of house. But when Grunk get there, Grunk hear two voice inside!
+pln
+pln "Jack! Did you sell it?" (This voice sound like woman.) "How much money did you get?"
+pln
+pln "I got something better than money, Mom!" (That voice sound like boy voice.) "I got these!"
+pln
+pln "Jack! We need money, not beans!"
+pln
+pln "But Mom, they're magic!" 
+pln
+pln "You've got your father's brains, Jack."
+pln
+pln Then lots of bean fly out of window and hit Grunk in head! So Grunk pick up bean, because bean can be tasty. Put them in pocket. Now Grunk pocket so full of bean that them almost falling out. Grunk think that maybe this not good time to go in house. Maybe Grunk go [[look around by barn|3]] instead. Or maybe Grunk just [[eat bean|5]]!
+end
+:3
+pln Barn big red building with big door and big smell. Smell like animal. Or like Grunk brother. Grunk mom and dad say some time that Grunk and brother act just like animal. Brother smell like one too.
+pln
+pln Outside barn, there yard with dirt and chicken and barrel. Chicken walking around yard, pecking at ground. Maybe chicken looking for food too. It walk around near barrel, so Grunk look inside of barrel too.
+pln
+pln Barrel full of grain! Grunk know that grain food! Or it thing that food made out of, anyway. Wonder if grain tasty by itself? Maybe Grunk not need find cow if Grunk can [[eat grain|6]] instead.
+pln
+pln Wait, that silly. There <i>chicken</i> here! Grunk <i>know</i> that chicken taste good. So why not just [[eat chicken|7]]!
+pln
+pln Or maybe there even <i>more</i> tasty thing [[inside barn|8]]...
+pln
+pln It not easy choice.
+pln
+pln Mmm, chicken...
+end
+:4
+pln Grunk try one little mushroom.
+pln
+pln Ugh! It taste nasty. Grunk leave rest of them in pocket. 
+pln
+pln Now Grunk feel funny, too. Moon turning funny color. Look like rainbow shining down on Grunk! It so bright that maybe Grunk can touch rainbow. Try climbing up, but Grunk just fall down. Then Grunk see lady climbing down rainbow from moon!
+pln
+pln Moon lady singing moon song that Grunk not know, but Grunk know that it very pretty song. Make Grunk feel like dancing. So Grunk dance, and moon lady dance with Grunk, and Grunk dance with moon lady, and...
+pln
+pln ...then Grunk wake up in yard outside of barn with chicken. Oh well. Maybe moon lady just dream. Or maybe moon lady just turn into chicken.
+pln
+pln But at least there food here! There whole barrel of grain, so Grunk can [[eat that|6]]. Or Grunk can [[eat chicken|7]]! (It probably not really moon lady. Grunk hope.) Or Grunk can just [[go in barn|8]]. 
+end
+:5
+pln Grunk eat one bean. Not bad. But bean better when it cooked, so Grunk leave rest of them in pocket. Cooking bean need pot and water and fire. And Grunk not have pot or water or-
+Wait. Grunk head feel itchy. Like Grunk hair growing. Grunk never feel hair growing before. Take off helmet to feel it. That not hair! It viney stalky plant thing! There plant growing out of Grunk head!
+pln
+pln That not right!
+pln
+pln At time like this, Grunk remember what Aunt Hruka do. It always work for her, so maybe it work for Grunk.
+pln
+pln Grunk run around and around, waving both arm in air.
+pln
+pln It work! When Grunk tired from running, Grunk feel head again, and vine all fall out! Phew. Grunk need to thank Aunt Hruka when Grunk see her.
+pln
+pln After all that running, Grunk end up next to barn building. There chicken here, and there barrel of grain here, and there barn here. So Grunk could try [[eating chicken|7]] or [[eating grain|6]] or eating -- um. Grunk mean [[<i>entering</i> barn|8]]. Not eating barn.
+end
+:6
+pln Grunk grab big handful of grain. Munch munch munch.
+pln
+pln Ugh.
+pln
+pln Grain not as tasty as Grunk hope.
+pln
+pln Grunk think that bread come from grain, but this not taste like bread. Bread taste soft and bready. Grain taste hard and grainy. Too bad Grunk not know how grain turn into bread.
+pln
+pln Maybe it magic.
+pln
+pln It not really seem fair, though: Grunk hungry and there big barrel of food here, and Grunk not able to eat any of it! That just like when it rain on really special day. But even worse, because Grunk hungry.
+pln
+pln Oh well. Grunk can still try [[eating chicken|7]] instead. Or maybe there some better thing to eat [[inside of barn|8]].
+end
+:7
+pln Mmm, chicken! Grunk run up to chicken and grab it!
+pln
+pln Oops, chicken see Grunk coming. It go "buck-ack!" and run other way so Grunk just grab big handful of Grunk hand.
+pln
+pln But that OK! Grunk try again! If chicken run in circle, Grunk run in circle! If chicken go behind barrel, Grunk go behind barrel! If chicken run between Grunk leg, Grunk... fall over.
+pln
+pln Hmm. Catching chicken harder than Grunk expect. Maybe chicken smart. Grunk know chicken not smart as pig. So chicken probably not smart as Grunk, either. Maybe chicken just get lucky.
+pln
+pln Oh well. Grunk can still [[eat grain|6]]. Chicken want grain, but chicken not getting any, because chicken mean to Grunk, not letting Grunk catch and eat it. Maybe Grunk not even stay here with chicken. Maybe Grunk [[go inside barn|8]] instead.
+end
+:8
+pln Oooh. Barn not full of cow. Or chicken. Or grain.
+pln
+pln Barn full of <i>cheese</i>!
+pln
+pln There lots of shelf full of cheese. White cheese and yellow cheese and blue cheese and one that look like it glowing green. Hard cheese and squishy cheese. There cheese that smell so good that Grunk drool and there other cheese that smell so bad that Grunk wonder if cheese can die and no one find out until it too late.
+There one cheese that look just right. So Grunk lean over big tall can of old milk to get it. But Grunk pocket too full, and when Grunk lean over, thing fall out into can. 
+pln
+pln Milk in can start bubbling and turning color. Think maybe something magic fall in, because now milk in can climbing out of can. And it getting bigger. It bigger than Grunk, even! Milk turning into giant cheese monster!
+pln
+pln Oh no! Should Grunk [[fight giant cheese monster|9]]? Or should Grunk [[try talking to giant cheese monster|10]]?
+end
+:9
+pln Grunk have sword! And cheese monster not have sword. So Grunk run across barn at cheese monster, swinging sword!
+pln
+pln Cheese monster go "gloobidigloop!" and Grunk go "Rarr!" and Grunk cut off bit of cheese monster and cheese monster hit Grunk in head with big hand made of cheese!
+pln
+pln It really good fight! Must be strong cheese.
+pln
+pln Hey, Grunk just cut off that arm! No fair growing it back!
+pln
+pln Grunk keep cutting off piece of cheese, and cheese monster keep backing up. Ha ha! Now cheese monster back up against far wall, away from Grunk.
+pln
+pln Grunk almost win, but how to finish it off? Grunk can just [[throw sword at cheese monster|11]] and stick it to wall that way. Or Grunk can [[keep cutting off bits|12]] until cheese monster just big pile of cheese.
+end
+:10
+pln Grunk say, "Hello, cheese monster!"
+pln
+pln Cheese monster say, "gloopy gloop gloop?"
+pln
+pln Grunk think maybe that cheese monster talk for "Hello, Grunk."
+pln
+pln Grunk say, "Grunk never meet cheese monster before!"
+pln
+pln Cheese monster say, "gloobidy gloop!"
+pln
+pln Grunk say, "Grunk orc. Grunk in army. Grunk looking for castle where Grunk can bring box."
+pln
+pln Cheese monster say, "glerp."
+pln
+pln Grunk think that maybe cheese monster not have much to say because cheese monster not cheese monster for very long. Before that, cheese monster just old milk.
+pln
+pln Hmm. What Grunk say next? Maybe say [[nice thing|13]] about cheese monster? Or maybe [[not so nice thing|14]]. It still monster, after all. And for all Grunk know, maybe "glerp" mean "Grunk look like big smelly head."
+end
+:11
+pln Cheese monster up against wall, so Grunk throw sword across barn at it!
+pln
+pln And cheese monster duck out of way!
+pln
+pln Uh-oh. Now Grunk not have sword. And cheese monster still mad.
+pln
+pln Cheese monster come at Grunk, waving both fist! Cheese monster hit Grunk! Grunk hit cheese monster! Cheese monster hit Grunk! Grunk hit cheese monster! Cheese monster stronger than Grunk! And Grunk afraid if Grunk hit too hard, Grunk hand get stuck in cheese.
+pln
+pln This not looking good.
+pln
+pln Then cheese monster hit Grunk hard, and Grunk fall down on floor!
+pln
+pln Oh no! Grunk in trouble now. Cheese monster standing over Grunk. Grunk lying on back. What can Grunk do? Maybe Grunk can [[kick cheese monster|15]]? Grunk know good spot for kicking person in, but Grunk not know if cheese monster have same bits that some person have there. Maybe it better if Grunk just [[try running away|16]], maybe even try getting sword back.
+end
+:12
+pln Grunk know that hitting cheese monster with sword work so far, so Grunk keep hitting cheese monster with sword. If cheese monster grow back foot, Grunk cut foot off. If cheese monster grow back head, cut head off. If cheese monster show Grunk finger, Grunk cut finger off.
+pln
+pln Cheese monster keep growing back part, but cheese monster not get any bigger. Every time Grunk cut piece off, there less cheese monster left. Soon, there big pile of foot and head and finger, and only little cheese monster! Ha ha. Cheese monster figure it out too, and it run away into mouse hole in barn wall. But that OK, because now Grunk have lots and lots of cheese!
+pln
+pln Cheese monster cheese tastiest cheese that Grunk ever eat. Grunk eat and eat and eat cheese monster parts until Grunk so full that Grunk not want any more. Yum!
+pln
+pln Then Grunk burp and take nap.
+pln
+pln <b>-END-</b>
+pln
+pln [[Start over.|Start]]
+end
+:13
+pln Grunk tell cheese monster how much Grunk like cheese. Not mention part about how Grunk like <i>eating</i> cheese. Say that cheese smell nice and it come in pretty color.
+pln
+pln And Grunk tell cheese monster that it even better than normal cheese, because normal cheese just sit there. But cheese monster can walk and do thing and even talk. At least, Grunk think "gloopy gloop" mean talking. It close enough.
+pln
+pln Grunk tell joke; cheese monster laugh. Grunk tell cheese monster that maybe Grunk and cheese monster can drink beer together some day. Cheese monster hug Grunk. Aw. It all sticky and cheesy, but that OK.
+pln
+pln Grunk tell cheese monster that Grunk hungry, so cheese monster go up to farm house, help Grunk find food. There woman and boy in there, but them run away when them see cheese monster. Oh well. That just mean more food for Grunk and Grunk new friend!
+pln
+pln <b>-END-</b>
+pln
+pln [[Start over.|Start]]
+end
+:14
+pln Grunk tell cheese monster how much Grunk like cheese. Grunk like cheese between bread, and cheese on cracker, and cheese with slice of apple. Cheese tasty, and Grunk like eating cheese.
+pln
+pln Cheese monster not look so happy about that.
+pln
+pln Grunk tell cheese monster how Grunk cut up cheese with knife. Tell it how Grunk put cheese in fire so it get all melty. Grunk tell cheese monster how Grunk like biting off hunk of cheese and chewing it up.
+pln
+pln This special kind of fight, called "wit".
+pln
+pln But cheese monster maybe not know about wit, because cheese monster not try saying mean thing back at Grunk. It just knock Grunk down instead! Grunk even drop sword. Now Grunk lying on back, and cheese monster still standing there.
+pln
+pln What can Grunk do? [[Kick cheese monster|15]]? Grunk know good spot for kicking person in, but Grunk not know if cheese monster have same bits that some person have there. Maybe it better if Grunk just [[try running away|16]], maybe even try getting sword back.
+end
+:15
+pln Grunk kick cheese monster right in place that it hurt!
+pln
+pln But it not hurt cheese monster.
+pln
+pln And cheese monster sticky and gooey.
+pln
+pln And Grunk boot very hard. It sink deep inside of cheese monster.
+pln
+pln And now Grunk leg stuck in cheese.
+pln
+pln And cheese monster even more angry than before.
+pln
+pln This not looking good for Grunk. Not good at all.
+pln
+pln Grunk try fighting back, but cheese monster jump on Grunk. It all cheese fist and cheese mouth and cheese leg and cheese body and...
+pln
+pln ...and so gooey and sticky and <i>cheesy</i>...
+pln
+pln ...and it all over Grunk, and it all over floor, and it all over everywhere...
+pln
+pln ...and Grunk not get to eat cheese, because <i>cheese eat Grunk</i>.
+pln
+pln That not what Grunk hoping for at all. End up eating raw grain instead. And Grunk still finding bit of cheese in ear two month later.
+pln
+pln <b>-END-</b>
+pln
+pln [[Start over.|Start]]
+end
+:16
+pln Cheese monster jump on Grunk!
+pln
+pln But Grunk roll away just in time! Ha ha.
+pln
+pln Now cheese monster on floor, and Grunk crawling away to get sword. Grunk get back up again, with sword now. Cheese monster get back up too. Now cheese monster and Grunk on opposite side of barn. Grunk watching cheese monster. Cheese monster watching Grunk.
+pln Maybe Grunk need try something different. Old plan not work out so great. Or maybe Grunk just not do it right. So what should Grunk try now? Talk? Fight? Dance? No, not dance. Grunk not very good at dancing, and cheese monster not look like it any good at dancing either. Better just stick to [[talking|10]] or [[fighting|9]].
+end

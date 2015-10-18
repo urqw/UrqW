@@ -113,7 +113,7 @@ function Player() {
             this.forgetProc();
             this.play();
         }
-    };
+   };
 
     /**
      * @param {String} labelName
@@ -127,9 +127,6 @@ function Player() {
         this.common();
 
         if (this.goto(labelName, 'btn')) {
-            Game.setVar('previous_loc', Game.getVar('current_loc'));
-            Game.setVar('current_loc', labelName);
-
             this.continue();
         }
     };
@@ -142,8 +139,10 @@ function Player() {
         if (this.lock) return false;
         
         this.lock = true;
-        
+
         var tmpLoc = Game.realCurrentLoc;
+
+        Game.realCurrentLoc = null;
 
         this.Parser.parse(command);
 
@@ -151,10 +150,10 @@ function Player() {
             this.Parser.parse(this.flowStack[this.flow].pop());
         }
         
-        if (tmpLoc != Game.realCurrentLoc) { // сдвинулись! играем квест дальше
-            this.Client.cls();
+        if (Game.realCurrentLoc !== null) { // сдвинулись! играем квест дальше
             this.continue();
         } else { // стоим на месте. Порисуем что ли.
+            Game.realCurrentLoc = tmpLoc;
             this.fin();
         }
     };

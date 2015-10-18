@@ -18,14 +18,19 @@ Player.prototype.goto = function(labelName, type) {
             Game.realCurrentLoc = label.name;
         }
 
-            if (type == 'goto') {
-                if (Game.getVar('urq_mode') == 'ripurq') {
-                    this.buttons = [];
-                }
-//              this.text = [];
-            }
+        // todo контанты (type == 'btn' || (Game.getVar('urq_mode') != 'doqurq' && type == 'goto'))
+        if (type == 'btn' ||  type == 'goto') {
+            Game.setVar('previous_loc', Game.getVar('current_loc'));
+            Game.setVar('current_loc', labelName);
+        }
 
-        // todo контанты блять
+        if (type == 'goto') {
+            if (Game.getVar('urq_mode') == 'ripurq') {
+//                this.buttons = [];
+//                this.text = [];
+            }
+        }
+
         if (type == 'btn' || type == 'goto' || type == 'proc') {
             if (Game.getVar('urq_mode') == 'ripurq') {
                 Game.setVar(label.name, Game.getVar(label.name) + 1);
