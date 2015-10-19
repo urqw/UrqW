@@ -46,6 +46,11 @@ div.clearfix + div.text, #textfield div.text:first-child {
     white-space:pre-wrap;
 }
 
+#textfield table {
+    width: 100%;
+    table-layout: fixed;
+}
+
 #inventory {
     right: 0;
     float: right;
