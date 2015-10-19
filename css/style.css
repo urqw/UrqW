@@ -42,6 +42,10 @@ div.clearfix + div.text, #textfield div.text:first-child {
     cursor: pointer;
 }
 
+#textfield .text {
+    white-space:pre-wrap;
+}
+
 #inventory {
     right: 0;
     float: right;
