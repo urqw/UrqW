@@ -172,6 +172,8 @@ function Client() {
     /**
      * @param {String} itemName
      * @param {int} quantity
+     * 
+     * @return {Jquery|String}
      */
     this.drawItem = function (itemName, quantity) {
 
@@ -180,10 +182,6 @@ function Client() {
         $.each(Game.useLabels, function(index, value) {
             if (itemName.toLowerCase() == index.substr(4, itemName.length).toLowerCase()) {
                 var actionName = index.substr(itemName.length + 5);
-
-                if (actionName == '') {
-                    actionName = 'Осмотреть';
-                }
 
                 actions.push([actionName, index]);
             }
@@ -195,12 +193,21 @@ function Client() {
             }
 
             return '<li><a href="#" class="item_use">' + itemName + '</a></li>';
+        } if (actions.length == 1 && itemName != 'inv' && actions[0][0] == '') {
+            if (quantity > 1) {
+                itemName = itemName + ' (' + quantity + ')';
+            }
+            
+            var a = $('<a href="#" class="item_use">').attr('data-label', actions[0][1]).text(itemName);
+            a.html('<span class="glyphicon glyphicon-cog"></span> ' + a.text());
+            
+            return $('<li>').append(a);
         } else if (actions.length > 0)  {
 
             if (itemName == 'inv') {
-                    itemName = 'Инвентарь';
-                } else {
-                    if (quantity > 1) {
+                itemName = 'Инвентарь';
+            } else {
+                if (quantity > 1) {
                     itemName = itemName + ' (' + quantity + ')';
                 }
             }
@@ -210,6 +217,10 @@ function Client() {
             var li2 = $('<li class="menu-item">');
 
             for (var i = 0; i < actions.length; i++) {
+                if (actions[i][0] == '') {
+                    actions[i][0] = 'Осмотреть';
+                }
+                
                 li2.append($('<a href="#" class="item_use">').attr('data-label', actions[i][1]).text(actions[i][0]));
             }
 
@@ -227,5 +238,14 @@ function Client() {
      */
     this.convertToLink = function(text, command) {
         return "<a data-command='" + $("<div>").text(command).html() + "' class='button'>" + text + "</a>";
+    };
+
+    /**
+     * преврать текст вида <a ...>текст</a> в текст
+     * @param text 
+     * todo
+     */
+    this.disableLink = function(text) {
+        
     }
 }

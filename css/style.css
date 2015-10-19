@@ -71,6 +71,11 @@ div.clearfix + div.text, #textfield div.text:first-child {
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
 }
 
+#inventory span.glyphicon {
+    color: #777;
+    right: 2px;
+    top: 2px;
+}
 
 .container {
     width: auto;
