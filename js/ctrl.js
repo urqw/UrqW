@@ -49,9 +49,17 @@ $(function() {
 
         $('#saveslots').find('.list-group').empty();
 
+        var btn = $('<button class="list-group-item list-group-item-warning button text-center savebtn" data-slot="fast">');
+        var lsname = localStorage.getItem(Game.name + '_fast_name');
+
+        if (lsname != null) {
+            btn.text(lsname);
+            $('#saveslots').find('.list-group').append(btn);
+        }
+
         for(var i = 1; i <= 10; i++) {
-            var btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
-            var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
+            btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
+            lsname = localStorage.getItem(Game.name + '_' + i + '_name');
 
             if (lsname === null) {
                 btn.text('(Пустой слот сохранения)').prop('disabled', true);
