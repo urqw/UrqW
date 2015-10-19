@@ -68,6 +68,7 @@ function Parser() {
         if (operand[0] == ':') return;
 
         switch (operand) {
+            case 'save': return Game.save('fast');
             case 'image': return GlobalPlayer.image(command.toString().trim());
             case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
             case 'play':
