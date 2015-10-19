@@ -8,6 +8,22 @@
 </head>
 <body>
 
+<!--
+[[ | ]]
+save
+clsb
+style.css
+
+html pln
+html btn
+токены
+
+:use_предмет
+:use_предмет_
+
+include ?
+-->
+
 <style>
     .container {
         margin-top: 20px;
@@ -81,11 +97,11 @@
         для проигрывания старых квестов, написанных под другие интерпретаторы</p>
     <p><mark>count_[локация]</mark> - счетчик заходов на локацию, меняется от операторов <mark>btn</mark>, <mark>proc</mark>, <mark>goto</mark></p>
     <p><mark>music</mark> - если присвоить этой переменной файл с музыкой, то она начнёт проигрываться и будет повторяться по окончанию</p>
-        <code>music="muscic/fon.mp3"</code>
+        <code>music="music/fon.mp3"</code>
     <p><mark>common</mark> - изменение этой переменной приведёт к тому, что оператор <mark>btn</mark> станет вызывать локацию не <mark>:common</mark>, а 
         <mark>:common_{значение}</mark> при переходах</p>
-    <p><mark>current_loc</mark> - название текущей локации. Меняется только при btn переходах</p>
-    <p><mark>previous_loc</mark> - название предыдущей локации. Меняется только при btn переходах</p>
+    <p><mark>current_loc</mark> - название текущей локации. Меняется при btn и goto переходах</p>
+    <p><mark>previous_loc</mark> - название предыдущей локации. Меняется при btn и goto переходах</p>
     <p><mark>style_dos_textcolor</mark> - число от 0 до 15. Меняет цвет текста на дос-цвета. Вот они:</p>
     <code>
         <span style="color: #000000;">0</span>
@@ -191,6 +207,7 @@
     <code>
         play "Slash.wav"
     </code>
+    <p><mark>image [файл]</mark> - выводит указанное изображение</p>
     <p><mark>proc [метка]</mark> -
         переход на указанную локацию и выполнение квеста до оператора <mark>end</mark>, после чего возврат на изначальную позицию
         (увеличит счетчик заходов на локацию, переменная <mark>count_[метка]</mark>)</p>

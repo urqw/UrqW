@@ -37,9 +37,22 @@ function Client() {
     var me = this;
 
     /**
+     * @type {boolean}
+     */
+    var fistRender = true;
+    
+    /**
      * render
      */
     this.render = function (data) {
+        if (fistRender) {
+            if (Game.getVar('urq_mode') == 'dosurq') {
+                $('#additionalstyle').find('style').empty().append('#buttons .button {background-color: #AAA; color: rgb(255, 255, 255);}');
+            }
+            
+            fistRender = false;
+        }
+        
         var backColor = null;
         if (isNaN(Game.getVar('style_backcolor'))) {
             backColor = Game.getVar('style_backcolor');
