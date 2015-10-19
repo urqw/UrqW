@@ -135,7 +135,7 @@ function Client() {
 
             div.find('img').each(function(index) {
                 var src = $(this).attr('src');
-                if (src.indexOf('http://') == -1 && src.indexOf('https://') == -1) {
+                if (src && src.indexOf('http://') == -1 && src.indexOf('https://') == -1) {
                     if (files === null) {
                         $(this).attr('src', 'quests/' + Game.name + '/' + src);
                     } else {
@@ -193,11 +193,13 @@ function Client() {
         var actions = [];
 
         $.each(Game.useLabels, function(index, value) {
-            if (itemName.toLowerCase() == index.substr(4, itemName.length).toLowerCase()) {
+            if ((itemName.toLowerCase() + '_' == index.substr(4, itemName.length + 1).toLowerCase())
+            || (itemName.toLowerCase() == index.substr(4).toLowerCase())
+            ) {
                 var actionName = index.substr(itemName.length + 5);
 
                 actions.push([actionName, index]);
-            }
+            } 
         });
 
         if (actions.length == 0 && itemName != 'inv') {
