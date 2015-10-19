@@ -47,7 +47,7 @@ function Client() {
     this.render = function (data) {
         if (fistRender) {
             if (Game.getVar('urq_mode') == 'dosurq') {
-                $('#additionalstyle').find('style').empty().append('#buttons .button {background-color: #AAA; color: rgb(255, 255, 255);}');
+                $('#additionalstyle').find('style').empty().append('#buttons .button {background-color: #000; color: #AAA;}');
             }
             
             fistRender = false;
