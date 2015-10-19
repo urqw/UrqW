@@ -1,0 +1,46 @@
+/*
+* это тесты для тестирования верной работы движка
+*/
+
+:start
+pln Это тесты для тестирования верной работы движка
+btn proc test_proc, Проверить PROC
+btn goto test_input, Проверить INPUT
+end
+
+/*
+* PROC
+*/
+
+:test_proc
+pln Далее цифры от 1 до 3 по порядку:
+proc 123
+end
+
+:123
+proc 1
+end
+
+:1
+pln 1
+proc 2
+end
+
+:2
+pln 2
+proc 3
+end
+
+:3
+pln 3
+end
+
+/*
+* INPUT
+*/
+
+:test_input
+pln Введите что-то:
+input x
+pln Вот что вы ввели: #x$
+end
