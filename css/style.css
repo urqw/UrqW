@@ -51,10 +51,6 @@ div.clearfix + div.text, #textfield div.text:first-child {
     table-layout: fixed;
 }
 
-#textfield table td {
-    vertical-align: top;
-}
-
 #inventory {
     right: 0;
     float: right;
