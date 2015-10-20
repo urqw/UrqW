@@ -243,6 +243,7 @@ $(function() {
 
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             $('#info').hide();
+            buttonField.show();
             GlobalPlayer.anykeyAction(e.charCode);
         }
     });
@@ -253,6 +254,7 @@ $(function() {
     $(document).on('click', '#textfield, #info', function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             $('#info').hide();
+            buttonField.show();
             GlobalPlayer.anykeyAction(e.charCode);
         }
     });
@@ -274,6 +276,7 @@ $(function() {
             var input = $('#input');
             if (input.find('input').val() != '') {
                 input.hide();
+                buttonField.show();
                 
                 GlobalPlayer.inputAction(input.find('input').val());
             } else {

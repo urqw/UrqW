@@ -41,6 +41,9 @@ Player.prototype.goto = function(labelName, type) {
 
         Game.position = label.pos;
 
+        // весь стек что дальше очищается
+        this.flowStack[this.flow] = []; 
+
         return true;
     }
 
@@ -112,16 +115,15 @@ Player.prototype.invkill = function(item) {
  * @param {String} label
  */
 Player.prototype.proc = function(label) {
+    this.flow++;
     this.procPosition.push(Game.position);
 
     if (this.goto(label, 'proc')) {
-        this.flow++;
         this.flowStack[this.flow] = [];
-
         return true;
     } else {
+        this.flow--;
         this.procPosition.pop();
-
         return false;
     }
 };
@@ -135,6 +137,7 @@ Player.prototype.end = function() {
         Game.position = this.procPosition.pop();
         this.flow--;
     } else {
+        this.flowStack[this.flow] = [];
         this.status = PLAYER_STATUS_END;
     }
 };
