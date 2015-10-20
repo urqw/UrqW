@@ -71,9 +71,11 @@ function Client() {
             me.drawButtons();
             me.drawInventory();
         } else if (data.status == PLAYER_STATUS_ANYKEY) {
+            this.crtlButtonField.hide();
             this.crtlInfo.text('[нажмите любую клавишу]');
             this.crtlInfo.show();
         } else if (data.status == PLAYER_STATUS_INPUT) {
+            this.crtlButtonField.hide();
             this.crtlInput.removeClass('has-error');
             this.crtlInput.find('input').val('');
             this.crtlInput.show();

@@ -68,12 +68,14 @@ function Player() {
     /**
      *
      */
-    this.play = function() {
+    this.play = function(line) {
         this.lock = true;
 
-        var line;
-
         this.status = PLAYER_STATUS_NEXT;
+
+        if (line !== undefined) {
+            this.Parser.parse(line);
+        }
 
         while ((this.status == PLAYER_STATUS_NEXT)) {
             if (this.flowStack[this.flow].length == 0 && ((line = Game.next()) !== false)) {
@@ -113,7 +115,7 @@ function Player() {
             this.forgetProc();
             this.play();
         }
-   };
+    };
 
     /**
      * @param {String} labelName
@@ -140,21 +142,8 @@ function Player() {
 
         this.common();
 
-        var tmpLoc = Game.realCurrentLoc;
-        Game.realCurrentLoc = null;
-
-        this.Parser.parse(command);
-
-        while (this.flowStack[this.flow].length > 0) {
-            this.Parser.parse(this.flowStack[this.flow].pop());
-        }
-        
-        if (Game.realCurrentLoc !== null) { // сдвинулись! играем квест дальше
-            this.continue();
-        } else { // стоим на месте. Порисуем.
-            Game.realCurrentLoc = tmpLoc;
-            this.fin();
-        }
+        this.play(command + '&end');
+        this.fin();
     };
 
     /**
@@ -164,25 +153,8 @@ function Player() {
     this.useAction = function(labelName) {
         if (this.lock) return false;
 
-        this.cls();
-
-        var tmpLoc = Game.realCurrentLoc;
-
-        Game.realCurrentLoc = null;
-
-        if (this.proc(labelName)) {
-            this.forgetProc();
-            this.play();
-        }
-
-        if (Game.realCurrentLoc === null) {
-            Game.locked = true;
-            this.goto(tmpLoc, 'return');
-            this.continue();
-            Game.locked = false;
-        } else {
-            this.fin();
-        }
+        this.play('proc ' + labelName + '&end');
+        this.fin();
     };
 
     /**
@@ -239,7 +211,7 @@ function Player() {
                     file = value + '.gif';
                 }
             }
-            
+
             this.image(file);
         }
 

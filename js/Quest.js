@@ -136,8 +136,8 @@ function Quest(text) {
         }
 
         for (var i = 0; i < this.quest.length; i++) {
-            if (str.substr(0, 1) == ':') {
-                var key = str.substr(1).toLowerCase().trim();
+            if (this.quest[i].substr(0, 1) == ':') {
+                var key = this.quest[i].substr(1).toLowerCase().trim();
                 this.realCurrentLoc = key;
                 this.setVar('current_loc', key);
                 this.setVar('previous_loc', key);
