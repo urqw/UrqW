@@ -55,6 +55,23 @@ $(function() {
                 $('#choose-game').show();
             });
         } else {
+            $.ajax({
+                url: 'games.json',
+                dataType: "json"
+            }).done(function(quests) {
+                for (var i = 0; i < quests.length; i++) {
+                    $('.gamelist').append(
+                        '<a href="#" class="list-group-item gamelink" data-game="' + quests[i].folder + '">' +
+                        '<div class="pull-right">' +
+                        '<span class="text-muted">' + quests[i].author + '</span>' +
+                        '</div>' +
+                        '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
+                        '<p class="list-group-item-text">' + quests[i].description + '</p>' +
+                        '</a>'
+                    );
+                }
+            });
+
             $('#loading').hide();
             $('#choose-game').show();
         }
@@ -68,7 +85,7 @@ $(function() {
     /**
      * Выбор игры из списка
      */
-    $('.gamelink').on('click', function() {
+    $('.gamelist').on('click', '.gamelink', function() {
         window.location.hash = encodeURIComponent($(this).data('game'));
         loadFromHash();
 
