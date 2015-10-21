@@ -129,7 +129,7 @@ function Expression(str) {
                             break;
                         case '==':
                             if ((typeof b == 'string') && (typeof a == 'string')) {
-                                var reg = new RegExp('^' + a.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.+').replace(/\\\?/g, '.') + '$', 'i');
+                                var reg = new RegExp('^' + a.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$', 'i');
                                 result = b.search(reg) != -1;
                             } else {
                                 result = b == a;
