@@ -27,7 +27,7 @@ function Parser() {
             
             // todo переделать на обратную польскую
             if (ifline.indexOf(' if ') != -1) {
-                ifline = ifline.substring(0, ifline.indexOf(' if '))
+                ifline = ifline.substring(0, ifline.indexOf(' if ') + 1)
             }
             
             if (ifline.indexOf(' else ') == -1) {
