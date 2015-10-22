@@ -87,7 +87,7 @@ function Parser() {
                 break;
             case 'clsb': return GlobalPlayer.clsb();
             case 'cls': return GlobalPlayer.cls();
-            case 'forget_proc': return GlobalPlayer.forgetProc();
+            case 'forget_procs': return GlobalPlayer.forgetProcs();
             case 'proc': return GlobalPlayer.proc(command.toString().trim());
             case 'end': return GlobalPlayer.end();
             case 'anykey': return GlobalPlayer.anykey(command.toString().trim());
