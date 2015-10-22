@@ -1,0 +1,1815 @@
+:start
+text=""
+pln  Дамы и господа. Представляя на ваш суд данное произведение, я попросил бы вас внимательно прочитать нижеследующие пункты :
+pln  1. Данная игра содержит элементы секса и насилия, а посему не рекомендуется для пользования людьми впечатлительными или со слабой психикой.
+pln  2. Данная игра содержит не совсем стандартный интерфейс, а посему я предложил бы вам сначала прочитать "Мануал".
+pln  Желаю неприятного времяпрепровождения! Искренне ваш, Гораф.
+str=4
+carry=str*10
+proc data
+btn startgame, Начало
+btn intro, Введение
+btn help, Помощь
+end
+
+:startgame
+if obj=2 then obj=0&proc use_#%object#use_object_1$$_#%object#use_object_2$$&pln
+if giv=2 then giv=0&proc give_#%object#use_object_1$$_#%character#char$$&pln
+clsb
+pln #%room#room$$
+pln #%text$
+proc any_purpose_event
+instr text=
+pln  #%room#room$_text$
+ooo=-1
+proc show_objects
+pln
+proc show_characters
+pln
+if mode=0 then proc main_menu
+if mode=1 then proc exits_menu
+if mode=2 then proc rest
+if mode=3 then ooo=0&proc examine_objects
+if mode=4 then ooo=#room$&proc examine_objects
+if mode=5 then goto use_engine
+if mode=6 then ooo=0&ooo2=#room$&proc take_objects
+if mode=7 then ooo=#room$&ooo2=0&proc take_objects
+if mode=8 then proc talk
+if mode=9 then goto give_engine
+if mode=10 then proc system_engine
+end
+
+:use_engine
+if obj<>1 then obj=1&goto use_objects else obj=2&goto use_objects
+end
+:give_engine
+if giv<>1 then obj=1&giv=1&goto use_objects else obj=0&giv=2&goto select_character
+end
+
+:show_objects
+i=0
+j=0
+if ooo<>-1 then btn back, Назад
+:show_objects_loop
+i=i+1
+if object#i$_loc=room then p  #%object#i$_text$
+if i<global_object_num then goto show_objects_loop
+end
+
+:show_characters
+i=0
+j=0
+if ooo<>-1 then btn back, Назад
+:show_characters_loop
+i=i+1
+if character#i$_loc=room then p  #%character#i$_text$&proc #%character#i$_trigger$
+if i<global_character_num then goto show_characters_loop
+end
+
+:talk
+i=0
+j=0
+btn back, Назад
+:talk_loop
+i=i+1
+if character#i$_loc=room then j=j+1&o#j$=i&btn talk#j$, #%character#i$$
+if i<global_character_num then goto talk_loop
+end
+
+:talk1
+proc #%character#o1$_talk$
+mode=0
+goto startgame
+end
+:talk2
+proc #%character#o2$_talk$
+mode=0
+goto startgame
+end
+:talk3
+proc #%character#o3$_talk$
+mode=0
+goto startgame
+end
+:talk4
+proc #%character#o4$_talk$
+mode=0
+goto startgame
+end
+:talk5
+proc #%character#o5$_talk$
+mode=0
+goto startgame
+end
+:talk6
+proc #%character#o6$_talk$
+mode=0
+goto startgame
+end
+:talk7
+proc #%character#o7$_talk$
+mode=0
+goto startgame
+end
+:talk8
+proc #%character#o8$_talk$
+mode=0
+goto startgame
+end
+
+:select_character
+i=0
+j=0
+btn back, Назад
+:select_character_loop
+i=i+1
+if character#i$_loc=room then j=j+1&o#j$=i&btn char#j$, #%character#i$$
+if i<global_character_num then goto select_character_loop
+end
+:char1
+char=o1
+mode=0
+goto startgame
+end
+:char2
+char=o2
+mode=0
+goto startgame
+end
+:char3
+char=o3
+mode=0
+goto startgame
+end
+:char4
+char=o4
+mode=0
+goto startgame
+end
+:char5
+char=o5
+mode=0
+goto startgame
+end
+:char6
+char=o6
+mode=0
+goto startgame
+end
+:char7
+char=o7
+mode=0
+goto startgame
+end
+:char8
+char=o8
+mode=0
+goto startgame
+end
+
+
+:take_objects
+i=0
+j=0
+btn back, Назад
+:take_objects_loop
+i=i+1
+if object#i$_loc=ooo2 then j=j+1&o#j$=i&btn take_object#j$, #%object#i$$
+if i<global_object_num then goto take_objects_loop
+end
+
+:take_object1
+if ooo=0 then proc #%object#o1$_take_trigger$
+if ooo=room then proc #%object#o1$_drop_trigger$
+if ooo=0 and carry<object#o1$_weight and object#o1$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o1$_weight and object#o1$_weight>100 then pln #%object#o1$_take$
+if ooo=0 and carry>=object#o1$_weight then object#o1$_loc=ooo&carry=carry-object#o1$_weight
+if ooo=room then object#o1$_loc=ooo&carry=carry+object#o1$_weight
+mode=0
+goto startgame
+end
+:take_object2
+if ooo=0 then proc #%object#o2$_take_trigger$
+if ooo=room then proc #%object#o2$_drop_trigger$
+if ooo=0 and carry<object#o2$_weight and object#o2$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o2$_weight and object#o2$_weight>100 then pln #%object#o2$_take$
+if ooo=0 and carry>=object#o2$_weight then object#o2$_loc=ooo&carry=carry-object#o2$_weight
+if ooo=room then object#o2$_loc=ooo&carry=carry+object#o2$_weight
+mode=0
+goto startgame
+end
+:take_object3
+if ooo=0 then proc #%object#o3$_take_trigger$
+if ooo=room then proc #%object#o3$_drop_trigger$
+if ooo=0 and carry<object#o3$_weight and object#o3$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o3$_weight and object#o3$_weight>100 then pln #%object#o3$_take$
+if ooo=0 and carry>=object#o3$_weight then object#o3$_loc=ooo&carry=carry-object#o3$_weight
+if ooo=room then object#o3$_loc=ooo&carry=carry+object#o3$_weight
+mode=0
+goto startgame
+end
+:take_object4
+if ooo=0 then proc #%object#o4$_take_trigger$
+if ooo=room then proc #%object#o4$_drop_trigger$
+if ooo=0 and carry<object#o4$_weight and object#o4$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o4$_weight and object#o4$_weight>100 then pln #%object#o4$_take$
+if ooo=0 and carry>=object#o4$_weight then object#o4$_loc=ooo&carry=carry-object#o4$_weight
+if ooo=room then object#o4$_loc=ooo&carry=carry+object#o4$_weight
+mode=0
+goto startgame
+end
+:take_object5
+if ooo=0 then proc #%object#o5$_take_trigger$
+if ooo=room then proc #%object#o5$_drop_trigger$
+if ooo=0 and carry<object#o5$_weight and object#o5$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o5$_weight and object#o5$_weight>100 then pln #%object#o5$_take$
+if ooo=0 and carry>=object#o5$_weight then object#o5$_loc=ooo&carry=carry-object#o5$_weight
+if ooo=room then object#o5$_loc=ooo&carry=carry+object#o5$_weight
+mode=0
+goto startgame
+end
+:take_object6
+if ooo=0 then proc #%object#o6$_take_trigger$
+if ooo=room then proc #%object#o6$_drop_trigger$
+if ooo=0 and carry<object#o6$_weight and object#o6$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o6$_weight and object#o6$_weight>100 then pln #%object#o6$_take$
+if ooo=0 and carry>=object#o6$_weight then object#o6$_loc=ooo&carry=carry-object#o6$_weight
+if ooo=room then object#o6$_loc=ooo&carry=carry+object#o6$_weight
+mode=0
+goto startgame
+end
+:take_object7
+if ooo=0 then proc #%object#o7$_take_trigger$
+if ooo=room then proc #%object#o7$_drop_trigger$
+if ooo=0 and carry<object#o7$_weight and object#o7$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o7$_weight and object#o7$_weight>100 then pln #%object#o7$_take$
+if ooo=0 and carry>=object#o7$_weight then object#o7$_loc=ooo&carry=carry-object#o7$_weight
+if ooo=room then object#o7$_loc=ooo&carry=carry+object#o7$_weight
+mode=0
+goto startgame
+end
+:take_object8
+if ooo=0 then proc #%object#o8$_take_trigger$
+if ooo=room then proc #%object#o8$_drop_trigger$
+if ooo=0 and carry<object#o8$_weight and object#o8$_weight<100 then pln Слишком тяжело
+if ooo=0 and carry<object#o8$_weight and object#o8$_weight>100 then pln #%object#o8$_take$
+if ooo=0 and carry>=object#o8$_weight then object#o8$_loc=ooo&carry=carry-object#o8$_weight
+if ooo=room then object#o8$_loc=ooo&carry=carry+object#o8$_weight
+mode=0
+goto startgame
+end
+
+
+
+:examine_objects
+i=0
+j=0
+btn back, Назад
+:objects_loop
+i=i+1
+if object#i$_loc=ooo then j=j+1&o#j$=i&btn examine_object#j$, #%object#i$$
+if i<global_object_num then goto objects_loop
+end
+
+:examine_object1
+proc #%object#o1$_examine_trigger$
+instr text=#%object#o1$_examine$
+mode=0
+goto startgame
+end
+:examine_object2
+proc #%object#o2$_examine_trigger$
+instr text=#%object#o2$_examine$
+mode=0
+goto startgame
+end
+:examine_object3
+proc #%object#o3$_examine_trigger$
+instr text=#%object#o3$_examine$
+mode=0
+goto startgame
+end
+:examine_object4
+proc #%object#o4$_examine_trigger$
+instr text=#%object#o4$_examine$
+mode=0
+goto startgame
+end
+:examine_object5
+proc #%object#o5$_examine_trigger$
+instr text=#%object#o5$_examine$
+mode=0
+goto startgame
+end
+:examine_object6
+proc #%object#o6$_examine_trigger$
+instr text=#%object#o6$_examine$
+mode=0
+goto startgame
+end
+:examine_object7
+proc #%object#o7$_examine_trigger$
+instr text=#%object#o7$_examine$
+mode=0
+goto startgame
+end
+:examine_object8
+proc #%object#o8$_examine_trigger$
+instr text=#%object#o8$_examine$
+mode=0
+goto startgame
+end
+
+
+:use_objects
+i=0
+j=0
+btn back, Назад
+:use_objects_loop
+i=i+1
+if object#i$_loc=0 or object#i$_loc=room then j=j+1&o#j$=i&btn use_object#j$, #%object#i$$
+if i<global_object_num then goto use_objects_loop
+end
+
+:use_object1
+use_object_#obj$=o1
+if obj=2 then mode=0
+goto startgame
+end
+:use_object2
+use_object_#obj$=o2
+if obj=2 then mode=0
+goto startgame
+end
+:use_object3
+use_object_#obj$=o3
+if obj=2 then mode=0
+goto startgame
+end
+:use_object4
+use_object_#obj$=o4
+if obj=2 then mode=0
+goto startgame
+end
+:use_object5
+use_object_#obj$=o5
+if obj=2 then mode=0
+goto startgame
+end
+:use_object6
+use_object_#obj$=o6
+if obj=2 then mode=0
+goto startgame
+end
+:use_object7
+use_object_#obj$=o7
+if obj=2 then mode=0
+goto startgame
+end
+:use_object8
+use_object_#obj$=o8
+goto startgame
+end
+
+
+
+:rest
+proc #%room#room$_rest_trigger$
+mode=0
+goto startgame
+end
+
+:exits_menu
+i=0
+btn back, Назад
+:exits_loop
+i=i+1
+btn exit#i$, #%room#room$_exit#i$$
+if i<#room#room$_exit_num$ then goto exits_loop
+end
+
+:back
+mode=0
+goto startgame
+end
+:exit1
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit1_text$
+room=#room#room$_exit1_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit2
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit2_text$
+room=#room#room$_exit2_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit3
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit3_text$
+room=#room#room$_exit3_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit4
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit4_text$
+room=#room#room$_exit4_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit5
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit5_text$
+room=#room#room$_exit5_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit6
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit6_text$
+room=#room#room$_exit6_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit7
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit7_text$
+room=#room#room$_exit7_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+:exit8
+proc #%room#room$_exit_trigger$
+instr text=#%room#room$_exit8_text$
+room=#room#room$_exit8_loc$
+proc #%room#room$_enter_trigger$
+mode=0
+goto startgame
+end
+
+
+:main_menu
+btn exits, Идти
+btn sleep, Отдохнуть
+btn inventory, Инвентарь
+btn examine, Осмотреть
+btn use, Использовать
+btn take, Взять
+btn drop, Бросить
+btn talk, Говорить
+btn give, Отдать
+btn system, Игра
+end
+
+:exits
+mode=1
+goto startgame
+end
+:sleep
+mode=2
+goto startgame
+end
+:inventory
+mode=3
+goto startgame
+end
+:examine
+mode=4
+goto startgame
+end
+:use
+mode=5
+goto startgame
+end
+:take
+mode=6
+goto startgame
+end
+:drop
+mode=7
+goto startgame
+end
+:talk
+mode=8
+goto startgame
+end
+:give
+mode=9
+goto startgame
+end
+:system
+mode=10
+goto startgame
+end
+
+:system_engine
+btn back, Назад
+btn savegame, Сохранить Игру
+end
+:savegame
+save startgame
+mode=0
+goto startgame
+end
+
+
+:intro
+pln  Все началось в один прекрасный день, когда будучи крайне стесненным в средствах,
+_ и не имеющий желания тяжело и много работать, я решил стать личным биографом капитана
+_ Блуда. Как, вы не слышали о капитане Блуде? А ведь в свое время в Париже он был не менее популярен чем
+_ прежде мосье Видок или мистер Холмс из Англии. Что ж, думаю мне удастся восполнить этот пробел в истории, и прочитав
+_ сие хроники вы узнаете о подвигах, расследованиях и удачах капитана Блуда.
+btn start, Назад
+end
+
+:help
+pln (c) Yuri Pavlenko aki Goraph 2004
+pln
+pln  Управление действиями игрока производиться с помощью меню, расположенного в нижней части экрана.
+_ Для выбора нужного пункта меню используются клавиши управления курсором и клавиша 'Enter'
+_ #/$#/$ 1. ИДТИ
+_ #/$ Позволяет перемещаться в выбранном направлении
+_ #/$#/$ 2. ОТДОХНУТЬ
+_ #/$ Используется для отдыха. Отдыхать в некоторых местах может быть опасно.
+_ #/$#/$ 3. ИНВЕНТАРЬ
+_ #/$ Позволяет осмотреть предметы, которые у вас с собой.
+_ #/$#/$ 4. ОСМОТРЕТЬ
+_ #/$ Позволяет осмотреть предметы в локации.
+_ #/$#/$ 5. ИСПОЛЬЗОВАТЬ
+_ #/$ Позволяет использовать предметы. Вам необходимо выбрать КАКИМ предметом воздействовать на КАКОЙ. Для того чтобы использовать предмет сам по себе его необходимо выбрать дважды.
+_ #/$#/$ 6. ВЗЯТЬ
+_ #/$ Позволяет взять один из предметов находящихся в локации.
+_ #/$#/$ 7. БРОСИТЬ
+_ #/$ Позволяет выложить один из предметов в инвентаре в локацию.
+_ #/$#/$ 8. ГОВОРИТЬ
+_ #/$ Позволяет общаться с некоторыми персонажами в игре.
+_ #/$#/$ 9. ОТДАТЬ
+_ #/$ Позволяет отдавать некоторые предметы персонажам в игре. Вам предстоит сначала выбрать какой предмет отдать, а потом выбрать персонажа, которму вы хотите отдать упомянутый предмет.
+_ #/$#/$ 10. ИГРА
+_ #/$ Позволяет получить доступ к системным функциям, таким как СОХРАНЕНИЕ ИГРЫ или НАЧАТЬ ИГРУ СНАЧАЛА, а также посмтореть на параметры персонажа.
+_ #/$#/$ Все это описание режима перемещений. Когда вы встретите врага, игра переходит в режим схватки. В этом режиме вы увидите постоянно изменяющуюся полоску с силой удара. Вам необходимо
+_ будет нажать любую клавишу в тот момент, когда полоска будет находиться в максимальном положении. Амплитуда и скорость изменения полоски напрямую зависит от ваших параметров.
+btn start, Назад
+end
+
+
+:data
+room=1
+минута=0
+час=8
+день=12
+месяц=10
+день_недели=1
+
+instr room1=Кабинет
+instr room1_text=Уютно обставленный кабинет капитана Блуда.
+room1_exit_num=1
+instr room1_exit1=Дверь
+room1_exit1_loc=2
+instr room1_exit1_text=Вы покидаете кабинет капитана Блуда.
+instr room1_exit_trigger=выход_кабинет
+instr room1_enter_trigger=nop
+instr room1_rest_trigger=кабинет_отдых
+
+instr room2=Прихожая
+instr room2_text=Уютная прихожая капитана Блуда.
+room2_exit_num=2
+instr room2_exit1=В кабинет
+room2_exit1_loc=1
+instr room2_exit1_text=Вы входите в кабинет капитана Блуда.
+instr room2_exit2=Ну улицу
+room2_exit2_loc=3
+instr room2_exit2_text=Вы выходите на улицу Ришалье.
+instr room2_exit_trigger=nop
+instr room2_enter_trigger=nop
+instr room2_rest_trigger=нормальный_отдых
+
+instr room3=Улица Ришалье
+instr room3_text=Вы прогуливаетесь по улице Ришалье.
+room3_exit_num=1
+instr room3_exit1=В дом капитана Блуда
+room3_exit1_loc=2
+instr room3_exit1_text=Вы входите в дом капитана Блуда.
+instr room3_exit_trigger=nop
+instr room3_enter_trigger=вызвать_экипаж
+instr room3_rest_trigger=нормальный_отдых
+
+instr room11=Улица перед жандармерией
+instr room11_text=Вы прогуливаетесь по улице возле жандармерии. Отсюда также видно Бастилию.
+room11_exit_num=1
+instr room11_exit1=В жандармерию
+room11_exit1_loc=12
+instr room11_exit1_text=Вы входите в жандармерию.
+instr room11_exit_trigger=nop
+instr room11_enter_trigger=вызвать_экипаж
+instr room11_rest_trigger=нормальный_отдых
+
+instr room12=Жандармерия
+instr room12_text=В жандармерии полно народа. Здесь много жандармов, преступников и их жертв.
+room12_exit_num=1
+instr room12_exit1=На улицу
+room12_exit1_loc=11
+instr room12_exit1_text=Вы выходите из жандармерии
+instr room12_exit_trigger=nop
+instr room12_enter_trigger=nop
+instr room12_rest_trigger=нормальный_отдых
+
+instr room13=Морг
+instr room13_text=Вы в морге. Здесь не слишком светло, и довольно прохладно. В морге стоит стойкий запах разлагающихся тел, перебивающий запах дешевого мыла, которым, по-видимому, омывали трупы.
+room13_exit_num=1
+instr room13_exit1=Выйти
+room13_exit1_loc=12
+instr room13_exit1_text=Вы выходите из морга
+instr room13_exit_trigger=nop
+instr room13_enter_trigger=nop
+instr room13_rest_trigger=нормальный_отдых
+
+instr room21=Квартал Красных Фонарей
+instr room21_text=Вы прогуливаетесь по кварталу Красных фонарей. Повсюду взад вперед бесцельно гуляют девушки, использующие очень много косметики.
+room21_exit_num=1
+instr room21_exit1=Походить по кварталу
+room21_exit1_loc=22
+instr room21_exit1_text=Вы идете дальше по кварталу.
+instr room21_exit_trigger=nop
+instr room21_enter_trigger=квартал_фонарей
+instr room21_rest_trigger=нормальный_отдых
+
+instr room22=Квартал Красных Фонарей
+instr room22_text=Вы прогуливаетесь по кварталу Красных фонарей. Повсюду взад вперед бесцельно гуляют девушки, использующие очень много косметики.
+room22_exit_num=1
+instr room22_exit1=Походить по кварталу
+room22_exit1_loc=23
+instr room22_exit1_text=Вы идете дальше по кварталу.
+instr room22_exit_trigger=nop
+instr room22_enter_trigger=квартал_фонарей
+instr room22_rest_trigger=нормальный_отдых
+
+instr room23=Квартал Красных Фонарей
+instr room23_text=Вы прогуливаетесь по кварталу Красных фонарей. Повсюду взад вперед бесцельно гуляют девушки, использующие очень много косметики.
+room23_exit_num=1
+instr room23_exit1=Походить по кварталу
+room23_exit1_loc=24
+instr room23_exit1_text=Вы идете дальше по кварталу.
+instr room23_exit_trigger=nop
+instr room23_enter_trigger=квартал_фонарей
+instr room23_rest_trigger=нормальный_отдых
+
+instr room24=Квартал Красных Фонарей
+instr room24_text=Вы прогуливаетесь по кварталу Красных фонарей. Повсюду взад вперед бесцельно гуляют девушки, использующие очень много косметики. Ваше внимание привлекает пансионат "Голубая луна".
+_ По словам Блуда это именно тот пансион, в котором и жила Лиззи Рош.
+room24_exit_num=2
+instr room24_exit1=Походить по кварталу
+room24_exit1_loc=21
+instr room24_exit1_text=Вы идете дальше по кварталу.
+instr room24_exit2=Зайти в пансион "Голубая луна"
+room24_exit2_loc=25
+instr room24_exit2_text=Вы входите в пансион "Голубая луна".
+instr room24_exit_trigger=nop
+instr room24_enter_trigger=квартал_фонарей
+instr room24_rest_trigger=нормальный_отдых
+
+instr room25=Пансион "Голубая луна"
+instr room25_text=Вы прогуливаетесь по кварталу Красных фонарей. Повсюду взад вперед бесцельно гуляют девушки, использующие очень много косметики.
+room25_exit_num=1
+instr room25_exit1=Походить по кварталу
+room25_exit1_loc=24
+instr room25_exit1_text=Вы идете дальше по кварталу.
+instr room25_exit_trigger=nop
+instr room25_enter_trigger=пансион
+instr room25_rest_trigger=нормальный_отдых
+
+instr room31="Двор Ангелов"
+instr room31_text=Вы оказываетесь на громадной парижской помойке, расположенной в старинных парижских руинах. Нищие, воры и оборванцы, а также шлюхи, гадалки и цыгане всех мастей живут
+_ здесь странной коммуной. И сейчас все они смотрят на вас.
+room31_exit_num=1
+instr room31_exit1=Походить по двору
+room31_exit1_loc=31
+instr room31_exit1_text=Вы идете дальше по двору
+instr room31_exit_trigger=nop
+instr room31_enter_trigger=вызвать_экипаж
+instr room31_rest_trigger=нормальный_отдых
+
+instr room41=Квартал Сен-Дени
+instr room41_text=Вы находитесь на небольшой улочке возле сиротского приюта. Это большое серое бесформенное строение. Большинство окон его открыты, из них свисает сохнущее белье.
+room41_exit_num=1
+instr room41_exit1=В приют.
+room41_exit1_loc=42
+instr room41_exit1_text=Вы входите в приют.
+instr room41_exit_trigger=nop
+instr room41_enter_trigger=вызвать_экипаж
+instr room41_rest_trigger=нормальный_отдых
+
+instr room42=Приют Сен-Дени
+instr room42_text=Вы входите в сиротский приют. Уже в прихожей вас поражает многообразие девочек всех возрастов, которые весело галдят.
+room42_exit_num=1
+instr room42_exit1=На улицу.
+room42_exit1_loc=41
+instr room42_exit1_text=Вы выходите на улицу.
+instr room42_exit_trigger=nop
+instr room42_enter_trigger=nop
+instr room42_rest_trigger=нормальный_отдых
+
+instr room51=Улица Дром
+instr room51_text=Это темная и достаточно грязная улица Дром. Вывеска "Дубильщик Жерар" свисает с конька одного из домов.
+room51_exit_num=1
+instr room51_exit1=К дубильщику.
+room51_exit1_loc=52
+instr room51_exit1_text=Вы входите к дубильщику.
+instr room51_exit2=Вверх по крыше.
+room51_exit2_loc=53
+instr room52_exit1_text=Вы залазите вверх по крыше.
+instr room51_exit_trigger=nop
+instr room51_enter_trigger=вызвать_экипаж
+instr room51_rest_trigger=нормальный_отдых
+
+instr room52=Дубильня
+instr room52_text=Вы в большой задымленной комнате. Свист раздается повсюду, а вокруг расположены странные механизмы.
+room52_exit_num=1
+instr room52_exit1=На улицу.
+room52_exit1_loc=51
+instr room52_exit1_text=Вы выходите на улицу.
+instr room52_exit_trigger=nop
+instr room52_enter_trigger=nop
+instr room52_rest_trigger=нормальный_отдых
+
+instr room53=Крыша Дубильни
+instr room53_text=Вы на крыше дубильни. До соседней крыши не более метра.
+room53_exit_num=2
+instr room53_exit1=Спуститься на улицу.
+room53_exit1_loc=51
+instr room53_exit1_text=Вы спускаетесь на улицу.
+instr room53_exit2=Прыгнуть на соседнюю крышу.
+room53_exit2_loc=54
+instr room53_exit2_text=Вы прыгаете на соседнюю крышу.
+instr room53_exit_trigger=nop
+instr room53_enter_trigger=погоня1
+instr room53_rest_trigger=нормальный_отдых
+
+instr room54=Крыша соседнего дома
+instr room54_text=Вы на крыше каменного дома. До соседней крыши чуть более метра.
+room54_exit_num=2
+instr room54_exit1=Спуститься на улицу.
+room54_exit1_loc=51
+instr room54_exit1_text=Вы спускаетесь на улицу.
+instr room54_exit2=Прыгнуть на соседнюю крышу.
+room54_exit2_loc=55
+instr room54_exit2_text=Вы прыгаете на соседнюю крышу.
+instr room54_exit_trigger=nop
+instr room54_enter_trigger=погоня2
+instr room54_rest_trigger=нормальный_отдых
+
+instr room55=Крыша неизвестного склада
+instr room55_text=Вы на крыше неизвестного склада.
+room55_exit_num=1
+instr room55_exit1=Спуститься на улицу.
+room55_exit1_loc=51
+instr room55_exit1_text=Вы спускаетесь на улицу.
+instr room55_exit_trigger=nop
+instr room55_enter_trigger=погоня3
+instr room55_rest_trigger=нормальный_отдых
+
+instr room56=Последняя крыша на улице Дром
+instr room56_text=Вы на крыше, которой заканчиваеться улица Дром. Дальше только Сена.
+room56_exit_num=1
+instr room56_exit1=Спуститься на улицу.
+room56_exit1_loc=51
+instr room56_exit1_text=Вы спускаетесь на улицу.
+instr room56_exit_trigger=nop
+instr room56_enter_trigger=погоня4
+instr room56_rest_trigger=нормальный_отдых
+
+instr room81=Булонский лес
+instr room81_text=Вы на опушке Булонского леса. Рядом стоит монастырь.
+room81_exit_num=1
+instr room81_exit1=В монастырь.
+room81_exit1_loc=82
+instr room81_exit1_text=Вы входите в монастырь.
+instr room81_exit_trigger=nop
+instr room81_enter_trigger=вызвать_экипаж
+instr room81_rest_trigger=нормальный_отдых
+
+instr room82=Монастырь
+instr room82_text=Вы в монастыре. Здесь тихо, сыро и грустно.
+room82_exit_num=1
+instr room82_exit1=На улицу.
+room82_exit1_loc=81
+instr room82_exit1_text=Вы выходите на улицу.
+instr room82_exit_trigger=nop
+instr room82_enter_trigger=быстрый_конец
+instr room82_rest_trigger=нормальный_отдых
+
+
+global_object_num=16
+
+instr object1=Столик
+instr object1_text=В центре кабинета стоит небольшой журнальный столик.
+instr object1_take=Вы не можете взять журнальный столик.
+instr object1_examine=На столике нет никаких журналов, зато не нем стоит небольшой кофейник и две кофейные чашки. Недолго думая, вы наливаете себе кофе.
+instr object1_examine_trigger=nop
+instr object1_take_trigger=nop
+instr object1_drop_trigger=nop
+object1_loc=1
+object1_weight=999
+
+instr object2=Gazette des Tribunaux
+instr object2_text=На журнальном столике лежит свежий выпуск "Gazette des Tribunaux"
+instr object2_take=Капитан Блуд не любит, когда вы берете насовсем газету, которую он выписывает. Однако вы можете почитать ее здесь.
+instr object2_examine=Это свежий утренний выпуск "Судебной газеты".
+instr object2_examine_trigger=читать_газету
+instr object2_take_trigger=nop
+instr object2_drop_trigger=nop
+object2_loc=-1
+object2_weight=999
+
+instr object3=Деньги
+instr object3_text=Повсюду валяються деньги.
+instr object3_take=Вы собираете деньги.
+instr object3_examine=Это денежные знаки выпущенные в обращение французским казначейством в разные годы, но все они имеют хождение до сих пор.
+instr object3_examine_trigger=считать_деньги
+instr object3_take_trigger=nop
+instr object3_drop_trigger=nop
+object3_loc=-1
+object3_weight=0
+
+instr object4=Блокнот
+instr object4_text=Здесь почему-то лежит ваш блокнот.
+instr object4_take=Вы взяли блокнот.
+instr object4_examine=Это ваш блокнот.
+instr object4_examine_trigger=nop
+instr object4_take_trigger=nop
+instr object4_drop_trigger=nop
+object4_loc=-1
+object4_weight=0
+
+instr object5=Экипаж
+instr object5_text=По улице туда сюда курсируют экипажи, перевозящие парижан с места на место.
+instr object5_take=Вы не можете просто так взять экипаж - никто не повезет вас бесплатно.
+instr object5_examine=Это обычный закрытый экипаж, для не слишком богатых парижан, которые не могут содержать собственный, но любят кататься а не ходить пешком.
+instr object5_examine_trigger=nop
+instr object5_take_trigger=nop
+instr object5_drop_trigger=nop
+object5_loc=-1
+object5_weight=999
+
+instr object6=Тело Лиззи
+instr object6_text=На столе лежит мертвое тело Лиззи Рош.
+instr object6_take=Вы не можете взять тело Лиззи. Здесь стоит работник морга, и следит за порядком. Он не разрешает вам делать это.
+instr object6_examine=Это мертвое тело Лиззи Рош, зверски убитой и изнасилованной. Ее лицо отдает трупной синевой, на шее следы от струны которой ее удушили, от ягодиц отрезан кусок кожи.
+instr object6_examine_trigger=тело_триггер
+instr object6_take_trigger=nop
+instr object6_drop_trigger=nop
+object6_loc=13
+object6_weight=999
+
+instr object7=Шея Лиззи
+instr object7_text=
+instr object7_take=Здесь стоит сотрудник морга. И если вы сделаете то что хотите, вас могут больше сюда не пустить.
+instr object7_examine=Шея Лиззи отмечена следами от струны, которой ее удушили.
+instr object7_examine_trigger=шея_триггер
+instr object7_take_trigger=nop
+instr object7_drop_trigger=nop
+object7_loc=-1
+object7_weight=999
+
+instr object8=Ягодицы Лиззи
+instr object8_text=
+instr object8_take=Здесь стоит сотрудник морга. И если вы сделаете то что хотите, вас могут больше сюда не пустить.
+instr object8_examine=Из левой ягодицы Лиззи кто-то вырезал довольно большой кусок кожи.
+instr object8_examine_trigger=ягодицы_триггер
+instr object8_take_trigger=nop
+instr object8_drop_trigger=nop
+object8_loc=-1
+object8_weight=999
+
+instr object9=Влагалище Лиззи
+instr object9_text=
+instr object9_take=Здесь стоит сотрудник морга. И если вы сделаете то что хотите, вас могут больше сюда не пустить.
+instr object9_examine=Влагалище Лиззи гладко выбрито.
+instr object9_examine_trigger=влагалище_триггер
+instr object9_take_trigger=nop
+instr object9_drop_trigger=nop
+object9_loc=-1
+object9_weight=999
+
+instr object10=Ногти Лиззи
+instr object10_text=
+instr object10_take=Здесь стоит сотрудник морга. И если вы сделаете то что хотите, вас могут больше сюда не пустить.
+instr object10_examine=Ногти Лиззи достаточно грязные.
+instr object10_examine_trigger=ногти_триггер
+instr object10_take_trigger=nop
+instr object10_drop_trigger=nop
+object10_loc=-1
+object10_weight=999
+
+instr object11=Место убийства
+instr object11_text=Вы видите тот темный переулок, где нашли тело Лиззи Рош.
+instr object11_take=Вы не можете взять место убийства.
+instr object11_examine=Вы осматриваете место убийства, однако все следы давно затоптаны.
+instr object11_examine_trigger=место_триггер
+instr object11_take_trigger=nop
+instr object11_drop_trigger=nop
+object11_loc=22
+object11_weight=999
+
+instr object12=Газовый фонарь
+instr object12_text=Единственным, и достаточно тусклым источником освещения для всего помещения является газовый фонарь под потолком.
+instr object12_take=Вы не можете взять газовый фонарь. Может случиться утечка газа.
+instr object12_examine=Обычный газовый фонарь, которые в последнее время вошли в моду в Париже.
+instr object12_examine_trigger=nop
+instr object12_take_trigger=nop
+instr object12_drop_trigger=nop
+object12_loc=52
+object12_weight=999
+
+instr object13=Темнота
+instr object13_text=В комнате абсолютно темно, и совершенно ничего не видно.
+instr object13_take=Вы не можете взять темноту.
+instr object13_examine=Вы находите в темноте газовый фонарь, и зажигаете его.
+instr object13_examine_trigger=искать_в_темноте
+instr object13_take_trigger=nop
+instr object13_drop_trigger=nop
+object13_loc=-1
+object13_weight=999
+
+instr object14=Кусочек кожи
+instr object14_text=На полу лежит кусочек кожи.
+instr object14_take=Вы взяли кусочек кожи.
+instr object14_examine=Похоже, это та часть кожи, которая была вырезана из ягодицы Лиззи Рош.
+instr object14_examine_trigger=кожа
+instr object14_take_trigger=nop
+instr object14_drop_trigger=nop
+object14_loc=-1
+object14_weight=0
+
+instr object15=Бельевая веревка
+instr object15_text=Отсюда к дальней крыше протянута бельевая веревка.
+instr object15_take=Вы не можете снять бельевую веревку - она привязана с обоих крыш.
+instr object15_examine=Обычная бельевая веревка, на которой сушиться белье. Она достаточно прочная, чтобы выдержать вес большого количества мокрого белья, или даже взрослого мужчины.
+instr object15_examine_trigger=nop
+instr object15_take_trigger=nop
+instr object15_drop_trigger=nop
+object15_loc=55
+object15_weight=999
+
+instr object16=Простыня
+instr object16_text=На бельевой веревке висит простыня
+instr object16_take=Вы взяли мокрую простыню.
+instr object16_examine=Мокрая простыня кого-то из жильцов с соседних домов.
+instr object16_examine_trigger=nop
+instr object16_take_trigger=nop
+instr object16_drop_trigger=nop
+object16_loc=55
+object16_weight=20
+
+
+global_character_num=13
+
+instr character1=Блуд
+instr character1_text=Здесь же и неизменный капитан Блуд.
+character1_loc=1
+instr character1_talk=говорить_блуд
+instr character1_trigger=триггер_блуд
+
+instr character2=Герда
+instr character2_text=Чернокожая служанка Герда привезенная Блудом из Африки равномерно покачивает бедрами.
+character2_loc=-1
+instr character2_talk=говорить_герда
+instr character2_trigger=триггер_герда
+
+instr character3=Дюваль
+instr character3_text=Инспектор Дюваль здесь, и похоже следит за вами, но упорно делает что не замечает вас.
+character3_loc=12
+instr character3_talk=говорить_дюваль
+instr character3_trigger=триггер_дюваль
+
+instr character4=Работник морга
+instr character4_text=Здесь же стоит работник морга, и следит за вашими действиями.
+character4_loc=13
+instr character4_talk=говорить_морг
+instr character4_trigger=триггер_морг
+
+instr character5=Мари
+instr character5_text=Вы видите красивую стройную девушку в коротком платьице, открывающем ноги почти до колен. Это Мари.
+character5_loc=-1
+instr character5_talk=говорить_мари
+instr character5_trigger=триггер_мари
+
+instr character6=Софи
+instr character6_text=Вы видите веселую красавицу, которая зазывно улыбаеться вам. Это Софи.
+character6_loc=-1
+instr character6_talk=говорить_софи
+instr character6_trigger=триггер_софи
+
+instr character7=Марла
+instr character7_text=Вы видите красивую, грустную и слегка задумчивую девушку. Это Марла.
+character7_loc=-1
+instr character7_talk=говорить_марла
+instr character7_trigger=триггер_марла
+
+instr character8=Жюли
+instr character8_text=Вы видите слегка испуганную девушку в плаще. Это Жюли.
+character8_loc=-1
+instr character8_talk=говорить_жюли
+instr character8_trigger=триггер_жюли
+
+instr character9=Марго
+instr character9_text=Вы видите властную женщину, гордо обозревающую улицу. Это Марго.
+character9_loc=-1
+instr character9_talk=говорить_марго
+instr character9_trigger=триггер_марго
+
+instr character10=Диана
+instr character10_text=Вы видите стройную девушку без юбки, в одних панталонах, которая весело смеется, заманивая клиентов. Это Диана.
+character10_loc=-1
+instr character10_talk=говорить_диана
+instr character10_trigger=триггер_диана
+
+instr character11=Мишель
+instr character11_text=Из толпы выделяеться огромный хромой горбун, который шагает прямо к Блуду. Вы знаете его, это лидер комунны - Мишель.
+character11_loc=31
+instr character11_talk=говорить_мишель
+instr character11_trigger=триггер_мишель
+
+instr character12=Директор Приюта
+instr character12_text=За столом из дуба сидит директор приюта.
+character12_loc=42
+instr character12_talk=говорить_директор
+instr character12_trigger=триггер_директор
+
+instr character13=Дубильщик
+instr character13_text=Из дыма и пара появляеться дубильщик - пожилой месье в пенсне и синих нарукавниках.
+character13_loc=52
+instr character13_talk=говорить_дубильщик
+instr character13_trigger=триггер_дубильщик
+
+end
+
+
+:nop
+end
+
+:нормальный_отдых
+pln
+instr text=#%text$
+час=час+1
+pln Вы отдыхаете около часа...
+pln
+end
+
+:вызвать_экипаж
+object5_loc=room
+end
+
+:квартал_фонарей
+object5_loc=room
+if час>8 and час<14 then instr text=#%text$  В это раннее время квартал красных фонарей еще спит.&pln В это раннее время квартал красных фонарей еще спит.
+if час>8 and час<14 then character5_loc=14&character6_loc=14&character7_loc=14&character8_loc=14&character9_loc=14&character10_loc=14
+if час<8 or час>14 then character5_loc=14+rnd10&character6_loc=14+rnd10&character7_loc=14+rnd10&character8_loc=14+rnd10&character9_loc=14+rnd10&character10_loc=14+rnd10
+end
+
+:пансион
+pln  - Я зайду в пансион сам, - говорит Блуд, - Дабы не смущать хозяйку вашим присутствием. Хозяйка этого заведения моя давняя знакомая.
+pln
+минута=минута+30
+pln  Через некоторое время капитан Блуд вышел из дверей пансиона.
+pln  - Хозяйка позволила мне осмотреть комнату Лиззи. Там нет ничего интересного. Однако я хочу поговорить с соседкой Лиззи. Ее зовут Жюли, и сейчас она работает где-то на улице. Давайте попробуем найти ее.
+room=24
+forget_procs
+goto startgame
+end
+
+
+:any_purpose_event
+if блуд_не_с_вами=0 then character1_loc=room
+if блуд_не_с_вами=1 then минута_погони=минута_погони+1
+минута=минута+1
+if минута>=60 then час=час+1&минута=минута-60
+if час>=24 then час=0&день=день+1&proc прошел_день
+if день>=30 then день=1&месяц=месяц+1
+if месяц>=13 then месяц=1&год=год+1
+if месяц=1 then instr месяц_строка=Января
+if месяц=2 then instr месяц_строка=Февраля
+if месяц=3 then instr месяц_строка=Марта
+if месяц=4 then instr месяц_строка=Апреля
+if месяц=5 then instr месяц_строка=Мая
+if месяц=6 then instr месяц_строка=Июня
+if месяц=7 then instr месяц_строка=Июля
+if месяц=8 then instr месяц_строка=Августа
+if месяц=9 then instr месяц_строка=Сентября
+if месяц=10 then instr месяц_строка=Октября
+if месяц=11 then instr месяц_строка=Ноября
+if месяц=12 then instr месяц_строка=Декабря
+if день_недели=1 then instr день_строка=Понедельник
+if день_недели=2 then instr день_строка=Вторник
+if день_недели=3 then instr день_строка=Среда
+if день_недели=4 then instr день_строка=Четверг
+if день_недели=5 then instr день_строка=Пятница
+if день_недели=6 then instr день_строка=Суббота
+if день_недели=7 then instr день_строка=Воскресенье
+instr ноль=
+if минута<10 then instr ноль=0
+pln #час$:#%ноль$#минута$, #день$ #%месяц_строка$, #%день_строка$, 18.. год
+end
+
+:прошел_день
+if месяц<=6 then рассвет_минута=рассвет_минута+1
+if рассвет_минута=60 then рассвет_минута=1&рассвет_час=рассвет_час+1
+if месяц>6 then рассвет_минута=рассвет_минута-1
+if рассвет_минута=0 then рассвет_минута=59&рассвет_час=рассвет_час-1
+if месяц<=6 then закат_минута=закат_минута-1
+if закат_минута=60 then закат_минута=1&закат_час=закат_час-1
+if месяц>6 then закат_минута=закат_минута+1
+if закат_минута=0 then закат_минута=59&закат_час=закат_час+1
+день_недели=день_недели+1
+if день_недели>=8 then день_недели=1
+end
+
+:погода
+if месяц=1 or месяц=2 or месяц=12 then goto погода_зима
+if месяц=3 or месяц=4 or месяц=5 then goto погода_весна
+if месяц=6 or месяц=7 or месяц=8 then goto погода_лето
+if месяц=9 or месяц=10 or месяц=11 then goto погода_осень
+end
+
+:погода_осень
+r=rnd10
+if r<6 then pln  На улице стоит прекрасная погода, несмотря на то, что на дворе осень.
+if r=7 or r=8 then pln  На улице идет мелкий, противный моросящий дождь.
+if r=9 or r=6 then pln  На улице стоит туман, и вы не видите дальше, чем за 20 шагов вперед.
+if r=10 then pln  На улице идет настоящий ливень, где-то гремит гром и сверкает молния. Ужасная погода, и вам сразу же хочется вернуться назад.
+погода_сегодня=r
+end
+
+:кабинет_отдых
+час=час+1
+pln  Удобно устроившись в кресле вы расслабились, и провели в таком состоянии некоторое время.
+if object2_loc<>1 and час>7 and час<21 then object2_loc=1&character2_loc=1&pln В кабинет входит Герда со свежей газетой в руках, и говорит : #/$ - Утренняя прэсса, мосье Блууд.
+if object2_loc=1 and час>21 then object2_loc=-1&character2_loc=-1&pln В кабинет входит Герда, берет со стола газету и уносит ее.
+if час>0 and час<7 then час=8&pln  Устав от суматохи дня, вы засыпаете прямо в кресле...
+if день_ангелы=день and час>7 and час<21 and шаг_блуда<5 then goto ангел_отчет
+if шаг_блуда=6 then cab8_know=1&шаг_блуда=7&pln  Пока вы отдыхаете, Блуд погружается в изучение той огромной библиотеки, которая была в его кабинете. И не проходит и получаса, как Блуд вскричал :
+_ #/$ - Чтож, друг мой, - сказал он, - Я думаю, я знаю что нам делать дальше. Высказывание, написанное на левой ягодице мадмуазель Лиззи, принадлежит Сервиусу, а крест нарисованный на заднем плане,
+_ я бы назвал альбигойским. Единственный альбигойский монастырь во Франции расположен в районе Булонского леса, и, как ни странно, имеет обширную библиотеку с римскими авторами. Я подозреваю, что вся эта
+_ татуировка это некий шифр, некий ключ, который указывает на расположение какого-то предмета. И мне кажется, что данным предметом будет книга. Думаю нам стоит съездить в этот монастырь, друг мой.
+end
+
+:считать_деньги
+pln  У вас осталось еще #франков$ франков.
+end
+
+:ангел_отчет
+шаг_блуда=5
+pln  Неожиданно в комнату вбегает чумазый мальчик. Нервно озираясь по сторонам, он находит глазами Блуда, и говорит :
+_ #/$ - Я от Мишеля.
+_ #/$ Блуд вынимает из кармана камзола кошель, и бросает мальчику.
+_ #/$ - Докладывай - говорит ему Блуд.
+_ #/$
+if приют=1 then cab5_know=1&pln  Сиротский приют, о котором шла речь, мы нашли. Это приют в квартале Сент-Дени. Они все еще помнят эту девочку. Ее звали Лаурой. Она попала в приют уже относительно взрослой - ей было 4 года.
+_ На левой ягодице у нее была татуировка. Какая-то надпись по латыни, однако мы не смогли узнать какая. Девочку уже искал какой-то человек около полугода назад, однако, как вы понимаете, безуспешно.
+if дубильщик=1 then cab6_know=1&pln  Мы нашли дубильщика. Это было непросто, однако нам это удалось. Он проживает на улице Дром. Он ужасно запуган, и все время бормочет что-то несвязное о черном человеке.
+pln  Вот и все, что меня просили передать. На сим, я откланиваюсь.
+end
+
+
+
+:говорить_герда
+pln  - Мосье, я честная чернокожая девушка, хотя и служанка, но я верная мосье Блууду, и готова помереть за него.
+end
+
+:триггер_герда
+if rnd10=1 then pln  Герда томно вздыхает.
+if rnd10=1 then pln  Герда чешет свой носик.
+if rnd10=1 then pln  Хриплое дыхание Герды заставляет вас обратить еще более пристальное внимание на ее огромные груди.
+end
+
+:говорить_дюваль
+pln  Вместе с Блудом вы подходите к испектору Дювалю.
+_ #/$ - Надеюсь вы не думаете, что я рад видеть вас здесь, - говорит Дюваль.
+_ #/$ - Конечно, инспектор, - говорит Блад, - Но я хотел бы узнать у вас кое-что.
+_ #/$ - Ладно, спрашивайте раз уж вы здесь, - ответил инспектор.
+forget_procs
+btn duval1, Что вы думаете об убийстве Лиззи Рош?
+btn duval2, Почему убийца вырезал кусок кожи из ее ягодицы?
+btn duval3, Можно ли нам осмотреть тело?
+btn duval4, Ничего, мы уже уходим.
+end
+
+:duval1
+pln  - Зря вы лезете в это дело, - говорит Дюваль. - Оно абсолютно бесперспективное. В квартале Красных фонарей шлюх убивают через день, и если нам не удается взять убийцу сразу у теплого тела, то
+_ обычно не удается сделать это вообще. Это дело не было раскрыто по горячим следам, и вряд ли будет закрыто вообще. Кто угодно мог убить и изнасиловат ее - со шлюхами это случается часто.
+_ Какой-нибудь матрос с корабля, или солдат, которому нечем было платить. Да и кому какое дело до этой Лиззы Рош? Она была всего-навсего обычной шлюхой.
+goto говорить_дюваль
+end
+
+:duval2
+pln  - Почем я знаю? - говорит инспектор. - Скорее всего это какой-то извращенец, которых в последнее время множество развелось в Париже. Недавно мы арестовали мужчину, который убил зеленщицу, и отрезал
+_ ей груди. А год назад у нас было дело черной вдовы, которая отрезала половой член всем пяти своим мужьям. Я видел все эти половые челны - они хранила их заспиртованными в банках в
+_ своем подвале. Член ее второго мужа был самым большим. И вы думаете, кто-нибудь знает, зачем она это делала? Сама она говорила, что таким образом она пыталась оставить себе на память что-нибудь от ее
+_мужчин.
+goto говорить_дюваль
+end
+
+:duval3
+pln  - Что ж, Блуд, - говорит инспектор. - Я не считаю, что всякие гражданские могут спокойно входить в жандармерию и осматривать тела или вещественные доказательства, которые хранятся у нас. В конце концов, это
+_ же жандармерия, а не проходной двор. Что, если каждый будет приходить сюда, и осматривать тела? Однако я помню, что в прошлом вы неоднократно оказывали известные услуги нашему ведомству. Поэтому я все-же позволю
+_ вам в виде исключения осмотреть тело убитой. Эй, Бланше! проводи этих господ в морг.
+pln
+pln  Вы и капитан Блуд спускаетесь в морг...
+room=13
+goto startgame
+end
+
+:duval4
+pln - Вот и прекрасно, - говорит инспектор.
+goto startgame
+end
+
+:триггер_дюваль
+end
+
+:триггер_морг
+if rnd6=1 then pln  Работник морга ест бутерброд.
+if rnd6=1 then pln  Работник насвистывает арию из "Юлия Цезаря".
+if rnd6=1 then pln  Работник морга нежно поглаживает труп.
+if rnd6=1 then pln  Работник морга подходит к трупу пожилого мужчины и участливо спрашивает у него :#/$ - Как вы сегодня, мсье Жан?
+end
+
+:говорить_морг
+pln  - Я ничего не знаю, - говорит работник морга. - Я всего лишь работник морга. Знаю только то, что те кто сюда попадает, уже никогда не возвращаються обратно.
+end
+
+:триггер_мари
+if rnd6=1 then pln  Мари смотри на вас с ожиданием.
+if rnd6=1 then pln  Мари заигрывает с вами.
+if rnd6=1 then pln  Мари зазывно смотрит на вас.
+end
+:триггер_марго
+if rnd6=1 then pln  Марго смотри на вас с ожиданием, но потом ее взгляд падает на Блуда, и ее лицо мрачнеет.
+if rnd6=1 then pln  Марго мрачно смотрит на Блуда.
+if rnd6=1 then pln  Марго плюет сквозь зубы.
+end
+:триггер_жюли
+if rnd6=1 then pln  Жюли смотрит на вас с испугом.
+if rnd6=1 then pln  Вы чувствуете желание, глядя на Жюли.
+if rnd6=1 then pln  Жюли чудно выглядит в этом месте.
+end
+:триггер_софи
+if rnd6=1 then pln  Софи поглаживает свои длинные ноги.
+if rnd6=1 then pln  Софи причмокивает губами.
+if rnd6=1 then pln  Софи цокает своими чудными белыми зубками.
+end
+:триггер_марла
+if rnd6=1 then pln  Вы видите, как Марла вытаскивает кошелек из кармана подвыпившего клиента, но решаете никому об этом не говорить.
+if rnd6=1 then pln  Марла смотрит на вас с ожиданием.
+if rnd6=1 then pln  Марла достает из-за пазухи бутылку вина, и залихватски отхлебывает из горлышка.
+end
+:триггер_диана
+if rnd6=1 then pln  Диана трогает себя за грудь, одновременно глядя на вас.
+if rnd6=1 then pln  Диана трогает себя за бедро, одновременно глядя на вас.
+if rnd6=1 then pln  Диана зазывно смотрит на вас.
+if rnd6=1 then pln #/$ Из дверей одного из борделей неожиданно вываливается раскрасневшийся священник. Подбежав к вам, он хватает вас за руку.
+_ #/$ - Опасайтесь этого места, - кричит он вам прямо в лицо. - Здесь царит блуд и разврат.
+_ #/$ - Ошибаетесь милейший, - отвечал капитан, - мы здесь только проездом.
+end
+:говорить_мари
+pln  - Не хочешь перепихнуться, красавчик, - говорит Мари.
+_#/$ - Нет, - отвечает за вас Блуд, - Лучше расскажи что-нибудь о Лиззи Рош.
+_#/$ - Это та девушка, которую убили вчера? - отвечает Мари, - К сожалению, я ничего о ней не знаю. Мы обычно работали в разных концах квартала.
+end
+:говорить_марго
+pln  - Здравствуй, Блуд, - говорит Марго.
+_#/$ - Я хотел бы узнать подробнее о Лиззи.
+_#/$ - Это та девушка, которую убили вчера? - отвечает Марго, - Она работала здесь. Никого не трогала, никогда никого не обижала. Она была хорошей девушкой. Она даже хотела завязать.
+_ Она работала здесь с 14-и лет. С тех самых пор, когда она сбежала из сиротского приюта. Хоть убей, не помню из какого.
+pln
+pln  Когда мы отошли от Марго, Блуд посмотрел на меня, и сказал :
+_#/$ - Чтож, дело начинает проясняться. Нужно найти этот сиротский приют.
+_ Думаю нам нужно будет заехать во двор Ангелов, и попросить их немного поработать для нас.
+приют=1
+шаг_блуда=3
+cab4_know=1
+end
+:говорить_жюли
+pln  - Чего вам, молодые люди? Я не занимаюсь сексом сразу с двумя - говорит Жюли.
+_#/$ - Мы пришли не ради секса, - отвечает за вас Блуд, - Лучше расскажи что-нибудь о Лиззи Рош.
+_#/$ - Моя соседка - отвечает Жюли, - Ее убили недавно. Какой-то маньяк. Он даже вырезал кусок кожи из ее ягодицы. Как раз то место где была ее татуировка.
+_#/$ - Татуировка? - заинтересовано переспросил Блуд.
+_#/$ - Именно, - ответила Жюли, - думаю именно из-за этой татуировки ее и убили. У нее на ягодице были вытатуирована какая-то латинская надпись. К сожалению, я не знаю какая. Я не очень грамотная.
+_ По словам Лиззи, эта татуировка была у нее с рождения.
+pln
+pln  Когда мы отошли от Жюли, Блуд посмотрел на меня, и сказал :
+_#/$ - Чтож, дело начинает проясняться. Если дело в татуировке, то это объясняет, зачем убийце было вырезать кусок кожи. И эта латинская надпись, по всей видимости, имеет для кого-то чрезвычайно важное значение.
+_ Однако человеческой коже свойственно разлагаться. Поэтому убийце могут понадобиться услуги опытного кожевника, галантерейщика или дубильщика. Конечно, он может сделать это и сам, но думаю, что поискать стоит.
+_ Думаю нам нужно будет заехать во двор Ангелов, и попросить их немного поработать для нас.
+дубильщик=1
+шаг_блуда=3
+cab4_know=1
+end
+:говорить_софи
+pln  - Хочешь меня? - спрашивает Софи.
+_#/$ - Нет, - отвечает за вас Блуд, - Лучше расскажи что-нибудь о Лиззи Рош.
+_#/$ - С какой это стати я должна общаться с человеком, который меня не хочет?
+end
+:говорить_марла
+pln  - Чего тебе, милок? - спрашивает Марла.
+_#/$ - Дело, - отвечает за вас Блуд, - Расскажи что-нибудь о Лиззи Рош.
+_#/$ - А может лучше займемся любовью, - говорит Марла, обнимая капитана Блуда. Однако он перехватывает ее руку в своем кармане, и говорит ей прямо в глаза, - Меня тебе не обокрасть, детка.
+end
+:говорить_диана
+pln  - Меня зовут Диана, - говорит Диана.
+_#/$ - А меня Блуд, - отвечает за вас Блуд, - Но лучше расскажи что-нибудь о Лиззи Рош.
+_#/$ - Это та девушка, которую убили вчера? - отвечает Диана, - Я слышала об этом. Такая трагедия!
+end
+
+:триггер_мишель
+end
+:говорить_мишель
+pln  - Здравствуй, Мишель, - говорит Блуд. - Я хотел бы попросить тебя сделать для меня работу как обычно.
+pln  - Я всегда рад работать с тобой, Блуд, - говорит Мишель. - Что тебе нужно знать?
+if приют=1 then pln - Примерно 6 лет назад, из какого-то приюта сбежала 14-летняя девочка. После этого она стала проституткой, и вчера умерла. Из особых примет - у нее была татуировка на левой ягодице, однако
+_ я совершенно не представляю какая именно. Можешь ли ты найти этот приют.#/$ - Не думаю, что с этим будут проблемы - отвечает Мишель, - стандартная цена.#/$ - Конечно - говорит Блуд.
+if дубильщик=1 then pln - Один человек вырезал прямоугольник из человеческой кожи размером примерно 10 на 15 сантиметров. У меня есть такое подозрение, что пока оный кусок кожи не начал разлагаться, искомый
+_ субьект отнесет его к дубильщику. Найди этого дубильщика.#/$ - Это задача несколько посложнее, - отвечал Мишель, - однако и с ней по силам справиться моим молодцам, если искомый дубильщик конечно существует.
+_ Две цены.#/$ - Устраивает, - сказал Блуд.
+pln  - Я пришлю к тебе домой мальчика в 8 утра завтра. Он и расскажет тебе о результатах.
+шаг_блуда=4
+день_ангелы=день+1
+end
+
+:триггер_директор
+if rnd6=1 then pln  Директор приюта пишет что-то карандашом в книгу приходов.
+if rnd6=1 then pln  Директор приюта думает о своих важных директорских делах.
+end
+:говорить_директор
+if rnd6=1 then приют_видел_разврат=1&pln  С того места, где вы стоите, вам открываеться интересная картина. Дверь, которая находиться за спиной у директора была закрыта неплотно, и позволяла видеть сквозь нее.
+_ #/$ За дверью вам открылась препротивнейшая картина. На кожаном диване полулежал седой месье, с расстегнутыми штанами. На его коленях сидела обнаженная девочка, лет этак тринадцати. Одна рука месье находилась у нее
+_ между ног, другая мяла ее груди. Сама же девочка мастурбировала член месье.
+_ #/$ - Эй, друг мой, - говорит вам Блуд. - Не отвлекайтесь. Мы же не хотим отобрать у месье директора слишком много его драгоценного времени.
+pln  Вместе с Блудом вы подходите к директору приюта.
+_ #/$ - Что вам угодно на этот раз, Блуд, - спрашивает директор. Я удивляюсь тому, что даже здесь знают капитана.
+forget_procs
+btn director1, Я хотел бы узнать о девочке с татуировкой на попе, которая сбежала 6 лет назад из вашего приюта
+if директор_девочка=1 then btn director2, Почему Лаура сбежала из приюта?
+if директор_девочка=1 then btn director3, Какая именно татуировка была на ее ягодицах?
+if директор_девочка=1 then btn director4, Кто интересовался Лаурой?
+if директор_девочка=2 then btn director6, Почему Лаура сбежала из приюта?
+if директор_девочка=2 then btn director7, Какая именно татуировка была на ее ягодицах?
+if директор_девочка=2 then btn director8, Кто интересовался Лаурой?
+if приют_видел_разврат=1 then btn director5, В своем приюте вы заставляете девочек проституировать?
+btn director9, Ничего, мы уже уходим.
+end
+
+:director1
+директор_девочка=1
+pln  - Странно, - говорит директор, - Я хорошо помню эту историю, потому как недавно меня уже спрашивали о ней.
+_ #/$ Девочка, которую здесь мы окрестили Лаурой, попала в наш приют 16 лет назад, если верить книгам прихода, так как сам я в то время еще не работал здесь. Ее подбросили нам достаточно взрослой - ей было уже 4 года.
+_ Сам я попал в сей приют 10 лет назад, и помню Лауру очень смутно. Если верить журналам, она была тихой, спокойной девочкой, и ее побег был для всех неожиданностью.
+goto говорить_директор
+end
+:director2
+pln  - Откуда мне знать, господа, - отвечает директор. - Думаю она наслушалась о радостях жизни в большом городе от своих приятельниц, и решила отправиться туда на поиски своей счастливой звезды.
+_ Иногда кое-кому из наших воспитанниц действительно удаеться удачно выйти замуж. Однако, к сожалению, большинство из них попадают на панель, и кончают там.
+goto говорить_директор
+end
+:director3
+pln  - Вы что же, думаете что я осмотрел и перещупал попу каждой девочки в своем приюте? - возмутился директор. - А даже если бы это было и так, я бы не вспомнил об этом через столько лет.
+goto говорить_директор
+end
+:director4
+pln  - Я не видел лица этого человека, - говорит директор - Оно было закрыто черным шарфом. Сам этот человек был также одет во все черное - черный кожаный плащ, черные сапоги, черный цилиндр на голове, и черный шарф закрывающий его лицо.
+_ Однако, к тому времени как он пришел к нам за Лаурой, она уже давно сбежала. У этого человека был странный хриплый голос. Я бы не хотел встречаться с ним еще раз.
+goto говорить_директор
+end
+:director5
+директор_девочка=2
+pln  Директор смотрит на вас несколько испуганно.
+_ #/$ - Поймите, - говорит он, - Я ничего не могу сделать! Вы знаете какой размер дотаций от государства на содержание сиротских приютов? Может быть вы думаете, что приюты содержаться за счет меценатов? Да именно за счет них.
+_ Но меценаты не бескорыстны. Взамен за свои деньги, они хотят получать от девочек известные услуги. Да, это плохо, но то что я делаю позволяет этим девочкам просто выжить. Или вы считаете что лучше оставить их умирать на морозе?
+_ А ежели вы такой моралист, то почему не отдаете часть своей зарплаты бескорыстно в сиротский приют?
+goto говорить_директор
+end
+:director6
+pln  - Чтож, откроюсь вам, - сказал директор, - Татуировка на ягодицах Лауры привлекала наших меценатов, и делала эту девочку чрезвычайно популярной. С двенадцати лет ее регулярно заставляли заниматься этим, давая в награду леденцы.
+_ Однако Лауре на особенно нравилось это занятие. Думаю именно это и было основной причиной ее побега, более того - я уверен в этом.
+goto говорить_директор
+end
+:director7
+шаг_блуда=6
+pln  - Я перкрасно помню эту татуировку на ее попке. Там было написано : "Nullus enim locus sine genio est". Она была на ее попе с четырехлетнего возраста, с того самого момента, как она попала в приют.
+_ Татуировка была сделана профессионально - с годами, как Лаура взрослела, и кожа на ее ягодицах растягивалась, буквы не тускнели, а наоборот, становились все более различимыми. Помню, я любил наблюдать за этим процессом.
+_ Рядом с надписью, хотя правильнее будет сказать за ней, располагался крест, похожий на католический. Крест особой формы, с фигурными вырезами. Я плохо помню его - ведь прошло уже 6 лет с того времени.
+goto говорить_директор
+end
+:director8
+pln  - Черный человек. Я действительно не знаю кто он. Он пришел сюда и потребовал Лауру. Он утверждал, что он является родственником девочки, кажеться дядей. И только сейчас он узнал о существовании племянницы от совей умирающей
+_ сестры, которая решила исповедаться ему на смертном одре. Однако я не поверил ему. Я думаю, что этот субьект был нанят одним из наших меценатов, пожелавшим получить девочку в свое личное безраздельное пользование.
+_ Однако, как я уже говорил, к этому времени Лауры уже не было в пансионе, и я так ничего и не узнал о ее дальнейшей судьбе.
+goto говорить_директор
+end
+:director9
+room=42
+goto startgame
+end
+
+:говорить_дубильщик
+pln  Вы подходите к дубильщику.
+_ #/$ - Отвечай! - кричит ему Блуд, пытаясь перекричать все работающие механизмы вокруг. - Ты тот дубильщик, которому недавно дали кусок кожи 10 на 15 сантиметров с латинской надписью на нем.
+_ #/$ Вы видите, как глаза дубильщика за пенсне бегают туда-сюда, как будто чего-то бояться.
+_ #/$ - Дай угадаю, - говорит Блуд, - Ты должен был продубить этот кусок кожи, дабы она не разлагалась, не так ли?
+_ #/$ И снова вы видите, как молчит дубильщик. Неожиданно ваш взгляд падает на кусочек кожи, который закреплен в рамке недалеко от дубильщика. По размерам, вы сразу понимаете, что это и есть искомый кусок.
+_ #/$ Вдруг, дубильщик закрывает лицо руками с криком "Неет!" Взгляд его направлен куда-то мимо вас. Вы оборачиваетесь, и видите человека в черном плаще, который стоит в проходе.
+_ На голове у него черный цилиндр, а на ногах черный сапоги. Лицо его закрыто черным шарфом. В руках у него два черных пистолета. И он стреляет из них, убив одним выстрелом дубильщика, а вторым разбив газовый фонарь.
+_#/$#/$ Помещение погружается во тьму. Вы слышите звон разбитого стекла, глухие удары, крик "Ай", как будто голосом Блуда, а потом быстрый топот ног, выскочивших на улицу.
+_ #/$ Вам нужно быстро решать, что делать дальше.
+object12_loc=-1
+object13_loc=52
+character13_loc=-1
+блуд_не_с_вами=1
+character1_loc=-1
+room51_exit_num=2
+end
+
+:говорить_блуд
+if шаг_блуда=0 then pln  - Вы не могли бы почитать мне утреннюю газету, - говорит капитан Блуд. - Возможно в ней найдеться какое-либо интересное убийство, которое займет нас до обеда.
+_ Ибо та скука, которая охватила меня в последнее время, или как говорят англичане, "splin", уже начинает мне порядком надоедать. Утреннюю газету должна принести Герда. Сядьте в кресло, и отдохните, ожидая ее прихода.
+if шаг_блуда=1 then франков=100+rnd100&шаг_блуда=2&object3_loc=0&object4_loc=0&pln  Капитан Блуд достает из под широких полов своего сюртука несколько смятых купюр и блокнот. Он дает все это вам.
+_ #/$ - В процессе нашего расследования нам может понадобиться заплатить за что-нибудь. Вам могут понадобиться для этого деньги. А обо всех интересных уликах, которые встретятся нам
+_ на пути, записывайте в этот блокнот. Они нам еще пригодятся, а меня никуда ни годная память.
+if шаг_блуда=2 then апатия=апатия-10&pln  - Бедная Лиззи! Я до сих пор не верю в то, что она погибла!
+if шаг_блуда=3 then апатия=апатия-5&pln  - Мы должны съездить на двор Ангелов. Они помогут нам в наших поисках.
+if шаг_блуда=4 then pln  - Теперь надо просто тихо ждать отчета от двора Ангелов.
+if шаг_блуда=5 then апатия=апатия-25&pln  - Вперед. Надо поговорить со всеми лично.
+if шаг_блуда=6 then апатия=апатия-10&pln  - Чтож, теперь мы с вами знаем, что было написано на попе Лиззи. И, думаю ее убили именно поэтому. Мне откуда-то знаком этот текст на латыни, однако, я не могу вспомнить откуда.
+_ Думаю, мне нужно будет просмотреть мою маленькую библиотеку, когда мы вернемся в наш кабинет.
+if франков<20 then франков=франков+20+rnd20&pln  - Однако! У нас практически закончились деньги! Возьмите эту скромную сумму. Она поможет нам свести концы с концами, и продолжить наше расследование.
+end
+
+:триггер_блуд
+if час=8 and минута<10 then апатия=0&вожделение=20&любопытство=50
+апатия=апатия+1
+if character2_loc=room then вожделение=вожделение+1
+if character5_loc=room then вожделение=вожделение+1
+if character6_loc=room then вожделение=вожделение+1
+if character7_loc=room then вожделение=вожделение+1
+if character8_loc=room then вожделение=вожделение+1
+if character9_loc=room then вожделение=вожделение+1
+if character10_loc=room then вожделение=вожделение+1
+if апатия>любопытство and rnd6=1 and room<>1 then pln  - Вряд ли мы найдем здесь что-либо еще сегодня, - говорит Блуд, - Я порядком устал. Думаю нам следует поехать домой.
+if апатия>любопытство+20 and rnd6=1 and room<>1 then pln  - Нам пора домой, - говорит Блуд. - На сегодня расследование пора заканчивать.
+if апатия>любопытство+50 and rnd6=1 and room<>1 then room=1&pln  - Мне это надоело. Я возвращаюсь домой. - говорит Блуд, после чего он выходит на улицу и ловит первый же экипаж который везет его домой.
+_ Вам не остается ничего иного, кроме как последовать за ним.
+if апатия>любопытство+20 and rnd6=1 and room=1 then pln  Со стороны кажется, что капитан Блуд спит в кресле, однако вы знаете, что на самом деле в его голове в это время происходит невероятный мыслительный
+_ процесс, во время которого он еще раз прокручивает в своей голове все события сегодняшнего дня, и пытается понять, кто и зачем совершил это гнусное преступление.
+if вожделение>любопытство and вожделение>апатия and character2_loc=room then минута=минута+15&вожделение=20&pln Капитан Блуд неожиданно набрасываеться на Грету... О том что случилось дальше, вы как хронист не считаете нужным писать.
+_ Через четверть часа все было кончено.
+if вожделение>любопытство and вожделение>апатия and character2_loc<>room then pln  Капитан Блуд вожделенно смотрит на вас.
+if вожделение>любопытство and character2_loc=room then pln  Капитан Блуд вожделенно смотрит на Герду.
+if любопытство>апатия and rnd10=1 then pln  - Давайте займемся делом, - говорит Блуд. - Хватит терять время!
+end
+:use_Gazette des Tribunaux_Gazette des Tribunaux
+if шаг_блуда>0 and день=12 then pln  Вы уже читали сегодняшнюю газету.
+if шаг_блуда=0 then любопытство=любопытство+100&шаг_блуда=1&минута=минута+30&pln  Взяв в руки утренний номер Gazette des Tribunaux вы отметили одну из криминальных статей с огромным заголовком : "ЖЕСТОКОЕ УБИЙСТВО В КВАРТАЛЕ КРАСНЫХ ФОНАРЕЙ".
+_ #/$ Сегодня, около трех часов утра, половина квартала Красных фонарей сбежалась на пронзительный женский крик. Кричавшая, мадмуазель Сагат, неопределенного рода занятий,
+_ по ее словам прогуливалась взад вперед по кварталу безо всякой цели, как вдруг наткнулась на труп молодой женщины, лежащей лицом вниз в луже крови.
+_ #/$ Как оказалось позднее, женщина была задушена струной от фортепиано, которую убийца так и оставил обмотанной вокруг ее шеи. Медицинский осмотр не оставлял никаких сомнений,
+_ что перед смертью жертва была изнасилована. Все ее юбки были разорваны, и, более того, из ее левой ягодицы был вырезан довольно обширный кусок кожи, примерно 10х15 сантиметров.
+_ #/$ Потерпевшую звали Лиззи Рош, она проживала неподалеку, и не имела определенного занятия. По слухам, ее часто видели прогуливающейся взад вперед без определенной цели по этому кварталу.
+_ #/$ Именно в таком виде, в разорванных юбках, со струной на шее, в луже крови и без кожи на ягодице ее и застала нашедшая ее мадемуазель Сагат. Таково это поистине ужасное преступление,
+_ окутанное, пока, глубокой тайной. Жандармы, находившиеся поблизости в том же квартале, ничего не видели и не слышали.
+_ #/$ #/$ - Неслыханно! - услышал я крик капитана Блуда - Я знал эту девушку! Малютка Лиззи! Мы должны немедленно заняться этим делом! Не следует мешкать ни минуты!
+_ Собирайтесь - мы едем расследовать это жестокое убийство!
+if шаг_блуда>0 and день=13 then pln ТРАГЕДИЯ НА УЛИЦЕ ПАВЕ-СЕНТ-АНДРЭ
+_ #/$ #/$ Сегодня утром, в доме 13, что на улице Паве-Сент-Андрэ, был найден труп молодого человека, Антуана Эклера, художника по профессии, что подписывался псевдонимом Батист.
+_ Читатели могли видеть некоторые из его картин на выставке в доме Инвалидов. Труп был найден зеленщицей, регулярно навещавшей его по утрам. Антуан Эклер был зарезан в собственно доме,
+_ одним ударом ножа, который распорол ему живот. По результатам обследования врача, скончался потерпевший немедленно. Соседи отмечали резкий запах из квартиры Антуана еще до прихода зеленщицы,
+_ исходивший по видимому от вывалившихся наружу внутренностей потерпевшего, однако, не придали этому должного внимания. Жестокое убийство пока не раскрыто, однако инспектор Дюваль заявил, что ответственные за него
+_ вскоре будут найдены.
+if шаг_блуда>0 and день=13 and cab7_know=1 then pln&pln - Однако, - сказал капитан Блуд, - дело здесь не чисто! Мы уже слышали об этом художнике из уст проститутки Марго! По слухам, именно он имел некие связи с мадмуазель Рош.
+_ Я готов допустить, что эти убийства могут быть связаны.
+if шаг_блуда>0 and день=14 then pln ТРАГЕДИЯ НА СТОЯНКЕ ПРОКАТНЫХ ЭКИПАЖЕЙ
+_ #/$ #/$ Сегодня утром, на стоянке прокатных экипажей, в экипаже 2844, был найден труп извозчика, Эмиля Рабле, у которого было перерезано горло. По результатам медицинской экспертизы, извозчик умер около двух суток назад,
+_ труп его уже околел. Неладное заподозрил уборщик, прогуливавшийся неподалеку от оного экипажа. Его внимание привлекла лужа крови, вытекающая из экипажа. После чего он позвал жандарма, прогуливающегося поблизости.
+_ Он и засвидетельствовал смерть. Мотивы сего жуткого преступления пока остаються неясны.
+end
+
+:give_деньги_герда
+pln  - Я не продаю свое тело за деньги, молодой хозяин. Мое тело всецело пренадлежит мосье капитану.
+end
+
+:use_столик_столик
+pln  Вы хотели передвинуть столик, но оказалось, что он прибит к полу.
+end
+
+:use_простыня_бельевая веревка
+room=56
+pln  Ухватившись за простыню, вы сьехали на ней по веревке, прямо к черному человеку.
+goto погоня4
+end
+
+:give_Кусочек кожи_Блуд
+шаг_блуда=6
+pln  - Хмм, - говорит Блуд, - Мне знакомо это изречение. Однако я не могу вспомнить, кому оно принадлежит. И альбигойский крест на заднем плане. Все это несколько странно...
+_ Думаю нам следует вернуться домой, и произвести расширенную работу в библиотеке...
+end
+
+:use_экипаж_экипаж
+pln  Ни один экипаж не повезет вас бесплатно.
+end
+
+:give_деньги_мари
+франки=франки-20
+час=час+1
+pln  Вы даете Мари двадцать франков. За эти деньги она уединяется в меблированных комнатах на час вместе с капитаном Блудом, который проводит там ее допрос.
+_ Час вы гуляете по кварталу, думая чем себя занять. Через час Блуд возвращается.
+pln  - Она не знает ничего существенного по нашему делу, - говорит Блуд.
+end
+:give_деньги_софи
+франки=франки-20
+час=час+1
+pln  Вы даете Софи двадцать франков. За эти деньги она уединяется в меблированных комнатах на час вместе с капитаном Блудом, который проводит там ее допрос.
+_ Час вы гуляете по кварталу, думая чем себя занять. Через час Блуд возвращается.
+pln  - Она не знает ничего существенного по нашему делу, - говорит Блуд.
+end
+:give_деньги_жюли
+франки=франки-20
+час=час+1
+pln  Вы даете Жюли двадцать франков. За эти деньги она уединяется в меблированных комнатах на час вместе с капитаном Блудом, который проводит там ее допрос.
+_ Час вы гуляете по кварталу, думая чем себя занять. Через час Блуд возвращается.
+pln  - Она не знает ничего существенного по нашему делу, - говорит Блуд.
+end
+:give_деньги_диана
+франки=франки-20
+час=час+1
+pln  Вы даете Диане двадцать франков. За эти деньги она уединяеться в меблированых комнатах на час вместе с капитаном Блудом, который проводит там ее допрос.
+_ Час вы гуляете по кварталу, думая чем себя занять. Через час Блуд возвращаеться.
+pln  - Она не знает ничего существенного по нашему делу, - говорит Блуд.
+end
+:give_деньги_марла
+франки=франки-30
+час=час+1
+pln  Вы даете Марле двадцать франков. За эти деньги она уединяется в меблированных комнатах на час вместе с капитаном Блудом, который проводит там ее допрос.
+_ Час вы гуляете по кварталу, думая чем себя занять. Через час Блуд возвращается.
+pln  - Она не знает ничего существенного по нашему делу, - говорит Блуд.
+pln  Вы также замечаете, что кроме 20 франков у вас куда-то пропало еще десять.
+end
+:give_деньги_марго
+франки=франки-20
+pln  Вы даете Марго двадцать франков.
+pln  - Здравствуй, Блуд, - говорит Марго.
+_#/$ - Я хотел бы узнать подробнее о Лиззи.
+_#/$ - Это та девушка, которую убили вчера? - отвечает Марго, - Она работала здесь. Никого не трогала, никогда никого не обижала. Она была хорошей девушкой. Она даже хотела завязать.
+_ У нее был парень - единственный с кого она не брала денег. Его звали Батист. Он был художником, и жил на улице Паве-Сент-Андре. Можешь узнать у него, если тебе нужно знать что-либо личное о Лиззи.
+cab7_know=1
+end
+
+:use_деньги_экипаж
+if франков<=0 then pln У вас недостаточно денег на экипаж!
+if блуд_не_с_вами=1 then pln Вы не можете ехать без Блуда!
+if франков>0 and блуд_не_с_вами=0 then forget_procs&goto ехать
+end
+
+:ехать
+cls
+pln  Помахав франком, вы вынуждаете экипаж остановиться, и вместе с Блудом залазите внутрь.
+_ #/$ Большой и грузный извозчик оценивающе смотрит на вас, и спрашивает :
+_ #/$ - Куда ехать, уважаемые?
+btn cab1, Улица Ришалье (Дом капитана Блуда)
+btn cab2, Жандармерия
+btn cab3, Квартал Красных Фонарей
+if cab4_know=1 then btn cab4, Во двор Ангелов
+if cab5_know=1 then btn cab5, В сиротский приют
+if cab6_know=1 then btn cab6, К дубильщику
+;if cab7_know=1 then btn cab7, На улицу Паве-Сент-Андре (к художнику Батисту)
+if cab8_know=1 then btn cab8, К монастырю недалеко от Булонского леса
+;if cab9_know=1 then btn cab9, На стоянку экипажей
+end
+
+:cab1
+cls
+франков=франков-1
+минут=минут+15
+pln  - Хорошо, месье, с вас один франк!
+room=3
+goto startgame
+end
+
+:cab2
+cls
+франков=франков-2
+минут=минут+30
+pln  - Ох месье, не люблю я это место. С вас два франка.
+room=11
+goto startgame
+end
+
+:cab3
+cls
+франков=франков-1
+минут=минут+45
+pln  - Хе-хе, месье, правильное решение. Я и сам часто бывал там в молодые годы.
+room=21
+goto startgame
+end
+
+:cab4
+cls
+франков=франков-5
+минут=минут+45
+pln  - Не лучшее место, чтобы ехать туда, месье. Но я все же отвезу вас туда за 5 франков.
+room=31
+goto startgame
+end
+
+:cab5
+cls
+франков=франков-1
+минут=минут+30
+pln  - Желаете усыновить сиротку, господа? - слащавым голосом спросил извозчик.
+room=41
+goto startgame
+end
+
+:cab6
+cls
+франков=франков-1
+минут=минут+45
+pln  - Может быть лучшь отвезти вас к галантерее около Триумфальной арки? Ну нет так нет.
+room=51
+goto startgame
+end
+
+:cab7
+cls
+франков=франков-2
+минут=минут+30
+pln  - А вы тоже рисуете? И я нет. Ну чтож, поехали.
+room=61
+goto startgame
+end
+
+:cab8
+cls
+франков=франков-5
+час=час+1
+pln  - Неблизко же вас везти. Ну чтож, поехали.
+room=81
+goto startgame
+end
+
+
+:cab9
+cls
+франков=франков-1
+минут=минут+30
+pln  - На стоянку экипажей? Чтож, пожалуйста.
+room=71
+goto startgame
+end
+
+
+
+
+
+
+
+:тело_триггер
+pln  Бегло осмотрев тело Лиззи Рош, вы замечаете что более внимательного изучения требуют четыре его части : шея, ягодицы, влагалище и ногти.
+object7_loc=13
+object8_loc=13
+object9_loc=13
+object10_loc=13
+end
+
+:шея_триггер
+любопытство=любопытство+10
+pln  Блуд внимательно осмотрел шею Лиззи.
+_ #/$ - Думаю она была задушена достаточно сильным человеком, - говорит он. - Обратите внимание на то, какой глубины следы от струны которой ее душили. Я считаю себя достаточно сильным мужчиной, но я
+_ сомневаюсь, чтобы у меня хватило сил оставить следы такой глубины. Сомневаюсь, чтобы это убийство могла совершить женщина.
+_ #/$ Далее, обратите внимание на эти следы на шее. Как видите, здесь мы наблюдаем две полосы - одна идет таким образом, как будто петля была наброшена сверху вниз, другая напротив, снизу вверх. С первого
+_ взгляда это достаточно странно, однако легко объяснимо. По всей видимости убийца сначала набросил струну на шею убитой стоя за ней сзади, после чего он повалил ее на землю лицом вниз, и душил ее придавив
+_ коленом к земле. Петля при этом сместилась, также как и направление приложения усилий. Это подтверждает также и тот факт, что шрам от струны сверху в них гораздо более глубокий, и именно он привел к окончательной
+_ смерти. Кстати, след от узла, на который была завязана струна, также существует только от этого шрама.
+_ #/$ Таким образом, я думаю, что мы можем с практически полной уверенностью сказать, что убийца это достаточно сильный мужчина, ростом метр восемдесят или более, так как рост убитой составляет примерно метр семьдесят пять.
+end
+
+:влагалище_триггер
+любопытство=любопытство+10
+pln  Взглянув на низ живота Лиззи, я заметил что он гладко выбрит. В области ее лона не было ни единого волоска. Блуд не оставил мой взгляд без внимания.
+_ #/$ - Среди парижских проституток сейчас довольно таки модно брить лобок - сказал он. - Сейчас практически все делают это. Так они борються за клиентов.
+_ #/$ Блуд приставил фонарь поближе, и всунул два своих пальца внутрь влагалища Лиззи. Пошевелив ими там, он вынул и обнюхал их, а после даже облизал.
+_ #/$ - Газеты и полицейский отчет утверждают, - сказал Блуд, - Что девушка была изнасилована перед смертью. Однако я не вижу не единого следа этого, более того, я готов спорить, что она не занималась сексом,
+_ по крайней мере, вагинальным, как минимум сутки до того как была убита. Это можно было бы объяснить тем, что доктор осматривавший труп не знаком с влагалищами проституток, а лишь с оными частями тела
+_ мадмуазелей из знатных и богатых семей, а здесь как ни странно наблюдается огромная разница. Либо, кто-то специально хочет выставить это дело как самое обычное изнасилование и убийство проститутки.
+end
+
+:ягодицы_триггер
+любопытство=любопытство+10
+pln  Блуд перевернул тело Лиззи на живот, и внимательно осмотрел ее ягодицы.
+_ #/$ - Прекрасные ягодицы, - сказал он, - очень милая попа, которую приятно потрогать, и я готов бы был допустить, что кто-то с столь извращенным разумом действительно мог бы отрезать часть кожи на память о девушке,
+_ но, все же я не думаю, что это могло случиться именно поэтому. Во-первых - почему тогда он отрезает кусок только от одной ягодицы, вместо того чтобы снять кожу с попы полностью. Во-вторых, посмотрите на разрез. Этот
+_ разрез сделан с помощью скальпеля, и профессионально. Не каждый хирург в этом городе сделает подобный разрез. Однако я не утверждаю, что наш убийца врач. Скорее всего даже наоборот. Однако это еще не вполне сформировавшаяся мысль.
+_ #/$ Обратите внимание вот еще на что. Вырезан правильный прямоугольник. Т.е. из ягодицы девушки был вырезан кусок кожи размером 10 на 15 сантиметров. Это опять же навевает на размышления.
+_ #/$ Блуд опять же вставил в анальное отверстие трупа пару пальцев, после чего вынул, понюхал, и брезгливо потрусил рукой, будто желая стряхнуть что-то с нее.
+_ #/$ - И в этом случае версия полиции не лезет ни в какие ворота - сказал Блуд, - Как видно даже из этого поверхностного осмотра, попа Лиззи часто использовалась для того, чтобы доставлять удовольствие мужчинам.
+_ Однако убийца, - кем бы он ни был, - не воспользовался эти ее отверстием в последний раз. Не спрашивайте, почему я сделал такие выводы, ибо излишние анатомические подробности не принесут вам особенной пользы, напротив, испортив аппетит.
+_ По моему скромному мнению это напрочь отвергает версию убийцы-извращенца. А, значит, это было хладноквроно обдуманное убийство, к которому вовсе не стоит примешивать похоть. Однако в таком случае я пока не могу объяснить,
+_ зачем убийце понадобилось отделять от левой ягодицы девушки пресловутый кусок кожи.
+end
+
+:ногти_триггер
+любопытство=любопытство+10
+pln  Блуд взял руку убитой в свои руки и поднес к своим глазам.
+_ #/$ - Всегда осматривайте руки, - сказал он, - А именно ногти. Хотя руки часто тоже несут с собой множество информации. Например то, что на руке у убитой было кольцо. Вот виден след от него. Однако оно было снято,
+_ причем гораздо позже наступления смерти. Думаю, это было сделано в этом морге, и это самое кольцо сейчас лежит в кармане у кого-то из служащих. Однако дело не в этом.
+_ #/$ Посмотрите что я нашел под ногтями. Под ногтями трупа обычно остается то, к чему его руки прикасались в последний момент его жизни. А под ногами этой девушки находятся маленькие кусочки кожи. Из такой кожи
+_ делают плащи для жандармов, телохранителей, контрразведки и тайных агентов. Конечно, черный кожаный плащ может одеть кто угодно, но все это навевает невеселые мысли.
+end
+
+:место_триггер
+любопытство=любопытство+10
+pln  Блуд с интересом осмотрел место убийства.
+_#/$ - Обратите внимание на еще одну "ошибку" газет. Я здорово сомневаюсь, что убийство произошло именно здесь. Посмотрите на брущатку. Здесь совершенно не найти никаких следов крови. В то же время давайте переместимся на пару десятков метров.
+_ Полгода назад здесь произошла пьяная драка с моим участием, где одному из клиентов борделя наверху проломили череп табуреткой. Вы видите? Следы крови остались на камне до сих пор. Так что, могу сказать вам с полной уверенностью,
+_ - убийство произошло не здесь. Тело привезли сюда позже. Думаю нам нужно поспрашивать девочек, которые работают здесь насчет экипажа, который мог здесь останавливаться.
+end
+
+:искать_в_темноте
+pln  Вы находите в темноте Блуда. Он покашляет, но встает, зажигает спичку, и опираясь на вашу руку, выходит из дубильни.
+блуд_не_с_вами=0
+room=51
+end
+
+:погоня1
+if минута_погони<5 then pln  Вы видите черного человека на крыше соседнего здания. Он убегает от вас.
+end
+:погоня2
+if минута_погони<10 then pln  Вы видите черного человека на соседнем здании. Он убегает от вас.
+end
+:погоня3
+if минута_погони<15 then pln  Вы видите черного человека на соседнем здании. Совершенно неясно как он туда попал. Но он убегает от вас.
+end
+:погоня4
+if минута_погони<20 then object14_loc=56&минута_погони=20&pln  Съехав по простыне к черному человеку, вы недолго думая, с криком набрасываетесь на него, и больно бьете его локтем по цилиндру.
+_ Черный человек не остается в долгу, и тыкает вам в глаза пальцами. Практически ничего не видя, вы хватаете его за полу плаща, однако он вырывает ее из ваших рук, бьет вас сапогом в лицо, нервно
+_ смееться, и прыгает в Сену. Через несколько минут, отдышавшись и успокоившись, вы встаете, и смотрите вниз на Сену. Сена была бы красива ночью, если бы не запах. Нигде не видно никаких следов черного человека.
+end
+
+:кожа
+pln Черт! Это именно тот кусочек кожи, из-за которого весь сыр-бор! Именно эту часть ягодицы Лиззи Рош черный человек решил оставить себе, а после продубить. Выглядит все это так :
+_#/$  ________________________________________________
+_#/$ |                  _____                         |
+_#/$ |                  \   /                         |
+_#/$ |              |\___| |___/|                     |
+_#/$ |              |           |                     |
+_#/$ |      Nullus enim locus sine genio est.         |
+_#/$ |              |/   | |   \|                     |
+_#/$ |                   | |                          |
+_#/$ |                  /___\                         |
+_#/$ |________________________________________________|
+_#/$
+_#/$  [От Автора. Если вы нашли эту часть игры, напишите мне на мой почтовый адрес yura@pavlenko.biz. На мой субъективный взгляд это самая сложная ее часть. Первому написавшему я назову личность черного человека. ж)]
+_#/$
+end
+
+
+
+
+
+:быстрый_конец
+pln  Войдя в монастырь вы замечаете старого монаха, который сунув в глаз монокль, при свете лампадки, перебирает книги. Блуд уверенно подходит к старику-монаху, и говорит :
+_ #/$ - Дедушка, не могли бы вы дать нам почитать труды Сервиуса?
+_ #/$ - Отчего же, ответил монах, и поковылял внутрь, гулять среди шкафов, пока наконец не вернулся со старой запыленной книгой, поросшей паутиной и мхом.
+_ #/$ - Никогда еще на моей памяти никто не брал почитать эту книгу, - сказал монах.
+_ #/$ Блуд взял книгу в руки, раскрыл и произнес :
+_ #/$ - А-ха.
+_ #/$ В середине книги, среди страниц была встроена полость, в которую помещен некий сверток. С интересом развернув сверток, Блуд обнаружил там амулет из желтого металла и с красными камнями, на цепочке.
+_ #/$ - Думаю, черный человек, искал именно это...
+_ #/$ На сим мы и закончим наш квест...
+anykey
+pln&pln  Извините за столь неожиданное окончание истории, но все это из-за того, что жюри конкурса не дало авторам достаточно времени. Из-за чего большинство не успело.
+anykey
+pln&pln  Однако... Я забыл про то, что в конце должен появится огонь...
+anykey
+pln&pln  - Древний альбигойский амулет... - пробормотал старик монах, схватившись за сердце... В ту же секунду его сразил сердечный приступ, и он гулко упал на пол, зацепив столик, за которым сидел.
+_ Стоящая на нем лампадка, перевернулась и упала на пол. Сухие книги в библиотеке сразу же занялись. И лишь чудом смогли наши герои выбраться из пылающей библиотеки.
+_ #/$ А вот это уже, действительно конец...
+anykey
+pln&pln  Дамы и господа. Если эта игра вам понравилась, то пришлите мне письмо по адресу : yura@pavlenko.biz
+_#/$ В письме я бы попросил вас ответить на три вопроса :
+_#/$ 1. Кто, по вашему мнению, убил Лиззи Рош?
+_#/$ 2. Как, по вашему мнению, зовут помощника капитана Блуда?
+_#/$ 3. Существует ли черный человек, и кто скрывается под его личиной?
+quit
+end
+
+_
