@@ -136,8 +136,6 @@ $(function() {
      * Нажатие на сохранение
      */
     returnToGame.on('click', function() {
-        if (GlobalPlayer.lock) return false;
-
         $('#saveslots').hide();
         $('#game').show();
     });
