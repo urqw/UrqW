@@ -145,7 +145,7 @@ Player.prototype.end = function() {
 /**
  *
  */
-Player.prototype.forgetProc = function() {
+Player.prototype.forgetProcs = function() {
     this.flowStack[0] = this.flowStack[this.flow];
     this.procPosition = [];
     this.flow = 0;
