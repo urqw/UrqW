@@ -54,8 +54,13 @@ function Parser() {
             
             if (xbtn.length > 1) {
                 var desc = this.prepareLine(xbtn.slice(1).join(',').trim());
+                var comm = xbtn[0].trim();
+                
+                if (comm.indexOf('&') == -1) {
+                    comm = this.prepareLine(comm);
+                }
 
-                return GlobalPlayer.btn(this.prepareLine(xbtn[0].trim()), desc);
+                return GlobalPlayer.btn(comm, desc);
             }
         }
         
