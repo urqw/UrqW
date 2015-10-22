@@ -128,6 +128,13 @@ function Expression(str) {
                             result = b - a;
                             break;
                         case '==':
+                            if ((typeof b == 'string') && (typeof a == 'string')) {
+                                var reg = new RegExp('^' + a.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$', 'i');
+                                result = b.search(reg) != -1;
+                            } else {
+                                result = b == a;
+                            }
+                            break;
                         case '=':
                             if ((typeof b == 'string') && (typeof a == 'string')) {
                                 result = b.toLowerCase() == a.toLowerCase();
