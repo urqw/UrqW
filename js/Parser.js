@@ -55,7 +55,7 @@ function Parser() {
             if (xbtn.length > 1) {
                 var desc = this.prepareLine(xbtn.slice(1).join(',').trim());
 
-                return GlobalPlayer.btn(xbtn[0].trim(), desc);
+                return GlobalPlayer.btn(this.prepareLine(xbtn[0].trim()), desc);
             }
         }
         
