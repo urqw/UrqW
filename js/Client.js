@@ -260,9 +260,13 @@ function Client() {
     /**
      * преврать текст вида <a ...>текст</a> в текст
      * @param text 
-     * todo
      */
     this.disableLink = function(text) {
-        
+        var a = $(text);
+        if (a.hasClass('button')) {
+            return a.text();
+        } else {
+            return text;
+        }
     }
 }

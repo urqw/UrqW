@@ -82,12 +82,7 @@ Player.prototype.clsb = function() {
     
     for(var i = 0; i < this.text.length; i++) {
         this.text[i][0] = this.text[i][0].replace(/\<a.+?\>.+?\<\/a\>/gi, function (match) {
-            var a = $(match);
-            if (a.hasClass('button')) {
-                return a.text();
-            } else {
-                return match;
-            }
+            return GlobalPlayer.Client.disableLink(match);
         });
     }
 
