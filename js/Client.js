@@ -146,7 +146,7 @@ function Client() {
                 }
             });
 
-            div.find('a').each(function(index) {
+            div.find('a.button').each(function(index) {
                 var action = $(this).attr('data-action');
                 if (GlobalPlayer.links[action] == null) {
                     $(this).contents().unwrap();
