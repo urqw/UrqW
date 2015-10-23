@@ -36,23 +36,40 @@ $(function() {
         $('#choose-game').hide();
 
         if (window.location.hash.length > 0) {
-            $.ajax({
-                url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
-                dataType: "text"
-            }).done(function(msg) {
-                $.ajax({
-                    url: 'quests/' + window.location.hash.substr(1) + '/style.css',
-                    dataType: "text"
-                }).complete(function(style) {
-                    if (style.status == 200) {
-                        $('#additionalstyle').find('style').empty();
-                        $('#additionalstyle').find('style').append(style.responseText);
+            JSZipUtils.getBinaryContent('quests/' + window.location.hash.substr(1) + '.zip', function(err, data) {
+                if(err) {
+                    throw err; // or handle err
+                }
+
+                var zip = new JSZip(data);
+
+
+                files = {};
+                var qst = null;
+
+                for (var i =0; i < zip.files.length; i++) {
+                    if (qst == null && zip.files[i].name.split('.').pop() == 'qst') {
+                        qst = zip.files[i];
+                    } else if (zip.files[i].name == 'style.css') {
+                        readStyle(zip.files[i]);
+                    } else {
+                        readFile(zip.files[i].name, zip.files[i]);
                     }
-                    start(msg, window.location.hash.substr(1));
-                });
-            }).fail(function () {
-                $('#loading').hide();
-                $('#choose-game').show();
+                }
+
+                if (!qst) {
+                    return;
+                }
+
+                // read file to global variable and start quest
+                var reader = new FileReader();
+                reader.onload = function() {
+                    mode = $('#urq_mode').val();
+                    setTimeout(function() {
+                        start(reader.result, qst.name);
+                    }, 200); // todo
+                };
+                reader.readAsText(qst, 'CP1251');
             });
         } else {
             $.ajax({
