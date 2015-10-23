@@ -148,7 +148,7 @@ $(function() {
 
         var command = $(this).data('command');
 
-        var label = Game.getLabel(GlobalPlayer.Parser.openTags(command.toString()));
+        var label = Game.getLabel(command.toString());
 
         if (label) {
             GlobalPlayer.btnAction(label.name);
@@ -162,7 +162,7 @@ $(function() {
 
         var command = $(this).data('command');
 
-        var label = Game.getLabel(GlobalPlayer.Parser.openTags(command.toString()));
+        var label = Game.getLabel(command.toString());
 
         if (label) {
             GlobalPlayer.btnAction(label.name);
