@@ -54,8 +54,13 @@ function Parser() {
             
             if (xbtn.length > 1) {
                 var desc = this.prepareLine(xbtn.slice(1).join(',').trim());
+                var com = xbtn[0].trim();
+                
+                if (com.indexOf('&') == -1) {
+                    com = this.openTags(com);
+                }
 
-                return GlobalPlayer.btn(this.openTags(xbtn[0].trim()), desc);
+                return GlobalPlayer.btn(com, desc);
             }
         }
         
@@ -234,7 +239,7 @@ function Parser() {
                     text = exp;
                 }
                 
-                return GlobalPlayer.Client.convertToLink(text, command);
+                return GlobalPlayer.Client.convertToLink(text, GlobalPlayer.link(command));
             });
         }
         

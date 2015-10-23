@@ -15,13 +15,12 @@ var gameMusic = new Audio();
  * @constructor
  */
 function Player() {
-    var me = this;
-
     this.Parser = new Parser();
     this.Client = new Client();
 
     this.text = [];
     this.buttons = [];
+    this.links = [];
     this.inf = false;
 
     this.procPosition = [];
@@ -118,12 +117,42 @@ function Player() {
     };
 
     /**
+     * @param {int} actionId
+     * @param {bool} link
+     */
+    this.action = function(actionId, link) {
+        if (this.lock) return false;
+        
+        if (link) {
+            var command = this.links[actionId];
+            this.links[actionId] = null;
+        } else {
+            for (var key in this.buttons) {
+                if (this.buttons[key].id == actionId) {
+                    command = this.buttons[key].command;
+                    delete this.buttons[key];
+                    
+                    break
+                }
+            }
+        }
+        
+        if (command === null) return;
+
+        var label = Game.getLabel(command);
+
+        if (label) {
+            this.btnAction(label.name);
+        } else {
+            this.xbtnAction(command);
+        }
+    };
+
+    /**
      * @param {String} labelName
      * @returns {boolean}
      */
     this.btnAction = function(labelName) {
-        if (this.lock) return false;
-
         this.cls();
 
         this.common();
@@ -138,8 +167,6 @@ function Player() {
      * @returns {boolean}
      */
     this.xbtnAction = function(command) {
-        if (this.lock) return false;
-
         this.common();
 
         this.play(command + '&end');

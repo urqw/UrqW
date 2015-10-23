@@ -70,6 +70,7 @@ Player.prototype.perkill = function() {
 Player.prototype.cls = function() {
     this.text = [];
     this.buttons = [];
+    this.links = [];
 
     this.Client.cls();
 };
@@ -79,6 +80,7 @@ Player.prototype.cls = function() {
  */
 Player.prototype.clsb = function() {
     this.buttons = [];
+    this.links = [];
     
     for(var i = 0; i < this.text.length; i++) {
         this.text[i][0] = this.text[i][0].replace(/\<a.+?\>.+?\<\/a\>/gi, function (match) {
@@ -223,9 +225,23 @@ Player.prototype.print = function(text, br) {
  * @param {String} desc
  */
 Player.prototype.btn = function(command, desc) {
+    var id = this.buttons.length;
+
     this.buttons.push({
+        id: id,
         command: command,
         desc: desc 
     });
+};
+
+/**
+ * @param {String} command
+ */
+Player.prototype.link = function(command) {
+    var id = this.links.length;
+
+    this.links[id] = command;
+    
+    return id;
 };
 
