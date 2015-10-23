@@ -144,31 +144,11 @@ $(function() {
      * Нажатие на btn
      */
     buttonField.on('click', '.button', function() {
-        if (GlobalPlayer.lock) return false;
-
-        var command = $(this).data('command');
-
-        var label = Game.getLabel(command.toString());
-
-        if (label) {
-            GlobalPlayer.btnAction(label.name);
-        } else {
-            GlobalPlayer.xbtnAction(command);
-        }
+        GlobalPlayer.action($(this).data('action'), false);
     });
 
     textfield.on('click', 'a.button', function() {
-        if (GlobalPlayer.lock) return false;
-
-        var command = $(this).data('command');
-
-        var label = Game.getLabel(command.toString());
-
-        if (label) {
-            GlobalPlayer.btnAction(label.name);
-        } else {
-            GlobalPlayer.xbtnAction(command);
-        }
+        GlobalPlayer.action($(this).data('action'), true);
     });
 
     /**

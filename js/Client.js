@@ -146,6 +146,13 @@ function Client() {
                 }
             });
 
+            div.find('a').each(function(index) {
+                var action = $(this).attr('data-action');
+                if (GlobalPlayer.links[action] == null) {
+                    $(this).contents().unwrap();
+                }
+            });
+
             me.crtlTextField.append(div);
 
             if (text[1]) {
@@ -161,9 +168,11 @@ function Client() {
         me.crtlButtonField.empty();
         
         $.each(GlobalPlayer.buttons, function(index, button) {
-            var buttonCtrl = $('<button class="list-group-item button">').attr('data-command', button.command).html(button.desc);
+            if (button) {
+                var buttonCtrl = $('<button class="list-group-item button">').attr('data-action', button.id).html(button.desc);
 
-            me.crtlButtonField.append(buttonCtrl);
+                me.crtlButtonField.append(buttonCtrl);
+            }
         });
     };
 
@@ -251,10 +260,10 @@ function Client() {
     /**
      * превратить текст и комманду в <a> тег
      * @param {String} text
-     * @param {String} command
+     * @param {int} action
      */
-    this.convertToLink = function(text, command) {
-        return "<a data-command='" + $("<div>").text(command).html() + "' class='button'>" + text + "</a>";
+    this.convertToLink = function(text, action) {
+        return "<a data-action='" + action + "' class='button'>" + text + "</a>";
     };
 
     /**
