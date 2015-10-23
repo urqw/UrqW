@@ -230,7 +230,7 @@ function Parser() {
                     command = exptmp.slice(1).join('|').trim();
                     text = exptmp[0].trim();
                 } else {
-                    command = exp;
+                    command = exp.trim();
                     text = exp;
                 }
                 

@@ -112,7 +112,7 @@ function Player() {
         }
 
         if (this.proc(commonLabel)) {
-            this.forgetProc();
+            this.forgetProcs();
             this.play();
         }
     };
