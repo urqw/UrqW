@@ -421,9 +421,9 @@ score2=0
 end
 
 :board
-v_i=0
+/*v_i=0
 :board_pause_loop
-if v_i<v_pause then &v_i=v_i+1&goto board_pause_loop
+if v_i<v_pause then &v_i=v_i+1&goto board_pause_loop*/
 clrscr=4096
 cls
 pln  #%player1$ vs #%player2$
