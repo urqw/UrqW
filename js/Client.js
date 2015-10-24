@@ -156,7 +156,7 @@ function Client() {
             });
             
             if (text.rendered == undefined) {
-                div.css('opacity', 0.5);
+//                div.css('opacity', 0.5);
             }
 
             me.crtlTextField.append(div);
@@ -168,12 +168,10 @@ function Client() {
             if (text.rendered == undefined) {
                 if (scrolled == false) {
                     scrolled = true;
-                    $('html, body').animate({
-                        scrollTop: div.offset().top
-                    }, 500);
+                    $('html, body').animate({scrollTop: div.offset().top}, 500);
                 }
 
-                div.delay(200).animate({opacity:1});
+//                div.animate({opacity:1}, 800);
             }
             
             GlobalPlayer.text[index].rendered = true;
