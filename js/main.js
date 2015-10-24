@@ -19,6 +19,8 @@ GlobalPlayer = null;
  */
 files = null;
 
+quest = []; // todo
+
 /**
  * 
  */
@@ -43,7 +45,7 @@ $(function() {
                     loadFromHashFailed();
                 }
 
-                loadZip(data);
+                loadZip(data, window.location.hash.substr(1));
             });
         } else {
             loadFromHashFailed();
@@ -56,17 +58,17 @@ $(function() {
     loadFromHash();
 
     
-    function loadZip(data) {
+    function loadZip(data, name) {
         var zip = new JSZip(data);
 
         files = {};
-        var qst = null;
+        var qst = [];
 
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
-                if (qst == null && file.name.split('.').pop() == 'qst') {
-                    qst = file;
+                if (file.name.split('.').pop() == 'qst') {
+                    qst.push(file);
                 } else if (file.name.split('.').pop() == 'css') {
                     $('#additionalstyle').find('style').append(file.asBinary());
                 } else {
@@ -75,9 +77,11 @@ $(function() {
             }
         }
 
-        if (qst) {
-            if (qst.name.lastIndexOf('/') != -1) {
-                var dir = qst.name.substring(0, qst.name.lastIndexOf('/') + 1);
+        if (qst.length > 0) {
+            quest = '';
+            
+            if (qst[0].name.lastIndexOf('/') != -1) {
+                var dir = qst[0].name.substring(0, qst[0].name.lastIndexOf('/') + 1);
 
                 for (var key in files) {
                     var newkey = key.substr(dir.length);
@@ -85,8 +89,12 @@ $(function() {
                     delete files[key];
                 }
             }
+            
+            for (var i = 0; i < qst.length; i++) {
+                quest = quest + win2unicode(qst[i].asBinary());
+            }
 
-            start(win2unicode(qst.asBinary()), qst.name);
+            start(quest, name);
         }    
     }
     
@@ -130,15 +138,15 @@ $(function() {
      */
     $('#quest').on('change', function(e) {
         files = {};
-        var qst = null;
-        var reader = new FileReader();
+        var qst = [];
         
         if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop() == 'zip') {
+            var reader = new FileReader();
             var zip = e.target.files[0];    
             
             reader.onload = function() {
                 mode = $('#urq_mode').val();
-                loadZip(reader.result);
+                loadZip(reader.result, zip.name);
             };
             reader.readAsBinaryString(zip, 'CP1251');
 
@@ -146,8 +154,8 @@ $(function() {
         }
 
         for (var i = 0; i < e.target.files.length; i++) {
-            if (qst == null && e.target.files[i].name.split('.').pop() == 'qst') {
-                qst = e.target.files[i];
+            if (e.target.files[i].name.split('.').pop() == 'qst') {
+                qst.push(e.target.files[i]);
             } else if (e.target.files[i].name == 'style.css') {
                 readStyle(e.target.files[i]);
             } else {
@@ -155,19 +163,38 @@ $(function() {
             }
         }
 
-        if (!qst) {
+        if (qst.length == 0) {
             return;
         }
 
-        // read file to global variable and start quest
-        reader.onload = function() {
-            mode = $('#urq_mode').val();
-            setTimeout(function() {
-                start(reader.result, qst.name);
-            }, 200); // todo
-        };
-        reader.readAsText(qst, 'CP1251');
+        var name = qst[0].name;
+        mode = $('#urq_mode').val();
+        quest = [];
+        var slices = qst.length;
+        
+        while (qst.length > 0) {
+            readQst(qst.shift());
+        }
+
+        var loadq = setInterval(function() {
+            if (slices == quest.length) {
+                clearInterval(loadq);
+                start(quest.join(''), name);
+            }
+        }, 200); // todo
     });
+
+    /**
+     * @param file
+     */
+    function readQst(file) {
+        var reader = new FileReader();
+        reader.onload = function() {
+            quest.push(reader.result)
+        };
+
+        reader.readAsText(file, 'CP1251');
+    }
 
     /**
      * @param filename
@@ -201,6 +228,7 @@ $(function() {
      * @param {String} name имя игры или файла
      */
     function start(msg, name) {
+        quest = null;
         window.onbeforeunload = function(e) {
             return 'confirm please';
         };
