@@ -122,6 +122,8 @@ function Client() {
      * Нарисовать текст
      */
     this.drawText = function () {
+        var scrolled = false;
+        
         me.crtlTextField.empty();
         
         $.each(GlobalPlayer.text, function(index, text) {
@@ -152,12 +154,29 @@ function Client() {
                     $(this).contents().unwrap();
                 }
             });
+            
+            if (text.rendered == undefined) {
+                div.css('opacity', 0.5);
+            }
 
             me.crtlTextField.append(div);
 
             if (text[1]) {
                 me.crtlTextField.append('<div class="clearfix">');
             }
+
+            if (text.rendered == undefined) {
+                if (scrolled == false) {
+                    scrolled = true;
+                    $('html, body').animate({
+                        scrollTop: div.offset().top
+                    }, 500);
+                }
+
+                div.delay(200).animate({opacity:1});
+            }
+            
+            GlobalPlayer.text[index].rendered = true;
         });
     };
 
