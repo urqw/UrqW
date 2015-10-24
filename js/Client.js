@@ -127,7 +127,7 @@ function Client() {
         $.each(GlobalPlayer.text, function(index, text) {
             var div = $('<div>').html(text[0]);
 
-            if (div.find('*:not(a)').length == 0) {
+            if (div.find('*:not(a, s, b, small, span, q, i)').length == 0) {
                 div.addClass('text');
             }
             
@@ -212,6 +212,8 @@ function Client() {
                 actions.push([actionName, index]);
             } 
         });
+
+        itemName = itemName.replace(/_/g, '');
 
         if (actions.length == 0 && itemName != 'inv') {
             if (quantity > 1) {
