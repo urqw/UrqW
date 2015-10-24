@@ -141,7 +141,7 @@ function Client() {
                     if (files === null) {
                         $(this).attr('src', 'quests/' + Game.name + '/' + src);
                     } else {
-                        $(this).attr('src', files[src]);
+                        $(this).attr('src', files[src]); // todo
                     }
                 }
             });

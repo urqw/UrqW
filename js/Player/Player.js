@@ -250,12 +250,8 @@ function Player() {
      */
         // todo переместить в клиента
     this.image = function(src) {
-        if (files === null) {
-            if (src) {
-                this.print($('<img style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
-            }
-        } else {
-            this.print($('<img style="margin: 5px auto; display: block;">').attr('src', files[src]).prop('outerHTML'), true);
+        if (src) {
+            this.print($('<img style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
         }
     };
 
