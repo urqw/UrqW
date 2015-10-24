@@ -213,6 +213,8 @@ function Client() {
             } 
         });
 
+        itemName = itemName.replace(/_/g, '');
+
         if (actions.length == 0 && itemName != 'inv') {
             if (quantity > 1) {
                 itemName = itemName + ' (' + quantity + ')';
