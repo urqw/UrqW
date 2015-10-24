@@ -19,6 +19,8 @@ GlobalPlayer = null;
  */
 files = null;
 
+quest = []; // todo
+
 /**
  * 
  */
@@ -27,6 +29,8 @@ var mode;
 $(function() {
     $('#something_wrong').hide();
     $('#infopanel').show();
+    
+    $('#additionalstyle').find('style').empty();
 
     /**
      * Загрузить из хеша
@@ -36,44 +40,15 @@ $(function() {
         $('#choose-game').hide();
 
         if (window.location.hash.length > 0) {
-            $.ajax({
-                url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
-                dataType: "text"
-            }).done(function(msg) {
-                $.ajax({
-                    url: 'quests/' + window.location.hash.substr(1) + '/style.css',
-                    dataType: "text"
-                }).complete(function(style) {
-                    if (style.status == 200) {
-                        $('#additionalstyle').find('style').empty();
-                        $('#additionalstyle').find('style').append(style.responseText);
-                    }
-                    start(msg, window.location.hash.substr(1));
-                });
-            }).fail(function () {
-                $('#loading').hide();
-                $('#choose-game').show();
+            JSZipUtils.getBinaryContent('quests/' + window.location.hash.substr(1) + '.zip', function(err, data) {
+                if(err) {
+                    loadFromHashFailed();
+                }
+
+                loadZip(data, window.location.hash.substr(1));
             });
         } else {
-            $.ajax({
-                url: 'games.json',
-                dataType: "json"
-            }).done(function(quests) {
-                for (var i = 0; i < quests.length; i++) {
-                    $('.gamelist').append(
-                        '<a href="#" class="list-group-item gamelink" data-game="' + quests[i].folder + '">' +
-                        '<div class="pull-right">' +
-                        '<span class="text-muted">' + quests[i].author + '</span>' +
-                        '</div>' +
-                        '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
-                        '<p class="list-group-item-text">' + quests[i].description + '</p>' +
-                        '</a>'
-                    );
-                }
-            });
-
-            $('#loading').hide();
-            $('#choose-game').show();
+            loadFromHashFailed();
         }
     }
 
@@ -81,6 +56,72 @@ $(function() {
      * Попробуем загрузить квест если в хеше что-то есть
      */
     loadFromHash();
+
+    
+    function loadZip(data, name) {
+        var zip = new JSZip(data);
+
+        files = {};
+        var qst = [];
+
+        for (var key in zip.files) {
+            if (!zip.files[key].dir) {
+                var file = zip.file(key);
+                if (file.name.split('.').pop() == 'qst') {
+                    qst.push(file);
+                } else if (file.name.split('.').pop() == 'css') {
+                    $('#additionalstyle').find('style').append(file.asBinary());
+                } else {
+                    files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
+                }
+            }
+        }
+
+        if (qst.length > 0) {
+            quest = '';
+            
+            if (qst[0].name.lastIndexOf('/') != -1) {
+                var dir = qst[0].name.substring(0, qst[0].name.lastIndexOf('/') + 1);
+
+                for (var key in files) {
+                    var newkey = key.substr(dir.length);
+                    files[newkey] = files[key];
+                    delete files[key];
+                }
+            }
+            
+            for (var i = 0; i < qst.length; i++) {
+                quest = quest + win2unicode(qst[i].asBinary());
+            }
+
+            start(quest, name);
+        }    
+    }
+    
+    /**
+     * 
+     */
+    function loadFromHashFailed() {
+        $.ajax({
+            url: 'games.json',
+            dataType: "json"
+        }).done(function(quests) {
+            for (var i = 0; i < quests.length; i++) {
+                $('.gamelist').append(
+                    '<a href="#" class="list-group-item gamelink" data-game="' + quests[i].folder + '">' +
+                    '<div class="pull-right">' +
+                    '<span class="text-muted">' + quests[i].author + '</span>' +
+                    '</div>' +
+                    '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
+                    '<p class="list-group-item-text">' + quests[i].description + '</p>' +
+                    '</a>'
+                );
+            }
+        });
+
+        $('#loading').hide();
+        $('#choose-game').show();
+    }
 
     /**
      * Выбор игры из списка
@@ -97,11 +138,24 @@ $(function() {
      */
     $('#quest').on('change', function(e) {
         files = {};
-        var qst = null;
+        var qst = [];
+        
+        if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop() == 'zip') {
+            var reader = new FileReader();
+            var zip = e.target.files[0];    
+            
+            reader.onload = function() {
+                mode = $('#urq_mode').val();
+                loadZip(reader.result, zip.name);
+            };
+            reader.readAsBinaryString(zip, 'CP1251');
 
-        for (var i =0; i < e.target.files.length; i++) {
-            if (qst == null && e.target.files[i].name.split('.').pop() == 'qst') {
-                qst = e.target.files[i];
+            return;
+        }
+
+        for (var i = 0; i < e.target.files.length; i++) {
+            if (e.target.files[i].name.split('.').pop() == 'qst') {
+                qst.push(e.target.files[i]);
             } else if (e.target.files[i].name == 'style.css') {
                 readStyle(e.target.files[i]);
             } else {
@@ -109,20 +163,38 @@ $(function() {
             }
         }
 
-        if (!qst) {
+        if (qst.length == 0) {
             return;
         }
 
-        // read file to global variable and start quest
+        var name = qst[0].name;
+        mode = $('#urq_mode').val();
+        quest = [];
+        var slices = qst.length;
+        
+        while (qst.length > 0) {
+            readQst(qst.shift());
+        }
+
+        var loadq = setInterval(function() {
+            if (slices == quest.length) {
+                clearInterval(loadq);
+                start(quest.join(''), name);
+            }
+        }, 200); // todo
+    });
+
+    /**
+     * @param file
+     */
+    function readQst(file) {
         var reader = new FileReader();
         reader.onload = function() {
-            mode = $('#urq_mode').val();
-            setTimeout(function() {
-                start(reader.result, qst.name);
-            }, 200); // todo
+            quest.push(reader.result)
         };
-        reader.readAsText(qst, 'CP1251');
-    });
+
+        reader.readAsText(file, 'CP1251');
+    }
 
     /**
      * @param filename
@@ -131,9 +203,10 @@ $(function() {
     function readFile(filename, file) {
         var reader = new FileReader();
         reader.onload = function() {
-            files[filename] = reader.result;
+            files[filename] = URL.createObjectURL(new Blob([reader.result], {type: MIME[filename.split('.').pop()]}));
         };
-        reader.readAsDataURL(file);
+
+        reader.readAsArrayBuffer(file);
     }
 
     /**
@@ -142,7 +215,6 @@ $(function() {
     function readStyle(file) {
         var style = new FileReader();
         style.onload = function() {
-            $('#additionalstyle').find('style').empty();
             $('#additionalstyle').find('style').append(style.result);
         };
 
@@ -156,6 +228,7 @@ $(function() {
      * @param {String} name имя игры или файла
      */
     function start(msg, name) {
+        quest = null;
         window.onbeforeunload = function(e) {
             return 'confirm please';
         };
