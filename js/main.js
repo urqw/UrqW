@@ -68,7 +68,11 @@ $(function() {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
                 if (file.name.split('.').pop() == 'qst') {
-                    qst.push(file);
+                    if (file.name.substr(0, 1) == '_') {
+                        qst.unshift(file);
+                    } else {
+                        qst.push(file);
+                    }
                 } else if (file.name.split('.').pop() == 'css') {
                     $('#additionalstyle').find('style').append(file.asBinary());
                 } else {
@@ -79,7 +83,7 @@ $(function() {
 
         if (qst.length > 0) {
             quest = '';
-            
+
             if (qst[0].name.lastIndexOf('/') != -1) {
                 var dir = qst[0].name.substring(0, qst[0].name.lastIndexOf('/') + 1);
 
@@ -91,15 +95,15 @@ $(function() {
             }
             
             for (var i = 0; i < qst.length; i++) {
-                quest = quest + win2unicode(qst[i].asBinary());
+                quest = quest + '\r\n' + win2unicode(qst[i].asBinary());
             }
 
             start(quest, name);
-        }    
+        }
     }
-    
+
     /**
-     * 
+     *
      */
     function loadFromHashFailed() {
         $.ajax({
@@ -139,11 +143,11 @@ $(function() {
     $('#quest').on('change', function(e) {
         files = {};
         var qst = [];
-        
+
         if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop() == 'zip') {
             var reader = new FileReader();
-            var zip = e.target.files[0];    
-            
+            var zip = e.target.files[0];
+
             reader.onload = function() {
                 mode = $('#urq_mode').val();
                 loadZip(reader.result, zip.name);
@@ -171,7 +175,7 @@ $(function() {
         mode = $('#urq_mode').val();
         quest = [];
         var slices = qst.length;
-        
+
         while (qst.length > 0) {
             readQst(qst.shift());
         }
@@ -179,7 +183,7 @@ $(function() {
         var loadq = setInterval(function() {
             if (slices == quest.length) {
                 clearInterval(loadq);
-                start(quest.join(''), name);
+                start(quest.join('\r\n'), name);
             }
         }, 200); // todo
     });
@@ -190,7 +194,11 @@ $(function() {
     function readQst(file) {
         var reader = new FileReader();
         reader.onload = function() {
-            quest.push(reader.result)
+            if (file.name.substr(0, 1) == '_') {
+                quest.unshift(reader.result);
+            } else {
+                quest.push(reader.result);
+            }
         };
 
         reader.readAsText(file, 'CP1251');
@@ -232,7 +240,7 @@ $(function() {
         window.onbeforeunload = function(e) {
             return 'confirm please';
         };
-        
+
         $('#loading').hide();
         $('#infopanel').hide();
         $('#logo').hide();
@@ -243,7 +251,7 @@ $(function() {
         Game.init();
 
         GlobalPlayer = new Player;
-        
+
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
 
         GlobalPlayer.Client.crtlInfo = $('#info');
