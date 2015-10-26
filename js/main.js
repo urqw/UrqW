@@ -83,7 +83,7 @@ $(function() {
 
         if (qst.length > 0) {
             quest = '';
-            
+
             if (qst[0].name.lastIndexOf('/') != -1) {
                 var dir = qst[0].name.substring(0, qst[0].name.lastIndexOf('/') + 1);
 
@@ -99,11 +99,11 @@ $(function() {
             }
 
             start(quest, name);
-        }    
+        }
     }
-    
+
     /**
-     * 
+     *
      */
     function loadFromHashFailed() {
         $.ajax({
@@ -143,11 +143,11 @@ $(function() {
     $('#quest').on('change', function(e) {
         files = {};
         var qst = [];
-        
+
         if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop() == 'zip') {
             var reader = new FileReader();
-            var zip = e.target.files[0];    
-            
+            var zip = e.target.files[0];
+
             reader.onload = function() {
                 mode = $('#urq_mode').val();
                 loadZip(reader.result, zip.name);
@@ -175,7 +175,7 @@ $(function() {
         mode = $('#urq_mode').val();
         quest = [];
         var slices = qst.length;
-        
+
         while (qst.length > 0) {
             readQst(qst.shift());
         }
@@ -240,7 +240,7 @@ $(function() {
         window.onbeforeunload = function(e) {
             return 'confirm please';
         };
-        
+
         $('#loading').hide();
         $('#infopanel').hide();
         $('#logo').hide();
@@ -251,7 +251,7 @@ $(function() {
         Game.init();
 
         GlobalPlayer = new Player;
-        
+
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
 
         GlobalPlayer.Client.crtlInfo = $('#info');
