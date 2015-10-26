@@ -57,7 +57,6 @@ $(function() {
      */
     loadFromHash();
 
-    
     function loadZip(data, name) {
         var zip = new JSZip(data);
 
@@ -73,14 +72,16 @@ $(function() {
                     } else {
                         qst.push(file);
                     }
-                } else if (file.name.split('.').pop() == 'css') {
+                } else if (file.name.split('.').pop().toLowerCase() == 'css') {
                     $('#additionalstyle').find('style').append(file.asBinary());
+                } else if (file.name.split('.').pop().toLowerCase() == 'js') {
+                    $('#additionalscript').find('script').attr('src', URL.createObjectURL(new Blob([(file.asBinary())])));
                 } else {
                     files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
                 }
             }
         }
-
+        
         if (qst.length > 0) {
             quest = '';
 
@@ -160,8 +161,10 @@ $(function() {
         for (var i = 0; i < e.target.files.length; i++) {
             if (e.target.files[i].name.split('.').pop().toLowerCase() == 'qst') {
                 qst.push(e.target.files[i]);
-            } else if (e.target.files[i].name == 'style.css') {
+            } else if (e.target.files[i].name.toLowerCase() == 'style.css') {
                 readStyle(e.target.files[i]);
+            } else if (e.target.files[i].name.toLowerCase() == 'script.js') {
+                readJs(e.target.files[i]);
             } else {
                 readFile(e.target.files[i].name, e.target.files[i]);
             }
@@ -227,6 +230,18 @@ $(function() {
         };
 
         style.readAsText(file, 'CP1251');
+    }
+
+    /**
+     * @param file
+     */
+    function readJs(file) {
+        var script = new FileReader();
+        script.onload = function() {
+            $('#additionalscript').find('script').attr('src', script.result);
+        };
+
+        script.readAsDataURL(file);
     }
 
     /**

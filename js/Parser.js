@@ -163,87 +163,88 @@ function Parser() {
         
     };
 
-    /**
-     * Разбиваем по &
-     *
-     * @param line
-     *
-     * @returns {String}
-     */
-    this.prepareLine = function (line) {
-        var pos = line.replace(/\[\[.+?\]\]/g, function(exp) {
-            return exp.replace(/\&/g, ' ');
-        }).indexOf('&');
-
-        if (pos != -1) {
-            GlobalPlayer.flowAdd(line.substring(pos + 1));
-            line = line.substring(0, pos).replace(/^\s+/, '');
-        }
-
-        return this.openTags(line);
-    };
-
-    /**
-     * Открываем #$, #%$
-     *
-     * @param {String} line
-     *
-     * @returns {String}
-     */
-    this.openTags = function (line) {
-        line = line.replace(/\#\/\$/g, '<br>');
-        line = line.replace(/\#\%\/\$/g, '<br>');
-        line = line.replace(/\#\$/g, ' ');
-        line = line.replace(/\#\%\$/g, ' ');
-
-        // ##$
-        line = line.replace(/\#\#[^\#]+?\$/g, function(exp) {
-            return '&#' + exp.substr(2, (exp.length - 3)) + ';';
-        });
-
-        while (line.search(/\#[^\#]+?\$/) != -1) {
-            line = line.replace(/\#[^\#]+?\$/, function(exp) {
-                // рудимент для совместимости
-                if (exp[1] == '%') {
-                    exp = exp.substr(2, (exp.length - 3));
-                } else {
-                    exp = exp.substr(1, (exp.length - 2));
-                }
-                var result = new Expression(exp).calc();
-                
-                return isFloat(result) ? result.toFixed(2) : result;
-            });
-        }
-
-        return line;
-    };
-
-    /**
-     * @param {String} line
-     *
-     * @returns {String}
-     */
-    this.openLinks = function(line) {
-        while (line.search(/\[\[.+?\]\]/) != -1) {
-            line = line.replace(/\[\[.+?\]\]/, function(exp) {
-                var text;
-                var command;
-                exp = exp.substr(2, (exp.length - 4));
-                
-                if (exp.indexOf('|') > 0) {
-                    var exptmp = exp.split('|');
-                    command = exptmp.slice(1).join('|').trim();
-                    text = exptmp[0].trim();
-                } else {
-                    command = exp.trim();
-                    text = exp;
-                }
-                
-                return GlobalPlayer.Client.convertToLink(text, GlobalPlayer.link(command));
-            });
-        }
-        
-        return line;
-    };
 }
 
+
+/**
+ * Разбиваем по &
+ *
+ * @param line
+ *
+ * @returns {String}
+ */
+Parser.prototype.prepareLine = function (line) {
+    var pos = line.replace(/\[\[.+?\]\]/g, function(exp) {
+        return exp.replace(/\&/g, ' ');
+    }).indexOf('&');
+
+    if (pos != -1) {
+        GlobalPlayer.flowAdd(line.substring(pos + 1));
+        line = line.substring(0, pos).replace(/^\s+/, '');
+    }
+
+    return this.openTags(line);
+};
+
+/**
+ * Открываем #$, #%$
+ *
+ * @param {String} line
+ *
+ * @returns {String}
+ */
+Parser.prototype.openTags = function (line) {
+    line = line.replace(/\#\/\$/g, '<br>');
+    line = line.replace(/\#\%\/\$/g, '<br>');
+    line = line.replace(/\#\$/g, ' ');
+    line = line.replace(/\#\%\$/g, ' ');
+
+    // ##$
+    line = line.replace(/\#\#[^\#]+?\$/g, function(exp) {
+        return '&#' + exp.substr(2, (exp.length - 3)) + ';';
+    });
+
+    while (line.search(/\#[^\#]+?\$/) != -1) {
+        line = line.replace(/\#[^\#]+?\$/, function(exp) {
+            // рудимент для совместимости
+            if (exp[1] == '%') {
+                exp = exp.substr(2, (exp.length - 3));
+            } else {
+                exp = exp.substr(1, (exp.length - 2));
+            }
+            var result = new Expression(exp).calc();
+
+            return isFloat(result) ? result.toFixed(2) : result;
+        });
+    }
+
+    return line;
+};
+
+/**
+ * @param {String} line
+ *
+ * @returns {String}
+ */
+Parser.prototype.openLinks = function(line) {
+    while (line.search(/\[\[.+?\]\]/) != -1) {
+        line = line.replace(/\[\[.+?\]\]/, function(exp) {
+            var text;
+            var command;
+            exp = exp.substr(2, (exp.length - 4));
+
+            if (exp.indexOf('|') > 0) {
+                var exptmp = exp.split('|');
+                command = exptmp.slice(1).join('|').trim();
+                text = exptmp[0].trim();
+            } else {
+                command = exp.trim();
+                text = exp;
+            }
+
+            return GlobalPlayer.Client.convertToLink(text, GlobalPlayer.link(command));
+        });
+    }
+
+    return line;
+};
