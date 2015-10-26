@@ -75,7 +75,7 @@ $(function() {
                 } else if (file.name.split('.').pop().toLowerCase() == 'css') {
                     $('#additionalstyle').find('style').append(file.asBinary());
                 } else if (file.name.split('.').pop().toLowerCase() == 'js') {
-                    $('#additionalscript').find('script').attr('src', URL.createObjectURL(new Blob([(file.asBinary())])));
+                    eval(win2unicode(file.asBinary())); // todo?
                 } else {
                     files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
                 }
@@ -238,10 +238,10 @@ $(function() {
     function readJs(file) {
         var script = new FileReader();
         script.onload = function() {
-            $('#additionalscript').find('script').attr('src', script.result);
+            eval(script.result); // todo?
         };
 
-        script.readAsDataURL(file);
+        script.readAsText(file, 'CP1251');
     }
 
     /**
