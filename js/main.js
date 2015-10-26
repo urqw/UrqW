@@ -67,8 +67,8 @@ $(function() {
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
-                if (file.name.split('.').pop() == 'qst') {
-                    if (file.name.substr(0, 1) == '_') {
+                if (file.name.split('.').pop().toLowerCase() == 'qst') {
+                    if (file.name.substr(0, 1) == '_' || file.name.indexOf('/_') != -1) {
                         qst.unshift(file);
                     } else {
                         qst.push(file);
@@ -144,7 +144,7 @@ $(function() {
         files = {};
         var qst = [];
 
-        if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop() == 'zip') {
+        if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop().toLowerCase() == 'zip') {
             var reader = new FileReader();
             var zip = e.target.files[0];
 
@@ -158,7 +158,7 @@ $(function() {
         }
 
         for (var i = 0; i < e.target.files.length; i++) {
-            if (e.target.files[i].name.split('.').pop() == 'qst') {
+            if (e.target.files[i].name.split('.').pop().toLowerCase() == 'qst') {
                 qst.push(e.target.files[i]);
             } else if (e.target.files[i].name == 'style.css') {
                 readStyle(e.target.files[i]);
