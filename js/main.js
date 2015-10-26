@@ -68,7 +68,11 @@ $(function() {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
                 if (file.name.split('.').pop() == 'qst') {
-                    qst.push(file);
+                    if (file.name.substr(0, 1) == '_') {
+                        qst.unshift(file);
+                    } else {
+                        qst.push(file);
+                    }
                 } else if (file.name.split('.').pop() == 'css') {
                     $('#additionalstyle').find('style').append(file.asBinary());
                 } else {
@@ -91,7 +95,7 @@ $(function() {
             }
             
             for (var i = 0; i < qst.length; i++) {
-                quest = quest + win2unicode(qst[i].asBinary());
+                quest = quest + '\r\n' + win2unicode(qst[i].asBinary());
             }
 
             start(quest, name);
@@ -179,7 +183,7 @@ $(function() {
         var loadq = setInterval(function() {
             if (slices == quest.length) {
                 clearInterval(loadq);
-                start(quest.join(''), name);
+                start(quest.join('\r\n'), name);
             }
         }, 200); // todo
     });
@@ -190,7 +194,11 @@ $(function() {
     function readQst(file) {
         var reader = new FileReader();
         reader.onload = function() {
-            quest.push(reader.result)
+            if (file.name.substr(0, 1) == '_') {
+                quest.unshift(reader.result);
+            } else {
+                quest.push(reader.result);
+            }
         };
 
         reader.readAsText(file, 'CP1251');
