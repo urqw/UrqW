@@ -4,22 +4,19 @@
   "authors": [
     "akela <tinycoyote@gmail.com>"
   ],
-  "description": "you can play urq-quest files with it (maybe)",
+  "description": "you can play urq-quest with it",
   "main": "index.html",
   "keywords": [
     "urq",
     "quest",
     "text-quest",
     "parser",
-    "interpeter"
+    "interpreter"
   ],
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "vendor"
   ],
   "dependencies": {
     "bootstrap": "~3.3.5",
