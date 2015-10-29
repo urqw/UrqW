@@ -37,254 +37,254 @@ function Player() {
     /**
      * системные команды
      */
+}
 
-    /**
-     *
-     */
-    this.continue = function() {
-        this.play();
 
-        this.fin();
-    };
+/**
+ *
+ */
+Player.prototype.continue = function() {
+    this.play();
 
-    /**
-     * рендер
-     */
-    this.fin = function() {
-        if (Game.getVar('music')) this.playMusic(Game.getVar('music'), true);
+    this.fin();
+};
 
-        if (this.status != PLAYER_STATUS_NEXT) {
-            this.Client.render({
-                status: this.status,
-                text: this.text,
-                buttons: this.buttons
-            });
-        }
+/**
+ * рендер
+ */
+Player.prototype.fin = function() {
+    if (Game.getVar('music')) this.playMusic(Game.getVar('music'), true);
 
-        this.lock = !(this.status == PLAYER_STATUS_END || this.status == PLAYER_STATUS_PAUSE);
-    };
+    if (this.status != PLAYER_STATUS_NEXT) {
+        this.Client.render({
+            status: this.status,
+            text: this.text,
+            buttons: this.buttons
+        });
+    }
 
-    /**
-     *
-     */
-    this.play = function(line) {
-        this.lock = true;
+    this.lock = !(this.status == PLAYER_STATUS_END || this.status == PLAYER_STATUS_PAUSE);
+};
 
-        this.status = PLAYER_STATUS_NEXT;
+/**
+ *
+ */
+Player.prototype.play = function(line) {
+    this.lock = true;
 
-        if (line !== undefined) {
+    this.status = PLAYER_STATUS_NEXT;
+
+    if (line !== undefined) {
+        this.Parser.parse(line);
+    }
+
+    while ((this.status == PLAYER_STATUS_NEXT)) {
+        if (this.flowStack[this.flow].length == 0 && ((line = Game.next()) !== false)) {
             this.Parser.parse(line);
         }
 
-        while ((this.status == PLAYER_STATUS_NEXT)) {
-            if (this.flowStack[this.flow].length == 0 && ((line = Game.next()) !== false)) {
-                this.Parser.parse(line);
-            }
-
-            while (this.flowStack[this.flow].length > 0 && this.status == PLAYER_STATUS_NEXT) {
-                this.Parser.parse(this.flowStack[this.flow].pop());
-            }
+        while (this.flowStack[this.flow].length > 0 && this.status == PLAYER_STATUS_NEXT) {
+            this.Parser.parse(this.flowStack[this.flow].pop());
         }
-    };
+    }
+};
 
-    /**
-     * добавление команды в текущий поток
-     *
-     * @param {String} line
-     */
-    this.flowAdd = function(line) {
-        this.flowStack[this.flow].push(line);
-    };
+/**
+ * добавление команды в текущий поток
+ *
+ * @param {String} line
+ */
+Player.prototype.flowAdd = function(line) {
+    this.flowStack[this.flow].push(line);
+};
 
-    /**
-     * команды далее исполняются юзером по ходу игры
-     */
+/**
+ * команды далее исполняются юзером по ходу игры
+ */
 
-    /**
-     * коммон
-     */
-    this.common = function() {
-        var commonLabel = 'common';
+/**
+ * коммон
+ */
+Player.prototype.common = function() {
+    var commonLabel = 'common';
 
-        if (Game.getVar('urq_mode') != 'ripurq' && Game.getVar('common') !== 0) {
-            commonLabel = commonLabel + '_' + Game.getVar('common');
-        }
+    if (Game.getVar('urq_mode') != 'ripurq' && Game.getVar('common') !== 0) {
+        commonLabel = commonLabel + '_' + Game.getVar('common');
+    }
 
-        if (this.proc(commonLabel)) {
-            this.forgetProcs();
-            this.play();
-        }
-    };
+    if (this.proc(commonLabel)) {
+        this.forgetProcs();
+        this.play();
+    }
+};
 
-    /**
-     * @param {int} actionId
-     * @param {bool} link
-     */
-    this.action = function(actionId, link) {
-        if (this.lock) return false;
-        
-        if (link) {
-            var command = this.links[actionId];
-            this.links[actionId] = null;
-        } else {
-            for (var key in this.buttons) {
-                if (this.buttons[key].id == actionId) {
-                    command = this.buttons[key].command;
-                    delete this.buttons[key];
-                    
-                    break
-                }
+/**
+ * @param {int} actionId
+ * @param {bool} link
+ */
+Player.prototype.action = function(actionId, link) {
+    if (this.lock) return false;
+
+    if (link) {
+        var command = this.links[actionId];
+        this.links[actionId] = null;
+    } else {
+        for (var key in this.buttons) {
+            if (this.buttons[key].id == actionId) {
+                command = this.buttons[key].command;
+                delete this.buttons[key];
+
+                break
             }
         }
-        
-        if (command === null) return;
+    }
 
-        var label = Game.getLabel(command);
+    if (command === null) return;
 
-        if (label) {
-            this.btnAction(label.name);
-        } else {
-            this.xbtnAction(command);
-        }
-    };
+    var label = Game.getLabel(command);
 
-    /**
-     * @param {String} labelName
-     * @returns {boolean}
-     */
-    this.btnAction = function(labelName) {
-        this.cls();
+    if (label) {
+        this.btnAction(label.name);
+    } else {
+        this.xbtnAction(command);
+    }
+};
 
-        this.common();
+/**
+ * @param {String} labelName
+ * @returns {boolean}
+ */
+Player.prototype.btnAction = function(labelName) {
+    this.cls();
 
-        if (this.goto(labelName, 'btn')) {
-            this.continue();
-        }
-    };
+    this.common();
 
-    /**
-     * @param {String} command
-     * @returns {boolean}
-     */
-    this.xbtnAction = function(command) {
-        this.common();
-
-        this.play(command + '&end');
-        this.fin();
-    };
-
-    /**
-     * @param {String} labelName
-     * @returns {boolean}
-     */
-    this.useAction = function(labelName) {
-        if (this.lock) return false;
-
-        this.play('proc ' + labelName + '&end');
-        this.fin();
-    };
-
-    /**
-     * @param {String} keycode
-     * @returns {boolean}
-     */
-    this.anykeyAction = function(keycode) {
-        if (this.inf.length > 0) {
-            this.setVar(this.inf, keycode);
-        }
-
-        GlobalPlayer.continue();
-    };
-
-    /**
-     * @param {String} value
-     * @returns {boolean}
-     */
-    this.inputAction = function(value) {
-        this.setVar(this.inf, value);
-
+    if (this.goto(labelName, 'btn')) {
         this.continue();
-    };
+    }
+};
 
-    /**
-     * @inheritDoc
-     */
-    this.setVar = function(variable, value) {
-        if (Game.locked) return false;
+/**
+ * @param {String} command
+ * @returns {boolean}
+ */
+Player.prototype.xbtnAction = function(command) {
+    this.common();
 
-        variable = variable.trim();
+    this.play(command + '&end');
+    this.fin();
+};
 
-        if (variable.toLowerCase() === 'style_dos_textcolor') {
-            Game.setVar('style_textcolor', dosColorToHex(value));
-        } else
-        if (variable.toLowerCase() === 'urq_mode') {
-            if (value == 'dosurq') {
-                Game.setVar('style_backcolor', '#000');
-                Game.setVar('style_textcolor', '#FFF');
+/**
+ * @param {String} labelName
+ * @returns {boolean}
+ */
+Player.prototype.useAction = function(labelName) {
+    if (this.lock) return false;
+
+    this.play('proc ' + labelName + '&end');
+    this.fin();
+};
+
+/**
+ * @param {String} keycode
+ * @returns {boolean}
+ */
+Player.prototype.anykeyAction = function(keycode) {
+    if (this.inf.length > 0) {
+        this.setVar(this.inf, keycode);
+    }
+
+    GlobalPlayer.continue();
+};
+
+/**
+ * @param {String} value
+ * @returns {boolean}
+ */
+Player.prototype.inputAction = function(value) {
+    this.setVar(this.inf, value);
+
+    this.continue();
+};
+
+/**
+ * @inheritDoc
+ */
+Player.prototype.setVar = function(variable, value) {
+    if (Game.locked) return false;
+
+    variable = variable.trim();
+
+    if (variable.toLowerCase() === 'style_dos_textcolor') {
+        Game.setVar('style_textcolor', dosColorToHex(value));
+    } else
+    if (variable.toLowerCase() === 'urq_mode') {
+        if (value == 'dosurq') {
+            Game.setVar('style_backcolor', '#000');
+            Game.setVar('style_textcolor', '#FFF');
+        }
+    } else
+
+    // todo переместить
+    if (variable.toLowerCase() === 'image') {
+        var file = value;
+        if (files != null) {
+            if (files[value] !== undefined) {
+                file = value;
+            } else if (files[value + '.png'] !== undefined) {
+                file = value + '.png';
+            } else if (files[value + '.jpg'] !== undefined) {
+                file = value + '.jpg';
+            } else if (files[value + '.gif'] !== undefined) {
+                file = value + '.gif';
             }
-        } else
+        }
 
-        // todo переместить
-        if (variable.toLowerCase() === 'image') {
-            var file = value;
-            if (files != null) {
-                if (files[value] !== undefined) {
-                    file = value;
-                } else if (files[value + '.png'] !== undefined) {
-                    file = value + '.png';
-                } else if (files[value + '.jpg'] !== undefined) {
-                    file = value + '.jpg';
-                } else if (files[value + '.gif'] !== undefined) {
-                    file = value + '.gif';
-                }
+        this.image(file);
+    }
+
+    Game.setVar(variable, value);
+};
+
+/**
+ * @param {String} src
+ */
+    // todo переместить в клиента
+Player.prototype.image = function(src) {
+    if (src) {
+        this.print($('<img style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
+    }
+};
+
+/**
+ * @param {String} src
+ * @param {Boolean} loop
+ */
+Player.prototype.playMusic = function(src, loop) {
+    var file;
+
+    if (files === null) {
+        file = 'quests/' + Game.name + '/' + src;
+    } else {
+        file = files[src];
+    }
+
+    if (src) {
+        if (gameMusic.getAttribute('src') != file) {
+            gameMusic.src = file;
+
+            if (loop) {
+                gameMusic.addEventListener('ended', function() {
+                    gameMusic.src = file;
+                    gameMusic.play();
+                }, false);
             }
 
-            this.image(file);
+            gameMusic.play();
         }
-
-        Game.setVar(variable, value);
-    };
-
-    /**
-     * @param {String} src
-     */
-        // todo переместить в клиента
-    this.image = function(src) {
-        if (src) {
-            this.print($('<img style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
-        }
-    };
-
-    /**
-     * @param {String} src
-     * @param {Boolean} loop
-     */
-    this.playMusic = function(src, loop) {
-        var file;
-
-        if (files === null) {
-            file = 'quests/' + Game.name + '/' + src;
-        } else {
-            file = files[src];
-        }
-
-        if (src) {
-            if (gameMusic.getAttribute('src') != file) {
-                gameMusic.src = file;
-
-                if (loop) {
-                    gameMusic.addEventListener('ended', function() {
-                        gameMusic.src = file;
-                        gameMusic.play();
-                    }, false);
-                }
-
-                gameMusic.play();
-            }
-        } else {
-            gameMusic.pause();
-        }
-    };
-
-}
+    } else {
+        gameMusic.pause();
+    }
+};
 

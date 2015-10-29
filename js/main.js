@@ -41,11 +41,18 @@ $(function() {
 
         if (window.location.hash.length > 0) {
             JSZipUtils.getBinaryContent('quests/' + window.location.hash.substr(1) + '.zip', function(err, data) {
-                if(err) {
-                    loadFromHashFailed();
+                if (err) {
+                    $.ajax({
+                        url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
+                        dataType: "text"
+                    }).done(function(msg) {
+                        start(msg, window.location.hash.substr(1));
+                    }).fail(function () {
+                        loadFromHashFailed();
+                    });
+                } else {
+                    loadZip(data, window.location.hash.substr(1));
                 }
-
-                loadZip(data, window.location.hash.substr(1));
             });
         } else {
             loadFromHashFailed();
@@ -122,6 +129,8 @@ $(function() {
                     '</a>'
                 );
             }
+        }).fail(function() {
+            $('.gamelist').text('Не удалось загрузить список квестов. Скорее всего у вас браузер на основе хромиума (хром, опера, яндекс-браузер и д.р.) и вы запустили веб урку локально. Безопасность хромиума запрещает обращаться к каким бы то не было локальным файлам и считывать их автоматически. Это исправляется если запустить хром с флагом "--allow-file-access-from-files". В вебе такой проблемы ни у кого не будет, речь только о локальной работе. Вы всё ещё можете выбрать файлы игры вручную из папки quests и поиграть.')
         });
 
         $('#loading').hide();
