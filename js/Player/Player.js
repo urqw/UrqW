@@ -253,7 +253,7 @@ Player.prototype.setVar = function(variable, value) {
     // todo переместить в клиента
 Player.prototype.image = function(src) {
     if (src) {
-        this.print($('<img style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
+        this.print($('<img alt="Изображение" style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
     }
 };
 
