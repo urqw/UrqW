@@ -233,7 +233,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
 
     itemName = itemName.replace(/_/g, ' ');
 
-    if (actions.length == 0 && itemName != 'inv') {
+    if (actions.length == 0 && itemName != 'inv' || (Game.getVar('hide_use_' + itemName) > 0)) {
         if (quantity > 1) {
             itemName = itemName + ' (' + quantity + ')';
         }
@@ -249,7 +249,6 @@ Client.prototype.drawItem = function (itemName, quantity) {
 
         return $('<li>').append(a);
     } else if (actions.length > 0)  {
-
         if (itemName == 'inv') {
             itemName = 'Инвентарь';
         } else {
@@ -267,7 +266,9 @@ Client.prototype.drawItem = function (itemName, quantity) {
                 actions[i][0] = 'Осмотреть';
             }
 
-            li2.append($('<a href="#" class="item_use">').attr('data-label', actions[i][1]).text(actions[i][0]));
+            if (Game.getVar('hide_use_' + itemName + '_' + actions[i][0]) == 0) {
+                li2.append($('<a href="#" class="item_use">').attr('data-label', actions[i][1]).text(actions[i][0]));
+            }
         }
 
         ul.append(li2);
