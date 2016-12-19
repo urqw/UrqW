@@ -91,7 +91,7 @@ $(function() {
 
             GlobalPlayer.goto(Game.realCurrentLoc, 'return');
 
-            if (this.status != PLAYER_STATUS_NEXT) {
+            if (GlobalPlayer.status != PLAYER_STATUS_NEXT) {
                 GlobalPlayer.fin();
             } else {
                 GlobalPlayer.continue();
