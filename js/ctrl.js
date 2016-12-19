@@ -94,6 +94,8 @@ $(function() {
             if (GlobalPlayer.status != PLAYER_STATUS_NEXT) {
                 GlobalPlayer.fin();
             } else {
+                GlobalPlayer.text = [];
+                GlobalPlayer.buttons = [];
                 GlobalPlayer.continue();
             }
 
