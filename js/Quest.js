@@ -250,6 +250,9 @@ Quest.prototype.save = function(slot) {
 
     localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
     localStorage.setItem(this.name + '_' + slot.toString() + '_data', JSON.stringify({
+        status: GlobalPlayer.status,
+        text: GlobalPlayer.text,
+        buttons: GlobalPlayer.buttons,
         items: this.items,
         vars: this.vars,
         position: this.position,
@@ -264,6 +267,9 @@ Quest.prototype.save = function(slot) {
  */
 Quest.prototype.load = function(slot) {
     var data = JSON.parse(localStorage.getItem(this.name + '_' + slot.toString() + '_data'));
+    GlobalPlayer.status = data.status;
+    GlobalPlayer.text = data.text;
+    GlobalPlayer.buttons = data.buttons;
     this.items = data.items;
     this.vars = data.vars;
     this.position = data.position;

@@ -22,14 +22,14 @@ files = null;
 quest = []; // todo
 
 /**
- * 
+ *
  */
 var mode;
 
 $(function() {
     $('#something_wrong').hide();
     $('#infopanel').show();
-    
+
     $('#additionalstyle').find('style').empty();
 
     /**
@@ -88,7 +88,7 @@ $(function() {
                 }
             }
         }
-        
+
         if (qst.length > 0) {
             quest = '';
 
@@ -101,7 +101,7 @@ $(function() {
                     delete files[key];
                 }
             }
-            
+
             for (var i = 0; i < qst.length; i++) {
                 quest = quest + '\r\n' + win2unicode(qst[i].asBinary());
             }
@@ -274,7 +274,7 @@ $(function() {
 
         Game.init();
 
-        GlobalPlayer = new Player;
+        GlobalPlayer = new Player();
 
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
 
