@@ -288,3 +288,65 @@ Player.prototype.playMusic = function(src, loop) {
     }
 };
 
+
+/**
+ * 
+ */
+Player.prototype.getUseActions = function() {
+    var useActions = [];
+    var shortLabelName;
+    var action;
+
+    for (var labelName in Game.useLabels) {
+        shortLabelName = labelName.substr(4);
+
+        if (('inv_' == shortLabelName.substr(0, 4).toLowerCase())
+            || ('inv' == shortLabelName.toLowerCase())
+        ) {
+            if (useActions['inv'] == undefined) {
+                useActions['inv'] = [];
+            }
+
+            useActions['inv'].push({name: shortLabelName.substr(4).replace(/_/g, ' '), action: Game.useLabels['inv']});
+        }
+    }
+
+    for (var itemName in Game.items) {
+        for (var labelName in Game.useLabels) {
+            shortLabelName = labelName.substr(4);
+            
+            if ((itemName.toLowerCase() + '_' == shortLabelName.substr(0, itemName.length + 1).toLowerCase()) 
+                || (itemName.toLowerCase() == shortLabelName.toLowerCase())
+            ) {
+                action = labelName;
+            } else {
+                action = null;
+            }
+
+            if (useActions[itemName] == undefined) {
+                useActions[itemName] = [];
+            }
+
+            useActions[itemName].push({quantity: Game.items[itemName], name: shortLabelName.substr(itemName.length + 1).replace(/_/g, ' '), action: action});
+        }
+
+        if (useActions[itemName] == undefined) {
+            useActions[itemName] = [{quantity: Game.items[itemName]}];
+        }
+    }
+    
+    return useActions;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
