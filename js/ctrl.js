@@ -90,11 +90,15 @@ $(function() {
             Game.load($(this).data('slot'));
 
             GlobalPlayer.goto(Game.realCurrentLoc, 'return');
-            GlobalPlayer.fin();
+
+            if (this.status != PLAYER_STATUS_NEXT) {
+                GlobalPlayer.fin();
+            } else {
+                GlobalPlayer.continue();
+            }
 
             returnToGame.click();
 
-//            GlobalPlayer.continue();
             Game.locked = false;
         });
 
