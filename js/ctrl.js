@@ -11,7 +11,7 @@ $(function() {
     var textfield = $('#textfield');
     var inventory = $('#inventory');
     var returnToGame = $('#return_to_game');
-    
+
     /**
      * Нажатие на сохранение
      */
@@ -72,27 +72,40 @@ $(function() {
         $('#saveslots').find('.savebtn').on('click', function() {
             textfield.empty();
             buttonField.empty();
-            GlobalPlayer.text = [];
-            GlobalPlayer.buttons = [];
+            $('#info').hide();
+            $('#input').hide();
+
+            Game.locked = true;
+
+            GlobalPlayer = new Player();
+
+            if (mode) GlobalPlayer.setVar('urq_mode', mode);
+
+            GlobalPlayer.Client.crtlInfo = $('#info');
+            GlobalPlayer.Client.crtlInput = $('#input');
+            GlobalPlayer.Client.crtlButtonField = $('#buttons');
+            GlobalPlayer.Client.crtlTextField = $('#textfield');
+            GlobalPlayer.Client.crtlInventory = $('#inventory');
 
             Game.load($(this).data('slot'));
-            Game.locked = true;
+
             GlobalPlayer.goto(Game.realCurrentLoc, 'return');
+            GlobalPlayer.fin();
 
             returnToGame.click();
 
-            GlobalPlayer.continue();
+//            GlobalPlayer.continue();
             Game.locked = false;
         });
 
         $('#saveslots').show();
-        
+
         return false;
     });
-    
+
     $('#mute').on('click', function () {
         var span = $(this).find('span.glyphicon');
-        
+
         if (volume == 1) {
             span.find('span.sr-only').text('Выключить звук');
             volume = 2;
@@ -112,23 +125,31 @@ $(function() {
             span.removeClass('glyphicon-volume-off');
             span.addClass('glyphicon-volume-up');
         }
-        
+
         return false;
     });
 
     $('#restart').on('click', function () {
         if (confirm('Перезапустить игру?')) {
+//            GlobalPlayer.status = PLAYER_STATUS_END;
             $('#info').hide();
             $('#input').hide();
-            
+
             textfield.empty();
             buttonField.empty();
-            GlobalPlayer.text = [];
-            GlobalPlayer.buttons = [];
-            
-            if (mode) GlobalPlayer.setVar('urq_mode', mode);
 
             Game.init();
+
+            GlobalPlayer = new Player();
+
+            if (mode) GlobalPlayer.setVar('urq_mode', mode);
+
+            GlobalPlayer.Client.crtlInfo = $('#info');
+            GlobalPlayer.Client.crtlInput = $('#input');
+            GlobalPlayer.Client.crtlButtonField = $('#buttons');
+            GlobalPlayer.Client.crtlTextField = $('#textfield');
+            GlobalPlayer.Client.crtlInventory = $('#inventory');
+
             GlobalPlayer.continue();
         }
 
@@ -258,12 +279,12 @@ $(function() {
             if (input.find('input').val() != '') {
                 input.hide();
                 buttonField.show();
-                
+
                 GlobalPlayer.inputAction(input.find('input').val());
             } else {
                 input.addClass('has-error');
             }
         }
     });
-    
+
 });
