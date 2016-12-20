@@ -13,7 +13,7 @@
     "parser",
     "interpreter"
   ],
-  "license": "MIT",
+  "license": "GPL2",
   "ignore": [
     "**/.*",
     "vendor"
