@@ -3,7 +3,6 @@
     margin: 0;
 }
 
-
 button {
     display: block;
 }
@@ -13,7 +12,7 @@ p {
     display: inline;
 }
 
-#buttons {
+#buttons, #input {
     margin-top: 10px;
 }
 
