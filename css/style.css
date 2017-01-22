@@ -12,7 +12,7 @@ p {
     display: inline;
 }
 
-#buttons, #input {
+#buttons, #input, #info {
     margin-top: 10px;
 }
 
