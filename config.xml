@@ -5,6 +5,8 @@
         versionCode = "10"
         version     = "1.0.0">
 
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
+
     <name>UrqW</name>
 
     <description>
