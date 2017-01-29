@@ -30,8 +30,8 @@
     <script type="text/javascript" charset="utf-8">
         $(document).on('click', 'a[href^="http"]', function(e) {
             e.preventDefault();
-            navigator.app.loadUrl($(e.currentTarget).attr('href'), { openExternal:true });
-//            window.open($(e.currentTarget).attr('href'), '_system', '');
+//            navigator.app.loadUrl($(e.currentTarget).attr('href'), { openExternal:true });
+            window.open($(e.currentTarget).attr('href'), '_system', '');
         });
 
         // Call onDeviceReady when Cordova is loaded.
