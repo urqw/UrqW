@@ -25,8 +25,37 @@
     <script src="js/Client.js"></script>
     <script src="js/ctrl.js"></script>
     <script src="js/main.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.5.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        // Call onDeviceReady when Cordova is loaded.
+        //
+        // At this point, the document has loaded but cordova-2.5.0.js has not.
+        // When Cordova is loaded and talking with the native device,
+        // it will call the event `deviceready`.
+        //
+        function onLoad() {
+            document.addEventListener("deviceready", onDeviceReady, false);
+        }
+
+        // Cordova is loaded and it is now safe to call Cordova methods
+        //
+        function onDeviceReady() {
+            // Register the event listener
+            document.addEventListener("backbutton", onBackKeyDown, false);
+        }
+
+        // Handle the back button
+        //
+        function onBackKeyDown() {
+            return false;
+        }
+
+    </script>
+
 </head>
-<body>
+<body onload="onLoad()">
 
 <div id="additionalstyle">
     <style></style>
@@ -49,7 +78,7 @@
     </div>
     <div id="choose-game" style="display: none;">
         <div class="page-header">
-            <h3>Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h3>
+            <h3>Загрузите игру:</h3>
             <select id="urq_mode" class="form-control">
                 <option value="urqw" selected>Не применять специальных правил</option>
                 <option value="ripurq">Rip URQ 1.4</option>
@@ -61,7 +90,7 @@
             <input id="quest" type="file" multiple>
         </div>
         <div class="page-header">
-            <h3>Или выберите игру из списка:</h3>
+            <a href="https://github.com/narmiel/UrqW/tree/gh-pages/quests">Игры можно скачать здесь</a>
         </div>
 
         <div class="list-group gamelist">
@@ -119,12 +148,6 @@
     </div>
 </div>
 
-
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">https://github.com/narmiel/UrqW</p>
-    </div>
-</footer>
 
 </body>
 </html>

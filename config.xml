@@ -16,4 +16,9 @@
     </author>
 
     <icon src="logo.png" />
+
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="true" />
+    <!-- Android only -->
+    <preference name="android-minSdkVersion" value="10" />
 </widget>
