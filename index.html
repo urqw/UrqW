@@ -28,12 +28,6 @@
 
     <script src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
-        $(document).on('click', 'a[href^="http"]', function(e) {
-            e.preventDefault();
-//            navigator.app.loadUrl($(e.currentTarget).attr('href'), { openExternal:true });
-            window.open($(e.currentTarget).attr('href'), '_system', '');
-        });
-
         // Call onDeviceReady when Cordova is loaded.
         //
         // At this point, the document has loaded but cordova-2.5.0.js has not.
@@ -42,6 +36,12 @@
         //
         function onLoad() {
             document.addEventListener("deviceready", onDeviceReady, false);
+
+            $(document).on('click', 'a[href^="http"]', function(e) {
+                e.preventDefault();
+                //            navigator.app.loadUrl($(e.currentTarget).attr('href'), { openExternal:true });
+                window.open($(e.currentTarget).attr('href'), '_system', '');
+            });
         }
 
         // Cordova is loaded and it is now safe to call Cordova methods
