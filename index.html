@@ -28,6 +28,10 @@
 
     <script src="cordova.js"></script>
     <script type="text/javascript" charset="utf-8">
+        $(document).on('click', 'a[href^="http"]', function(event) {
+            e.preventDefault();
+            window.open($(e.currentTarget).attr('href'), '_system', '');
+        });
 
         // Call onDeviceReady when Cordova is loaded.
         //
