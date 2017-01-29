@@ -21,4 +21,5 @@
     <preference name="fullscreen" value="true" />
     <!-- Android only -->
     <preference name="android-minSdkVersion" value="10" />
+    <preference name="android-targetSdkVersion" value="15" />
 </widget>
