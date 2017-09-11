@@ -29,7 +29,6 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
  * http://narmiel.github.io/UrqW/docs/urql.html - описание urq language
 
 ### Ссылки:
- * http://telegram.me/narmiel - быстрая связь с разработчиком
  * http://urq.plut.info/ - сайт urq
  * http://forum.ifiction.ru/viewtopic.php?id=2138 - тема на форуме иффикшн про UrqW
  * http://urq.borda.ru/?1-0-0-00000495-000-0-0-1444755056 - тема на форуме urq про UrqW
