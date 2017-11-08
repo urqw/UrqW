@@ -11,6 +11,7 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
 
 ### Установка:
  * Скачать отсюда https://github.com/narmiel/UrqW/releases веб или stand-alone версию
+ * https://build.phonegap.com/apps/2457271/builds - android / windows phone
 
 ### Текущая цель:
  * ~~совместимость с большинством игр под досурку~~ (выполнено)
