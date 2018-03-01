@@ -224,11 +224,16 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
     }
 
+    if (variable == 'time') {
+        var Date = new Date();
+        return Date.getHours() * 3600 + Date.getMinutes() * 60 + Date.getSeconds();
+    }
+
     // Для выражений вроде "1 деньги"
     if (variable.split(' ').length > 1) {
         var count = variable.split(' ')[0];
         if (!isNaN(count)) {
-            variable = variable.split(' ').slice(1).join(' ').trim()
+            variable = variable.split(' ').slice(1).join(' ').trim();
             return this.vars[variable] >= count;
         }
     }
