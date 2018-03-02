@@ -225,8 +225,8 @@ Quest.prototype.getVar = function(variable) {
     }
 
     if (variable == 'time') {
-        var Date = new Date();
-        return Date.getHours() * 3600 + Date.getMinutes() * 60 + Date.getSeconds();
+        var Datetime = new Date();
+        return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
     }
 
     // Для выражений вроде "1 деньги"
