@@ -132,7 +132,13 @@ Parser.prototype.parse = function(line) {
             return GlobalPlayer.btn(btn[0].trim(), btn.slice(1).join(',').trim());
         //рудименты далее
         case 'tokens':
-            var reg = new RegExp('[' + ((Game.getVar('tokens_delim') == 'char') ? '' : Game.getVar('tokens_delim')).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + ']', 'gi');
+            var reg;
+
+            if (Game.getVar('tokens_delim') == 'char') {
+                reg = '';
+            } else {
+                reg = new RegExp('[' + (Game.getVar('tokens_delim')).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + ']', 'gi');
+            }
 
             var str = (new Expression(command.trim())).calc().split(reg);
 
