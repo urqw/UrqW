@@ -24,4 +24,5 @@ export default {
 
 <style>
 @import "~bulma/css/bulma.css";
+@import "assets/css/style.css";
 </style>
