@@ -1,7 +1,11 @@
 <template>
-  <div v-if="buttons && buttons.length">
-    <button v-for="button in buttons" @click="clicked(button.id)" :key="button.id" v-html="button.desc"></button>
-  </div>
+  <nav class="panel" v-if="buttons && buttons.length">
+    <a class="panel-block" v-for="button in buttons" @click="clicked(button.id)" :key="button.id" v-html="button.desc">
+      <span class="panel-icon">
+        <i class="fas fa-book"></i>
+      </span>
+    </a>
+  </nav>
 </template>
 
 <script>
@@ -17,3 +21,19 @@
         }
     };
 </script>
+
+<style scoped>
+  .button {
+    display: block;
+  }
+
+  .panel-block:first-child {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .panel-block:last-child {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+</style>

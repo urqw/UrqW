@@ -1,11 +1,3 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
-button {
-    display: block;
-}
 
 p {
     text-indent: 20px;
@@ -35,10 +27,6 @@ div.clearfix + div.text, #textfield div.text:first-child {
 
 #textfield img {
     max-width: 100%;
-}
-
-#textfield a.button {
-    cursor: pointer;
 }
 
 #textfield .text {
@@ -82,25 +70,6 @@ div.clearfix + div.text, #textfield div.text:first-child {
 }
 .container .text-muted {
     margin: 20px 0;
-}
-
-
-/** footer */
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 30px;
-}
-.footer {
-    height: 30px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: right;
 }
 
 
@@ -151,17 +120,4 @@ body {
 }
 .dropdown-submenu:hover>a:before {
     border-right-color:#ffffff;
-}
-
-/* чтобы навбар не коллапсировал */
-.navbar-nav>li, .navbar-nav {
-    float: left !important;
-}
-
-.navbar-nav.navbar-right:last-child {
-    margin-right: 0 !important;
-}
-
-.navbar-right {
-    float: right!important;
 }

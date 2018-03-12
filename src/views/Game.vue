@@ -1,10 +1,13 @@
 <template>
     <div>
         <Navbar/>
-        <hr>
-        <Content :content="Client.text" />
-        <Buttons :buttons="Client.buttons" v-on:clicked="buttonClicked"/>
-        <Info/>
+        <div class="section">
+            <div class="container">
+                <Content :content="Client.text" />
+                <Buttons :buttons="Client.buttons" v-on:clicked="buttonClicked"/>
+                <Info/>
+            </div>
+        </div>
     </div>
 </template>
 

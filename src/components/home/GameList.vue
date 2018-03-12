@@ -5,11 +5,20 @@
     </div>
 
     <div class="list-group gamelist">
-      <router-link :to="{ name: 'game', params: { name: item.folder } }" v-for="item in list" :key="item.folder">
-        <h2 class="title">{{ item.title }}</h2>
-        <h4>{{ item.description }}</h4>
-        <h4>{{ item.author }}</h4>
-      </router-link>
+      <div class="card" v-for="item in list" :key="item.folder">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <router-link :to="{ name: 'game', params: { name: item.folder } }" class="title game-title is-4">{{ item.title }}</router-link>
+              <br/>
+              <p class="subtitle is-6">{{ item.author }}</p>
+            </div>
+          </div>
+          <div class="content">
+            {{ item.description }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

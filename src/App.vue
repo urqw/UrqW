@@ -1,6 +1,8 @@
 <template>
-  <div id="app" class="container">
-    <router-view/>
+  <div id="app">
+    <div class="main">
+      <router-view/>
+    </div>
     <Footer/>
   </div>
 </template>
@@ -24,5 +26,20 @@ export default {
 
 <style>
 @import "~bulma/css/bulma.css";
-@import "assets/css/style.css";
+/*@import "assets/css/style.css";*/
+</style>
+
+<style scoped>
+  /**
+   * footer
+   */
+  #app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .main {
+    flex: 1;
+  }
 </style>

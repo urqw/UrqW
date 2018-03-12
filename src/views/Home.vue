@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <Logo/>
+  <div class="section">
+    <div class="container">
+      <Logo/>
 
-    <Message :msg="message" v-if="message"/>
+      <Message :msg="message" v-if="message"/>
 
-    <button @click="clicked">Event2</button>
+      <LoadGame/>
 
-    <LoadGame/>
-
-    <GameList/>
+      <GameList/>
+    </div>
   </div>
 </template>
 

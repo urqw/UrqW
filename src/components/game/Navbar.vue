@@ -1,26 +1,111 @@
 <template>
-  <nav class="navbar navbar-default">
-    <a class="navbar-brand " href="index.html">
-      <span style="margin-right: 5px;"><img style="opacity: 0.65;" height="24" width="24" alt="Brand" src="logo.svg"></span><span class="hidden-xs"> UrqW</span>
-    </a>
+  <nav class="navbar is-light" role="navigation" aria-label="dropdown navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <router-link class="navbar-item" :to="{name: 'home'}">
+          <logo class="logo"></logo>
+          <span>
+            UrqW
+          </span>
+        </router-link>
+        <a class="navbar-item">
+          <span class="icon">
+            <font-awesome-icon :icon="volume" />
+          </span>
+        </a>
+        <a class="navbar-item">
+          <span class="icon">
+            <font-awesome-icon :icon="reload" />
+          </span>
+        </a>
+        <a class="navbar-item">
+          <span class="icon">
+            <font-awesome-icon :icon="save" />
+          </span>
+        </a>
+        <a class="navbar-item">
+          <span class="icon">
+            <font-awesome-icon :icon="load" />
+          </span>
+        </a>
+      </div>
 
-    <ul class="nav navbar-nav">
-      <!--
-                      <li><a href="#"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></li>
-      -->
-      <li><a title="Управление громкостью" id="mute" href="#"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"><span class="hint sr-only">Убавить звук</span></span></a></li>
-      <li><a title="Перезапустить игру" id="restart" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"><span class="hint sr-only">Перезапустить игру</span></span></a></li>
-      <li><a title="Сохранить игру" id="save" href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"><span class="hint sr-only">Сохранить игру</span></span></a></li>
-      <li><a title="Загрузить игру" id="load" href="#"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"><span class="hint sr-only">Загрузить игру</span></span></a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Инвентарь <span class="caret"></span></a>
-        <a href="#" class="dropdown-toggle visible-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list"></span></a>
-        <ul id="inventory" class="dropdown-menu dropdown-menu-left">
-          <li><a href="#" class="item_use">(Пусто)</a></li>
-        </ul>
-      </li>
-    </ul>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item has-dropdown" @click="dropdownIsActive = !dropdownIsActive" :class="dropdownIsActive ? 'is-active' : ''">
+            <a class="navbar-link">
+              Right
+            </a>
+
+            <div class="navbar-dropdown is-right">
+              <a class="navbar-item">
+                Overview
+              </a>
+              <a class="navbar-item">
+                Elements
+              </a>
+              <a class="navbar-item">
+                Components
+              </a>
+              <hr class="navbar-divider">
+              <div class="navbar-item">
+                Version 0.6.2
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </nav>
 </template>
+
+<script>
+    import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+    import FaVolumeOn from '@fortawesome/fontawesome-free-solid/faVolumeUp'
+    import FaVolumeOff from '@fortawesome/fontawesome-free-solid/faVolumeOff'
+    import FaReload from '@fortawesome/fontawesome-free-solid/faSyncAlt'
+    import FaSave from '@fortawesome/fontawesome-free-solid/faSave'
+    import FaLoad from '@fortawesome/fontawesome-free-solid/faFolderOpen'
+    import Logo from '@/components/Logo'
+
+    export default {
+        name: 'navbar',
+        data() {
+            return {
+                dropdownIsActive: false
+            }
+        },
+        computed: {
+            volume () {
+                return FaVolumeOn
+            },
+            reload () {
+                return FaReload
+            },
+            save () {
+                return faSave
+            },
+            load () {
+                return FaLoad
+            },
+        },
+
+        components: {
+            FontAwesomeIcon,
+            Logo
+        }
+    }
+</script>
+
+<style scoped>
+  .logo {
+    width: 28px;
+    height: 28px;
+    margin-right: .7em;
+  }
+
+  .navbar.is-light .navbar-brand > .navbar-item,
+  .navbar.is-light .navbar-brand .navbar-link {
+    color: #4a4a4a;
+  }
+</style>
