@@ -238,7 +238,7 @@ $(function() {
         }
     });
 
-    $(document).keypress(function(e){
+    $(document).keydown(function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_END) {
             if (e.keyCode == 13) {
                 buttonField.find('button').each(function(index) {
@@ -252,7 +252,7 @@ $(function() {
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             $('#info').hide();
             buttonField.show();
-            GlobalPlayer.anykeyAction(e.charCode);
+            GlobalPlayer.anykeyAction(e.keyCode);
         }
     });
 
@@ -263,7 +263,7 @@ $(function() {
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
             $('#info').hide();
             buttonField.show();
-            GlobalPlayer.anykeyAction(e.charCode);
+            GlobalPlayer.anykeyAction(e.keyCode);
         }
     });
 
