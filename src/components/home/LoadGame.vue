@@ -1,27 +1,54 @@
 <template>
-<div id="choose-game" style="display: none;">
-  <div class="page-header">
-    <h3>Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h3>
-    <select id="urq_mode" class="form-control">
-      <option value="urqw" selected>Не применять специальных правил</option>
-      <option value="ripurq">Rip URQ 1.4</option>
-      <option value="dosurq">Dos URQ 1.35</option>
-    </select>
+<div class="content">
+  <h5 class="title is-5">Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h5>
+
+  <div class="file has-name">
+    <label class="file-label">
+      <input class="file-input" type="file" name="resume">
+      <span class="file-cta">
+      <span class="file-icon">
+         <font-awesome-icon :icon="upload" />
+      </span>
+      <span class="file-label">
+        Choose a file…
+      </span>
+    </span>
+      <div class="select">
+        <select>
+          <option value="urqw" selected>Не применять специальных правил</option>
+          <option value="ripurq">Rip URQ 1.4</option>
+          <option value="dosurq">Dos URQ 1.35</option>
+        </select>
+      </div>
+    </label>
   </div>
 
-  <div class="form-group">
-    <input id="quest" type="file" multiple>
-  </div>
 </div>
 </template>
 
 <script>
+    import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+    import FaUpload from '@fortawesome/fontawesome-free-solid/faUpload'
+
     export default {
         name: "loadGame",
+        data() {
+            return {
+                dropdownIsActive: false
+            }
+        },
         methods: {
             clicked (event) {
                 alert(event.currentTarget.textContent)
             }
+        },
+        computed: {
+            upload () {
+                return FaUpload
+            },
+        },
+        components: {
+            FontAwesomeIcon
         }
     };
 

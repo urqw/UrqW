@@ -5,17 +5,30 @@ import Game from "./views/Game.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      meta: {
+        title: 'UrqW'
+      }
     },
     {
       path: "/game/:name",
       name: "game",
-      component: Game
+      component: Game,
+      meta: {
+        title: 'UrqW'
+      }
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+    next()
+})
+
+export default router

@@ -83,7 +83,7 @@
                 return FaReload
             },
             save () {
-                return faSave
+                return FaSave
             },
             load () {
                 return FaLoad

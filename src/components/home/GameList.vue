@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div class="page-header">
-      <h3>Или выберите игру из списка:</h3>
+  <div class="content">
+    <div class="subtitle">
+      <h5 class="title is-5">Или выберите игру из списка:</h5>
     </div>
 
     <div class="list-group gamelist">
@@ -9,7 +9,7 @@
         <div class="card-content">
           <div class="media">
             <div class="media-content">
-              <router-link :to="{ name: 'game', params: { name: item.folder } }" class="title game-title is-4">{{ item.title }}</router-link>
+              <router-link :to="{ name: 'game', params: { name: item.folder } }" class="title game-title is-5">{{ item.title }}</router-link>
               <br/>
               <p class="subtitle is-6">{{ item.author }}</p>
             </div>
