@@ -8,9 +8,17 @@ function Client() {
      * @type {Player} проигрыватель
      */
     this.Player = null;
+
     this.status = Player.PLAYER_STATUS_NEXT;
+
     this.text = [];
+
     this.buttons = [];
+
+    /**
+     * @type int уровень звука
+     */
+    this.volume = 1;
 }
 
 /**

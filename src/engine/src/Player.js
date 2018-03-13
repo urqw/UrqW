@@ -16,6 +16,9 @@ function Player(Game) {
     this.PLAYER_STATUS_INPUT = 4;
     this.PLAYER_STATUS_QUIT = 5;
 
+    /**
+     * @type int уровень звука
+     */
     this.volume = 1;
 
     /**
@@ -43,15 +46,6 @@ function Player(Game) {
     this.flow = 0;
     this.flowStack = [];
     this.flowStack[this.flow] = [];
-
-    /**
-     * @type {boolean}
-     */
-    this.lock = false;
-
-    /**
-     * системные команды
-     */
 }
 
 
@@ -74,14 +68,14 @@ Player.prototype.fin = function() {
         this.Client.render();
     }
 
-    this.lock = !(this.status == this.PLAYER_STATUS_END || this.status == this.PLAYER_STATUS_PAUSE);
+    this.Game.lock = !(this.status == this.PLAYER_STATUS_END || this.status == this.PLAYER_STATUS_PAUSE);
 };
 
 /**
  *
  */
 Player.prototype.play = function(line) {
-    this.lock = true;
+    this.Game.lock = true;
 
     this.status = this.PLAYER_STATUS_NEXT;
 
@@ -151,7 +145,7 @@ Player.prototype.common = function() {
  * @param {bool} link
  */
 Player.prototype.action = function(actionId, link) {
-    if (this.lock) return false;
+    if (this.Game.lock) return false;
 
     if (link) {
         var command = this.links[actionId];
@@ -208,7 +202,7 @@ Player.prototype.xbtnAction = function(command) {
  * @returns {boolean}
  */
 Player.prototype.useAction = function(labelName) {
-    if (this.lock) return false;
+    if (this.Game.lock) return false;
 
     this.play('proc ' + labelName + '&end');
     this.fin();

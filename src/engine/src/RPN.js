@@ -4,6 +4,7 @@
 
 /**
  * @param {string} str выражение
+ * @param {Game} Game
  *
  * @constructor
  */
