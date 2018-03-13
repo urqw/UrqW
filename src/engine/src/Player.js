@@ -1,5 +1,6 @@
 
 import Parser from "./Parser";
+import Tools from "./tools";
 
 var gameMusic = new Audio();
 
@@ -14,6 +15,8 @@ function Player(Game) {
     this.PLAYER_STATUS_PAUSE = 3;
     this.PLAYER_STATUS_INPUT = 4;
     this.PLAYER_STATUS_QUIT = 5;
+
+    this.volume = 1;
 
     /**
      * @type {Quest} хранилище файла квеста
@@ -242,21 +245,21 @@ Player.prototype.setVar = function(variable, value) {
     variable = variable.trim();
 
     if (variable.toLowerCase() === 'style_dos_textcolor') {
-        this.Game.setVar('style_textcolor', dosColorToHex(value));
+        this.Game.setVar('style_textcolor', Tools.dosColorToHex(value));
     }
 
     if (variable.toLowerCase() === 'image') {
         // todo переместить
 
         var file = value;
-        if (files != null) {
-            if (files[value] !== undefined) {
+        if (this.Game.files != null) {
+            if (this.Game.files[value] !== undefined) {
                 file = value;
-            } else if (files[value + '.png'] !== undefined) {
+            } else if (this.Game.files[value + '.png'] !== undefined) {
                 file = value + '.png';
-            } else if (files[value + '.jpg'] !== undefined) {
+            } else if (this.Game.files[value + '.jpg'] !== undefined) {
                 file = value + '.jpg';
-            } else if (files[value + '.gif'] !== undefined) {
+            } else if (this.Game.files[value + '.gif'] !== undefined) {
                 file = value + '.gif';
             }
         }
@@ -283,10 +286,10 @@ Player.prototype.image = function(src) {
 Player.prototype.playMusic = function(src, loop) {
     var file;
 
-    if (files === null) {
+    if (this.Game.files === null) {
         file = 'quests/' + this.Game.name + '/' + src;
     } else {
-        file = files[src];
+        file = this.Game.files[src];
     }
 
     if (src) {
@@ -355,9 +358,9 @@ Player.prototype.goto = function(labelName, type) {
 Player.prototype.perkill = function() {
     this.Game.vars = {};
 
-    this.Game.items.forEach((index, value) => {
+    Object.entries(this.Game.items, (([index, value]) => {
         this.Game.setVar(index, parseInt(value));
-    });
+    }))
 };
 
 /**
@@ -396,9 +399,9 @@ Player.prototype.invkill = function(item) {
     if (item != null) {
         this.Game.setItem(item, 0);
     } else {
-        this.Game.items.forEach((index, value) => {
+        Object.entries(this.Game.items, (([index, value]) => {
             this.Game.setItem(index, 0);
-        });
+        }));
     }
 };
 

@@ -1,5 +1,6 @@
 
 import Expression from "./RPN";
+import Tools from "./tools";
 
 /**
  * @constructor
@@ -82,16 +83,16 @@ Parser.prototype.parse = function(line) {
         case 'image': return this.Player.image(command.toString().trim());
         case 'music': return this.Player.playMusic(command.toString().trim(), false);
         case 'play':
-            if (volume == 3) return;
+            if (this.Player.volume == 3) return;
 
             var Sound;
-            if (files === null) {
-                Sound = new Audio('quests/' + Game.name + '/' + command.toString().trim());
+            if (this.Player.Game.files === null) {
+                Sound = new Audio('quests/' + this.Player.Game.name + '/' + command.toString().trim());
             } else {
-                Sound = new Audio(files[command.toString().trim()]);
+                Sound = new Audio(this.Player.Game.files[command.toString().trim()]);
             }
 
-            Sound.volume = (volume == 1) ? 1 : 0.5;
+            Sound.volume = (this.Player.volume == 1) ? 1 : 0.5;
             Sound.play();
 
             break;
@@ -213,7 +214,7 @@ Parser.prototype.openTags = function (line) {
     });
 
     while (line.search(/\#[^\#]+?\$/) != -1) {
-        line = line.replace(/\#[^\#]+?\$/, function(exp) {
+        line = line.replace(/\#[^\#]+?\$/, (exp) => {
             // рудимент для совместимости
             if (exp[1] == '%') {
                 exp = exp.substr(2, (exp.length - 3));
@@ -222,7 +223,7 @@ Parser.prototype.openTags = function (line) {
             }
             var result = new Expression(exp, this.Player.Game).calc();
 
-            return isFloat(result) ? result.toFixed(2) : result;
+            return Tools.isFloat(result) ? result.toFixed(2) : result;
         });
     }
 
@@ -236,7 +237,7 @@ Parser.prototype.openTags = function (line) {
  */
 Parser.prototype.openLinks = function(line) {
     while (line.search(/\[\[.+?\]\]/) != -1) {
-        line = line.replace(/\[\[.+?\]\]/, function(exp) {
+        line = line.replace(/\[\[.+?\]\]/, (exp) => {
             var text;
             var command;
             exp = exp.substr(2, (exp.length - 4));
