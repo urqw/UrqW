@@ -24,8 +24,14 @@ export default {
 };
 </script>
 
-<style>
-@import "~bulma/css/bulma.css";
+<style lang="sass">
+@import "~bulma/sass/utilities/initial-variables.sass";
+
+$fullhd: $desktop;
+$widescreen: $desktop;
+
+@import "~bulma/bulma.sass";
+
 /*@import "assets/css/style.css";*/
 </style>
 
