@@ -271,8 +271,8 @@ Player.prototype.setVar = function(variable, value) {
  * @param {String} src
  */
 Player.prototype.image = function(src) {
-    if (src) {
-        this.text.push({img: src});
+    if (src && this.Game.files[src]) {
+        this.text.push({img: this.Game.files[src]});
     }
 };
 

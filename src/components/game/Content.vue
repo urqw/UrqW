@@ -5,7 +5,7 @@
         <img :src="cont.img" alt="Изображение" style="margin: 5px auto; display: block;">
       </template>
       <template v-else-if="cont.text">
-        <div v-html="cont.text" :style="{ color: cont.color ? cont.color : ''}" class="{ cont.ln ? 'ln' : ''}"></div>
+        <span v-html="cont.text" :style="{ color: cont.color ? cont.color : ''}" :class="cont.ln ? 'ln' : ''"></span>
       </template>
     </template>
   </div>
@@ -23,7 +23,8 @@
 </script>
 
 <style scoped>
-  .ln {
+  .ln:not(:last-child):after {
+    content: '';
     display: block;
   }
 </style>

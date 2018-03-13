@@ -31,57 +31,54 @@ Loader.prototype.loadZipFromLocalFolder = function(questname, folder = 'quests')
                 var files = {};
                 var qst = [];
 
-                for (var key in zip.files) {
-                    if (!zip.files[key].dir) {
-                        var file = zip.file(key);
-                        if (file.name.split('.').pop().toLowerCase() == 'qst') {
-                            if (file.name.substr(0, 1) == '_' || file.name.indexOf('/_') != -1) {
+                Promise.all(Object.keys(zip.files).map(function (fileName) {
+                    return new Promise(function(resolve, reject) {
+                        var file = zip.files[fileName];
+
+                        if (fileName.split('.').pop().toLowerCase() == 'qst') {
+                            if (fileName.substr(0, 1) == '_' || fileName.indexOf('/_') != -1) {
                                 qst.unshift(file);
                             } else {
                                 qst.push(file);
                             }
-                        } else if (file.name.split('.').pop().toLowerCase() == 'css') {
-//                        $('#additionalstyle').find('style').append(file.asBinary());
-                        } else if (file.name.split('.').pop().toLowerCase() == 'js') {
-//                          eval(win2unicode(file.asBinary())); // todo?
+
+                            resolve()
                         } else {
-                            file.async("base64")
-                                .then(function (data64) {
-                                    // console.log("data:image/jpeg;base64," + data64)
-                                });
-
-                            // files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
+                            file.async("blob").then(function (blob) {
+                                files[fileName] = URL.createObjectURL(blob);
+                                resolve()
+                            });
                         }
-                    }
-                }
+                    })
+                })).then(() => {
+                    if (qst.length > 0) {
+                        var quest = '';
 
-                if (qst.length > 0) {
-                    var quest = '';
+                        if (qst[0].name.lastIndexOf('/') != -1) {
+                            var dir = qst[0].name.substring(0, qst[0].name.lastIndexOf('/') + 1);
 
-                    if (qst[0].name.lastIndexOf('/') != -1) {
-                        var dir = qst[0].name.substring(0, qst[0].name.lastIndexOf('/') + 1);
-
-                        for (var key in files) {
-                            var newkey = key.substr(dir.length);
-                            files[newkey] = files[key];
-                            delete files[key];
+                            for (var key in files) {
+                                var newkey = key.substr(dir.length);
+                                files[newkey] = files[key];
+                                delete files[key];
+                            }
                         }
 
-                    }
+                        Promise.all(qst.map(qs => qs.async("binarystring"))).then(result => {
+                            result.forEach(data => {
+                                quest += `\r\n${Tools.win2unicode(data)}`
+                            });
 
-                    Promise.all(qst.map(qs => qs.async("binarystring"))).then(result => {
-                        result.forEach(data => {
-                            quest += `\r\n${Tools.win2unicode(data)}`
+                            let GameInstance = new Game(questname);
+                            GameInstance.files = files;
+                            GameInstance.init(quest);
+
+                            resolve(GameInstance);
                         });
-
-                        let GameInstance = new Game(questname);
-                        GameInstance.init(quest);
-
-                        resolve(GameInstance);
-                    });
-                } else {
-                    reject()
-                }
+                    } else {
+                        reject()
+                    }
+                })
             });
 
         });

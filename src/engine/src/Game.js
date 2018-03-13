@@ -21,6 +21,8 @@ function Game(name) {
      */
     this.items = {};
 
+    this.files = {};
+
     /**
      * @type {Object}
      */
