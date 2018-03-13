@@ -4,7 +4,7 @@
 
   <div class="file has-name">
     <label class="file-label">
-      <input class="file-input" type="file" name="resume">
+      <input class="file-input" multiple type="file" name="resume" @change="selectFiles">
       <span class="file-cta">
       <span class="file-icon">
          <font-awesome-icon :icon="upload" />
@@ -40,6 +40,11 @@
         methods: {
             clicked (event) {
                 alert(event.currentTarget.textContent)
+            },
+            selectFiles (event) {
+                let Loader = new Loader;
+
+                Loader.loadFiles(e.target.files);
             }
         },
         computed: {
@@ -53,59 +58,6 @@
     };
 
 /*
-
-    /!**
-     * Read file when change file-control
-     *!/
-    $('#quest').on('change', function(e) {
-        files = {};
-        var qst = [];
-
-        if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop().toLowerCase() == 'zip') {
-            var reader = new FileReader();
-            var zip = e.target.files[0];
-
-            reader.onload = function() {
-                mode = $('#urq_mode').val();
-                loadZip(reader.result, zip.name);
-            };
-            reader.readAsBinaryString(zip, 'CP1251');
-
-            return;
-        }
-
-        for (var i = 0; i < e.target.files.length; i++) {
-            if (e.target.files[i].name.split('.').pop().toLowerCase() == 'qst') {
-                qst.push(e.target.files[i]);
-            } else if (e.target.files[i].name.toLowerCase() == 'style.css') {
-                readStyle(e.target.files[i]);
-            } else if (e.target.files[i].name.toLowerCase() == 'script.js') {
-                readJs(e.target.files[i]);
-            } else {
-                readFile(e.target.files[i].name, e.target.files[i]);
-            }
-        }
-
-        if (qst.length == 0) {
-            return;
-        }
-
-        var name = qst[0].name;
-        mode = $('#urq_mode').val();
-        quest = [];
-        var slices = qst.length;
-
-        while (qst.length > 0) {
-            readQst(qst.shift());
-        }
-
-        var loadq = setInterval(function() {
-            if (slices == quest.length) {
-                clearInterval(loadq);
-                start(quest.join('\r\n'), name);
-            }
-        }, 200); // todo
-    });
 
     /!**
      * @param file

@@ -1,8 +1,12 @@
 /**
  * @constructor
  */
-function Parser() {
+function Parser(Player) {
 
+    /**
+     * @type {Player} проигрыватель
+     */
+    this.Player = Player;
 }
 
 /**
@@ -58,7 +62,7 @@ Parser.prototype.parse = function(line) {
                 com = this.openTags(com);
             }
 
-            return Game.Player.btn(com, desc);
+            return this.Player.btn(com, desc);
         }
     }
 
@@ -72,8 +76,8 @@ Parser.prototype.parse = function(line) {
 
     switch (operand) {
         case 'save': return Game.save('fast');
-        case 'image': return Game.Player.image(command.toString().trim());
-        case 'music': return Game.Player.playMusic(command.toString().trim(), false);
+        case 'image': return this.Player.image(command.toString().trim());
+        case 'music': return this.Player.playMusic(command.toString().trim(), false);
         case 'play':
             if (volume == 3) return;
 
@@ -88,17 +92,17 @@ Parser.prototype.parse = function(line) {
             Sound.play();
 
             break;
-        case 'clsb': return Game.Player.clsb();
-        case 'cls': return Game.Player.cls();
-        case 'forget_procs': return Game.Player.forgetProcs();
-        case 'proc': return Game.Player.proc(command.toString().trim());
-        case 'end': return Game.Player.end();
-        case 'anykey': return Game.Player.anykey(command.toString().trim());
-        case 'pause': return Game.Player.pause(parseInt(command));
-        case 'input': return Game.Player.input(command.toString().trim());
-        case 'quit': return Game.Player.quit();
-        case 'invkill': return Game.Player.invkill(command.toString().trim().length > 0 ? command.toString().trim() : null);
-        case 'perkill': return Game.Player.perkill();
+        case 'clsb': return this.Player.clsb();
+        case 'cls': return this.Player.cls();
+        case 'forget_procs': return this.Player.forgetProcs();
+        case 'proc': return this.Player.proc(command.toString().trim());
+        case 'end': return this.Player.end();
+        case 'anykey': return this.Player.anykey(command.toString().trim());
+        case 'pause': return this.Player.pause(parseInt(command));
+        case 'input': return this.Player.input(command.toString().trim());
+        case 'quit': return this.Player.quit();
+        case 'invkill': return this.Player.invkill(command.toString().trim().length > 0 ? command.toString().trim() : null);
+        case 'perkill': return this.Player.perkill();
         case 'inv-':
             var item = command.split(',');
             var quantity = 1;
@@ -107,7 +111,7 @@ Parser.prototype.parse = function(line) {
                 item = item[1];
             }
 
-            return Game.Player.invRemove(item.toString().trim(), quantity);
+            return this.Player.invRemove(item.toString().trim(), quantity);
         case 'inv+':
             item = command.split(',');
             quantity = 1;
@@ -116,16 +120,16 @@ Parser.prototype.parse = function(line) {
                 item = item[1];
             }
 
-            return Game.Player.invAdd(item.toString().trim(), quantity);
-        case 'goto': return Game.Player.goto(command.toString().trim(), 'goto');
+            return this.Player.invAdd(item.toString().trim(), quantity);
+        case 'goto': return this.Player.goto(command.toString().trim(), 'goto');
         case 'p':
-        case 'print':  return Game.Player.print(this.openLinks(command), false);
+        case 'print':  return this.Player.print(this.openLinks(command), false);
         case 'pln':
-        case 'println': return Game.Player.print(this.openLinks(command), true);
+        case 'println': return this.Player.print(this.openLinks(command), true);
         case 'btn':
             var btn = command.split(',');
 
-            return Game.Player.btn(btn[0].trim(), btn.slice(1).join(',').trim());
+            return this.Player.btn(btn[0].trim(), btn.slice(1).join(',').trim());
         //рудименты далее
         case 'tokens':
             var reg;
@@ -138,10 +142,10 @@ Parser.prototype.parse = function(line) {
 
             var str = (new Expression(command.trim())).calc().split(reg);
 
-            Game.Player.setVar('tokens_num', str.length);
+            this.Player.setVar('tokens_num', str.length);
 
             for (var i = 0; i < str.length; i++) {
-                Game.Player.setVar('token' + (i + 1), str[i]);
+                this.Player.setVar('token' + (i + 1), str[i]);
             }
 
             break;
@@ -149,7 +153,7 @@ Parser.prototype.parse = function(line) {
             line = command;
 
             if (line.indexOf('=') > 0) {
-                Game.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                this.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
             }
 
             // no break here
@@ -159,7 +163,7 @@ Parser.prototype.parse = function(line) {
         default:
             //  это выражение?
             if (line.indexOf('=') > 0) {
-                Game.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1)).calc());
+                this.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1)).calc());
             } else {
                 console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
             }
@@ -180,7 +184,7 @@ Parser.prototype.prepareLine = function (line) {
     }).indexOf('&');
 
     if (pos != -1) {
-        Game.Player.flowAdd(line.substring(pos + 1));
+        this.Player.flowAdd(line.substring(pos + 1));
         line = line.substring(0, pos).replace(/^\s+/, '');
     }
 
@@ -243,7 +247,7 @@ Parser.prototype.openLinks = function(line) {
                 text = exp;
             }
 
-            return Game.Client.convertToLink(text, Game.Player.link(command));
+            return Game.Client.convertToLink(text, this.Player.link(command));
         });
     }
 

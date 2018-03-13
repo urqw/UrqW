@@ -8,9 +8,9 @@ function set(Player) {
      * @param {String} line
      */
     Player.prototype.next = function(line) {
-        var line = this.Quest.get(Game.position);
+        var line = this.Quest.get(this.Game.position);
 
-        Game.position++;
+        this.Game.position++;
 
         // вырезать комментарий
         if (line.indexOf(';') != -1) {
@@ -46,13 +46,13 @@ function set(Player) {
 
         if (label) {
             if (type != 'proc') {
-                Game.realCurrentLoc = label.name;
+                this.Game.realCurrentLoc = label.name;
             }
 
             // todo контанты
             if ((type == 'btn' || type == 'goto')) {
-                Game.setVar('previous_loc', Game.getVar('current_loc'));
-                Game.setVar('current_loc', labelName);
+                this.Game.setVar('previous_loc', this.Game.getVar('current_loc'));
+                this.Game.setVar('current_loc', labelName);
             }
 
             if (type == 'goto') {
@@ -61,10 +61,10 @@ function set(Player) {
             }
 
             if (type == 'btn' || type == 'goto' || type == 'proc') {
-                Game.setVar(label.name, Game.getVar(label.name) + 1);
+                this.Game.setVar(label.name, this.Game.getVar(label.name) + 1);
             }
 
-            Game.position = label.pos;
+            this.Game.position = label.pos;
 
             // весь стек что дальше очищается
             this.flowStack[this.flow] = [];

@@ -68,7 +68,7 @@ function Expression(str) {
                     operStack.push(token);
                 }
             } else {
-                var variable = Game.getVar(token);
+                var variable = this.Game.getVar(token);
 
                 if (variable === 0) {
                     if (token.substr(0, 1) == '\'' || token.substr(0, 1) == '\"') {

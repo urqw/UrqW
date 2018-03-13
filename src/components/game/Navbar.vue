@@ -34,7 +34,7 @@
         <div class="navbar-end">
           <div class="navbar-item has-dropdown" @click="dropdownIsActive = !dropdownIsActive" :class="dropdownIsActive ? 'is-active' : ''">
             <a class="navbar-link">
-              Right
+              Inventory
             </a>
 
             <div class="navbar-dropdown is-right">
@@ -47,10 +47,6 @@
               <a class="navbar-item">
                 Components
               </a>
-              <hr class="navbar-divider">
-              <div class="navbar-item">
-                Version 0.6.2
-              </div>
             </div>
           </div>
         </div>

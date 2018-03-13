@@ -6,7 +6,7 @@ var gameMusic = new Audio();
 /**
  * @constructor
  */
-function Player(Quest) {
+function Player(Game) {
 
     this.PLAYER_STATUS_NEXT = 0;
     this.PLAYER_STATUS_END = 1;
@@ -15,8 +15,20 @@ function Player(Quest) {
     this.PLAYER_STATUS_INPUT = 4;
     this.PLAYER_STATUS_QUIT = 5;
 
-    this.Quest = Quest;
-    this.Parser = new Parser();
+    /**
+     * @type {Quest} хранилище файла квеста
+     */
+    this.Quest = null;
+    /**
+     * @type {Client} Клиент
+     */
+    this.Client = null;
+    /**
+     * @type {Game} состояние игры
+     */
+    this.Game = Game;
+
+    this.Parser = new Parser(this);
 
     this.text = [];
     this.buttons = [];
@@ -53,10 +65,10 @@ Player.prototype.continue = function() {
  * рендер
  */
 Player.prototype.fin = function() {
-    if (Game.getVar('music')) this.playMusic(Game.getVar('music'), true);
+    if (this.Game.getVar('music')) this.playMusic(this.Game.getVar('music'), true);
 
     if (this.status != this.PLAYER_STATUS_NEXT) {
-        Game.Client.render();
+        this.Client.render();
     }
 
     this.lock = !(this.status == this.PLAYER_STATUS_END || this.status == this.PLAYER_STATUS_PAUSE);
@@ -91,9 +103,9 @@ Player.prototype.play = function(line) {
  * @param {String} line
  */
 Player.prototype.next = function(line) {
-    var line = this.Quest.get(Game.position);
+    var line = this.Quest.get(this.Game.position);
 
-    Game.position++;
+    this.Game.position++;
 
     if (!line) {
         return false;
@@ -121,8 +133,8 @@ Player.prototype.flowAdd = function(line) {
 Player.prototype.common = function() {
     var commonLabel = 'common';
 
-    if (Game.getVar('common') !== 0) {
-        commonLabel = commonLabel + '_' + Game.getVar('common');
+    if (this.Game.getVar('common') !== 0) {
+        commonLabel = commonLabel + '_' + this.Game.getVar('common');
     }
 
     if (this.proc(commonLabel)) {
@@ -205,7 +217,7 @@ Player.prototype.useAction = function(labelName) {
  */
 Player.prototype.anykeyAction = function(keycode) {
     if (this.inf.length > 0) {
-        Game.setVar(this.inf, keycode);
+        this.Game.setVar(this.inf, keycode);
     }
 
     this.continue();
@@ -216,7 +228,7 @@ Player.prototype.anykeyAction = function(keycode) {
  * @returns {boolean}
  */
 Player.prototype.inputAction = function(value) {
-    Game.setVar(this.inf, value);
+    this.Game.setVar(this.inf, value);
 
     this.continue();
 };
@@ -225,12 +237,12 @@ Player.prototype.inputAction = function(value) {
  * @inheritDoc
  */
 Player.prototype.setVar = function(variable, value) {
-    if (Game.locked) return false;
+    if (this.Game.locked) return false;
 
     variable = variable.trim();
 
     if (variable.toLowerCase() === 'style_dos_textcolor') {
-        Game.setVar('style_textcolor', dosColorToHex(value));
+        this.Game.setVar('style_textcolor', dosColorToHex(value));
     }
 
     if (variable.toLowerCase() === 'image') {
@@ -252,7 +264,7 @@ Player.prototype.setVar = function(variable, value) {
         this.image(file);
     }
 
-    Game.setVar(variable, value);
+    this.Game.setVar(variable, value);
 };
 
 /**
@@ -273,7 +285,7 @@ Player.prototype.playMusic = function(src, loop) {
     var file;
 
     if (files === null) {
-        file = 'quests/' + Game.name + '/' + src;
+        file = 'quests/' + this.Game.name + '/' + src;
     } else {
         file = files[src];
     }
@@ -315,19 +327,19 @@ Player.prototype.goto = function(labelName, type) {
     if (label) {
         // todo контанты
         if (type != 'proc') {
-            Game.realCurrentLoc = label.name;
+            this.Game.realCurrentLoc = label.name;
         }
 
         if ((type == 'btn' || type == 'goto')) {
-            Game.setVar('previous_loc', Game.getVar('current_loc'));
-            Game.setVar('current_loc', labelName);
+            this.Game.setVar('previous_loc', this.Game.getVar('current_loc'));
+            this.Game.setVar('current_loc', labelName);
         }
 
         if (type == 'btn' || type == 'goto' || type == 'proc') {
-            Game.setVar('count_' + label.name, Game.getVar('count_' + label.name) + 1);
+            this.Game.setVar('count_' + label.name, this.Game.getVar('count_' + label.name) + 1);
         }
 
-        Game.position = label.pos;
+        this.Game.position = label.pos;
 
         // весь стек что дальше очищается
         this.flowStack[this.flow] = [];
@@ -342,10 +354,10 @@ Player.prototype.goto = function(labelName, type) {
  * удаление переменных
  */
 Player.prototype.perkill = function() {
-    Game.vars = {};
+    this.Game.vars = {};
 
-    Game.items.forEach(function(index, value) {
-        Game.setVar(index, parseInt(value));
+    this.Game.items.forEach((index, value) => {
+        this.Game.setVar(index, parseInt(value));
     });
 };
 
@@ -357,7 +369,7 @@ Player.prototype.cls = function() {
     this.buttons = [];
     this.links = [];
 
-    Game.Client.render();
+    this.Client.render();
 };
 
 /**
@@ -369,11 +381,11 @@ Player.prototype.clsb = function() {
 
     for(var i = 0; i < this.text.length; i++) {
         this.text[i][0] = this.text[i][0].replace(/\<a.+?\>.+?\<\/a\>/gi, function (match) {
-            return Game.Client.disableLink(match);
+            return this.Client.disableLink(match);
         });
     }
 
-    Game.Client.clsb();
+    this.Client.clsb();
 };
 
 /**
@@ -383,10 +395,10 @@ Player.prototype.clsb = function() {
  */
 Player.prototype.invkill = function(item) {
     if (item != null) {
-        Game.setItem(item, 0);
+        this.Game.setItem(item, 0);
     } else {
-        Game.items.forEach(function(index, value) {
-            Game.setItem(index, 0);
+        this.Game.items.forEach((index, value) => {
+            this.Game.setItem(index, 0);
         });
     }
 };
@@ -398,7 +410,7 @@ Player.prototype.invkill = function(item) {
  */
 Player.prototype.proc = function(label) {
     this.flow++;
-    this.procPosition.push(Game.position);
+    this.procPosition.push(this.Game.position);
 
     if (this.goto(label, 'proc')) {
         this.flowStack[this.flow] = [];
@@ -416,7 +428,7 @@ Player.prototype.proc = function(label) {
 Player.prototype.end = function() {
     if (this.procPosition.length > 0) {
         this.flowStack[this.flow].pop();
-        Game.position = this.procPosition.pop();
+        this.Game.position = this.procPosition.pop();
         this.flow--;
     } else {
         this.flowStack[this.flow] = [];
@@ -437,7 +449,7 @@ Player.prototype.forgetProcs = function() {
  * @param {String} inf
  */
 Player.prototype.anykey = function(inf) {
-    if (Game.locked) return false;
+    if (this.Game.locked) return false;
 
     this.inf = inf;
     this.status = this.PLAYER_STATUS_ANYKEY;
@@ -447,7 +459,7 @@ Player.prototype.anykey = function(inf) {
  * @param {int} inf
  */
 Player.prototype.pause = function(inf) {
-    if (Game.locked) return false;
+    if (this.Game.locked) return false;
 
     this.inf = inf;
     this.status = this.PLAYER_STATUS_PAUSE;
@@ -457,7 +469,7 @@ Player.prototype.pause = function(inf) {
  * @param {String} inf
  */
 Player.prototype.input = function(inf) {
-    if (Game.locked) return false;
+    if (this.Game.locked) return false;
 
     this.inf = inf;
     this.status = this.PLAYER_STATUS_INPUT;
@@ -475,7 +487,7 @@ Player.prototype.quit = function() {
  * @param {int} quantity
  */
 Player.prototype.invRemove = function(item, quantity) {
-    Game.removeItem(item, quantity);
+    this.Game.removeItem(item, quantity);
 };
 
 /**
@@ -483,7 +495,7 @@ Player.prototype.invRemove = function(item, quantity) {
  * @param {int} quantity
  */
 Player.prototype.invAdd = function(item, quantity) {
-    Game.addItem(item, quantity);
+    this.Game.addItem(item, quantity);
 };
 
 /**
@@ -492,12 +504,12 @@ Player.prototype.invAdd = function(item, quantity) {
  */
 Player.prototype.print = function(text, br) {
     var textColor = null;
-    if (isNaN(Game.getVar('style_textcolor'))) {
-        textColor = Game.getVar('style_textcolor');
-    } else if (Game.getVar('style_textcolor') > 0) {
-        var red = (Game.getVar('style_textcolor') >> 16) & 0xFF;
-        var green = (Game.getVar('style_textcolor') >> 8) & 0xFF;
-        var blue = Game.getVar('style_textcolor') & 0xFF;
+    if (isNaN(this.Game.getVar('style_textcolor'))) {
+        textColor = this.Game.getVar('style_textcolor');
+    } else if (this.Game.getVar('style_textcolor') > 0) {
+        var red = (this.Game.getVar('style_textcolor') >> 16) & 0xFF;
+        var green = (this.Game.getVar('style_textcolor') >> 8) & 0xFF;
+        var blue = this.Game.getVar('style_textcolor') & 0xFF;
 
         textColor = 'rgb(' + blue + ', ' + green  + ', ' + red + ')';
     }

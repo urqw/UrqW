@@ -8,9 +8,9 @@ function set(Player) {
      * @param {String} line
      */
     Player.prototype.next = function(line) {
-        var line = this.Quest.get(Game.position);
+        var line = this.Quest.get(this.Game.position);
 
-        Game.position++;
+        this.Game.position++;
 
         // вырезать комментарий
         if (line.indexOf(';') != -1) {
@@ -35,14 +35,14 @@ function set(Player) {
 
         if (label) {
             if (type != 'proc') {
-                Game.realCurrentLoc = label.name;
+                this.Game.realCurrentLoc = label.name;
             }
 
             if (type == 'btn' || type == 'goto' || type == 'proc') {
-                Game.setVar('count_' + label.name, Game.getVar('count_' + label.name) + 1);
+                this.Game.setVar('count_' + label.name, this.Game.getVar('count_' + label.name) + 1);
             }
 
-            Game.position = label.pos;
+            this.Game.position = label.pos;
 
             // весь стек что дальше очищается
             this.flowStack[this.flow] = [];

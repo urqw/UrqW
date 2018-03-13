@@ -8,6 +8,7 @@
 
 <style scoped>
   .footer {
-    padding: .4rem 0;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
   }
 </style>

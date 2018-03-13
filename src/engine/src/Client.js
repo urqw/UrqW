@@ -1,8 +1,14 @@
+import Player from "./Player";
+
 /**
  * @constructor
  */
 function Client() {
-    this.status = Game.Player.PLAYER_STATUS_NEXT;
+    /**
+     * @type {Player} проигрыватель
+     */
+    this.Player = null;
+    this.status = Player.PLAYER_STATUS_NEXT;
     this.text = [];
     this.buttons = [];
 }
@@ -11,9 +17,16 @@ function Client() {
  * рендер
  */
 Client.prototype.render = function() {
-    this.status = Game.Player.status;
-    this.text = Game.Player.text;
-    this.buttons = Game.Player.buttons;
+    this.status = this.Player.status;
+    this.text = this.Player.text;
+    this.buttons = this.Player.buttons;
+};
+
+/**
+ * btn
+ */
+Client.prototype.btn = function(action) {
+    return this.Player.action(action)
 };
 
 export default Client;

@@ -36,7 +36,7 @@ function Game(name) {
     /**
      * @type {Player} проигрыватель
      */
-    this.Player = null;
+    this.Player = new Player(this);
 
     /**
      * @type {Quest} хранилище файла квеста
@@ -46,7 +46,7 @@ function Game(name) {
     /**
      * @type {Client} Клиент
      */
-    this.Client = null;
+    this.Client = new Client();
 
     /**
      * @type {number}
@@ -78,15 +78,16 @@ Game.prototype.init = function(msg) {
     this.mode = 'ripurq';
     if (this.mode) {
         if (this.mode == 'ripurq') {
-            this.Player = ModeUrqRip(Player);
+            ModeUrqRip(Player);
         }
         if (this.mode == 'urqdos') {
-            this.Player = ModeUrqDos(Player);
+            ModeUrqDos(Player);
         }
     }
 
-    this.Player = new Player(this.Quest, this);
-    this.Client = new Client();
+    this.Player.Quest = this.Quest;
+    this.Player.Client = this.Client;
+    this.Client.Player = this.Player;
 
     this.Player.continue();
 };
