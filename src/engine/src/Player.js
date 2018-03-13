@@ -270,10 +270,9 @@ Player.prototype.setVar = function(variable, value) {
 /**
  * @param {String} src
  */
-    // todo переместить в клиента
 Player.prototype.image = function(src) {
     if (src) {
-        this.print($('<img alt="Изображение" style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
+        this.text.push({img: src});
     }
 };
 
@@ -500,9 +499,9 @@ Player.prototype.invAdd = function(item, quantity) {
 
 /**
  * @param {String} text
- * @param {bool} br
+ * @param {bool} ln
  */
-Player.prototype.print = function(text, br) {
+Player.prototype.print = function(text, ln) {
     var textColor = null;
     if (isNaN(this.Game.getVar('style_textcolor'))) {
         textColor = this.Game.getVar('style_textcolor');
@@ -514,7 +513,7 @@ Player.prototype.print = function(text, br) {
         textColor = 'rgb(' + blue + ', ' + green  + ', ' + red + ')';
     }
 
-    this.text.push([text, br,  textColor]);
+    this.text.push({text: text, ln: ln, color: textColor});
 };
 
 /**

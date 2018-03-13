@@ -7,7 +7,9 @@
  *
  * @constructor
  */
-function Expression(str) {
+function Expression(str, Game) {
+
+    this.Game = Game;
 
     /**
      * @return {Array}
@@ -179,7 +181,7 @@ function Expression(str) {
                 temp.push(token[0]);
             }
         }
-        
+
         return temp.pop();
     };
 
@@ -222,3 +224,4 @@ function Expression(str) {
     }
 }
 
+export default Expression;

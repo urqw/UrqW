@@ -1,3 +1,6 @@
+
+import Expression from "./RPN";
+
 /**
  * @constructor
  */
@@ -40,7 +43,7 @@ Parser.prototype.parse = function(line) {
             els = line.substring(line.indexOf(' else ') + 6);
         }
 
-        var conditionResult = new Expression(this.openTags(cond)).calc();
+        var conditionResult = new Expression(this.openTags(cond), this.Player.Game).calc();
 
         if (conditionResult === true || conditionResult > 0) {
             this.parse(then);
@@ -134,13 +137,13 @@ Parser.prototype.parse = function(line) {
         case 'tokens':
             var reg;
 
-            if (Game.getVar('tokens_delim') == 'char') {
+            if (this.Player.Game.getVar('tokens_delim') == 'char') {
                 reg = '';
             } else {
-                reg = new RegExp('[' + (Game.getVar('tokens_delim')).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + ']', 'gi');
+                reg = new RegExp('[' + (this.Player.Game.getVar('tokens_delim')).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + ']', 'gi');
             }
 
-            var str = (new Expression(command.trim())).calc().split(reg);
+            var str = (new Expression(command.trim()), this.Player.Game).calc().split(reg);
 
             this.Player.setVar('tokens_num', str.length);
 
@@ -153,7 +156,7 @@ Parser.prototype.parse = function(line) {
             line = command;
 
             if (line.indexOf('=') > 0) {
-                this.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                this.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'', this.Player.Game).calc());
             }
 
             // no break here
@@ -163,7 +166,7 @@ Parser.prototype.parse = function(line) {
         default:
             //  это выражение?
             if (line.indexOf('=') > 0) {
-                this.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1)).calc());
+                this.Player.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1), this.Player.Game).calc());
             } else {
                 console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
             }
@@ -217,7 +220,7 @@ Parser.prototype.openTags = function (line) {
             } else {
                 exp = exp.substr(1, (exp.length - 2));
             }
-            var result = new Expression(exp).calc();
+            var result = new Expression(exp, this.Player.Game).calc();
 
             return isFloat(result) ? result.toFixed(2) : result;
         });
@@ -247,7 +250,7 @@ Parser.prototype.openLinks = function(line) {
                 text = exp;
             }
 
-            return Game.Client.convertToLink(text, this.Player.link(command));
+            return this.Player.Client.convertToLink(text, this.Player.link(command));
         });
     }
 

@@ -8,6 +8,10 @@ import Game from "@/engine/src/Game";
  * @constructor
  */
 function Loader() {
+    /**
+     * int mode
+     */
+    this.mode = 0;
 }
 
 /**
@@ -103,7 +107,6 @@ Loader.prototype.loadFiles = function() {
         var zip = e.target.files[0];
 
         reader.onload = function() {
-            mode = $('#urq_mode').val();
             loadZip(reader.result, zip.name);
         };
         reader.readAsBinaryString(zip, 'CP1251');
@@ -128,7 +131,6 @@ Loader.prototype.loadFiles = function() {
     }
 
     var name = qst[0].name;
-    mode = $('#urq_mode').val();
     quest = [];
     var slices = qst.length;
 
