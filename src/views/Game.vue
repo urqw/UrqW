@@ -72,6 +72,10 @@
                     this.currentPage = 'save'
                 } else if (name === 'returnToGame') {
                     this.currentPage = 'game'
+                } else if (name === 'restartGame') {
+                    if (!this.Game.locked && confirm('Restart the game?')) {
+                        this.Game.restart();
+                    }
                 }
             }
         }

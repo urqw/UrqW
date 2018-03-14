@@ -26,9 +26,7 @@ function Game(name) {
     /**
      * @type {Object}
      */
-    this.vars = {
-        'tokens_delim': '\ \,\"\?\!'
-    };
+    this.vars = {};
 
     /**
      * @type {string} имя игры или файла для сохранения
@@ -38,17 +36,17 @@ function Game(name) {
     /**
      * @type {Player} проигрыватель
      */
-    this.Player = new Player(this);
+    this.Player = {};
 
     /**
      * @type {Quest} хранилище файла квеста
      */
-    this.Quest = null;
+    this.Quest = {};
 
     /**
      * @type {Client} Клиент
      */
-    this.Client = new Client();
+    this.Client = {};
 
     /**
      * @type {number}
@@ -73,10 +71,6 @@ Game.prototype.init = function(msg) {
     this.Quest = new Quest(msg);
     this.Quest.init();
 
-    this.realCurrentLoc = this.Quest.firstLabel;
-    this.setVar('current_loc', this.Quest.firstLabel);
-    this.setVar('previous_loc', this.Quest.firstLabel);
-
     this.mode = 'ripurq';
     if (this.mode) {
         if (this.mode == 'ripurq') {
@@ -87,11 +81,8 @@ Game.prototype.init = function(msg) {
         }
     }
 
-    this.Player.Quest = this.Quest;
-    this.Player.Client = this.Client;
-    this.Client.Player = this.Player;
-
-    this.Player.continue();
+    this.clean();
+    this.Player.continue()
 };
 
 /**
@@ -191,9 +182,44 @@ Game.prototype.getVar = function(variable) {
 };
 
 /**
+ * перезапуск
+ */
+Game.prototype.restart = function() {
+    this.clean();
+    this.Player.continue()
+};
+
+/**
+ * очистка
+ */
+Game.prototype.clean = function() {
+    if (this.locked) return false;
+
+    this.vars = {
+        'tokens_delim': '\ \,\"\?\!'
+    };
+
+    this.realCurrentLoc = this.Quest.firstLabel;
+    this.setVar('current_loc', this.Quest.firstLabel);
+    this.setVar('previous_loc', this.Quest.firstLabel);
+
+    this.Player = new Player(this);
+    this.Client = new Client();
+
+    this.position = 0;
+    this.items = {};
+
+    this.Player.Quest = this.Quest;
+    this.Player.Client = this.Client;
+    this.Client.Player = this.Player;
+};
+
+/**
  * сохранение
  */
 Game.prototype.save = function() {
+    if (this.locked) return false;
+
     return {
         status: this.Player.status,
         text: this.Player.text,
@@ -209,6 +235,8 @@ Game.prototype.save = function() {
  * загрузка
  */
 Game.prototype.load = function(data) {
+    if (this.locked) return false;
+
     this.Player.status = data.status;
     this.Player.text = data.text;
     this.Player.buttons = data.buttons;

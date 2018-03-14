@@ -13,12 +13,12 @@
             <font-awesome-icon :icon="volume" />
           </span>
         </a>
-        <a class="navbar-item">
+        <a class="navbar-item" @click="clickBtn('restartGame')">
           <span class="icon">
             <font-awesome-icon :icon="reload" />
           </span>
         </a>
-        <a :class="page === 'save' ? 'is-active' : ''"  class="navbar-item" @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')">
+        <a :class="page === 'save' ? 'is-active' : ''"  class="navbar-item" @click="clickBtn(page === 'load' ? 'returnToGame' : 'saveGame')">
           <span class="icon">
             <font-awesome-icon :icon="save" />
           </span>

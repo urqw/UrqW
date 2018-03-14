@@ -53,12 +53,16 @@
                 this.$emit('clicked', name);
             },
             clickSave(id) {
-                var Datetime = new Date();
+                data = this.Game.save();
 
-                localStorage.setItem(this.Game.name + '_' + id.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
-                localStorage.setItem(this.Game.name + '_' + id.toString() + '_data', JSON.stringify(this.Game.save()));
+                if (data) {
+                    var Datetime = new Date();
 
-                this.loadSaves()
+                    localStorage.setItem(this.Game.name + '_' + id.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
+                    localStorage.setItem(this.Game.name + '_' + id.toString() + '_data', JSON.stringify(data));
+
+                    this.loadSaves()
+                }
             }
         },
         props: {
