@@ -18,7 +18,7 @@
             <font-awesome-icon :icon="reload" />
           </span>
         </a>
-        <a :class="page === 'save' ? 'is-active' : ''"  class="navbar-item" @click="clickBtn(page === 'load' ? 'returnToGame' : 'saveGame')">
+        <a :class="page === 'save' ? 'is-active' : ''"  class="navbar-item" @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')">
           <span class="icon">
             <font-awesome-icon :icon="save" />
           </span>
