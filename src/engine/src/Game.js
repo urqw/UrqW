@@ -192,14 +192,9 @@ Game.prototype.getVar = function(variable) {
 
 /**
  * сохранение
- *
- * @param {int} slot
  */
-Game.prototype.save = function(slot) {
-    var Datetime = new Date();
-
-    localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
-    localStorage.setItem(this.name + '_' + slot.toString() + '_data', JSON.stringify({
+Game.prototype.save = function() {
+    return {
         status: this.Player.status,
         text: this.Player.text,
         buttons: this.Player.buttons,
@@ -207,16 +202,13 @@ Game.prototype.save = function(slot) {
         vars: this.vars,
         position: this.position,
         realCurrentLoc: this.realCurrentLoc
-    }));
+    };
 };
 
 /**
  * загрузка
- *
- * @param {int} slot
  */
-Game.prototype.load = function(slot) {
-    var data = JSON.parse(localStorage.getItem(this.name + '_' + slot.toString() + '_data'));
+Game.prototype.load = function(data) {
     this.Player.status = data.status;
     this.Player.text = data.text;
     this.Player.buttons = data.buttons;
@@ -224,6 +216,8 @@ Game.prototype.load = function(slot) {
     this.vars = data.vars;
     this.position = data.position;
     this.realCurrentLoc = data.realCurrentLoc;
+
+    this.Client.render();
 };
 
 export default Game;

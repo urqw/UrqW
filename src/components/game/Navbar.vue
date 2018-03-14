@@ -18,12 +18,12 @@
             <font-awesome-icon :icon="reload" />
           </span>
         </a>
-        <a class="navbar-item">
+        <a :class="page === 'save' ? 'is-active' : ''"  class="navbar-item" @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')">
           <span class="icon">
             <font-awesome-icon :icon="save" />
           </span>
         </a>
-        <a class="navbar-item">
+        <a :class="page === 'load' ? 'is-active' : ''" class="navbar-item" @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')">
           <span class="icon">
             <font-awesome-icon :icon="load" />
           </span>
@@ -85,10 +85,17 @@
                 return FaLoad
             },
         },
-
         components: {
             FontAwesomeIcon,
             Logo
+        },
+        methods: {
+            clickBtn (name) {
+                this.$emit('clickBtn', name);
+            }
+        },
+        props: {
+            page: String
         }
     }
 </script>
