@@ -75,6 +75,7 @@
                 } else if (name === 'restartGame') {
                     if (!this.Game.locked && confirm('Restart the game?')) {
                         this.Game.restart();
+                        this.$set(this, 'Client', this.Game.Client);
                     }
                 }
             }
