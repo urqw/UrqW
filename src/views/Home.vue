@@ -35,7 +35,7 @@
         },
         data() {
             return {
-                message: 'Загрузка...'
+                message: 'Loading...'
             }
         },
         mounted() {

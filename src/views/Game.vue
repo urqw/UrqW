@@ -77,6 +77,7 @@
                         this.Game.restart();
                         this.$set(this, 'Client', this.Game.Client);
                     }
+                } else if (name === 'switchVolume') {
                 }
             }
         }

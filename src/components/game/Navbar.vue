@@ -10,7 +10,7 @@
         </router-link>
         <a class="navbar-item">
           <span class="icon">
-            <font-awesome-icon :icon="volume" />
+            <font-awesome-icon :icon="volume" @click="clickBtn('switchVolume')"/>
           </span>
         </a>
         <a class="navbar-item" @click="clickBtn('restartGame')">
