@@ -1,38 +1,55 @@
 <template>
-  <nav class="navbar is-light" role="navigation" aria-label="dropdown navigation">
+  <nav
+    class="navbar is-light"
+    role="navigation"
+    aria-label="dropdown navigation"
+  >
     <div class="container">
       <div class="navbar-brand">
-        <router-link class="navbar-item" :to="{name: 'home'}">
-          <logo class="logo"></logo>
-          <span>
-            UrqW
-          </span>
+        <router-link class="navbar-item" :to="{ name: 'home' }">
+          <Logo class="logo" />
+          <span>UrqW</span>
         </router-link>
         <a class="navbar-item">
           <span class="icon">
-            <font-awesome-icon :icon="volume" @click="clickBtn('switchVolume')"/>
+            <font-awesome-icon
+              :icon="FaVolumeOn"
+              @click="clickBtn('switchVolume')"
+            />
           </span>
         </a>
         <a class="navbar-item" @click="clickBtn('restartGame')">
           <span class="icon">
-            <font-awesome-icon :icon="reload" />
+            <font-awesome-icon :icon="FaReload" />
           </span>
         </a>
-        <a :class="page === 'save' ? 'is-active' : ''"  class="navbar-item" @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')">
+        <a
+          :class="{ 'is-active': page === 'save' }"
+          class="navbar-item"
+          @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
+        >
           <span class="icon">
-            <font-awesome-icon :icon="save" />
+            <font-awesome-icon :icon="FaSave" />
           </span>
         </a>
-        <a :class="page === 'load' ? 'is-active' : ''" class="navbar-item" @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')">
+        <a
+          :class="{ 'is-active': page === 'load' }"
+          class="navbar-item"
+          @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
+        >
           <span class="icon">
-            <font-awesome-icon :icon="load" />
+            <font-awesome-icon :icon="FaLoad" />
           </span>
         </a>
       </div>
 
       <div class="navbar-menu">
         <div class="navbar-end">
-          <div class="navbar-item has-dropdown" @click="dropdownIsActive = !dropdownIsActive" :class="dropdownIsActive ? 'is-active' : ''">
+          <div
+            class="navbar-item has-dropdown"
+            @click="dropdownIsActive = !dropdownIsActive"
+            :class="{ 'is-active': dropdownIsActive }"
+          >
             <a class="navbar-link">
               Inventory
             </a>
@@ -56,59 +73,50 @@
 </template>
 
 <script>
-    import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-    import FaVolumeOn from '@fortawesome/fontawesome-free-solid/faVolumeUp'
-    import FaVolumeOff from '@fortawesome/fontawesome-free-solid/faVolumeOff'
-    import FaReload from '@fortawesome/fontawesome-free-solid/faSyncAlt'
-    import FaSave from '@fortawesome/fontawesome-free-solid/faSave'
-    import FaLoad from '@fortawesome/fontawesome-free-solid/faFolderOpen'
-    import Logo from '@/components/Logo'
+import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
+import FaVolumeOn from "@fortawesome/fontawesome-free-solid/faVolumeUp";
+import FaReload from "@fortawesome/fontawesome-free-solid/faSyncAlt";
+import FaSave from "@fortawesome/fontawesome-free-solid/faSave";
+import FaLoad from "@fortawesome/fontawesome-free-solid/faFolderOpen";
+import Logo from "@/components/Logo";
 
-    export default {
-        name: 'navbar',
-        data() {
-            return {
-                dropdownIsActive: false
-            }
-        },
-        computed: {
-            volume () {
-                return FaVolumeOn
-            },
-            reload () {
-                return FaReload
-            },
-            save () {
-                return FaSave
-            },
-            load () {
-                return FaLoad
-            },
-        },
-        components: {
-            FontAwesomeIcon,
-            Logo
-        },
-        methods: {
-            clickBtn (name) {
-                this.$emit('clickBtn', name);
-            }
-        },
-        props: {
-            page: String
-        }
+export default {
+  name: "navbar",
+  data() {
+    return {
+      dropdownIsActive: false,
+      FaVolumeOn,
+      FaReload,
+      FaSave,
+      FaLoad
+    };
+  },
+
+  components: {
+    FontAwesomeIcon,
+    Logo
+  },
+
+  methods: {
+    clickBtn(name) {
+      this.$emit("clickBtn", name);
     }
+  },
+  props: {
+    page: String
+  }
+};
 </script>
 
 <style scoped>
-  .logo {
-    width: 28px;
-    height: 28px;
-    margin-right: .7em;
-  }
+.logo {
+  width: 28px;
+  height: 28px;
+  margin-right: 0.7em;
+}
 
-  .navbar.is-light .navbar-brand > .navbar-item,
-  .navbar.is-light .navbar-brand .navbar-link {
-    color: #4a4a4a;
-  }
+.navbar.is-light .navbar-brand > .navbar-item,
+.navbar.is-light .navbar-brand .navbar-link {
+  color: #4a4a4a;
+}
 </style>

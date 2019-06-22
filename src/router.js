@@ -12,7 +12,7 @@ const router = new Router({
       name: "home",
       component: Home,
       meta: {
-        title: 'UrqW'
+        title: "UrqW"
       }
     },
     {
@@ -20,15 +20,15 @@ const router = new Router({
       name: "game",
       component: Game,
       meta: {
-        title: 'UrqW'
+        title: "UrqW"
       }
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-    document.title = to.meta.title
-    next()
-})
+  document.title = to.meta.title;
+  next();
+});
 
-export default router
+export default router;

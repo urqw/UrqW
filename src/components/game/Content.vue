@@ -1,30 +1,47 @@
 <template>
-  <div class="content" v-if="content && content.length">
-    <template v-for="cont in content">
-      <template v-if="cont.img">
-        <img :src="cont.img" alt="Изображение" style="margin: 5px auto; display: block;">
-      </template>
-      <template v-else-if="cont.text">
-        <span v-html="cont.text" :style="{ color: cont.color ? cont.color : ''}" :class="cont.ln ? 'ln' : ''"></span>
-      </template>
+  <div class="content" v-if="content.length">
+    <template v-for="(cont, i) in content">
+      <img
+        v-if="cont.img"
+        :key="i"
+        :src="cont.img"
+        alt="Изображение"
+        class="cont-img"
+      />
+      <span
+        v-else-if="cont.text"
+        v-html="cont.text"
+        :key="i"
+        :style="{ color: cont.color || '' }"
+        :class="{ ln: cont.ln }"
+      ></span>
     </template>
   </div>
 </template>
 
 <script>
-  //    <hr>
+//    <hr>
 
-  export default {
-        name: "contentText",
-        props: {
-            content: Array
-        }
-    };
+export default {
+  name: "contentText",
+  props: {
+    content: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
+  }
+};
 </script>
 
 <style scoped>
-  .ln:not(:last-child):after {
-    content: '';
-    display: block;
-  }
+.ln:not(:last-child):after {
+  content: "";
+  display: block;
+}
+.cont-img {
+  display: block;
+  margin: 5px auto;
+}
 </style>

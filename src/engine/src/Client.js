@@ -1,9 +1,10 @@
 import Player from "./Player";
 
-/**
- * @constructor
- */
-function Client() {
+export default class Client {
+  /**
+   * @constructor
+   */
+  constructor() {
     /**
      * @type {Player} проигрыватель
      */
@@ -19,22 +20,21 @@ function Client() {
      * @type int уровень звука
      */
     this.volume = 1;
-}
+  }
 
-/**
- * рендер
- */
-Client.prototype.render = function() {
+  /**
+   * рендер
+   */
+  render() {
     this.status = this.Player.status;
     this.text = this.Player.text;
     this.buttons = this.Player.buttons;
-};
+  }
 
-/**
- * btn
- */
-Client.prototype.btn = function(action) {
-    return this.Player.action(action)
-};
-
-export default Client;
+  /**
+   * btn
+   */
+  btn(action) {
+    return this.Player.action(action);
+  }
+}

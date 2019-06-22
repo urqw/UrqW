@@ -1,79 +1,74 @@
 <template>
-    <div>
-        <div class="panel-block-back">
-            <button class="button" @click="clickBtn('returnToGame')">
-              <span class="icon">
-                <font-awesome-icon :icon="arrowLeft"/>
-              </span>
-                <span>
-                  Return to game
-              </span>
-            </button>
-        </div>
-        <nav class="panel">
-            <a v-for="i in 10" class="panel-block" @click="clickSave(i)">
-                <template v-if="saves[i - 1]">
-                    {{ saves[i - 1] }}
-                </template>
-                <template v-else>
-                    Free save slot #{{ i }}
-                </template>
-            </a>
-        </nav>
+  <div>
+    <div class="panel-block-back">
+      <button class="button" @click="clickBtn('returnToGame')">
+        <span class="icon">
+          <font-awesome-icon :icon="FaArrowAltCircleLeft" />
+        </span>
+        <span>Return to game</span>
+      </button>
     </div>
+    <SavesPanel :saves="saves" @clicked="clickSave($event)"/>
+  </div>
 </template>
 
 <script>
-    import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-    import FaArrowAltCircleLeft from '@fortawesome/fontawesome-free-solid/faArrowAltCircleLeft'
+import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
+import FaArrowAltCircleLeft from "@fortawesome/fontawesome-free-solid/faArrowAltCircleLeft";
+import SavesPanel from './SavesPanel';
 
-    export default {
-        name: 'savegame',
-        computed: {
-            arrowLeft() {
-                return FaArrowAltCircleLeft
-            }
-        },
-        data () {
-            return {
-                saves: []
-            }
-        },
-        mounted () {
-            this.loadSaves()
-        },
-        components: {
-            FontAwesomeIcon,
-        },
-        methods: {
-            loadSaves() {
-                this.saves = Array(10).fill().map((_, i) => localStorage.getItem(`${this.Game.name}_${i + 1}_name`))
-            },
-            clickBtn(name) {
-                this.$emit('clicked', name);
-            },
-            clickSave(id) {
-                data = this.Game.save();
+export default {
+  name: "savegame",
+  data() {
+    return {
+      saves: [],
+      FaArrowAltCircleLeft
+    };
+  },
+  mounted() {
+    this.loadSaves();
+  },
+  components: {
+    SavesPanel,
+    FontAwesomeIcon
+  },
+  methods: {
+    loadSaves() {
+      this.saves = Array(10)
+        .fill()
+        .map((_, i) => localStorage.getItem(`${this.Game.name}_${i + 1}_name`));
+    },
+    clickBtn(name) {
+      this.$emit("clicked", name);
+    },
+    clickSave(id) {
+      const data = this.Game.save();
 
-                if (data) {
-                    var Datetime = new Date();
+      if (data) {
+        const dateTime = new Date();
 
-                    localStorage.setItem(this.Game.name + '_' + id.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
-                    localStorage.setItem(this.Game.name + '_' + id.toString() + '_data', JSON.stringify(data));
+        localStorage.setItem(
+          this.Game.name + "_" + id.toString() + "_name",
+          dateTime.toLocaleDateString() + " " + dateTime.toLocaleTimeString()
+        );
+        localStorage.setItem(
+          this.Game.name + "_" + id.toString() + "_data",
+          JSON.stringify(data)
+        );
 
-                    this.loadSaves()
-                }
-            }
-        },
-        props: {
-            Game: Object
-        }
+        this.loadSaves();
+      }
     }
+  },
+  props: {
+    Game: Object
+  }
+};
 </script>
 <style scoped>
-    .panel-block-back {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 1em;
-    }
+.panel-block-back {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
 </style>

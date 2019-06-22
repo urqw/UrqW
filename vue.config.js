@@ -1,2 +1,2 @@
-module.exports = {
-}
+/* eslint-env node */
+module.exports = {};

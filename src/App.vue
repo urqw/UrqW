@@ -1,16 +1,16 @@
 <template>
   <div id="app">
     <div class="main">
-      <router-view/>
+      <router-view />
     </div>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
-import Parser from "@/engine/src/Parser";
+// import Parser from "@/engine/src/Parser";
 //console.log(Parser);
 
 export default {
@@ -19,7 +19,7 @@ export default {
     Footer,
   },
   mounted() {
-//    console.log(Parser);
+    //    console.log(Parser);
   }
 };
 </script>
@@ -36,16 +36,16 @@ $widescreen: $desktop;
 </style>
 
 <style scoped>
-  /**
+/**
    * footer
    */
-  #app {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+#app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
-  .main {
-    flex: 1;
-  }
+.main {
+  flex: 1;
+}
 </style>
