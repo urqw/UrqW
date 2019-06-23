@@ -70,14 +70,11 @@ Game.prototype.init = function(msg) {
   this.Quest = new Quest(msg);
   this.Quest.init();
 
-  this.mode = "ripurq";
-  if (this.mode) {
-    if (this.mode == "ripurq") {
-      ModeUrqRip(Player);
-    }
-    if (this.mode == "urqdos") {
-      ModeUrqDos(Player);
-    }
+  if (this.mode === "ripurq") {
+    ModeUrqRip(Player);
+  }
+  if (this.mode === "urqdos") {
+    ModeUrqDos(Player);
   }
 
   this.clean();

@@ -10,7 +10,7 @@ function Loader() {
   /**
    * int mode
    */
-  this.mode = 0;
+  this.mode = 'urqw';
 
   this.questname = '';
 }
@@ -61,7 +61,6 @@ Loader.prototype.composeFiles = function (files) {
     var qst = [];
 
     Object.keys(files).map((fileName) => {
-      console.log(fileName);
       const file = files[fileName];
 
       if (getExt(fileName) === "qst") {
@@ -99,6 +98,7 @@ Loader.prototype.composeFiles = function (files) {
 
       let GameInstance = new Game(this.questname);
       GameInstance.files = resources;
+      GameInstance.mode = this.mode;
       GameInstance.init(quest);
       resolve(GameInstance);
     } else {
@@ -112,9 +112,11 @@ Loader.prototype.composeFiles = function (files) {
  */
 Loader.prototype.loadZipFromLocalFolder = function (
   questname,
+  mode = "urqw",
   folder = "quests"
 ) {
   this.questname = questname;
+  this.mode = mode;
 
   return new Promise((resolve, reject) => {
     ZipUtils.getBinaryContent(`${folder}/${this.questname}.zip`, (err, zip) => {
@@ -129,8 +131,10 @@ Loader.prototype.getClient = function () {
 /**
  * загрузить из файлов
  */
-Loader.prototype.loadFiles = function (files) {
+Loader.prototype.loadFiles = function (files, mode) {
   this.questname = files[0].name;
+  this.mode = mode;
+
   if (
     files.length === 1 &&
     getExt(files[0].name) === "zip"

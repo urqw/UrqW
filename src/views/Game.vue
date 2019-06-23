@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       questName: this.$route.params.name,
+      mode: this.$route.params.mode,
       Client: {},
       Game: {},
       currentPage: "game"
