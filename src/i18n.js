@@ -13,7 +13,7 @@ export const i18n = new VueI18n({
 });
 
 const loadedLanguages = ["ru"]; // default language is preloaded
-const availableLanguages = ["ru", "en"];
+export const availableLanguages = ["ru", "en"];
 
 function checkLang(languageCode) {
   const [lang] = languageCode.split("-");

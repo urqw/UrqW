@@ -10,6 +10,7 @@
           <Logo class="logo" />
           <span>UrqW</span>
         </a>
+        <SettingsBtn/>
         <a class="navbar-item">
           <span class="icon">
             <font-awesome-icon
@@ -76,6 +77,7 @@ import FaReload from "@fortawesome/fontawesome-free-solid/faSyncAlt";
 import FaSave from "@fortawesome/fontawesome-free-solid/faSave";
 import FaLoad from "@fortawesome/fontawesome-free-solid/faFolderOpen";
 import Logo from "@/components/Logo";
+import SettingsBtn from "@/components/shared/SettingsBtn";
 
 export default {
   name: "navbar",
@@ -90,6 +92,7 @@ export default {
   },
 
   components: {
+    SettingsBtn,
     FontAwesomeIcon,
     Logo
   },
