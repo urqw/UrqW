@@ -6,5 +6,7 @@
   "image": "Image",
   "ok": "Ok",
   "returnToGame": "Return to game",
-  "inventory": "Inventory"
+  "inventory": "Inventory",
+  "restartGameRequest": "Restart the game?",
+  "confirmClose": "Leave the game? Unsaved progress will be lost."
 }

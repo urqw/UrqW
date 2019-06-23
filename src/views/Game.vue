@@ -73,6 +73,17 @@ export default {
     }
   },
   methods: {
+    onBeforeUnload(e) {
+      // custom messages don't really work across all browsers, but still...
+      // Cancel the event
+      e.preventDefault();
+      const msg = this.$t("confirmClose");
+      // Chrome requires returnValue to be set
+      e.returnValue = msg;
+      // other browsers require to return a string
+      return msg;
+    },
+
     buttonClicked(action) {
       this.Client.btn(action);
     },
@@ -86,7 +97,7 @@ export default {
       if (name === "returnToGame") {
         this.currentPage = "game";
       } else if (name === "restartGame") {
-        if (!this.Game.locked && confirm("Restart the game?")) {
+        if (!this.Game.locked && confirm(this.$t("restartGameRequest"))) {
           this.Game.restart();
           this.Client = this.Game.Client;
         }
@@ -95,7 +106,7 @@ export default {
       } else if (name === "home") {
         if (!this.Game.locked && confirm("Return to home screen?")) {
           window.onbeforeunload = null;
-          this.$router.push({ name: 'home' })
+          this.$router.push({ name: "home" });
         }
       }
     }
