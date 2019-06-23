@@ -10,7 +10,7 @@
           <SaveGame :Game="Game" @clicked="onSaveClicked"></SaveGame>
         </template>
         <template v-else>
-          <Content :content="Client.text" />
+          <Content :content="Client.text" @click.native="linkClicked" />
           <Buttons :buttons="Client.buttons" @clicked="buttonClicked" />
           <Info />
         </template>
@@ -85,6 +85,12 @@ export default {
       return msg;
     },
 
+    linkClicked(e) {
+      // todo refactor this
+      if (e.target.dataset.action !== undefined) {
+        this.Client.link(e.target.dataset.action);
+      }
+    },
     buttonClicked(action) {
       this.Client.btn(action);
     },
@@ -112,6 +118,10 @@ export default {
           window.removeEventListener("beforeunload", this.onBeforeUnload);
           this.$router.push({ name: "home" });
         }
+      } else if (name === "saveGame") {
+        this.currentPage = "save";
+      } else if (name === "loadGame") {
+        this.currentPage = "load";
       }
     }
   }

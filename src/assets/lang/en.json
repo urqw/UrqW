@@ -13,5 +13,6 @@
   "inventory": "Inventory",
   "restartGameRequest": "Restart the game?",
   "returnToHomeScreenRequest": "Return to home screen?",
-  "confirmClose": "Leave the game? Unsaved progress will be lost."
+  "confirmClose": "Leave the game? Unsaved progress will be lost.",
+  "emptyGameSlot": "Empty save slot"
 }

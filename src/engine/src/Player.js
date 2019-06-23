@@ -370,15 +370,13 @@ export default class Player {
     this.links = [];
 
     for (let i = 0; i < this.text.length; i++) {
-      this.text[i][0] = this.text[i][0].replace(
-        /\<a.+?\>.+?\<\/a\>/gi,
-        match => {
-          return this.Client.disableLink(match);
-        }
+      this.text[i].text = this.text[i].text.replace(
+        /\<a.+?\>(.+?)\<\/a\>/gi,
+        '$1'
       );
     }
 
-    this.Client.clsb();
+    this.Client.render();
   }
 
   invkill(item) {

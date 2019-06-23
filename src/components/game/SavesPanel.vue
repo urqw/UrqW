@@ -26,7 +26,6 @@ export default {
     label: {
       type: String,
       default() {
-        debugger;
         return this.$t("emptyGameSlot");
       }
     }

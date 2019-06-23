@@ -37,4 +37,20 @@ export default class Client {
   btn(action) {
     return this.Player.action(action);
   }
+
+  /**
+   * link
+   */
+  link(action) {
+    return this.Player.action(action, true);
+  }
+
+  /**
+   * превратить текст и комманду в <a> тег
+   * @param {String} text
+   * @param {int} action
+   */
+  convertToLink(text, action) {
+    return "<a data-action='" + action + "'>" + text + "</a>";
+  };
 }
