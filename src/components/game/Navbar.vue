@@ -1,73 +1,80 @@
 <template>
-  <nav
-    class="navbar is-light"
-    role="navigation"
-    aria-label="dropdown navigation"
-  >
-    <div class="container">
-      <div class="navbar-brand">
-        <a class="navbar-item" @click="clickBtn('home')">
-          <Logo class="logo" />
-          <span>UrqW</span>
-        </a>
-        <SettingsBtn/>
-        <a class="navbar-item">
+  <div>
+    <nav
+      class="navbar is-light"
+      role="navigation"
+      aria-label="dropdown navigation"
+    >
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" @click="clickBtn('home')">
+            <Logo class="logo" />
+            <span>UrqW</span>
+          </a>
+          <a class="navbar-item" @click="isOpenedSettings = !isOpenedSettings">
+          <span class="icon">
+            <font-awesome-icon :icon="FaCog"/>
+          </span>
+          </a>
+          <a class="navbar-item">
           <span class="icon">
             <font-awesome-icon
               :icon="FaVolumeOn"
               @click="clickBtn('switchVolume')"
             />
           </span>
-        </a>
-        <a class="navbar-item" @click="clickBtn('restartGame')">
+          </a>
+          <a class="navbar-item" @click="clickBtn('restartGame')">
           <span class="icon">
             <font-awesome-icon :icon="FaReload" />
           </span>
-        </a>
-        <a
-          :class="{ 'is-active': page === 'save' }"
-          class="navbar-item"
-          @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
-        >
+          </a>
+          <a
+            :class="{ 'is-active': page === 'save' }"
+            class="navbar-item"
+            @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
+          >
           <span class="icon">
             <font-awesome-icon :icon="FaSave" />
           </span>
-        </a>
-        <a
-          :class="{ 'is-active': page === 'load' }"
-          class="navbar-item"
-          @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
-        >
+          </a>
+          <a
+            :class="{ 'is-active': page === 'load' }"
+            class="navbar-item"
+            @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
+          >
           <span class="icon">
             <font-awesome-icon :icon="FaLoad" />
           </span>
-        </a>
-      </div>
+          </a>
+        </div>
 
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <div
-            class="navbar-item has-dropdown"
-            @click="dropdownIsActive = !dropdownIsActive"
-            :class="{ 'is-active': dropdownIsActive }"
-          >
-            <a class="navbar-link" v-text="$t('inventory')"></a>
-            <div class="navbar-dropdown is-right">
-              <a class="navbar-item">
-                Overview
-              </a>
-              <a class="navbar-item">
-                Elements
-              </a>
-              <a class="navbar-item">
-                Components
-              </a>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <div
+              class="navbar-item has-dropdown"
+              @click="dropdownIsActive = !dropdownIsActive"
+              :class="{ 'is-active': dropdownIsActive }"
+            >
+              <a class="navbar-link" v-text="$t('inventory')"></a>
+              <div class="navbar-dropdown is-right">
+                <a class="navbar-item">
+                  Overview
+                </a>
+                <a class="navbar-item">
+                  Elements
+                </a>
+                <a class="navbar-item">
+                  Components
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+    <SettingsPopup :open="isOpenedSettings" @cancel="isOpenedSettings = false"/>
+  </div>
 </template>
 
 <script>
@@ -76,23 +83,26 @@ import FaVolumeOn from "@fortawesome/fontawesome-free-solid/faVolumeUp";
 import FaReload from "@fortawesome/fontawesome-free-solid/faSyncAlt";
 import FaSave from "@fortawesome/fontawesome-free-solid/faSave";
 import FaLoad from "@fortawesome/fontawesome-free-solid/faFolderOpen";
+import FaCog from "@fortawesome/fontawesome-free-solid/faCog";
 import Logo from "@/components/Logo";
-import SettingsBtn from "@/components/shared/SettingsBtn";
+import SettingsPopup from "@/components/shared/SettingsPopup.vue";
 
 export default {
   name: "navbar",
   data() {
     return {
+      isOpenedSettings: false,
       dropdownIsActive: false,
       FaVolumeOn,
       FaReload,
       FaSave,
-      FaLoad
+      FaLoad,
+      FaCog,
     };
   },
 
   components: {
-    SettingsBtn,
+    SettingsPopup,
     FontAwesomeIcon,
     Logo
   },
