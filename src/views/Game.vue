@@ -81,6 +81,10 @@ export default {
         }
       } else if (name === "switchVolume") {
         console.warn("switching volume not implemented"); // eslint-disable-line no-console
+      } else if (name === "home") {
+        if (!this.Game.locked && confirm("Return to home screen?")) {
+          this.$router.push({ name: 'home' })
+        }
       }
     }
   }

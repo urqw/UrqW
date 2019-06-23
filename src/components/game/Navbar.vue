@@ -6,10 +6,10 @@
   >
     <div class="container">
       <div class="navbar-brand">
-        <router-link class="navbar-item" :to="{ name: 'home' }">
+        <a class="navbar-item" @click="clickBtn('home')">
           <Logo class="logo" />
           <span>UrqW</span>
-        </router-link>
+        </a>
         <a class="navbar-item">
           <span class="icon">
             <font-awesome-icon

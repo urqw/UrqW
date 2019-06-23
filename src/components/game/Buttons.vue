@@ -6,25 +6,15 @@
       @click="clicked(button.id)"
       :key="button.id"
     >
-      <span class="panel-icon">
-        <font-awesome-icon :icon="FaBook" />
-      </span>
       <span v-html="button.desc"></span>
     </a>
   </nav>
 </template>
 
 <script>
-import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
-import FaBook from "@fortawesome/fontawesome-free-solid/faBook";
 
 export default {
   name: "buttons",
-
-  components: {
-    FontAwesomeIcon
-  },
-
   props: {
     buttons: {
       type: Array,
@@ -33,13 +23,6 @@ export default {
       }
     }
   },
-
-  data() {
-    return {
-      FaBook
-    };
-  },
-
   methods: {
     clicked(action) {
       this.$emit("clicked", action);
