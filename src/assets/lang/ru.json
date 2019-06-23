@@ -8,5 +8,6 @@
   "returnToGame": "Вернуться к игре",
   "inventory": "Инвентарь",
   "restartGameRequest": "Перезапустить игру?",
+  "returnToHomeScreenRequest": "Вернуться на стартовый экран?",
   "confirmClose": "Выйти из игры? Несохраненный прогресс будет утерян."
 }
