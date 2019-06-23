@@ -179,7 +179,7 @@ export default class Parser {
       case "tokens":
         var reg;
 
-        if (this.Player.Game.getVar("tokens_delim") == "char") {
+        if (this.Player.Game.getVar("tokens_delim") === "char") {
           reg = "";
         } else {
           reg = new RegExp(

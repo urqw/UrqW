@@ -80,6 +80,13 @@ export function win2unicode(str) {
   return res;
 }
 
+export function getExt(fileName) {
+  return fileName
+    .split(".")
+    .pop()
+    .toLowerCase();
+}
+
 export const MIME = {
   bmp: "image/bmp",
   gif: "image/gif",
@@ -91,3 +98,4 @@ export const MIME = {
   midi: "audio/midi",
   mp3: "audio/mp3"
 };
+

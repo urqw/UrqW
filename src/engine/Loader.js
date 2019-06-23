@@ -2,6 +2,7 @@ import JSZip from "jszip";
 import ZipUtils from "jszip-utils";
 import Game from "@/engine/src/Game";
 import { win2unicode } from "./src/tools";
+import { getExt } from "./src/tools";
 
 /**
  * @constructor
@@ -11,12 +12,99 @@ function Loader() {
    * int mode
    */
   this.mode = 0;
+
+  this.questname = '';
 }
 
 /**
  * загрузить из zip файла
  */
-Loader.prototype.loadZip = function() {};
+Loader.prototype.loadZip = function(zip) {
+  var loadedFiles = {};
+
+  return new Promise((resolve, reject) => {
+    resolve(JSZip.loadAsync(zip).then((unpackedZip) => {
+      return new Promise((resolve, reject) => {
+
+        Promise.all(
+          Object.keys(unpackedZip.files).map((fileName) => {
+            return new Promise((resolve, reject) => {
+              const file = unpackedZip.files[fileName];
+
+              if (['qst', 'css', 'js'].indexOf(getExt(fileName)) >= 0) {
+                file.async("binarystring").then((data) => {
+                  loadedFiles[fileName] = data;
+                  resolve();
+                });
+              } else {
+                file.async("blob").then((blob) => {
+                  loadedFiles[fileName] = URL.createObjectURL(blob);
+                  resolve();
+                });
+              }
+            });
+          })
+        ).then(() => {
+          resolve(this.composeFiles(loadedFiles))
+        });
+      });
+    }));
+  });
+};
+
+/**
+ * собрать файлы
+ */
+Loader.prototype.composeFiles = function(files) {
+  return new Promise((resolve, reject) => {
+    var resources = {};
+    var qst = [];
+
+    Object.keys(files).map((fileName) => {
+      const file = files[fileName];
+
+      if (getExt(fileName) === "qst") {
+        const hasUnderscore =
+          fileName.startsWith("_") || fileName.includes("/_");
+        if (hasUnderscore) {
+          qst.unshift(fileName);
+        } else {
+          qst.push(fileName);
+        }
+      } else {
+        resources[fileName] = file;
+      }
+    });
+
+    if (qst.length > 0) {
+      var quest = "";
+
+      if (qst[0].lastIndexOf("/") !== -1) {
+        var dir = qst[0].substring(
+          0,
+          qst[0].lastIndexOf("/") + 1
+        );
+
+        for (var key in resources) {
+          var newkey = key.substr(dir.length);
+          resources[newkey] = resources[key];
+          delete resources[key];
+        }
+      }
+
+      qst.forEach(function(fileName) {
+        quest += `\r\n${win2unicode(files[fileName])}`;
+      });
+
+      let GameInstance = new Game(this.questname);
+      GameInstance.files = resources;
+      GameInstance.init(quest);
+      resolve(GameInstance);
+    } else {
+      reject();
+    }
+  });
+};
 
 /**
  * загрузить из zip файла
@@ -25,146 +113,63 @@ Loader.prototype.loadZipFromLocalFolder = function(
   questname,
   folder = "quests"
 ) {
-  return new Promise(function(resolve, reject) {
-    ZipUtils.getBinaryContent(`${folder}/${questname}.zip`, function(
-      err,
-      data
-    ) {
-      JSZip.loadAsync(data).then(function(zip) {
-        var files = {};
-        var qst = [];
+  this.questname = questname;
 
-        Promise.all(
-          Object.keys(zip.files).map(function(fileName) {
-            return new Promise(function(resolve, reject) {
-              const file = zip.files[fileName];
-              const ext = fileName
-                .split(".")
-                .pop()
-                .toLowerCase();
-
-              if (ext == "qst") {
-                const hasUnderscore =
-                  fileName.startsWith("_") || fileName.includes("/_");
-                if (hasUnderscore) {
-                  qst.unshift(file);
-                } else {
-                  qst.push(file);
-                }
-
-                resolve();
-              } else {
-                file.async("blob").then(function(blob) {
-                  files[fileName] = URL.createObjectURL(blob);
-                  resolve();
-                });
-              }
-            });
-          })
-        ).then(() => {
-          if (qst.length > 0) {
-            var quest = "";
-
-            if (qst[0].name.lastIndexOf("/") != -1) {
-              var dir = qst[0].name.substring(
-                0,
-                qst[0].name.lastIndexOf("/") + 1
-              );
-
-              for (var key in files) {
-                var newkey = key.substr(dir.length);
-                files[newkey] = files[key];
-                delete files[key];
-              }
-            }
-
-            Promise.all(qst.map(qs => qs.async("binarystring"))).then(
-              result => {
-                result.forEach(data => {
-                  quest += `\r\n${win2unicode(data)}`;
-                });
-
-                let GameInstance = new Game(questname);
-                GameInstance.files = files;
-                GameInstance.init(quest);
-
-                resolve(GameInstance);
-              }
-            );
-          } else {
-            reject();
-          }
-        });
-      });
+  return new Promise((resolve, reject) => {
+    ZipUtils.getBinaryContent(`${folder}/${this.questname}.zip`, (err, zip) => {
+      resolve(this.loadZip(zip))
     });
   });
 };
 
-/**
- * рендер
- */
 Loader.prototype.getClient = function() {};
 
 /**
- * рендер
+ * загрузить из файлов
  */
-Loader.prototype.loadFiles = function() {
-  const files = {};
-  const qst = [];
+Loader.prototype.loadFiles = function(files) {
+  this.questname = files[0].name;
+  var reader = new FileReader();
 
   if (
-    e.target.files.length == 1 &&
-    e.target.files[0].name
-      .split(".")
-      .pop()
-      .toLowerCase() == "zip"
+    files.length === 1 &&
+    getExt(files[0].name) === "zip"
   ) {
-    var reader = new FileReader();
-    var zip = e.target.files[0];
 
-    reader.onload = function() {
-      loadZip(reader.result, zip.name);
-    };
-    reader.readAsBinaryString(zip, "CP1251");
+    return new Promise((resolve, reject) => {
+      var zip = files[0];
 
-    return;
+      reader.onload = () => {
+        resolve(this.loadZip(zip, zip.name))
+      };
+
+      reader.readAsBinaryString(zip, "CP1251");
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      var loadedFiles = {};
+
+      Promise.all(
+        Array.from(files).map((file) => {
+          if (['qst', 'css', 'js'].indexOf(getExt(file.name)) >= 0) {
+            reader.onload = () => {
+              loadedFiles[file.name] = reader.result;
+              resolve();
+            };
+            reader.readAsText(file, 'CP1251');
+          } else {
+            reader.onload = () => {
+              loadedFiles[file.name] = URL.createObjectURL(new Blob([reader.result], {type: MIME[filename.split('.').pop()]}));
+              resolve();
+            };
+            reader.readAsArrayBuffer(file);
+          }
+        })
+      ).then(() => {
+        resolve(this.composeFiles(loadedFiles))
+      });
+    });
   }
-
-  for (var i = 0; i < e.target.files.length; i++) {
-    if (
-      e.target.files[i].name
-        .split(".")
-        .pop()
-        .toLowerCase() == "qst"
-    ) {
-      qst.push(e.target.files[i]);
-    } else if (e.target.files[i].name.toLowerCase() == "style.css") {
-      readStyle(e.target.files[i]);
-    } else if (e.target.files[i].name.toLowerCase() == "script.js") {
-      readJs(e.target.files[i]);
-    } else {
-      readFile(e.target.files[i].name, e.target.files[i]);
-    }
-  }
-
-  if (qst.length == 0) {
-    return;
-  }
-
-  var name = qst[0].name;
-  quest = [];
-  var slices = qst.length;
-
-  while (qst.length > 0) {
-    readQst(qst.shift());
-  }
-
-  var loadq = setInterval(function() {
-    if (slices == quest.length) {
-      clearInterval(loadq);
-      start(quest.join("\r\n"), name);
-    }
-  }, 200); // todo
 };
 
 export default Loader;

@@ -50,16 +50,27 @@ export default {
     };
   },
   mounted() {
-    let LoaderInstance = new Loader();
+    window.onbeforeunload = function() {
+      return "confirm please";
+    };
 
-    LoaderInstance.loadZipFromLocalFolder(this.questName).then(GameInstance => {
-      this.Game = GameInstance;
-      this.Client = GameInstance.Client;
+    if (this.$route.params.Game === undefined) {
+      if (this.$route.params.name === undefined){
+        window.onbeforeunload = null;
+        this.$router.push({ name: 'home'});
+        return;
+      }
 
-      window.onbeforeunload = function() {
-        return "confirm please";
-      };
-    });
+      let LoaderInstance = new Loader();
+
+      LoaderInstance.loadZipFromLocalFolder(this.questName).then(GameInstance => {
+        this.Game = GameInstance;
+        this.Client = this.Game.Client;
+      });
+    } else {
+      this.Game = this.$route.params.Game;
+      this.Client = this.Game.Client;
+    }
   },
   methods: {
     buttonClicked(action) {
@@ -83,6 +94,7 @@ export default {
         console.warn("switching volume not implemented"); // eslint-disable-line no-console
       } else if (name === "home") {
         if (!this.Game.locked && confirm("Return to home screen?")) {
+          window.onbeforeunload = null;
           this.$router.push({ name: 'home' })
         }
       }

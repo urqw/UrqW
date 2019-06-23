@@ -1,6 +1,4 @@
 function set(Player) {
-  console.log(Player);
-
   /**
    * следующая строка
    *

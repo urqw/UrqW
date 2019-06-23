@@ -18,7 +18,6 @@ import Message from "@/components/home/Message.vue";
 import Logo from "@/components/home/Logo.vue";
 import LoadGame from "@/components/home/LoadGame.vue";
 import GameList from "@/components/home/GameList.vue";
-import Zip from "@/components/home/Zip.vue";
 
 export default {
   name: "home",

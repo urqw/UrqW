@@ -53,7 +53,9 @@ export default {
     selectFiles(event) {
       let loader = new Loader();
 
-      loader.loadFiles(event.target.files);
+      loader.loadFiles(event.target.files).then(GameInstance => {
+        this.$router.push({ name: 'game', params: {Game: GameInstance}});
+      });
     }
   },
   components: {

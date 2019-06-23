@@ -16,7 +16,7 @@ const router = new Router({
       }
     },
     {
-      path: "/game/:name",
+      path: "/game/:name?",
       name: "game",
       component: Game,
       meta: {

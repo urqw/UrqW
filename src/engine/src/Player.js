@@ -480,7 +480,7 @@ export default class Player {
    * @param {String} item
    * @param {int} quantity
    */
-  nvAdd(item, quantity) {
+  invAdd(item, quantity) {
     this.Game.addItem(item, quantity);
   }
 
