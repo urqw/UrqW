@@ -4,21 +4,13 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">{{ title }}</p>
-        <button
-          class="delete"
-          aria-label="close"
-          @click="$emit('cancel')"
-        ></button>
       </header>
       <section class="modal-card-body">
         <slot name="body" />
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" @click="$emit('ok')">
-          {{ $t("ok") }}
-        </button>
         <button class="button" @click="$emit('cancel')">
-          {{ $t("cancel") }}
+          {{ $t("close") }}
         </button>
       </footer>
     </div>
