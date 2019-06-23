@@ -5,7 +5,7 @@
         v-if="cont.img"
         :key="i"
         :src="cont.img"
-        alt="Изображение"
+        :alt="$t('image')"
         class="cont-img"
       />
       <span

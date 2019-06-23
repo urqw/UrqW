@@ -50,10 +50,7 @@
             @click="dropdownIsActive = !dropdownIsActive"
             :class="{ 'is-active': dropdownIsActive }"
           >
-            <a class="navbar-link">
-              Inventory
-            </a>
-
+            <a class="navbar-link" v-text="$t('inventory')"></a>
             <div class="navbar-dropdown is-right">
               <a class="navbar-item">
                 Overview

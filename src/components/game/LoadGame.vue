@@ -5,18 +5,18 @@
         <span class="icon">
           <font-awesome-icon :icon="FaArrowAltCircleLeft" />
         </span>
-        <span>Return to game</span>
+        <span v-text="$t('returnToGame')"></span>
       </button>
     </div>
 
-    <SavesPanel :saves="saves" @clicked="clickLoad($event)"/>
+    <SavesPanel :saves="saves" @clicked="clickLoad($event)" />
   </div>
 </template>
 
 <script>
 import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
 import FaArrowAltCircleLeft from "@fortawesome/fontawesome-free-solid/faArrowAltCircleLeft";
-import SavesPanel from './SavesPanel';
+import SavesPanel from "./SavesPanel";
 
 export default {
   name: "loadgame",

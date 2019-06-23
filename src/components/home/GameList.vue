@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="subtitle">
-      <h5 class="title is-5">Или выберите игру из списка:</h5>
+      <h5 class="title is-5" v-text="$t('chooseGame')"/>
     </div>
 
     <div class="list-group gamelist">

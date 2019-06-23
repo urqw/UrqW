@@ -1,31 +1,37 @@
 <template>
-    <nav class="panel">
-        <a v-for="i in 10" :key="i" class="panel-block" @click="$emit('clicked', i)">
-            {{ saves[i - 1] || `${label} #${i}` }}
-        </a>
-    </nav>
+  <nav class="panel">
+    <a
+      v-for="i in 10"
+      :key="i"
+      class="panel-block"
+      @click="$emit('clicked', i)"
+    >
+      {{ saves[i - 1] || `${label} #${i}` }}
+    </a>
+  </nav>
 </template>
 
 <script>
 export default {
-    name: 'SavesPanel',
+  name: "SavesPanel",
 
-    props: {
-        saves: {
-            type: Array,
-            default() {
-                return [];
-            }
-        },
+  props: {
+    saves: {
+      type: Array,
+      default() {
+        return [];
+      }
+    },
 
-        label: {
-            type: String,
-            default: "Empty save slot",
-        }
+    label: {
+      type: String,
+      default() {
+        debugger;
+        return this.$t("emptyGameSlot");
+      }
     }
-}
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

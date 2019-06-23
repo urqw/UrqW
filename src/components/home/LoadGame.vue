@@ -1,8 +1,7 @@
 <template>
   <div class="content">
     <h5 class="title is-5">
-      Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ
-      файлы игры):
+      {{ $t("loadGameHeader") }}
     </h5>
 
     <div class="file has-name">
@@ -19,14 +18,12 @@
             <font-awesome-icon :icon="FaUpload" />
           </span>
           <span class="file-label">
-            Выберите файл…
+            {{ $t("chooseFile") }}
           </span>
         </span>
         <div class="select">
           <select>
-            <option value="urqw" selected
-              >Не применять специальных правил</option
-            >
+            <option value="urqw" selected v-text="$t('noSpecialRules')"></option>
             <option value="ripurq">Rip URQ 1.4</option>
             <option value="dosurq">Dos URQ 1.35</option>
           </select>

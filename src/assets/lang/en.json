@@ -1,0 +1,10 @@
+{
+  "loadGameHeader": "Load the game (select ALL additional files, if there's any):",
+  "chooseFile": "Choose file…",
+  "noSpecialRules": "Do not apply special rules",
+  "chooseGame": "Or pick a game from the list:",
+  "image": "Image",
+  "ok": "Ok",
+  "returnToGame": "Return to game",
+  "inventory": "Inventory"
+}
