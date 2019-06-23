@@ -1,8 +1,7 @@
 import JSZip from "jszip";
 import ZipUtils from "jszip-utils";
 import Game from "@/engine/src/Game";
-import { win2unicode } from "./src/tools";
-import { getExt } from "./src/tools";
+import {win2unicode, getExt, MIME} from "./src/tools";
 
 /**
  * @constructor
@@ -19,7 +18,7 @@ function Loader() {
 /**
  * загрузить из zip файла
  */
-Loader.prototype.loadZip = function(zip) {
+Loader.prototype.loadZip = function (zip) {
   var loadedFiles = {};
 
   return new Promise((resolve, reject) => {
@@ -55,12 +54,14 @@ Loader.prototype.loadZip = function(zip) {
 /**
  * собрать файлы
  */
-Loader.prototype.composeFiles = function(files) {
+Loader.prototype.composeFiles = function (files) {
+
   return new Promise((resolve, reject) => {
     var resources = {};
     var qst = [];
 
     Object.keys(files).map((fileName) => {
+      console.log(fileName);
       const file = files[fileName];
 
       if (getExt(fileName) === "qst") {
@@ -92,7 +93,7 @@ Loader.prototype.composeFiles = function(files) {
         }
       }
 
-      qst.forEach(function(fileName) {
+      qst.forEach(function (fileName) {
         quest += `\r\n${win2unicode(files[fileName])}`;
       });
 
@@ -109,7 +110,7 @@ Loader.prototype.composeFiles = function(files) {
 /**
  * загрузить из zip файла
  */
-Loader.prototype.loadZipFromLocalFolder = function(
+Loader.prototype.loadZipFromLocalFolder = function (
   questname,
   folder = "quests"
 ) {
@@ -122,15 +123,14 @@ Loader.prototype.loadZipFromLocalFolder = function(
   });
 };
 
-Loader.prototype.getClient = function() {};
+Loader.prototype.getClient = function () {
+};
 
 /**
  * загрузить из файлов
  */
-Loader.prototype.loadFiles = function(files) {
+Loader.prototype.loadFiles = function (files) {
   this.questname = files[0].name;
-  var reader = new FileReader();
-
   if (
     files.length === 1 &&
     getExt(files[0].name) === "zip"
@@ -138,6 +138,8 @@ Loader.prototype.loadFiles = function(files) {
 
     return new Promise((resolve, reject) => {
       var zip = files[0];
+
+      var reader = new FileReader();
 
       reader.onload = () => {
         resolve(this.loadZip(zip, zip.name))
@@ -151,19 +153,23 @@ Loader.prototype.loadFiles = function(files) {
 
       Promise.all(
         Array.from(files).map((file) => {
-          if (['qst', 'css', 'js'].indexOf(getExt(file.name)) >= 0) {
-            reader.onload = () => {
-              loadedFiles[file.name] = reader.result;
-              resolve();
-            };
-            reader.readAsText(file, 'CP1251');
-          } else {
-            reader.onload = () => {
-              loadedFiles[file.name] = URL.createObjectURL(new Blob([reader.result], {type: MIME[filename.split('.').pop()]}));
-              resolve();
-            };
-            reader.readAsArrayBuffer(file);
-          }
+          return new Promise((resolve, reject) => {
+            var reader = new FileReader();
+
+            if (['qst', 'css', 'js'].indexOf(getExt(file.name)) >= 0) {
+              reader.onload = () => {
+                loadedFiles[file.name] = reader.result;
+                resolve();
+              };
+              reader.readAsText(file, 'CP1251');
+            } else {
+              reader.onload = () => {
+                loadedFiles[file.name] = URL.createObjectURL(new Blob([reader.result], {type: MIME[file.name.split('.').pop()]}));
+                resolve();
+              };
+              reader.readAsArrayBuffer(file);
+            }
+          })
         })
       ).then(() => {
         resolve(this.composeFiles(loadedFiles))
