@@ -44,7 +44,7 @@
             @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
           >
           <span class="icon">
-            <font-awesome-icon icon="load" />
+            <font-awesome-icon icon="folder-open" />
           </span>
           </a>
         </div>
