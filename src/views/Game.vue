@@ -1,29 +1,39 @@
 <template>
-  <div>
+  <div class="game">
     <Navbar :page="currentPage"
             :Client="Client"
             @clickBtn="clickBtn"
+            class="game-navbar"
     />
-    <div class="section">
-      <div class="container">
-        <template v-if="Game && currentPage === 'load'">
-          <LoadGame :Game="Game" @clicked="onLoadClicked"></LoadGame>
-        </template>
-        <template v-else-if="Game && currentPage === 'save'">
-          <SaveGame :Game="Game" @clicked="onSaveClicked"></SaveGame>
-        </template>
-        <template v-else-if="Client">
-          <Content :content="Client.text" @click.native="linkClicked" />
-          <Buttons :buttons="Client.buttons" @clicked="buttonClicked" />
-          <Info />
-        </template>
-        <template v-if="Client && Client.isStatusInput()">
-          <Input @inputDone="inputDone" />
-        </template>
-        <template v-else-if="Client && Client.isStatusAnykey()">
-          <Anykey @anykeyDone="anykeyDone" />
-        </template>
+    <div class="game-content"
+         v-hammer:panstart="onPanStart"
+         v-hammer:panend="onPanEnd"
+         v-hammer:pan="onPan"
+    >
+      <div class="section">
+        <div class="container">
+          <template v-if="Game && currentPage === 'load'">
+            <LoadGame :Game="Game" @clicked="onLoadClicked"></LoadGame>
+          </template>
+          <template v-else-if="Game && currentPage === 'save'">
+            <SaveGame :Game="Game" @clicked="onSaveClicked"></SaveGame>
+          </template>
+          <template v-else-if="Client">
+            <Content :content="Client.text" @click.native="linkClicked" />
+            <Buttons :buttons="Client.buttons" @clicked="buttonClicked" />
+            <Info />
+          </template>
+          <template v-if="Client && Client.isStatusInput()">
+            <Input @inputDone="inputDone" />
+          </template>
+          <template v-else-if="Client && Client.isStatusAnykey()">
+            <Anykey @anykeyDone="anykeyDone" />
+          </template>
+        </div>
       </div>
+      <Inventory class="game-inventory"
+                 :style="styleInventory"
+      />
     </div>
   </div>
 </template>
@@ -37,6 +47,7 @@ import Anykey from "@/components/game/Anykey.vue";
 import Info from "@/components/game/Info.vue";
 import SaveGame from "@/components/game/SaveGame.vue";
 import LoadGame from "@/components/game/LoadGame.vue";
+import Inventory from "@/components/game/Inventory.vue";
 import Loader from "@/engine/Loader";
 // import Client from "@/engine/src/Client";
 
@@ -51,6 +62,7 @@ export default {
     Input,
     Anykey,
     Info,
+    Inventory,
     SaveGame,
     LoadGame
   },
@@ -62,11 +74,32 @@ export default {
       Client: null,
       /** @var {Game} Game **/
       Game: null,
-      currentPage: "game"
+      currentPage: "game",
+      swipeStart: 0,
+      swipe: 0,
+      swipeActive: false,
+      menuOpened: false,
+      widthWindow: 0,
     };
+  },
+  computed: {
+    styleInventory() {
+      let swipe = '-100%';
+
+      if (this.menuOpened && !this.swipeActive) {
+        swipe = '0';
+      } else if (this.swipeActive) {
+        swipe = `calc(100% + (${this.swipe}px))`;
+      }
+
+      return { transform: `translateX(${swipe})` };
+    },
   },
   mounted() {
     window.addEventListener("beforunload", this.onBeforeUnload);
+    window.addEventListener("resize", this.updateWidth);
+
+    this.updateWidth();
 
     if (this.$route.params.Game === undefined) {
       if (this.$route.params.name === undefined) {
@@ -87,6 +120,9 @@ export default {
       this.Game = this.$route.params.Game;
       this.Client = this.Game.Client;
     }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateWidth);
   },
   methods: {
     onBeforeUnload(e) {
@@ -146,7 +182,54 @@ export default {
       } else if (name === "loadGame") {
         this.currentPage = "load";
       }
-    }
+    },
+    updateWidth() {
+      this.widthWindow = window.innerWidth;
+    },
+    onPan(event) {
+      let swipe = event.deltaX;
+
+      if (event.deltaX > 0) {
+        swipe = 0;
+      } else if (event.deltaX < this.widthWindow) {
+        swipe = this.widthWindow;
+      }
+
+      this.swipe = swipe;
+    },
+    onPanStart() {
+      this.swipeActive = true;
+      this.swipeStart = this.swipe;
+    },
+    onPanEnd(event) {
+      this.swipeActive = false;
+      this.swipe = event.deltaX < -60 ? this.updateWidth * -1 : 0;
+    },
   }
 };
 </script>
+
+<style scoped>
+  .game {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .game-navbar {
+    flex-shrink: 0;
+  }
+
+  .game-content {
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+  }
+
+  .game-inventory {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+  }
+</style>
