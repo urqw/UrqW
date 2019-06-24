@@ -9,13 +9,16 @@
         <template v-else-if="Game && currentPage === 'save'">
           <SaveGame :Game="Game" @clicked="onSaveClicked"></SaveGame>
         </template>
-        <template v-else>
+        <template v-else-if="Client">
           <Content :content="Client.text" @click.native="linkClicked" />
           <Buttons :buttons="Client.buttons" @clicked="buttonClicked" />
           <Info />
         </template>
-        <template v-if="Client.isStatusInput()">
-            <Input @inputDone="inputDone" />
+        <template v-if="Client && Client.isStatusInput()">
+          <Input @inputDone="inputDone" />
+        </template>
+        <template v-else-if="Client && Client.isStatusAnykey()">
+          <Anykey @anykeyDone="anykeyDone" />
         </template>
       </div>
     </div>
@@ -27,6 +30,7 @@ import Navbar from "@/components/game/Navbar.vue";
 import Buttons from "@/components/game/Buttons.vue";
 import Content from "@/components/game/Content.vue";
 import Input from "@/components/game/Input.vue";
+import Anykey from "@/components/game/Anykey.vue";
 import Info from "@/components/game/Info.vue";
 import SaveGame from "@/components/game/SaveGame.vue";
 import LoadGame from "@/components/game/LoadGame.vue";
@@ -40,6 +44,7 @@ export default {
     Buttons,
     Content,
     Input,
+    Anykey,
     Info,
     SaveGame,
     LoadGame
@@ -48,8 +53,10 @@ export default {
     return {
       questName: this.$route.params.name,
       mode: this.$route.params.mode,
-      Client: {},
-      Game: {},
+      /** @var {Client} Client **/
+      Client: null,
+      /** @var {Game} Game **/
+      Game: null,
       currentPage: "game"
     };
   },
@@ -105,6 +112,9 @@ export default {
     },
     inputDone(text) {
       this.Client.inputDone(text);
+    },
+    anykeyDone(keyCode) {
+      this.Client.anykeyDone(keyCode);
     },
     clickBtn(name) {
       if (name === "returnToGame") {

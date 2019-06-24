@@ -51,7 +51,7 @@ export default class Client {
    * link
    * @param {String} keyCode
    */
-  anykey(keyCode) {
+  anykeyDone(keyCode) {
     return this.Player.anykeyAction(keyCode);
   }
 
