@@ -3,7 +3,7 @@
     <div class="panel-block-back">
       <button class="button" @click="clickBtn('returnToGame')">
         <span class="icon">
-          <font-awesome-icon :icon="FaArrowAltCircleLeft" />
+          <font-awesome-icon icon="arrow-alt-circle-left" />
         </span>
         <span v-text="$t('returnToGame')"></span>
       </button>
@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
-import FaArrowAltCircleLeft from "@fortawesome/fontawesome-free-solid/faArrowAltCircleLeft";
 import SavesPanel from "./SavesPanel";
 
 export default {
@@ -22,7 +20,6 @@ export default {
   data() {
     return {
       saves: [],
-      FaArrowAltCircleLeft
     };
   },
   mounted() {
@@ -30,7 +27,6 @@ export default {
   },
   components: {
     SavesPanel,
-    FontAwesomeIcon
   },
   methods: {
     loadSaves() {

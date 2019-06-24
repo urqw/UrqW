@@ -15,7 +15,7 @@
         />
         <span class="file-cta">
           <span class="file-icon">
-            <font-awesome-icon :icon="FaUpload" />
+            <font-awesome-icon icon="folder-open" />
           </span>
           <span class="file-label">
             {{ $t("chooseFile") }}
@@ -34,8 +34,6 @@
 </template>
 
 <script>
-import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
-import FaUpload from "@fortawesome/fontawesome-free-solid/faUpload";
 import Loader from "../../engine/Loader";
 
 export default {
@@ -44,7 +42,6 @@ export default {
     return {
       mode: 'urqw',
       dropdownIsActive: false,
-      FaUpload
     };
   },
   methods: {
@@ -56,9 +53,6 @@ export default {
       });
     }
   },
-  components: {
-    FontAwesomeIcon
-  }
 };
 
 /*

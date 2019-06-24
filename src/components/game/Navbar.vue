@@ -13,20 +13,20 @@
           </a>
           <a class="navbar-item" @click="isOpenedSettings = !isOpenedSettings">
           <span class="icon">
-            <font-awesome-icon :icon="FaCog"/>
+            <font-awesome-icon icon="cog"/>
           </span>
           </a>
           <a class="navbar-item">
           <span class="icon">
             <font-awesome-icon
-              :icon="FaVolumeOn"
+              icon="volume-up"
               @click="clickBtn('switchVolume')"
             />
           </span>
           </a>
           <a class="navbar-item" @click="clickBtn('restartGame')">
           <span class="icon">
-            <font-awesome-icon :icon="FaReload" />
+            <font-awesome-icon icon="sync" />
           </span>
           </a>
           <a
@@ -35,7 +35,7 @@
             @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
           >
           <span class="icon">
-            <font-awesome-icon :icon="FaSave" />
+            <font-awesome-icon icon="save" />
           </span>
           </a>
           <a
@@ -44,7 +44,7 @@
             @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
           >
           <span class="icon">
-            <font-awesome-icon :icon="FaLoad" />
+            <font-awesome-icon icon="load" />
           </span>
           </a>
         </div>
@@ -78,12 +78,6 @@
 </template>
 
 <script>
-import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
-import FaVolumeOn from "@fortawesome/fontawesome-free-solid/faVolumeUp";
-import FaReload from "@fortawesome/fontawesome-free-solid/faSyncAlt";
-import FaSave from "@fortawesome/fontawesome-free-solid/faSave";
-import FaLoad from "@fortawesome/fontawesome-free-solid/faFolderOpen";
-import FaCog from "@fortawesome/fontawesome-free-solid/faCog";
 import Logo from "@/components/Logo";
 import SettingsPopup from "@/components/shared/SettingsPopup.vue";
 
@@ -93,17 +87,11 @@ export default {
     return {
       isOpenedSettings: false,
       dropdownIsActive: false,
-      FaVolumeOn,
-      FaReload,
-      FaSave,
-      FaLoad,
-      FaCog,
     };
   },
 
   components: {
     SettingsPopup,
-    FontAwesomeIcon,
     Logo
   },
 
