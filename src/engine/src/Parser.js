@@ -96,10 +96,6 @@ export default class Parser {
       case "music":
         return this.Player.playMusic(command.toString().trim(), false);
       case "play":
-        if (this.Player.volume == 3) {
-          return;
-        }
-
         var Sound;
         if (this.Player.Game.files === null) {
           Sound = new Audio(
@@ -109,7 +105,7 @@ export default class Parser {
           Sound = new Audio(this.Player.Game.files[command.toString().trim()]);
         }
 
-        Sound.volume = this.Player.volume == 1 ? 1 : 0.5;
+        Sound.volume = this.Player.Client;
         Sound.play();
 
         break;

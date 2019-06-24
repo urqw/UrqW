@@ -93,4 +93,11 @@ export default class Client {
   isStatusAnykey() {
     return this.status === Player.PLAYER_STATUS_ANYKEY;
   }
+
+  /**
+   * @param {Number} volume
+   */
+  setVolume(volume) {
+    this.volume = volume;
+  }
 }

@@ -6,10 +6,6 @@ var gameMusic = new Audio();
 
 export default class Player {
   constructor(Game) {
-    /**
-     * @type int уровень звука
-     */
-    this.volume = 1;
 
     /**
      * @type {Quest} хранилище файла квеста
@@ -370,7 +366,7 @@ export default class Player {
     this.buttons = [];
     this.links = [];
 
-    this.text =  Client.removeLinks(this.text);
+    this.text = Client.removeLinks(this.text);
 
     this.Client.render();
   }
@@ -523,10 +519,7 @@ export default class Player {
 
     this.links[id] = command;
 
-    return Client.generateLink(
-      text,
-      id
-    );
+    return Client.generateLink(text, id);
   }
 
   static PLAYER_STATUS_NEXT = 0;
