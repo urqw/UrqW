@@ -33,16 +33,34 @@ export default class Client {
 
   /**
    * btn
+   * @param {String} action
    */
-  btn(action) {
+  btnClick(action) {
     return this.Player.action(action);
   }
 
   /**
    * link
+   * @param {String} action
    */
-  link(action) {
+  linkClick(action) {
     return this.Player.action(action, true);
+  }
+
+  /**
+   * link
+   * @param {String} keyCode
+   */
+  anykey(keyCode) {
+    return this.Player.anykeyAction(keyCode);
+  }
+
+  /**
+   * link
+   * @param {String} text
+   */
+  inputDone(text) {
+    return this.Player.inputAction(text);
   }
 
   /**
@@ -50,7 +68,29 @@ export default class Client {
    * @param {String} text
    * @param {int} action
    */
-  convertToLink(text, action) {
+  static generateLink(text, action) {
     return "<a data-action='" + action + "'>" + text + "</a>";
   };
+
+  /**
+   * @param {Array} text
+   */
+  static removeLinks (text) {
+    for (let i = 0; i < text.length; i++) {
+      text[i].text = text[i].text.replace(
+        /\<a.+?\>(.+?)\<\/a\>/gi,
+        '$1'
+      );
+    }
+
+    return text;
+  };
+
+  isStatusInput() {
+    return this.status === Player.PLAYER_STATUS_INPUT;
+  }
+
+  isStatusAnykey() {
+    return this.status === Player.PLAYER_STATUS_ANYKEY;
+  }
 }

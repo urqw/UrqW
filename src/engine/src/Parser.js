@@ -320,10 +320,7 @@ export default class Parser {
           text = exp;
         }
 
-        return this.Player.Client.convertToLink(
-          text,
-          this.Player.link(command)
-        );
+        return this.Player.link(text, command);
       });
     }
 

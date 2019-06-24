@@ -14,6 +14,9 @@
           <Buttons :buttons="Client.buttons" @clicked="buttonClicked" />
           <Info />
         </template>
+        <template v-if="Client.isStatusInput()">
+            <Input @inputDone="inputDone" />
+        </template>
       </div>
     </div>
   </div>
@@ -88,17 +91,20 @@ export default {
     linkClicked(e) {
       // todo refactor this
       if (e.target.dataset.action !== undefined) {
-        this.Client.link(e.target.dataset.action);
+        this.Client.linkClick(e.target.dataset.action);
       }
     },
     buttonClicked(action) {
-      this.Client.btn(action);
+      this.Client.btnClick(action);
     },
     onLoadClicked() {
       this.currentPage = "load";
     },
     onSaveClicked() {
       this.currentPage = "save";
+    },
+    inputDone(text) {
+      this.Client.inputDone(text);
     },
     clickBtn(name) {
       if (name === "returnToGame") {

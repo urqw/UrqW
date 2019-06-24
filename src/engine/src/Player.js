@@ -1,4 +1,5 @@
 import Parser from "./Parser";
+import Client from "./Client";
 import { dosColorToHex } from "./tools";
 
 var gameMusic = new Audio();
@@ -369,12 +370,7 @@ export default class Player {
     this.buttons = [];
     this.links = [];
 
-    for (let i = 0; i < this.text.length; i++) {
-      this.text[i].text = this.text[i].text.replace(
-        /\<a.+?\>(.+?)\<\/a\>/gi,
-        '$1'
-      );
-    }
+    this.text =  Client.removeLinks(this.text);
 
     this.Client.render();
   }
@@ -522,12 +518,15 @@ export default class Player {
   /**
    * @param {String} command
    */
-  link(command) {
+  link(text, command) {
     const id = this.links.length;
 
     this.links[id] = command;
 
-    return id;
+    return Client.generateLink(
+      text,
+      id
+    );
   }
 
   static PLAYER_STATUS_NEXT = 0;
