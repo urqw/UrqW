@@ -77,11 +77,17 @@ export default {
         return 'volume-up';
       }
 
+      const volumeIndex = VOLUMES.findIndex(volume => volume === this.Client.volume);
+
+      if (volumeIndex === -1) {
+          return 'volume-up';
+      }
+
       return [
         'volume-up',
         'volume-down',
         'volume-mute',
-      ][VOLUMES.findIndex(volume => volume === this.Client.volume)];
+      ][volumeIndex];
     },
   },
   components: {
