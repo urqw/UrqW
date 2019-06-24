@@ -1,78 +1,56 @@
 <template>
-  <div>
-    <nav
-      class="navbar is-light"
-      role="navigation"
-      aria-label="dropdown navigation"
-    >
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" @click="clickBtn('home')">
-            <Logo class="logo" />
-            <span>UrqW</span>
-          </a>
-          <a class="navbar-item" @click="isOpenedSettings = !isOpenedSettings">
-            <span class="icon">
-              <font-awesome-icon icon="cog"/>
-            </span>
-          </a>
-          <a class="navbar-item" @click="clickBtn('switchVolume')">
-          <span class="icon">
-            <font-awesome-icon
-              :icon="volumeIcon"
-            />
-          </span>
-          </a>
-          <a class="navbar-item" @click="clickBtn('restartGame')">
-            <span class="icon">
-              <font-awesome-icon icon="sync" />
-            </span>
-          </a>
-          <a :class="{ 'is-active': page === 'save' }"
-             class="navbar-item"
-             @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
-          >
-          <span class="icon">
-            <font-awesome-icon icon="save" />
-          </span>
-          </a>
-          <a
-            :class="{ 'is-active': page === 'load' }"
-            class="navbar-item"
-            @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
-          >
-          <span class="icon">
-            <font-awesome-icon icon="folder-open" />
-          </span>
-          </a>
-        </div>
-
-        <div class="navbar-menu">
-          <div class="navbar-end">
-            <div
-              class="navbar-item has-dropdown"
-              @click="dropdownIsActive = !dropdownIsActive"
-              :class="{ 'is-active': dropdownIsActive }"
-            >
-              <a class="navbar-link" v-text="$t('inventory')"></a>
-              <div class="navbar-dropdown is-right">
-                <a class="navbar-item">
-                  Overview
-                </a>
-                <a class="navbar-item">
-                  Elements
-                </a>
-                <a class="navbar-item">
-                  Components
-                </a>
-              </div>
+    <div>
+        <nav class="navbar is-light">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" @click="clickBtn('home')">
+                        <Logo class="logo"/>
+                        <span>UrqW</span>
+                    </a>
+                </div>
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" @click="clickBtn('switchVolume')">
+                            <span class="icon">
+                                <font-awesome-icon
+                                    :icon="volumeIcon"
+                                />
+                            </span>
+                        </a>
+                        <a class="navbar-item" @click="clickBtn('restartGame')">
+                        <span class="icon">
+                          <font-awesome-icon icon="sync" />
+                        </span>
+                        </a>
+                        <a :class="{ 'is-active': page === 'save' }"
+                           class="navbar-item"
+                           @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
+                        >
+                      <span class="icon">
+                        <font-awesome-icon icon="save" />
+                      </span>
+                        </a>
+                        <a :class="{ 'is-active': page === 'load' }"
+                           class="navbar-item"
+                           @click="clickBtn(page === 'load' ? 'returnToGame' : 'loadGame')"
+                        >
+                      <span class="icon">
+                        <font-awesome-icon icon="folder-open" />
+                      </span>
+                        </a>
+                    </div>
+                    <div class="navbar-end">
+                        <a class="navbar-item" @click="isOpenedSettings = !isOpenedSettings">
+                        <span class="icon">
+                          <font-awesome-icon icon="cog"/>
+                        </span>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <SettingsPopup :open="isOpenedSettings" @cancel="isOpenedSettings = false"/>
-  </div>
+        </nav>
+        <SettingsPopup :open="isOpenedSettings" @cancel="isOpenedSettings = false"/>
+    </div>
 </template>
 
 <script>
@@ -129,5 +107,26 @@ export default {
 .navbar.is-light .navbar-brand > .navbar-item,
 .navbar.is-light .navbar-brand .navbar-link {
   color: #4a4a4a;
+}
+
+.navbar > .container {
+    display: flex;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+    flex-shrink: 0;
+    box-shadow: none;
+}
+
+.navbar-start,
+.navbar-end {
+    display: flex;
+}
+
+.navbar-end {
+    margin-left: auto;
 }
 </style>
