@@ -17,6 +17,7 @@
     },
     mounted: function () {
       window.addEventListener('keyup', this.submit);
+      window.addEventListener('mouseup', this.submit);
     },
     methods: {
       submit(e) {
