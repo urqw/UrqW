@@ -125,6 +125,8 @@ export default {
     flex-grow: 1;
     flex-shrink: 0;
     box-shadow: none;
+    background-color: whitesmoke;
+    color: #363636;
 }
 
 .navbar-start,
