@@ -99,5 +99,6 @@ export default class Client {
    */
   setVolume(volume) {
     this.volume = volume;
+    this.Player.gameMusic.volume = volume;
   }
 }

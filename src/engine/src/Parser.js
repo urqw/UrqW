@@ -105,7 +105,7 @@ export default class Parser {
           Sound = new Audio(this.Player.Game.files[command.toString().trim()]);
         }
 
-        Sound.volume = this.Player.Client;
+        Sound.volume = this.Player.Client.volume;
         Sound.play();
 
         break;

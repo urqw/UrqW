@@ -2,10 +2,9 @@ import Parser from "./Parser";
 import Client from "./Client";
 import { dosColorToHex } from "./tools";
 
-var gameMusic = new Audio();
-
 export default class Player {
   constructor(Game) {
+    this.gameMusic = new Audio();
 
     /**
      * @type {Quest} хранилище файла квеста
@@ -276,24 +275,24 @@ export default class Player {
     }
 
     if (src) {
-      if (gameMusic.getAttribute("src") != file) {
-        gameMusic.src = file;
+      if (this.gameMusic.getAttribute("src") != file) {
+        this.gameMusic.src = file;
 
         if (loop) {
-          gameMusic.addEventListener(
+          this.gameMusic.addEventListener(
             "ended",
             function() {
-              gameMusic.src = file;
-              gameMusic.play();
+              this.gameMusic.src = file;
+              this.gameMusic.play();
             },
             false
           );
         }
 
-        gameMusic.play();
+        this.gameMusic.play();
       }
     } else {
-      gameMusic.pause();
+      this.gameMusic.pause();
     }
   }
 

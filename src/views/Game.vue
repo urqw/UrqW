@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Navbar :page="currentPage" @clickBtn="clickBtn" />
+    <Navbar :page="currentPage"
+            :Client="Client"
+            @clickBtn="clickBtn"
+    />
     <div class="section">
       <div class="container">
         <template v-if="Game && currentPage === 'load'">
@@ -36,6 +39,8 @@ import SaveGame from "@/components/game/SaveGame.vue";
 import LoadGame from "@/components/game/LoadGame.vue";
 import Loader from "@/engine/Loader";
 // import Client from "@/engine/src/Client";
+
+import { VOLUMES } from "@/const.js";
 
 export default {
   name: "game",
@@ -125,7 +130,9 @@ export default {
           this.Client = this.Game.Client;
         }
       } else if (name === "switchVolume") {
-        console.warn("switching volume not implemented"); // eslint-disable-line no-console
+        const currentVolumeIndex = VOLUMES.findIndex(volume => volume === this.Client.volume);
+
+        this.Client.setVolume(VOLUMES[currentVolumeIndex + 1 === VOLUMES.length ? 0 : currentVolumeIndex + 1]);
       } else if (name === "home") {
         if (
           !this.Game.locked &&

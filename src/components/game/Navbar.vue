@@ -12,27 +12,25 @@
             <span>UrqW</span>
           </a>
           <a class="navbar-item" @click="isOpenedSettings = !isOpenedSettings">
-          <span class="icon">
-            <font-awesome-icon icon="cog"/>
-          </span>
+            <span class="icon">
+              <font-awesome-icon icon="cog"/>
+            </span>
           </a>
-          <a class="navbar-item">
+          <a class="navbar-item" @click="clickBtn('switchVolume')">
           <span class="icon">
             <font-awesome-icon
-              icon="volume-up"
-              @click="clickBtn('switchVolume')"
+              :icon="volumeIcon"
             />
           </span>
           </a>
           <a class="navbar-item" @click="clickBtn('restartGame')">
-          <span class="icon">
-            <font-awesome-icon icon="sync" />
-          </span>
+            <span class="icon">
+              <font-awesome-icon icon="sync" />
+            </span>
           </a>
-          <a
-            :class="{ 'is-active': page === 'save' }"
-            class="navbar-item"
-            @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
+          <a :class="{ 'is-active': page === 'save' }"
+             class="navbar-item"
+             @click="clickBtn(page === 'save' ? 'returnToGame' : 'saveGame')"
           >
           <span class="icon">
             <font-awesome-icon icon="save" />
@@ -81,15 +79,33 @@
 import Logo from "@/components/Logo";
 import SettingsPopup from "@/components/shared/SettingsPopup.vue";
 
+import { VOLUMES } from "@/const.js";
+
 export default {
   name: "navbar",
+  props: {
+    Client: Object,
+    page: String,
+  },
   data() {
     return {
       isOpenedSettings: false,
       dropdownIsActive: false,
     };
   },
+  computed: {
+    volumeIcon() {
+      if (!this.Client) {
+        return 'volume-up';
+      }
 
+      return [
+        'volume-up',
+        'volume-down',
+        'volume-mute',
+      ][VOLUMES.findIndex(volume => volume === this.Client.volume)];
+    },
+  },
   components: {
     SettingsPopup,
     Logo
@@ -100,9 +116,6 @@ export default {
       this.$emit("clickBtn", name);
     }
   },
-  props: {
-    page: String
-  }
 };
 </script>
 
