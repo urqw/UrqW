@@ -48,7 +48,6 @@ export default class Client {
    * рендер
    */
   render() {
-    this.status = this.Player.status;
     this.text = this.Player.text;
     this.buttons = this.Player.buttons;
   }
@@ -82,11 +81,11 @@ export default class Client {
    * @param {String} keyCode
    */
   anykeyDone(keyCode) {
-    if (this.Game.isLocked()) {
-      return false;
+    if (this.isStatusAnykey()) {
+      return this.Player.anykeyAction(keyCode);
     }
 
-    return this.Player.anykeyAction(keyCode);
+    return false;
   }
 
   /**
@@ -94,11 +93,11 @@ export default class Client {
    * @param {String} text
    */
   inputDone(text) {
-    if (this.Game.isLocked()) {
-      return false;
+    if (this.isStatusInput()) {
+      return this.Player.inputAction(text);
     }
 
-    return this.Player.inputAction(text);
+    return false;
   }
 
   /**
@@ -125,11 +124,11 @@ export default class Client {
   };
 
   isStatusInput() {
-    return this.status === Player.PLAYER_STATUS_INPUT;
+    return this.Player.status === Player.PLAYER_STATUS_INPUT;
   }
 
   isStatusAnykey() {
-    return this.status === Player.PLAYER_STATUS_ANYKEY;
+    return this.Player.status === Player.PLAYER_STATUS_ANYKEY;
   }
 
   /**
