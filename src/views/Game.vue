@@ -65,7 +65,7 @@ export default {
   mounted() {
     window.addEventListener("beforunload", this.onBeforeUnload);
 
-    if (this.$route.params.Game === undefined) {
+    if (this.$route.params.Client === undefined) {
       if (this.$route.params.name === undefined) {
         window.removeEventListener("beforeunload", this.onBeforeUnload);
         this.$router.push({ name: "home" });

@@ -27,11 +27,6 @@ export default {
     LoadGame,
     GameList
   },
-  computed: {
-    /*   content: function () {
-                     return (this.Game.Client && this.Game.Client.text) ? this.Game.Client.text : []
-                 },  */
-  },
   data() {
     return {
       message: "Loading..."
