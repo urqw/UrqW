@@ -122,7 +122,7 @@ export default class Parser {
       case "anykey":
         return this.Player.anykey(command.toString().trim());
       case "pause":
-        return this.Player.pause(parseFloat(command) * 1000);
+        return this.Player.pause(parseInt(command));
       case "input":
         return this.Player.input(command.toString().trim());
       case "quit":
