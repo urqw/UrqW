@@ -64,13 +64,6 @@ Game.prototype.init = function(msg) {
   this.Quest = new Quest(msg);
   this.Quest.init();
 
-  if (this.mode === "ripurq") {
-    ModeUrqRip(Player);
-  }
-  if (this.mode === "urqdos") {
-    ModeUrqDos(Player);
-  }
-
   this.clean();
 };
 
@@ -235,6 +228,18 @@ Game.prototype.load = function(data) {
  */
 Game.prototype.isLocked = function() {
   return this.locked;
+};
+
+Game.prototype.setMode = function() {
+  if (this.mode === "ripurq") {
+    ModeUrqRip(Player);
+  }
+  if (this.mode === "dosurq") {
+    ModeUrqDos(Player);
+    this.setVar('style_backcolor', '#000');
+    this.setVar('style_textcolor', '#FFF');
+  }
+  console.log(Player);
 };
 
 export default Game;

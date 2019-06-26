@@ -31,7 +31,14 @@ export default class Client {
     this.Game = GameInstance;
     this.Player = this.Game.Player;
     this.Player.Client = this;
-    this.Player.continue();
+    this.Player.play();
+
+    if (this.Game.getVar('urq_mode')) {
+      this.Game.mode = this.Game.getVar('urq_mode');
+    }
+
+    this.Game.setMode();
+    this.Player.fin();
   }
 
   /**
