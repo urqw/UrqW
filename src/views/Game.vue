@@ -6,11 +6,11 @@
     />
     <div class="section">
       <div class="container">
-        <template v-if="Game && currentPage === 'load'">
-          <LoadGame :Game="Game" @clicked="onLoadClicked"></LoadGame>
+        <template v-if="Client && currentPage === 'load'">
+          <LoadGame :Client="Client" @clicked="onLoadClicked"></LoadGame>
         </template>
-        <template v-else-if="Game && currentPage === 'save'">
-          <SaveGame :Game="Game" @clicked="onSaveClicked"></SaveGame>
+        <template v-else-if="Client && currentPage === 'save'">
+          <SaveGame :Client="Client" @clicked="onSaveClicked"></SaveGame>
         </template>
         <template v-else-if="Client">
           <Content :content="Client.text" @click.native="linkClicked" />
@@ -37,8 +37,7 @@ import Anykey from "@/components/game/Anykey.vue";
 import Info from "@/components/game/Info.vue";
 import SaveGame from "@/components/game/SaveGame.vue";
 import LoadGame from "@/components/game/LoadGame.vue";
-import Loader from "@/engine/Loader";
-// import Client from "@/engine/src/Client";
+import Loader from "@/core/Loader";
 
 import { VOLUMES } from "@/const.js";
 
@@ -60,8 +59,6 @@ export default {
       mode: this.$route.params.mode,
       /** @var {Client} Client **/
       Client: null,
-      /** @var {Game} Game **/
-      Game: null,
       currentPage: "game"
     };
   },
@@ -78,14 +75,12 @@ export default {
       let LoaderInstance = new Loader();
 
       LoaderInstance.loadZipFromLocalFolder(this.questName).then(
-        GameInstance => {
-          this.Game = GameInstance;
-          this.Client = this.Game.Client;
+        Client => {
+          this.Client = Client;
         }
       );
     } else {
-      this.Game = this.$route.params.Game;
-      this.Client = this.Game.Client;
+      this.Client = this.$route.params.Client;
     }
   },
   methods: {
@@ -125,19 +120,15 @@ export default {
       if (name === "returnToGame") {
         this.currentPage = "game";
       } else if (name === "restartGame") {
-        if (!this.Game.locked && confirm(this.$t("restartGameRequest"))) {
-          this.Game.restart();
-          this.Client = this.Game.Client;
+        if (confirm(this.$t("restartGameRequest"))) {
+          this.Client = this.Client.restartGame();
         }
       } else if (name === "switchVolume") {
-        const currentVolumeIndex = VOLUMES.findIndex(volume => volume === this.Client.volume);
+        const currentVolumeIndex = VOLUMES.findIndex(volume => volume === this.Client.getVolume());
 
         this.Client.setVolume(VOLUMES[currentVolumeIndex + 1 === VOLUMES.length ? 0 : currentVolumeIndex + 1]);
       } else if (name === "home") {
-        if (
-          !this.Game.locked &&
-          confirm(this.$t("returnToHomeScreenRequest"))
-        ) {
+        if (confirm(this.$t("returnToHomeScreenRequest"))) {
           window.removeEventListener("beforeunload", this.onBeforeUnload);
           this.$router.push({ name: "home" });
         }

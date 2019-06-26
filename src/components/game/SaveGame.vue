@@ -32,23 +32,23 @@ export default {
     loadSaves() {
       this.saves = Array(10)
         .fill()
-        .map((_, i) => localStorage.getItem(`${this.Game.name}_${i + 1}_name`));
+        .map((_, i) => localStorage.getItem(`${this.Client.getGameName()}_${i + 1}_name`));
     },
     clickBtn(name) {
       this.$emit("clicked", name);
     },
     clickSave(id) {
-      const data = this.Game.save();
+      const data = this.Client.saveGame();
 
       if (data) {
         const dateTime = new Date();
 
         localStorage.setItem(
-          this.Game.name + "_" + id.toString() + "_name",
+          this.Client.getGameName() + "_" + id.toString() + "_name",
           dateTime.toLocaleDateString() + " " + dateTime.toLocaleTimeString()
         );
         localStorage.setItem(
-          this.Game.name + "_" + id.toString() + "_data",
+          this.Client.getGameName() + "_" + id.toString() + "_data",
           JSON.stringify(data)
         );
 
@@ -57,7 +57,7 @@ export default {
     }
   },
   props: {
-    Game: Object
+    Client: Object
   }
 };
 </script>

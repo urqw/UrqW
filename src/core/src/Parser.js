@@ -20,7 +20,7 @@ export default class Parser {
     var operand = expl[0].toLowerCase().trim();
     var command = expl.slice(1).join(" ");
 
-    if (operand == "if") {
+    if (operand === "if") {
       var cond = line.substring(
         line.indexOf("if ") + 3,
         line.indexOf(" then ")
@@ -31,11 +31,11 @@ export default class Parser {
       var ifline = line;
 
       // todo переделать на обратную польскую
-      if (ifline.indexOf(" if ") != -1) {
+      if (ifline.indexOf(" if ") !== -1) {
         ifline = ifline.substring(0, ifline.indexOf(" if ") + 1);
       }
 
-      if (ifline.indexOf(" else ") == -1) {
+      if (ifline.indexOf(" else ") === -1) {
         then = line.substring(line.indexOf(" then ") + 6);
         els = false;
       } else {
@@ -60,7 +60,7 @@ export default class Parser {
       }
 
       return;
-    } else if (operand == "btn") {
+    } else if (operand === "btn") {
       var xbtn = command.split(",");
 
       if (xbtn.length > 1) {
@@ -72,7 +72,7 @@ export default class Parser {
         );
         var com = xbtn[0].trim();
 
-        if (com.indexOf("&") == -1) {
+        if (com.indexOf("&") === -1) {
           com = this.openTags(com);
         }
 
@@ -86,7 +86,7 @@ export default class Parser {
     operand = expl[0].toLowerCase().trim();
     command = expl.slice(1).join(" ");
 
-    if (operand[0] == ":") return;
+    if (operand[0] === ":") return;
 
     switch (operand) {
       case "save":
@@ -249,7 +249,7 @@ export default class Parser {
       })
       .indexOf("&");
 
-    if (pos != -1) {
+    if (pos !== -1) {
       this.Player.flowAdd(line.substring(pos + 1));
       line = line.substring(0, pos).replace(/^\s+/, "");
     }
@@ -275,10 +275,10 @@ export default class Parser {
       return "&#" + exp.substr(2, exp.length - 3) + ";";
     });
 
-    while (line.search(/\#[^\#]+?\$/) != -1) {
+    while (line.search(/\#[^\#]+?\$/) !== -1) {
       line = line.replace(/\#[^\#]+?\$/, exp => {
         // рудимент для совместимости
-        if (exp[1] == "%") {
+        if (exp[1] === "%") {
           exp = exp.substr(2, exp.length - 3);
         } else {
           exp = exp.substr(1, exp.length - 2);
@@ -298,7 +298,7 @@ export default class Parser {
    * @returns {String}
    */
   openLinks(line) {
-    while (line.search(/\[\[.+?\]\]/) != -1) {
+    while (line.search(/\[\[.+?\]\]/) !== -1) {
       line = line.replace(/\[\[.+?\]\]/, exp => {
         var text;
         var command;

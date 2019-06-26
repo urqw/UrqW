@@ -40,13 +40,13 @@ function Expression(str, Game) {
     for (var i = 0; i < this.expr.length; i++) {
       var token = this.expr[i].trim();
 
-      if (token.length == 0) continue;
+      if (token.length === 0) continue;
 
       // если отрицательное число
-      if (lastTokenIsOperator && token == "-") {
+      if (lastTokenIsOperator && token === "-") {
         do {
           token = this.expr[++i].trim();
-        } while (token.length == 0);
+        } while (token.length === 0);
 
         exitStack.push([
           -parseFloat(token.replace(",", ".").replace(/ /g, ""))
@@ -56,10 +56,10 @@ function Expression(str, Game) {
         // считываем всё число дальше
         exitStack.push([parseFloat(token.replace(",", ".").replace(/ /g, ""))]);
       } else if (this.getPriority(token) > 0) {
-        if (token == "(") {
+        if (token === "(") {
           operStack.push(token);
-        } else if (token == ")") {
-          while (operStack[operStack.length - 1] != "(") {
+        } else if (token === ")") {
+          while (operStack[operStack.length - 1] !== "(") {
             exitStack.push(operStack.pop());
           }
 
@@ -69,7 +69,7 @@ function Expression(str, Game) {
             this.getPriority(token) <=
             this.getPriority(operStack[operStack.length - 1])
           ) {
-            if (operStack.length == 0) break;
+            if (operStack.length === 0) break;
             exitStack.push(operStack.pop());
           }
 
@@ -79,8 +79,8 @@ function Expression(str, Game) {
         var variable = this.Game.getVar(token);
 
         if (variable === 0) {
-          if (token.substr(0, 1) == "'" || token.substr(0, 1) == '"') {
-            if (token.substr(-1, 1) == "'" || token.substr(-1, 1) == '"') {
+          if (token.substr(0, 1) === "'" || token.substr(0, 1) === '"') {
+            if (token.substr(-1, 1) === "'" || token.substr(-1, 1) === '"') {
               variable = token.substr(1, token.length - 2);
             }
           }
@@ -113,7 +113,7 @@ function Expression(str, Game) {
       if (this.getPriority(token) > 0) {
         var result;
 
-        if (/*token == '!' ||*/ token == "not") {
+        if (/*token == '!' ||*/ token === "not") {
           var variable = temp.pop();
 
           result = !(variable === true || variable > 0);
@@ -145,24 +145,24 @@ function Expression(str, Game) {
                     "$",
                   "i"
                 );
-                result = b.search(reg) != -1;
+                result = b.search(reg) !== -1;
               } else {
-                result = b == a;
+                result = b === a;
               }
               break;
             case "=":
               if (typeof b == "string" && typeof a == "string") {
-                result = b.toLowerCase() == a.toLowerCase();
+                result = b.toLowerCase() === a.toLowerCase();
               } else {
-                result = b == a;
+                result = b === a;
               }
               break;
             case "!=":
             case "<>":
               if (typeof b == "string" && typeof a == "string") {
-                result = b.toLowerCase() != a.toLowerCase();
+                result = b.toLowerCase() !== a.toLowerCase();
               } else {
-                result = b != a;
+                result = b !== a;
               }
 
               break;

@@ -10,8 +10,6 @@
 <script>
 // @ is an alias to /src
 import Footer from "@/components/Footer.vue";
-// import Parser from "@/engine/src/Parser";
-//console.log(Parser);
 
 export default {
   name: "home",

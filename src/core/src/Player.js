@@ -19,6 +19,11 @@ export default class Player {
      */
     this.Game = Game;
 
+    /**
+     * @type {number}
+     */
+    this.position = 0;
+
     this.Parser = new Parser(this);
 
     this.text = [];
@@ -46,18 +51,18 @@ export default class Player {
     if (this.Game.getVar("music"))
       this.playMusic(this.Game.getVar("music"), true);
 
-    if (this.status != Player.PLAYER_STATUS_NEXT) {
+    if (this.status !== Player.PLAYER_STATUS_NEXT) {
       this.Client.render();
     }
 
-    this.Game.lock = !(
-      this.status == Player.PLAYER_STATUS_END ||
-      this.status == Player.PLAYER_STATUS_PAUSE
+    this.Game.locked = !(
+      this.status === Player.PLAYER_STATUS_END ||
+      this.status === Player.PLAYER_STATUS_PAUSE
     );
   }
 
   play(line) {
-    this.Game.lock = true;
+    this.Game.locked = true;
 
     this.status = Player.PLAYER_STATUS_NEXT;
 
@@ -65,7 +70,7 @@ export default class Player {
       this.Parser.parse(line);
     }
 
-    while (this.status == Player.PLAYER_STATUS_NEXT) {
+    while (this.status === Player.PLAYER_STATUS_NEXT) {
       if (
         this.flowStack[this.flow].length === 0 &&
         (line = this.next()) !== false
@@ -75,7 +80,7 @@ export default class Player {
 
       while (
         this.flowStack[this.flow].length > 0 &&
-        this.status == Player.PLAYER_STATUS_NEXT
+        this.status === Player.PLAYER_STATUS_NEXT
       ) {
         this.Parser.parse(this.flowStack[this.flow].pop());
       }
@@ -84,11 +89,9 @@ export default class Player {
 
   /**
    * следующая строка
-   *
-   * @param {String} line
    */
-  next(line) {
-    var line = this.Quest.get(this.Game.position);
+  next() {
+    let line = this.Quest.get(this.Game.position);
 
     this.Game.position++;
 
@@ -130,16 +133,13 @@ export default class Player {
    * @param {boolean} [link]
    */
   action(actionId, link = false) {
-    if (this.Game.lock) {
-      return false;
-    }
     let command;
     if (link) {
       command = this.links[actionId];
       this.links[actionId] = null;
     } else {
       for (let key in this.buttons) {
-        if (this.buttons[key].id == actionId) {
+        if (this.buttons[key].id === actionId) {
           command = this.buttons[key].command;
           delete this.buttons[key];
 
@@ -187,10 +187,6 @@ export default class Player {
   }
 
   useAction(labelName) {
-    if (this.Game.lock) {
-      return false;
-    }
-
     this.play("proc " + labelName + "&end");
     this.fin();
   }
@@ -218,10 +214,6 @@ export default class Player {
   }
 
   setVar(variable, value) {
-    if (this.Game.locked) {
-      return false;
-    }
-
     variable = variable.trim();
 
     if (variable.toLowerCase() === "style_dos_textcolor") {
@@ -275,7 +267,7 @@ export default class Player {
     }
 
     if (src) {
-      if (this.gameMusic.getAttribute("src") != file) {
+      if (this.gameMusic.getAttribute("src") !== file) {
         this.gameMusic.src = file;
 
         if (loop) {
@@ -314,16 +306,16 @@ export default class Player {
 
     if (label) {
       // TODO конcтанты
-      if (type != "proc") {
+      if (type !== "proc") {
         this.Game.realCurrentLoc = label.name;
       }
 
-      if (type == "btn" || type == "goto") {
+      if (type === "btn" || type === "goto") {
         this.Game.setVar("previous_loc", this.Game.getVar("current_loc"));
         this.Game.setVar("current_loc", labelName);
       }
 
-      if (type == "btn" || type == "goto" || type == "proc") {
+      if (type === "btn" || type === "goto" || type === "proc") {
         this.Game.setVar(
           "count_" + label.name,
           this.Game.getVar("count_" + label.name) + 1
@@ -421,10 +413,6 @@ export default class Player {
    * @param {String} inf
    */
   anykey(inf) {
-    if (this.Game.locked) {
-      return false;
-    }
-
     this.inf = inf;
     this.status = Player.PLAYER_STATUS_ANYKEY;
   }
@@ -433,10 +421,6 @@ export default class Player {
    * @param {int} inf
    */
   pause(inf) {
-    if (this.Game.locked) {
-      return false;
-    }
-
     this.inf = inf;
     this.status = Player.PLAYER_STATUS_PAUSE;
   }
@@ -445,10 +429,6 @@ export default class Player {
    * @param {String} inf
    */
   input(inf) {
-    if (this.Game.locked) {
-      return false;
-    }
-
     this.inf = inf;
     this.status = Player.PLAYER_STATUS_INPUT;
   }
@@ -511,6 +491,7 @@ export default class Player {
   }
 
   /**
+   * @param {String} text
    * @param {String} command
    */
   link(text, command) {
