@@ -120,7 +120,7 @@ export default {
       if (name === "returnToGame") {
         this.currentPage = "game";
       } else if (name === "restartGame") {
-        if (confirm(this.$t("restartGameRequest"))) {
+        if (!this.Client.isLocked() && confirm(this.$t("restartGameRequest"))) {
           this.Client = this.Client.restartGame();
         }
       } else if (name === "switchVolume") {

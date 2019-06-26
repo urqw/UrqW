@@ -123,16 +123,29 @@ export default class Client {
     return text;
   };
 
+  /**
+   * @return {Boolean}
+   */
   isStatusInput() {
     return this.Player.status === Player.PLAYER_STATUS_INPUT;
   }
 
+  /**
+   * @return {Boolean}
+   */
   isStatusAnykey() {
     return this.Player.status === Player.PLAYER_STATUS_ANYKEY;
   }
 
   /**
-   * @return {Number} volume
+   * @return {Boolean}
+   */
+  isLocked() {
+    return this.Game.isLocked();
+  }
+
+  /**
+   * @return {Number}
    */
   getVolume() {
     return this.volume;
