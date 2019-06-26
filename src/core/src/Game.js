@@ -187,6 +187,9 @@ Game.prototype.restart = function() {
  * очистка
  */
 Game.prototype.clean = function() {
+  this.Player = new Player(this);
+  this.Player.Quest = this.Quest;
+
   this.vars = {
     tokens_delim: ' ,"?!'
   };
@@ -197,10 +200,6 @@ Game.prototype.clean = function() {
 
   this.position = 0;
   this.items = {};
-
-  this.Player = new Player(this);
-
-  this.Player.Quest = this.Quest;
 };
 
 /**

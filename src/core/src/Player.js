@@ -30,6 +30,7 @@ export default class Player {
     this.buttons = [];
     this.links = [];
     this.inf = false;
+    this.timer = null;
 
     this.procPosition = [];
 
@@ -289,12 +290,6 @@ export default class Player {
   }
 
   /**
-   * команды из квеста
-   *
-   * @author narmiel
-   */
-
-  /**
    * прыгнуть на метку
    *
    * @param {string} labelName
@@ -418,11 +413,19 @@ export default class Player {
   }
 
   /**
-   * @param {int} inf
+   * @param {int} milliseconds
    */
-  pause(inf) {
-    this.inf = inf;
+  pause(milliseconds) {
+    if (this.timer !== null) {
+      clearTimeout(this.timer);
+    }
     this.status = Player.PLAYER_STATUS_PAUSE;
+
+    this.timer = setTimeout(() => {
+      if (this.status === Player.PLAYER_STATUS_PAUSE) {
+        this.continue();
+      }
+    }, milliseconds);
   }
 
   /**

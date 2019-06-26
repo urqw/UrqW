@@ -98,7 +98,7 @@ export default {
 
     this.updateWidth();
 
-    if (this.$route.params.Game === undefined) {
+    if (this.$route.params.Client === undefined) {
       if (this.$route.params.name === undefined) {
         window.removeEventListener("beforeunload", this.onBeforeUnload);
         this.$router.push({ name: "home" });
@@ -157,7 +157,10 @@ export default {
         this.currentPage = "game";
       } else if (name === "restartGame") {
         if (confirm(this.$t("restartGameRequest"))) {
-          this.Client = this.Client.restartGame();
+          let NewClient = this.Client.restartGame();
+          if (NewClient) {
+            this.Client = NewClient;
+          }
         }
       } else if (name === "switchVolume") {
         const currentVolumeIndex = VOLUMES.findIndex(volume => volume === this.Client.getVolume());
