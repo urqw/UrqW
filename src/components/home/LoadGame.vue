@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Loader from "../../engine/Loader";
+import Loader from "../../core/Loader";
 
 export default {
   name: "loadGame",
@@ -48,66 +48,11 @@ export default {
     selectFiles(event) {
       let loader = new Loader();
 
-      loader.loadFiles(event.target.files, this.mode).then(GameInstance => {
-        this.$router.push({ name: 'game', params: {Game: GameInstance}});
+      loader.loadFiles(event.target.files, this.mode).then(Client => {
+        this.$router.push({ name: 'game', params: {Client: Client}});
       });
     }
   },
 };
 
-/*
-
-    /!**
-     * @param file
-     *!/
-    function readQst(file) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            if (file.name.substr(0, 1) == '_') {
-                quest.unshift(reader.result);
-            } else {
-                quest.push(reader.result);
-            }
-        };
-
-        reader.readAsText(file, 'CP1251');
-    }
-
-    /!**
-     * @param filename
-     * @param file
-     *!/
-    function readFile(filename, file) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            files[filename] = URL.createObjectURL(new Blob([reader.result], {type: MIME[filename.split('.').pop()]}));
-        };
-
-        reader.readAsArrayBuffer(file);
-    }
-
-    /!**
-     * @param file
-     *!/
-    function readStyle(file) {
-        var style = new FileReader();
-        style.onload = function() {
-            $('#additionalstyle').find('style').append(style.result);
-        };
-
-        style.readAsText(file, 'CP1251');
-    }
-
-    /!**
-     * @param file
-     *!/
-    function readJs(file) {
-        var script = new FileReader();
-        script.onload = function() {
-            eval(script.result); // todo?
-        };
-
-        script.readAsText(file, 'CP1251');
-    }
-*/
 </script>

@@ -1,6 +1,5 @@
 import Quest from "./Quest";
 import Player from "./Player";
-import Client from "./Client";
 import ModeUrqRip from "./modes/urqrip";
 import ModeUrqDos from "./modes/urqdos";
 
@@ -13,7 +12,7 @@ function Game(name) {
   /**
    * @type {boolean}
    */
-  this.locked = false;
+  this.locked = true;
 
   /**
    * @type {Object}
@@ -41,11 +40,6 @@ function Game(name) {
    * @type {Quest} хранилище файла квеста
    */
   this.Quest = {};
-
-  /**
-   * @type {Client} Клиент
-   */
-  this.Client = {};
 
   /**
    * @type {number}
@@ -78,7 +72,6 @@ Game.prototype.init = function(msg) {
   }
 
   this.clean();
-  this.Player.continue();
 };
 
 /**
@@ -103,8 +96,6 @@ Game.prototype.removeItem = function(name, count) {
  * @param {int} count
  */
 Game.prototype.setItem = function(name, count) {
-  if (this.locked) return false;
-
   count = parseInt(count);
 
   if (count <= 0) {
@@ -122,7 +113,7 @@ Game.prototype.setItem = function(name, count) {
  * @return {int}
  */
 Game.prototype.getItem = function(name) {
-  return this.items[name] == undefined ? 0 : this.items[name];
+  return this.items[name] === undefined ? 0 : this.items[name];
 };
 
 /**
@@ -130,7 +121,7 @@ Game.prototype.getItem = function(name) {
  * @param {*} value
  */
 Game.prototype.setVar = function(variable, value) {
-  if (variable.substr(0, 4).toLowerCase() == "inv_") {
+  if (variable.substr(0, 4).toLowerCase() === "inv_") {
     variable = variable.substr(4);
 
     this.setItem(variable, value);
@@ -146,17 +137,17 @@ Game.prototype.setVar = function(variable, value) {
 Game.prototype.getVar = function(variable) {
   variable = variable.toLowerCase();
 
-  if (variable.substr(0, 4) == "inv_") {
+  if (variable.substr(0, 4) === "inv_") {
     variable = variable.substr(4);
   }
 
-  if (variable == "rnd") {
+  if (variable === "rnd") {
     return Math.random();
-  } else if (variable.substr(0, 3) == "rnd") {
+  } else if (variable.substr(0, 3) === "rnd") {
     return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
   }
 
-  if (variable == "time") {
+  if (variable === "time") {
     var Datetime = new Date();
     return (
       Datetime.getHours() * 3600 +
@@ -178,7 +169,7 @@ Game.prototype.getVar = function(variable) {
     }
   }
 
-  if (this.vars[variable] != undefined) {
+  if (this.vars[variable] !== undefined) {
     return this.vars[variable];
   }
 
@@ -190,15 +181,12 @@ Game.prototype.getVar = function(variable) {
  */
 Game.prototype.restart = function() {
   this.clean();
-  this.Player.continue();
 };
 
 /**
  * очистка
  */
 Game.prototype.clean = function() {
-  if (this.locked) return false;
-
   this.vars = {
     tokens_delim: ' ,"?!'
   };
@@ -207,25 +195,18 @@ Game.prototype.clean = function() {
   this.setVar("current_loc", this.Quest.firstLabel);
   this.setVar("previous_loc", this.Quest.firstLabel);
 
-  this.Player = new Player(this);
-  this.Client = new Client();
-
   this.position = 0;
   this.items = {};
 
+  this.Player = new Player(this);
+
   this.Player.Quest = this.Quest;
-  this.Player.Client = this.Client;
-  this.Client.Player = this.Player;
 };
 
 /**
  * сохранение
  */
 Game.prototype.save = function() {
-  if (this.locked) {
-    return false;
-  }
-
   return {
     status: this.Player.status,
     text: this.Player.text,
@@ -241,8 +222,6 @@ Game.prototype.save = function() {
  * загрузка
  */
 Game.prototype.load = function(data) {
-  if (this.locked) return false;
-
   this.Player.status = data.status;
   this.Player.text = data.text;
   this.Player.buttons = data.buttons;
@@ -250,8 +229,13 @@ Game.prototype.load = function(data) {
   this.vars = data.vars;
   this.position = data.position;
   this.realCurrentLoc = data.realCurrentLoc;
+};
 
-  this.Client.render();
+/**
+ *
+ */
+Game.prototype.isLocked = function() {
+  return this.locked;
 };
 
 export default Game;

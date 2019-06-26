@@ -34,23 +34,23 @@ export default {
     loadSaves() {
       this.saves = Array(10)
         .fill()
-        .map((_, i) => localStorage.getItem(`${this.Game.name}_${i + 1}_name`));
+        .map((_, i) => localStorage.getItem(`${this.Client.getGameName()}_${i + 1}_name`));
     },
     clickBtn(name) {
       this.$emit("clicked", name);
     },
     clickLoad(id) {
-      const data = localStorage.getItem(this.Game.name + "_" + id + "_data");
+      const data = localStorage.getItem(this.Client.getGameName() + "_" + id + "_data");
 
       if (data) {
-        this.Game.load(JSON.parse(data));
+        this.Client.loadGame(JSON.parse(data));
 
         this.clickBtn("returnToGame");
       }
     }
   },
   props: {
-    Game: Object
+    Client: Object
   }
 };
 </script>

@@ -1,6 +1,6 @@
 import JSZip from "jszip";
 import ZipUtils from "jszip-utils";
-import Game from "@/engine/src/Game";
+import Client from "@/core/src/Client";
 import {win2unicode, getExt, MIME} from "./src/tools";
 
 /**
@@ -96,11 +96,7 @@ Loader.prototype.composeFiles = function (files) {
         quest += `\r\n${win2unicode(files[fileName])}`;
       });
 
-      let GameInstance = new Game(this.questname);
-      GameInstance.files = resources;
-      GameInstance.mode = this.mode;
-      GameInstance.init(quest);
-      resolve(GameInstance);
+      resolve(Client.createGame(this.questname, quest, resources, this.mode));
     } else {
       reject();
     }

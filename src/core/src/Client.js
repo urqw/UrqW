@@ -1,14 +1,19 @@
 import Player from "./Player";
+import Game from "./Game";
 
 export default class Client {
   /**
    * @constructor
    */
-  constructor() {
+  constructor(GameInstance) {
     /**
      * @type {Player} проигрыватель
      */
     this.Player = null;
+    /**
+     * @type {Game} инстанс игры
+     */
+    this.Game = null;
 
     this.status = Player.PLAYER_STATUS_NEXT;
 
@@ -20,6 +25,23 @@ export default class Client {
      * @type int уровень звука
      */
     this.volume = 1;
+
+    this.Game = GameInstance;
+    this.Player = this.Game.Player;
+    this.Player.Client = this;
+    this.Player.continue();
+  }
+
+  /**
+   * инстанс новой игры
+   */
+  static createGame(questname, quest, resources, mode = "urqw") {
+    let GameInstance = new Game(questname);
+    GameInstance.files = resources;
+    GameInstance.mode = mode;
+    GameInstance.init(quest);
+
+    return new Client(GameInstance);
   }
 
   /**
@@ -36,6 +58,10 @@ export default class Client {
    * @param {String} action
    */
   btnClick(action) {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
     return this.Player.action(action);
   }
 
@@ -44,6 +70,10 @@ export default class Client {
    * @param {String} action
    */
   linkClick(action) {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
     return this.Player.action(action, true);
   }
 
@@ -52,6 +82,10 @@ export default class Client {
    * @param {String} keyCode
    */
   anykeyDone(keyCode) {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
     return this.Player.anykeyAction(keyCode);
   }
 
@@ -60,6 +94,10 @@ export default class Client {
    * @param {String} text
    */
   inputDone(text) {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
     return this.Player.inputAction(text);
   }
 
@@ -95,10 +133,61 @@ export default class Client {
   }
 
   /**
+   * @return {Number} volume
+   */
+  getVolume() {
+    return this.volume;
+  }
+
+  /**
    * @param {Number} volume
    */
   setVolume(volume) {
     this.volume = volume;
-    this.Player.gameMusic.volume = volume;
+    this.Player.gameMusic.volume = this.volume;
+  }
+
+  /**
+   * @return {String}
+   */
+  getGameName() {
+    return this.Game.Name;
+  }
+
+  /**
+   * @return {Object}
+   */
+  saveGame() {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
+    return this.Game.save();
+  }
+
+  /**
+   * @param {Object} data
+   */
+  loadGame(data) {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
+    this.Game.load(data);
+
+    this.render();
+  }
+
+  /**
+   * @return {Client}
+   */
+  restartGame() {
+    if (this.Game.isLocked()) {
+      return false;
+    }
+
+    this.Game.restart();
+
+    return new Client(this.Game);
   }
 }
