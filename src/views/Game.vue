@@ -4,7 +4,7 @@
             :Client="Client"
             @clickBtn="clickBtn"
     />
-    <div class="section">
+    <div class="section" v-bind:style="backgroundStyle">
       <div class="container">
         <template v-if="Client && currentPage === 'load'">
           <LoadGame :Client="Client" @clicked="onLoadClicked"></LoadGame>
@@ -59,7 +59,8 @@ export default {
       mode: this.$route.params.mode,
       /** @var {Client} Client **/
       Client: null,
-      currentPage: "game"
+      currentPage: "game",
+      backgroundStyle: {},
     };
   },
   mounted() {
@@ -77,10 +78,12 @@ export default {
       LoaderInstance.loadZipFromLocalFolder(this.questName).then(
         Client => {
           this.Client = Client;
+          this.backgroundStyle = this.Client.style;
         }
       );
     } else {
       this.Client = this.$route.params.Client;
+      this.backgroundStyle = this.Client.style;
     }
   },
   methods: {

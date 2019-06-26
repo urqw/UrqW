@@ -32,17 +32,10 @@ export default {
 </script>
 
 <style scoped>
+.panel {
+  background-color: #fff;
+}
 .button {
   display: block;
 }
-/*
-  .panel-block:first-child {
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-  }
-
-  .panel-block:last-child {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-  }*/
 </style>
