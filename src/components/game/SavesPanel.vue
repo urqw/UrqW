@@ -6,7 +6,7 @@
       class="panel-block"
       @click="$emit('clicked', i)"
     >
-      {{ saves[i - 1] || `${label} #${i}` }}
+      {{ saves[i - 1] || $t("emptyGameSlot", {i}) }}
     </a>
   </nav>
 </template>
@@ -20,13 +20,6 @@ export default {
       type: Array,
       default() {
         return [];
-      }
-    },
-
-    label: {
-      type: String,
-      default() {
-        return this.$t("emptyGameSlot");
       }
     }
   }

@@ -104,11 +104,16 @@ export default {
     buttonClicked(action) {
       this.Client.btnClick(action);
     },
-    onLoadClicked() {
-      this.currentPage = "load";
+    onLoadClicked(name) {
+      if (name === 'returnToGame') {
+        this.currentPage = "game";
+      }
+      // TODO: handle
     },
-    onSaveClicked() {
-      this.currentPage = "save";
+    onSaveClicked(name) {
+      if (name === 'returnToGame') {
+        this.currentPage = "game";
+      }
     },
     inputDone(text) {
       this.Client.inputDone(text);
