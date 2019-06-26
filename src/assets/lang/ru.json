@@ -14,6 +14,8 @@
   "restartGameRequest": "Перезапустить игру?",
   "returnToHomeScreenRequest": "Вернуться на стартовый экран?",
   "confirmClose": "Выйти из игры? Несохраненный прогресс будет утерян.",
-  "emptyGameSlot": "Пустой слот сохранения",
+  "emptyGameSlot": "Пустой слот сохранения №{i}",
+  "loadGame": "Загрузка",
+  "saveGame": "Сохранение",
   "pressAnyKey": "Нажмите любую клавишу"
 }

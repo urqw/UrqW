@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="panel-block-back">
+      <h2 class="subtitle" v-text="$t('saveGame')"></h2>
       <button class="button" @click="clickBtn('returnToGame')">
         <span class="icon">
           <font-awesome-icon icon="arrow-alt-circle-left" />
@@ -16,7 +17,7 @@
 import SavesPanel from "./SavesPanel";
 
 export default {
-  name: "savegame",
+  name: "SaveGame",
   data() {
     return {
       saves: [],
@@ -53,6 +54,8 @@ export default {
         );
 
         this.loadSaves();
+
+        this.clickBtn("returnToGame");
       }
     }
   },
@@ -64,7 +67,8 @@ export default {
 <style scoped>
 .panel-block-back {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1em;
 }
 </style>
