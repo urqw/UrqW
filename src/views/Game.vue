@@ -120,8 +120,11 @@ export default {
       if (name === "returnToGame") {
         this.currentPage = "game";
       } else if (name === "restartGame") {
-        if (!this.Client.isLocked() && confirm(this.$t("restartGameRequest"))) {
-          this.Client = this.Client.restartGame();
+        if (confirm(this.$t("restartGameRequest"))) {
+          let NewClient = this.Client.restartGame();
+          if (NewClient) {
+            this.Client = NewClient;
+          }
         }
       } else if (name === "switchVolume") {
         const currentVolumeIndex = VOLUMES.findIndex(volume => volume === this.Client.getVolume());

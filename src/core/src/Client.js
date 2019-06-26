@@ -194,7 +194,7 @@ export default class Client {
    * @return {Client}
    */
   restartGame() {
-    if (this.Game.isLocked()) {
+    if (this.Player.status === Player.PLAYER_STATUS_NEXT) {
       return false;
     }
 
