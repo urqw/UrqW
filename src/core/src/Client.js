@@ -21,6 +21,8 @@ export default class Client {
 
     this.buttons = [];
 
+    this.style = {};
+
     /**
      * @type int уровень звука
      */
@@ -29,7 +31,14 @@ export default class Client {
     this.Game = GameInstance;
     this.Player = this.Game.Player;
     this.Player.Client = this;
-    this.Player.continue();
+    this.Player.play();
+
+    if (this.Game.getVar('urq_mode')) {
+      this.Game.mode = this.Game.getVar('urq_mode');
+    }
+
+    this.Game.setMode();
+    this.Player.fin();
   }
 
   /**
@@ -57,6 +66,7 @@ export default class Client {
   render() {
     this.text = this.Player.text;
     this.buttons = this.Player.buttons;
+    this.setBackColor();
   }
 
   /**
@@ -208,6 +218,18 @@ export default class Client {
     this.Game.restart();
 
     return new Client(this.Game);
+  }
+
+  setBackColor() {
+    if (isNaN(this.Game.getVar('style_backcolor'))) {
+      this.style['background-color'] = this.Game.getVar('style_backcolor');
+    } else if (this.Game.getVar('style_backcolor') > 0) {
+      var red = (this.Game.getVar('style_backcolor') >> 16) & 0xFF;
+      var green = (this.Game.getVar('style_backcolor') >> 8) & 0xFF;
+      var blue = this.Game.getVar('style_backcolor') & 0xFF;
+
+      this.style['background-color'] = 'rgb(' + blue + ', ' + green  + ', ' + red + ')';
+    }
   }
 }
 

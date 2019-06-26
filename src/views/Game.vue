@@ -9,6 +9,7 @@
          v-hammer:panstart="onPanStart"
          v-hammer:panend="onPanEnd"
          v-hammer:pan="onPan"
+         v-bind:style="backgroundStyle"
     >
       <div class="section">
         <div class="container">
@@ -77,6 +78,7 @@ export default {
       swipeActive: false,
       menuOpened: false,
       widthWindow: 0,
+      backgroundStyle: {},
     };
   },
   computed: {
@@ -110,10 +112,12 @@ export default {
       LoaderInstance.loadZipFromLocalFolder(this.questName).then(
         Client => {
           this.Client = Client;
+          this.backgroundStyle = this.Client.style;
         }
       );
     } else {
       this.Client = this.$route.params.Client;
+      this.backgroundStyle = this.Client.style;
     }
   },
   beforeDestroy() {
