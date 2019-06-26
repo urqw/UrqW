@@ -4,8 +4,6 @@ import { dosColorToHex } from "./tools";
 
 export default class Player {
   constructor(Game) {
-    this.gameMusic = new Audio();
-
     /**
      * @type {Quest} хранилище файла квеста
      */
@@ -268,24 +266,24 @@ export default class Player {
     }
 
     if (src) {
-      if (this.gameMusic.getAttribute("src") !== file) {
-        this.gameMusic.src = file;
+      if (Client.gameMusic.getAttribute("src") !== file) {
+        Client.gameMusic.src = file;
 
         if (loop) {
-          this.gameMusic.addEventListener(
+          Client.gameMusic.addEventListener(
             "ended",
             function() {
-              this.gameMusic.src = file;
-              this.gameMusic.play();
+              Client.gameMusic.src = file;
+              Client.gameMusic.play();
             },
             false
           );
         }
 
-        this.gameMusic.play();
+        Client.gameMusic.play();
       }
     } else {
-      this.gameMusic.pause();
+      Client.gameMusic.pause();
     }
   }
 
@@ -503,6 +501,12 @@ export default class Player {
     this.links[id] = command;
 
     return Client.generateLink(text, id);
+  }
+
+  /**
+   * Стиль
+   */
+  style() {
   }
 
   static PLAYER_STATUS_NEXT = 0;

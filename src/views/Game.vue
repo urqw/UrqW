@@ -133,6 +133,8 @@ export default {
       } else if (name === "home") {
         if (confirm(this.$t("returnToHomeScreenRequest"))) {
           window.removeEventListener("beforeunload", this.onBeforeUnload);
+          this.Client.close();
+          this.Client = null;
           this.$router.push({ name: "home" });
         }
       } else if (name === "saveGame") {

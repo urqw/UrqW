@@ -45,6 +45,13 @@ export default class Client {
   }
 
   /**
+   * "закрыть" игру
+   */
+  close() {
+    Client.gameMusic.pause();
+  }
+
+  /**
    * рендер
    */
   render() {
@@ -156,7 +163,7 @@ export default class Client {
    */
   setVolume(volume) {
     this.volume = volume;
-    this.Player.gameMusic.volume = this.volume;
+    Client.gameMusic.volume = this.volume;
   }
 
   /**
@@ -203,3 +210,5 @@ export default class Client {
     return new Client(this.Game);
   }
 }
+
+Client.gameMusic = new Audio();
