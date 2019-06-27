@@ -59,7 +59,22 @@ export default class Client {
    * рендер
    */
   render() {
-    this.text = this.Player.text;
+    // костыли для <img> тега
+    let text = this.Player.text;
+    for (let i = 0; i < text.length; i++) {
+      if (text[i].text !== undefined) {
+        let regex = /(<img[^>]+src=")([^">]+)"/i;
+        if (regex.test(text[i].text)) {
+          var src = text[i].text.match(regex)[2];
+          text[i].text = text[i].text.replace(
+            /(<img[^>]+src=")([^">]+)"/gi,
+            '$1' + this.Game.files[src] + "\""
+          );
+        }
+      }
+    }
+
+    this.text = text;
     this.buttons = this.Player.buttons;
     this.setBackColor();
   }
@@ -133,10 +148,12 @@ export default class Client {
    */
   static removeLinks (text) {
     for (let i = 0; i < text.length; i++) {
-      text[i].text = text[i].text.replace(
-        /\<a.+?\>(.+?)\<\/a\>/gi,
-        '$1'
-      );
+      if (text[i].text !== undefined) {
+        text[i].text = text[i].text.replace(
+          /\<a.+?\>(.+?)\<\/a\>/gi,
+          '$1'
+        );
+      }
     }
 
     return text;
