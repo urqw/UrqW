@@ -65,10 +65,13 @@ export default {
 };
 </script>
 <style scoped>
-.panel-block-back {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1em;
-}
+  .panel {
+    background-color: #fff;
+  }
+  .panel-block-back {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+  }
 </style>
