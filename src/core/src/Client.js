@@ -32,12 +32,7 @@ export default class Client {
     this.Player = this.Game.Player;
     this.Player.Client = this;
     this.Player.play();
-
-    if (this.Game.getVar('urq_mode')) {
-      this.Game.mode = this.Game.getVar('urq_mode');
-    }
-
-    this.Game.setMode();
+    this.Game.setMode(this.Game.getVar('urq_mode'));
     this.Player.fin();
   }
 
@@ -47,7 +42,7 @@ export default class Client {
   static createGame(questname, quest, resources, mode = "urqw") {
     let GameInstance = new Game(questname);
     GameInstance.files = resources;
-    GameInstance.mode = mode;
+    GameInstance.setVar('urq_mode', mode);
     GameInstance.init(quest);
 
     return new Client(GameInstance);

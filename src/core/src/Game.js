@@ -9,6 +9,7 @@ import ModeUrqDos from "./modes/urqdos";
  * @constructor
  */
 function Game(name) {
+
   /**
    * @type {boolean}
    */
@@ -25,6 +26,13 @@ function Game(name) {
    * @type {Object}
    */
   this.vars = {};
+
+  /**
+   * @type {Object}
+   */
+  this.systemVars = {
+    'urq_mode': 'urqw',
+  };
 
   /**
    * @type {string} имя игры или файла для сохранения
@@ -50,11 +58,6 @@ function Game(name) {
    * @type {string}
    */
   this.realCurrentLoc = "";
-
-  /**
-   * @type {string} режим
-   */
-  this.mode = "";
 }
 
 /**
@@ -113,12 +116,18 @@ Game.prototype.getItem = function(name) {
  * @param {*} value
  */
 Game.prototype.setVar = function(variable, value) {
-  if (variable.substr(0, 4).toLowerCase() === "inv_") {
-    variable = variable.substr(4);
+  variable = variable.toLowerCase();
 
-    this.setItem(variable, value);
+  if (this.systemVars[variable] !== undefined ) {
+    this.systemVars[variable] = value;
   } else {
-    this.vars[variable.toLowerCase()] = value;
+    if (variable.substr(0, 4) === "inv_") {
+      variable = variable.substr(4);
+
+      this.setItem(variable, value);
+    } else {
+      this.vars[variable] = value;
+    }
   }
 };
 
@@ -128,6 +137,10 @@ Game.prototype.setVar = function(variable, value) {
  */
 Game.prototype.getVar = function(variable) {
   variable = variable.toLowerCase();
+
+  if (this.systemVars[variable] !== undefined ) {
+    return this.systemVars[variable];
+  }
 
   if (variable.substr(0, 4) === "inv_") {
     variable = variable.substr(4);
@@ -229,11 +242,11 @@ Game.prototype.isLocked = function() {
   return this.locked;
 };
 
-Game.prototype.setMode = function() {
-  if (this.mode === "ripurq") {
+Game.prototype.setMode = function(mode) {
+  if (mode === "ripurq") {
     ModeUrqRip(Player);
   }
-  if (this.mode === "dosurq") {
+  if (mode === "dosurq") {
     ModeUrqDos(Player);
     this.setVar('style_backcolor', '#000');
     this.setVar('style_textcolor', '#FFF');
