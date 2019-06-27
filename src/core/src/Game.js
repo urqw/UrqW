@@ -239,7 +239,6 @@ Game.prototype.setMode = function() {
     this.setVar('style_backcolor', '#000');
     this.setVar('style_textcolor', '#FFF');
   }
-  console.log(Player);
 };
 
 export default Game;
