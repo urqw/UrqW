@@ -190,7 +190,7 @@ export default class Parser {
           );
         }
 
-        var str = (new Expression(command.trim()), this.Player.Game)
+        var str = (new Expression(command.trim(), this.Player.Game))
           .calc()
           .split(reg);
 
