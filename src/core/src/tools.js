@@ -98,4 +98,3 @@ export const MIME = {
   midi: "audio/midi",
   mp3: "audio/mp3"
 };
-
