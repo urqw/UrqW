@@ -16,11 +16,11 @@
     .inventory {
         flex-shrink: 0;
         border-radius: 0;
-        padding-left: 20%;
         display: flex;
     }
 
     .inventory .box {
         flex-grow: 1;
+        border-radius: 0;
     }
 </style>

@@ -83,12 +83,16 @@ export default {
   },
   computed: {
     styleInventory() {
-      let swipe = '-100%';
+      let swipe = `calc(100% + (${this.swipe}px))`;
 
-      if (this.menuOpened && !this.swipeActive) {
-        swipe = '0';
-      } else if (this.swipeActive) {
-        swipe = `calc(100% + (${this.swipe}px))`;
+      // if (this.menuOpened && !this.swipeActive) {
+      //   swipe = '0';
+      // } else if (this.swipeActive) {
+      //   swipe = `calc(100% - (${this.swipe}px))`;
+      // }
+
+      if (!this.swipeActive && this.menuOpened) {
+        swipe = 0;
       }
 
       return { transform: `translateX(${swipe})` };
@@ -189,26 +193,27 @@ export default {
       }
     },
     updateWidth() {
-      this.widthWindow = window.innerWidth;
+      this.widthWindow = window.outerWidth;
     },
     onPan(event) {
-      let swipe = event.deltaX;
+      let swipe = this.menuOpened ? Math.max(event.deltaX, 0) : Math.max(event.deltaX, this.widthWindow * -1);
 
-      if (event.deltaX > 0) {
-        swipe = 0;
-      } else if (event.deltaX < this.widthWindow) {
-        swipe = this.widthWindow;
-      }
-
-      this.swipe = swipe;
+      this.swipe = this.menuOpened ? swipe - this.widthWindow : swipe;
     },
     onPanStart() {
       this.swipeActive = true;
-      this.swipeStart = this.swipe;
     },
     onPanEnd(event) {
+      let swipe = this.menuOpened ? Math.max(event.deltaX, 0) : Math.max(event.deltaX, this.widthWindow * -1);
+
+      if (this.menuOpened) {
+        this.menuOpened = swipe < this.widthWindow / 6;
+      } else {
+        this.menuOpened = swipe * -1 > this.widthWindow / 6;
+      }
+
       this.swipeActive = false;
-      this.swipe = event.deltaX < -60 ? this.updateWidth * -1 : 0;
+      this.swipe = 0;
     },
   }
 };
@@ -227,12 +232,13 @@ export default {
 
   .game-content {
     flex-grow: 1;
-    display: flex;
     position: relative;
   }
 
   .game-inventory {
     position: absolute;
+    top: 0;
+    right: 0;
     width: 100%;
     height: 100%;
     transform: translateX(100%);
