@@ -53,8 +53,8 @@ export default class Loader {
 
     for (let [fileName, file] of Object.entries(files)) {
       if (getExt(fileName) === "qst") {
-        if (Loader._isInclude(fileName)) {
-          // put includes first
+        if (Loader._hasUnderscore(fileName)) {
+          // put files with _ first
           qst.unshift(fileName);
         } else {
           qst.push(fileName);
@@ -146,7 +146,7 @@ export default class Loader {
    * @return {boolean}
    * @private
    */
-  static _isInclude(fileName) {
+  static _hasUnderscore(fileName) {
     return fileName.startsWith("_") || fileName.includes("/_");
   }
 
