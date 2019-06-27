@@ -108,8 +108,6 @@ export default class Loader {
     });
   }
 
-  getClient() {}
-
   /**
    * загрузить из файлов
    */
