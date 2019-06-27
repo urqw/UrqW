@@ -23,7 +23,11 @@
         </span>
         <div class="select">
           <select v-model="mode">
-            <option value="urqw" selected v-text="$t('noSpecialRules')"></option>
+            <option
+              value="urqw"
+              selected
+              v-text="$t('noSpecialRules')"
+            ></option>
             <option value="ripurq">Rip URQ 1.4</option>
             <option value="dosurq">Dos URQ 1.35</option>
           </select>
@@ -40,8 +44,8 @@ export default {
   name: "loadGame",
   data() {
     return {
-      mode: 'urqw',
-      dropdownIsActive: false,
+      mode: "urqw",
+      dropdownIsActive: false
     };
   },
   methods: {
@@ -49,10 +53,9 @@ export default {
       let loader = new Loader();
 
       loader.loadFiles(event.target.files, this.mode).then(Client => {
-        this.$router.push({ name: 'game', params: {Client: Client}});
+        this.$router.push({ name: "game", params: { Client: Client } });
       });
     }
-  },
+  }
 };
-
 </script>

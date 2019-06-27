@@ -1,4 +1,5 @@
 import Expression from "./RPN";
+import Client from "./Client";
 import { isFloat } from "./tools";
 
 export default class Parser {
@@ -265,18 +266,18 @@ export default class Parser {
    * @returns {String}
    */
   openTags(line) {
-    line = line.replace(/\#\/\$/g, "<br>");
-    line = line.replace(/\#\%\/\$/g, "<br>");
-    line = line.replace(/\#\$/g, " ");
-    line = line.replace(/\#\%\$/g, " ");
+    line = line.replace(/#\/\$/g, Client.getLineBreakSymbol());
+    line = line.replace(/#%\/\$/g, Client.getLineBreakSymbol());
+    line = line.replace(/#\$/g, " ");
+    line = line.replace(/#%\$/g, " ");
 
     // ##$
-    line = line.replace(/\#\#[^\#]+?\$/g, function(exp) {
+    line = line.replace(/##[^#]+?\$/g, function(exp) {
       return "&#" + exp.substr(2, exp.length - 3) + ";";
     });
 
-    while (line.search(/\#[^\#]+?\$/) !== -1) {
-      line = line.replace(/\#[^\#]+?\$/, exp => {
+    while (line.search(/#[^#]+?\$/) !== -1) {
+      line = line.replace(/#[^#]+?\$/, exp => {
         // рудимент для совместимости
         if (exp[1] === "%") {
           exp = exp.substr(2, exp.length - 3);

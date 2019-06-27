@@ -118,6 +118,13 @@ export default class Client {
   }
 
   /**
+   * @return {String}
+   */
+  static getLineBreakSymbol() {
+    return "<br>";
+  };
+
+  /**
    * превратить текст и комманду в <a> тег
    * @param {String} text
    * @param {int} action

@@ -52,9 +52,9 @@ function Game(name) {
   this.realCurrentLoc = "";
 
   /**
-   * @type int режим
+   * @type {string} режим
    */
-  this.mode = 0;
+  this.mode = "";
 }
 
 /**
@@ -62,7 +62,6 @@ function Game(name) {
  */
 Game.prototype.init = function(msg) {
   this.Quest = new Quest(msg);
-  this.Quest.init();
 
   this.clean();
 };
@@ -239,7 +238,6 @@ Game.prototype.setMode = function() {
     this.setVar('style_backcolor', '#000');
     this.setVar('style_textcolor', '#FFF');
   }
-  console.log(Player);
 };
 
 export default Game;
