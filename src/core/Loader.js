@@ -1,7 +1,9 @@
 import JSZip from "jszip";
 import ZipUtils from "jszip-utils";
 import Client from "@/core/src/Client";
-import { win2unicode, getExt, MIME } from "./src/tools";
+import UniversalDetector from "jschardet";
+import IconvLite from "iconv-lite";
+import { getExt, MIME } from "./src/tools";
 
 function isTextType(fileName) {
   return ["qst", "css", "js"].includes(getExt(fileName));
@@ -78,7 +80,8 @@ export default class Loader {
       }
 
       qst.forEach(fileName => {
-        quest += `\r\n${win2unicode(files[fileName])}`;
+        let result = IconvLite.decode(files[fileName], UniversalDetector.detect(files[fileName]).encoding);
+        quest += `\r\n${result}`;
       });
 
       return Client.createGame(this.questname, quest, resources, this.mode);
@@ -108,8 +111,6 @@ export default class Loader {
     });
   }
 
-  getClient() {}
-
   /**
    * загрузить из файлов
    */
@@ -126,7 +127,7 @@ export default class Loader {
 
       for (let file of Array.from(files)) {
         if (isTextType(file.name)) {
-          loadedFiles[file.name] = await Loader._readFilePromise(file, "text");
+          loadedFiles[file.name] = await Loader._readFilePromise(file, "binaryString");
         } else {
           const result = await Loader._readFilePromise(file, "arrayBuffer");
           loadedFiles[file.name] = URL.createObjectURL(
@@ -153,11 +154,10 @@ export default class Loader {
   /**
    * @param {Blob} blob
    * @param {string} mode
-   * @param {string} [encoding="CP1251"]
    * @return {Promise<BufferSource | Blob | string>}
    * @private
    */
-  static _readFilePromise(blob, mode, encoding = "CP1251") {
+  static _readFilePromise(blob, mode) {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -166,8 +166,6 @@ export default class Loader {
         reader.readAsBinaryString(blob);
       } else if (mode === "arrayBuffer") {
         reader.readAsArrayBuffer(blob);
-      } else if (mode === "text") {
-        reader.readAsText(blob, encoding);
       }
     });
   }
