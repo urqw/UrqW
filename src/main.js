@@ -1,8 +1,9 @@
 import Vue from "vue";
+import VueMeta from "vue-meta";
 import App from "./App.vue";
 import router from "./router";
-import {i18n} from "./i18n";
-import {library} from '@fortawesome/fontawesome-svg-core'
+import { i18n } from "./i18n";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowAltCircleLeft } from "@fortawesome/free-solid-svg-icons/faArrowAltCircleLeft";
 import { faVolumeUp } from "@fortawesome/free-solid-svg-icons/faVolumeUp";
 import { faVolumeDown } from "@fortawesome/free-solid-svg-icons/faVolumeDown";
@@ -31,6 +32,8 @@ library.add(
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.use(VueMeta);
 
 new Vue({
   router,

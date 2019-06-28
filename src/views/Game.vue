@@ -1,9 +1,6 @@
 <template>
   <div>
-    <Navbar :page="currentPage"
-            :Client="Client"
-            @clickBtn="clickBtn"
-    />
+    <Navbar :page="currentPage" :Client="Client" @clickBtn="clickBtn" />
     <div class="section" v-bind:style="backgroundStyle">
       <div class="container">
         <template v-if="Client && currentPage === 'load'">
@@ -61,8 +58,19 @@ export default {
       Client: null,
       currentPage: "game",
       backgroundStyle: {},
+      styles: [],
+      scripts: []
     };
   },
+
+  metaInfo() {
+    return {
+      style: this.styles,
+      script: this.scripts,
+      __dangerouslyDisableSanitizers: ["script"], // welcome hackers!
+    };
+  },
+
   mounted() {
     window.addEventListener("beforunload", this.onBeforeUnload);
 
@@ -75,18 +83,32 @@ export default {
 
       let LoaderInstance = new Loader();
 
-      LoaderInstance.loadZipFromLocalFolder(this.questName).then(
-        Client => {
-          this.Client = Client;
-          this.backgroundStyle = this.Client.style;
-        }
-      );
+      LoaderInstance.loadZipFromLocalFolder(this.questName).then(client => {
+        this.Client = client;
+        this.backgroundStyle = this.Client.style;
+        this.processCustomResources(this.Client.Game.files);
+      });
     } else {
       this.Client = this.$route.params.Client;
       this.backgroundStyle = this.Client.style;
     }
   },
   methods: {
+    processCustomResources(gameFiles) {
+      const styles = [];
+      const scripts = [];
+      for (const [fileName, content] of Object.entries(gameFiles)) {
+        if (fileName.endsWith(".css")) {
+          styles.push({ cssText: content, type: "text/css" });
+        } else if (fileName.endsWith(".js")) {
+          scripts.push({ innerHTML: content });
+        }
+      }
+
+      this.styles = styles;
+      this.scripts = scripts;
+    },
+
     onBeforeUnload(e) {
       // custom messages don't really work across all browsers, but still...
       // Cancel the event
@@ -108,13 +130,13 @@ export default {
       this.Client.btnClick(action);
     },
     onLoadClicked(name) {
-      if (name === 'returnToGame') {
+      if (name === "returnToGame") {
         this.currentPage = "game";
       }
       // TODO: handle
     },
     onSaveClicked(name) {
-      if (name === 'returnToGame') {
+      if (name === "returnToGame") {
         this.currentPage = "game";
       }
     },
@@ -135,9 +157,17 @@ export default {
           }
         }
       } else if (name === "switchVolume") {
-        const currentVolumeIndex = VOLUMES.findIndex(volume => volume === this.Client.getVolume());
+        const currentVolumeIndex = VOLUMES.findIndex(
+          volume => volume === this.Client.getVolume()
+        );
 
-        this.Client.setVolume(VOLUMES[currentVolumeIndex + 1 === VOLUMES.length ? 0 : currentVolumeIndex + 1]);
+        this.Client.setVolume(
+          VOLUMES[
+            currentVolumeIndex + 1 === VOLUMES.length
+              ? 0
+              : currentVolumeIndex + 1
+          ]
+        );
       } else if (name === "home") {
         if (confirm(this.$t("returnToHomeScreenRequest"))) {
           window.removeEventListener("beforeunload", this.onBeforeUnload);

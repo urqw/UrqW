@@ -10,10 +10,6 @@ export default class Client {
      * @type {Player} проигрыватель
      */
     this.Player = null;
-    /**
-     * @type {Game} инстанс игры
-     */
-    this.Game = null;
 
     this.status = Player.PLAYER_STATUS_NEXT;
 
@@ -28,6 +24,9 @@ export default class Client {
      */
     this.volume = 1;
 
+    /**
+     * @type {Game} инстанс игры
+     */
     this.Game = GameInstance;
     this.Player = this.Game.Player;
     this.Player.Client = this;
@@ -42,7 +41,7 @@ export default class Client {
   static createGame(questname, quest, resources, mode = "urqw") {
     let GameInstance = new Game(questname);
     GameInstance.files = resources;
-    GameInstance.setVar('urq_mode', mode);
+    GameInstance.setVar("urq_mode", mode);
     GameInstance.init(quest);
 
     return new Client(GameInstance);
@@ -241,13 +240,13 @@ export default class Client {
 
   setBackColor() {
     if (isNaN(this.Game.getVar('style_backcolor'))) {
-      this.style['background-color'] = this.Game.getVar('style_backcolor');
+      this.stylec = this.Game.getVar('style_backcolor');
     } else if (this.Game.getVar('style_backcolor') > 0) {
       var red = (this.Game.getVar('style_backcolor') >> 16) & 0xFF;
       var green = (this.Game.getVar('style_backcolor') >> 8) & 0xFF;
       var blue = this.Game.getVar('style_backcolor') & 0xFF;
 
-      this.style['background-color'] = 'rgb(' + blue + ', ' + green  + ', ' + red + ')';
+      this.style.style = `rgb(${blue}, ${green}, ${red})`;
     }
   }
 }
