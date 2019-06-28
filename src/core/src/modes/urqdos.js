@@ -33,6 +33,12 @@ function set(Player) {
         this.Game.realCurrentLoc = label.name;
       }
 
+      // todo контанты
+      if ((type === 'btn')) {
+        this.Game.setVar("previous_loc", this.Game.getVar("current_loc"));
+        this.Game.setVar("current_loc", labelName);
+      }
+
       if (type === "btn" || type === "goto" || type === "proc") {
         this.Game.setVar(
           "count_" + label.name,

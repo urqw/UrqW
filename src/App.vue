@@ -44,8 +44,9 @@ $widescreen: $desktop;
 }
 
 .main {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 100%;
 }
 </style>

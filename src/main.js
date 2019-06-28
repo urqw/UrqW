@@ -1,5 +1,6 @@
 import Vue from "vue";
-import { VueHammer } from "vue2-hammer"
+import VueMeta from "vue-meta";
+import { VueHammer } from "vue2-hammer";
 import App from "./App.vue";
 import router from "./router";
 import {i18n} from "./i18n";
@@ -35,6 +36,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(VueHammer);
+
+Vue.use(VueMeta);
 
 new Vue({
   router,

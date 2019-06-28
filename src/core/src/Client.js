@@ -10,10 +10,6 @@ export default class Client {
      * @type {Player} проигрыватель
      */
     this.Player = null;
-    /**
-     * @type {Game} инстанс игры
-     */
-    this.Game = null;
 
     this.status = Player.PLAYER_STATUS_NEXT;
 
@@ -28,16 +24,14 @@ export default class Client {
      */
     this.volume = 1;
 
+    /**
+     * @type {Game} инстанс игры
+     */
     this.Game = GameInstance;
     this.Player = this.Game.Player;
     this.Player.Client = this;
     this.Player.play();
-
-    if (this.Game.getVar('urq_mode')) {
-      this.Game.mode = this.Game.getVar('urq_mode');
-    }
-
-    this.Game.setMode();
+    this.Game.setMode(this.Game.getVar('urq_mode'));
     this.Player.fin();
   }
 
@@ -47,7 +41,7 @@ export default class Client {
   static createGame(questname, quest, resources, mode = "urqw") {
     let GameInstance = new Game(questname);
     GameInstance.files = resources;
-    GameInstance.mode = mode;
+    GameInstance.setVar("urq_mode", mode);
     GameInstance.init(quest);
 
     return new Client(GameInstance);
@@ -64,7 +58,22 @@ export default class Client {
    * рендер
    */
   render() {
-    this.text = this.Player.text;
+    // костыли для <img> тега
+    let text = this.Player.text;
+    for (let i = 0; i < text.length; i++) {
+      if (text[i].text !== undefined) {
+        let regex = /(<img[^>]+src=")([^">]+)"/i;
+        if (regex.test(text[i].text)) {
+          var src = text[i].text.match(regex)[2];
+          text[i].text = text[i].text.replace(
+            /(<img[^>]+src=")([^">]+)"/gi,
+            '$1' + this.Game.files[src] + "\""
+          );
+        }
+      }
+    }
+
+    this.text = text;
     this.buttons = this.Player.buttons;
     this.setBackColor();
   }
@@ -138,10 +147,12 @@ export default class Client {
    */
   static removeLinks (text) {
     for (let i = 0; i < text.length; i++) {
-      text[i].text = text[i].text.replace(
-        /\<a.+?\>(.+?)\<\/a\>/gi,
-        '$1'
-      );
+      if (text[i].text !== undefined) {
+        text[i].text = text[i].text.replace(
+          /\<a.+?\>(.+?)\<\/a\>/gi,
+          '$1'
+        );
+      }
     }
 
     return text;
@@ -229,13 +240,13 @@ export default class Client {
 
   setBackColor() {
     if (isNaN(this.Game.getVar('style_backcolor'))) {
-      this.style['background-color'] = this.Game.getVar('style_backcolor');
+      this.style.backgroundColor = this.Game.getVar('style_backcolor');
     } else if (this.Game.getVar('style_backcolor') > 0) {
       var red = (this.Game.getVar('style_backcolor') >> 16) & 0xFF;
       var green = (this.Game.getVar('style_backcolor') >> 8) & 0xFF;
       var blue = this.Game.getVar('style_backcolor') & 0xFF;
 
-      this.style['background-color'] = 'rgb(' + blue + ', ' + green  + ', ' + red + ')';
+      this.style.backgroundColor = `rgb(${blue}, ${green}, ${red})`;
     }
   }
 }
