@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="gameView" v-bind:style="backgroundStyle">
     <Navbar :page="currentPage" :Client="Client" @clickBtn="clickBtn" />
-    <div class="section" v-bind:style="backgroundStyle">
+    <div class="section">
       <div class="container">
         <template v-if="Client && currentPage === 'load'">
           <LoadGame :Client="Client" @clicked="onLoadClicked"></LoadGame>
@@ -184,3 +184,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.gameView {
+  flex-basis: 100%;
+  flex-grow: 1;
+}
+</style>

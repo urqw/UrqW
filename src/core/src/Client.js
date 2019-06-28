@@ -240,13 +240,13 @@ export default class Client {
 
   setBackColor() {
     if (isNaN(this.Game.getVar('style_backcolor'))) {
-      this.stylec = this.Game.getVar('style_backcolor');
+      this.style.backgroundColor = this.Game.getVar('style_backcolor');
     } else if (this.Game.getVar('style_backcolor') > 0) {
       var red = (this.Game.getVar('style_backcolor') >> 16) & 0xFF;
       var green = (this.Game.getVar('style_backcolor') >> 8) & 0xFF;
       var blue = this.Game.getVar('style_backcolor') & 0xFF;
 
-      this.style.style = `rgb(${blue}, ${green}, ${red})`;
+      this.style.backgroundColor = `rgb(${blue}, ${green}, ${red})`;
     }
   }
 }
