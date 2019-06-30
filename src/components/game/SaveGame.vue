@@ -9,69 +9,89 @@
         <span v-text="$t('returnToGame')"></span>
       </button>
     </div>
+
+    <button class="button uploadControl" @click="makeLocalSave">
+      <span class="icon">
+        <font-awesome-icon icon="download" />
+      </span>
+      <span v-text="$t('downloadSave')"></span>
+    </button>
+
     <SavesPanel :saves="saves" @clicked="clickSave($event)" />
   </div>
 </template>
 
 <script>
-import SavesPanel from "./SavesPanel";
+import SavesPanel from "../shared/SavesPanel";
+import { saveLoad } from "../shared/saveLoad";
 
 export default {
   name: "SaveGame",
-  data() {
-    return {
-      saves: [],
-    };
+
+  components: {
+    SavesPanel
   },
+
+  mixins: [saveLoad],
+
   mounted() {
     this.loadSaves();
   },
-  components: {
-    SavesPanel,
-  },
+
   methods: {
-    loadSaves() {
-      this.saves = Array(10)
-        .fill()
-        .map((_, i) => localStorage.getItem(`${this.Client.getGameName()}_${i + 1}_name`));
-    },
-    clickBtn(name) {
-      this.$emit("clicked", name);
-    },
     clickSave(id) {
       const data = this.Client.saveGame();
 
       if (data) {
-        const dateTime = new Date();
-
-        localStorage.setItem(
-          this.Client.getGameName() + "_" + id.toString() + "_name",
-          dateTime.toLocaleDateString() + " " + dateTime.toLocaleTimeString()
-        );
-        localStorage.setItem(
-          this.Client.getGameName() + "_" + id.toString() + "_data",
-          JSON.stringify(data)
-        );
+        this._writeSaveName(id, this._getSaveNameTimestamp());
+        this._writeSaveData(id, JSON.stringify(data));
 
         this.loadSaves();
 
-        this.clickBtn("returnToGame");
+        this.returnToGame();
       }
+    },
+
+    makeLocalSave() {
+      const data = JSON.stringify(this.Client.saveGame());
+      const href = this._getDownloadUrl(data);
+      const fileName = `${this.Client.getGameName()}_${this._getSaveNameTimestamp()}.urqwSave`;
+
+      this._createDownload(fileName, href);
+
+      window.URL.revokeObjectURL(href);
+    },
+
+    _getDownloadUrl(data) {
+      const blob = new Blob([data], { type: "octet/stream" });
+      return window.URL.createObjectURL(blob);
+    },
+
+    _createDownload(fileName, contents) {
+      const link = document.createElement("a");
+      link.style = "display: none;";
+      link.setAttribute("download", fileName);
+      link.setAttribute("href", contents);
+
+      document.body.append(link);
+      link.click();
+      document.body.removeChild(link);
     }
   },
-  props: {
-    Client: Object
-  }
 };
 </script>
 <style scoped>
-  .panel {
-    background-color: #fff;
-  }
-  .panel-block-back {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1em;
-  }
+.panel {
+  background-color: #fff;
+}
+.panel-block-back {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.uploadControl {
+  margin-bottom: 1em;
+}
 </style>

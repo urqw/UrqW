@@ -17,5 +17,7 @@
   "emptyGameSlot": "Empty save slot #{i}",
   "loadGame": "Load",
   "saveGame": "Save",
+  "downloadSave": "Save to file",
+  "uploadSave": "Upload save from file",
   "pressAnyKey": "Press any key"
 }

@@ -196,7 +196,7 @@ export default class Client {
    * @return {String}
    */
   getGameName() {
-    return this.Game.Name;
+    return this.Game.name;
   }
 
   /**
