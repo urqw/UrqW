@@ -1,6 +1,6 @@
 import Parser from "./Parser";
 import Client from "./Client";
-import { dosColorToHex } from "./tools";
+import { dosColorToHex, intColorToRgb } from "./tools";
 
 export default class Player {
   constructor(Game) {
@@ -47,8 +47,9 @@ export default class Player {
    * рендер
    */
   fin() {
-    if (this.Game.getVar("music"))
+    if (this.Game.getVar("music")) {
       this.playMusic(this.Game.getVar("music"), true);
+    }
 
     if (this.status !== Player.PLAYER_STATUS_NEXT) {
       this.Client.render();
@@ -329,6 +330,7 @@ export default class Player {
   /**
    * удаление переменных
    */
+  // TODO: move to Game
   perkill() {
     this.Game.vars = {};
 
@@ -355,14 +357,14 @@ export default class Player {
     this.Client.render();
   }
 
+  // TODO: move to Game
   invkill(item) {
     if (item != null) {
       this.Game.setItem(item, 0);
     } else {
-      Object.entries(this.Game.items, ([index, value]) => {
-        // TODO: for..of
-        this.Game.setItem(index, 0);
-      });
+      for (const key of Object.keys(this.Game.items)) {
+        this.Game.setItem(key, 0);
+      }
     }
   }
 
@@ -459,21 +461,18 @@ export default class Player {
    * @param {boolean} ln
    */
   print(text, ln) {
-    let textColor = null;
-    if (isNaN(this.Game.getVar("style_textcolor"))) {
-      textColor = this.Game.getVar("style_textcolor");
-    } else if (this.Game.getVar("style_textcolor") > 0) {
-      const red = (this.Game.getVar("style_textcolor") >> 16) & 0xff;
-      const green = (this.Game.getVar("style_textcolor") >> 8) & 0xff;
-      const blue = this.Game.getVar("style_textcolor") & 0xff;
-
-      textColor = `rgb(${blue}, ${green}, ${red})`;
+    let color = null;
+    const styleTextColor = this.Game.getVar("style_textcolor");
+    if (isNaN(styleTextColor)) {
+      color = styleTextColor;
+    } else if (styleTextColor > 0) {
+      color = intColorToRgb(styleTextColor);
     }
 
     this.text.push({
       text,
       ln,
-      color: textColor
+      color
     });
   }
 

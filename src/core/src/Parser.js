@@ -266,13 +266,14 @@ export default class Parser {
    * @returns {String}
    */
   openTags(line) {
-    line = line.replace(/#\/\$/g, Client.getLineBreakSymbol());
-    line = line.replace(/#%\/\$/g, Client.getLineBreakSymbol());
+    const breakSymbol = Client.getLineBreakSymbol();
+    line = line.replace(/#\/\$/g, breakSymbol);
+    line = line.replace(/#%\/\$/g, breakSymbol);
     line = line.replace(/#\$/g, " ");
     line = line.replace(/#%\$/g, " ");
 
     // ##$
-    line = line.replace(/##[^#]+?\$/g, function(exp) {
+    line = line.replace(/##[^#]+?\$/g, exp => {
       return "&#" + exp.substr(2, exp.length - 3) + ";";
     });
 
@@ -284,7 +285,7 @@ export default class Parser {
         } else {
           exp = exp.substr(1, exp.length - 2);
         }
-        var result = new Expression(exp, this.Player.Game).calc();
+        const result = new Expression(exp, this.Player.Game).calc();
 
         return isFloat(result) ? result.toFixed(2) : result;
       });
@@ -301,12 +302,12 @@ export default class Parser {
   openLinks(line) {
     while (line.search(/\[\[.+?\]\]/) !== -1) {
       line = line.replace(/\[\[.+?\]\]/, exp => {
-        var text;
-        var command;
+        let text;
+        let command;
         exp = exp.substr(2, exp.length - 4);
 
         if (exp.indexOf("|") > 0) {
-          var exptmp = exp.split("|");
+          const exptmp = exp.split("|");
           command = exptmp
             .slice(1)
             .join("|")

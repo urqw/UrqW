@@ -47,6 +47,14 @@ export function dosColorToHex(value) {
   }
 }
 
+export function intColorToRgb(color) {
+  const red = (color >> 16) & 0xff;
+  const green = (color >> 8) & 0xff;
+  const blue = color & 0xff;
+
+  return `rgb(${blue}, ${green}, ${red})`;
+}
+
 export function isFloat(n) {
   return n === Number(n) && n % 1 !== 0;
 }
