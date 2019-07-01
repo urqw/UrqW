@@ -10,7 +10,10 @@
       </button>
     </div>
 
-    <label class="file-label uploadControl">
+    <label class="file-label uploadControl dragZone" :class="{isDragging}" @drop="onDrop" @dragover="onDragOver" @dragleave="onDragLeave">
+      <div class="dragTarget">
+        <p v-text="$t('dropFile')" class="has-text-weight-bold has-text-centered"></p>
+      </div>
       <input
         class="file-input"
         accept=".urqwSave"
@@ -45,6 +48,12 @@ export default {
     SavesPanel
   },
 
+  data() {
+    return {
+      isDragging: false
+    };
+  },
+
   mounted() {
     this.loadSaves();
   },
@@ -60,8 +69,12 @@ export default {
       }
     },
 
-    async uploadSave(event) {
-      const saveContent = await readFilePromise(event.target.files[0], "text");
+    uploadSave(event) {
+      this.onFiles(event.target.files);
+    },
+
+    async onFiles(files) {
+      const saveContent = await readFilePromise(files[0], "text");
       try {
         const data = JSON.parse(saveContent);
         if (data) {
@@ -72,11 +85,28 @@ export default {
       } catch (e) {
         console.error(e); // eslint-disable-line no-console
       }
+    },
+
+    onDrop(event) {
+      const files = event.dataTransfer.files;
+      this.onFiles(files);
+      this.isDragging = true;
+      event.preventDefault();
+    },
+
+    onDragOver(event) {
+      this.isDragging = true;
+      event.preventDefault();
+    },
+
+    onDragLeave(event) {
+      this.isDragging = false;
+      event.preventDefault();
     }
   }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .panel {
   background-color: #fff;
 }
@@ -88,5 +118,26 @@ export default {
 }
 .uploadControl {
   margin-bottom: 1em;
+}
+
+.dragZone {
+  position: relative;
+}
+.dragTarget {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: whitesmoke;
+  color: #363636;
+  z-index: 10;
+}
+.isDragging {
+  .dragTarget {
+    opacity: 1;
+  }
 }
 </style>

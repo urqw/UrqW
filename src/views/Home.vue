@@ -5,7 +5,7 @@
 
       <Message :msg="message" v-if="message" />
 
-      <LoadGame />
+      <UploadGame />
 
       <GameList />
     </div>
@@ -16,7 +16,7 @@
 // @ is an alias to /src
 import Message from "@/components/home/Message.vue";
 import Logo from "@/components/home/Logo.vue";
-import LoadGame from "@/components/home/LoadGame.vue";
+import UploadGame from "@/components/home/UploadGame.vue";
 import GameList from "@/components/home/GameList.vue";
 
 export default {
@@ -24,7 +24,7 @@ export default {
   components: {
     Message,
     Logo,
-    LoadGame,
+    UploadGame,
     GameList
   },
   data() {
