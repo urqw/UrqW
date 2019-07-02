@@ -1,6 +1,10 @@
 <template>
   <Popup :open="open" :title="$t('settingsTitle')" @cancel="$emit('cancel')">
     <template slot="body">
+      <p>
+        {{ $t("homePage") }}
+        <a :href="homepage" target="_blank">{{ homepage }}</a>
+      </p>
       <div class="field">
         <p class="help">
           {{ $t("settingsLang") }}
@@ -24,6 +28,7 @@
 
 <script>
 import LangFlag from "vue-lang-code-flags";
+import { homepage } from "../../../package.json";
 import Popup from "./Popup";
 import { availableLanguages, loadLanguageAsync } from "../../i18n";
 
@@ -44,6 +49,7 @@ export default {
 
   data() {
     return {
+      homepage,
       availableLanguages,
     };
   },
