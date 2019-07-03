@@ -72,9 +72,8 @@ export default {
       if (!this.Client) {
         return "volume-up";
       }
-
       const volumeIndex = VOLUMES.findIndex(
-        volume => volume === this.Client.volume
+        volume => volume === this.Client.getVolume()
       );
 
       if (volumeIndex === -1) {

@@ -1,4 +1,4 @@
-import Quest from "@/core/src/Quest.js";
+import Quest from "@/core/built/src/Quest.js";
 
 const fixture = `
 
@@ -60,10 +60,10 @@ describe("core/Quest", () => {
   const quest = new Quest(fixture);
 
   it("properly returns labels", () => {
-    expect(quest.getLabel("flirt1")).toEqual({ name: "flirt1", pos: 32 });
+    expect(quest.getLabelPosition("flirt1")).toEqual(32);
     // case-insensitive
-    expect(quest.getLabel("FliRt1")).toEqual({ name: "flirt1", pos: 32 });
-    expect(quest.getLabel("there_s_no_such_label")).toEqual(false);
+    expect(quest.getLabelPosition("FliRt1")).toEqual(32);
+    expect(quest.getLabelPosition("there_s_no_such_label")).toEqual(null);
   });
 
   it("properly returns lines by number", () => {

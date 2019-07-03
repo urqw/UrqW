@@ -41,7 +41,7 @@ export default {
     clickSave(id) {
       const data = this.Client.saveGame();
 
-      if (data) {
+      if (data !== null) {
         const dateTime = new Date();
 
         localStorage.setItem(

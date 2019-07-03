@@ -1,5 +1,5 @@
 <template>
-  <div class="gameView" v-bind:style="backgroundStyle">
+  <div class="gameView" v-bind:style="gameStyle">
     <Navbar :page="currentPage" :Client="Client" @clickBtn="clickBtn" />
     <div class="section">
       <div class="container">
@@ -57,7 +57,7 @@ export default {
       /** @var {Client} Client **/
       Client: null,
       currentPage: "game",
-      backgroundStyle: {},
+      gameStyle: {},
       styles: [],
       scripts: []
     };
@@ -85,12 +85,12 @@ export default {
 
       LoaderInstance.loadZipFromLocalFolder(this.questName).then(client => {
         this.Client = client;
-        this.backgroundStyle = this.Client.style;
-        this.processCustomResources(this.Client.Game.files);
+        this.gameStyle = this.Client.style;
+        this.processCustomResources(this.Client.Game.resources);
       });
     } else {
       this.Client = this.$route.params.Client;
-      this.backgroundStyle = this.Client.style;
+      this.gameStyle = this.Client.style;
     }
   },
   methods: {
