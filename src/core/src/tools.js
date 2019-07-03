@@ -47,6 +47,14 @@ export function dosColorToHex(value) {
   }
 }
 
+export function intColorToRgb(color) {
+  const red = (color >> 16) & 0xff;
+  const green = (color >> 8) & 0xff;
+  const blue = color & 0xff;
+
+  return `rgb(${blue}, ${green}, ${red})`;
+}
+
 export function isFloat(n) {
   return n === Number(n) && n % 1 !== 0;
 }
@@ -69,3 +77,25 @@ export const MIME = {
   midi: "audio/midi",
   mp3: "audio/mp3"
 };
+
+/**
+ * @param {Blob} blob
+ * @param {string} mode
+ * @param {string} encoding
+ * @return {Promise<BufferSource | Blob | string>}
+ * @private
+ */
+export function readFilePromise(blob, mode, encoding = "utf8") {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+
+    if (mode === "binaryString") {
+      reader.readAsBinaryString(blob);
+    } else if (mode === "arrayBuffer") {
+      reader.readAsArrayBuffer(blob);
+    } else if (mode === "text") {
+      reader.readAsText(blob, encoding);
+    }
+  });
+}

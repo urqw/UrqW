@@ -1,16 +1,9 @@
 import Player from "./Player";
 import Game from "./Game";
+import { intColorToRgb } from "./tools";
 
 export default class Client {
-  /**
-   * @constructor
-   */
   constructor(GameInstance) {
-    /**
-     * @type {Player} проигрыватель
-     */
-    this.Player = null;
-
     this.status = Player.PLAYER_STATUS_NEXT;
 
     this.text = [];
@@ -28,10 +21,15 @@ export default class Client {
      * @type {Game} инстанс игры
      */
     this.Game = GameInstance;
+
+    /**
+     * @type {Player} проигрыватель
+     */
     this.Player = this.Game.Player;
+
     this.Player.Client = this;
     this.Player.play();
-    this.Game.setMode(this.Game.getVar('urq_mode'));
+    this.Game.setMode(this.Game.getVar("urq_mode"));
     this.Player.fin();
   }
 
@@ -39,7 +37,7 @@ export default class Client {
    * инстанс новой игры
    */
   static createGame(questname, quest, resources, mode = "urqw") {
-    let GameInstance = new Game(questname);
+    const GameInstance = new Game(questname);
     GameInstance.files = resources;
     GameInstance.setVar("urq_mode", mode);
     GameInstance.init(quest);
@@ -131,7 +129,7 @@ export default class Client {
    */
   static getLineBreakSymbol() {
     return "<br>";
-  };
+  }
 
   /**
    * превратить текст и комманду в <a> тег
@@ -140,12 +138,12 @@ export default class Client {
    */
   static generateLink(text, action) {
     return "<a data-action='" + action + "'>" + text + "</a>";
-  };
+  }
 
   /**
    * @param {Array} text
    */
-  static removeLinks (text) {
+  static removeLinks(text) {
     for (let i = 0; i < text.length; i++) {
       if (text[i].text !== undefined) {
         text[i].text = text[i].text.replace(
@@ -156,7 +154,7 @@ export default class Client {
     }
 
     return text;
-  };
+  }
 
   /**
    * @return {Boolean}
@@ -198,7 +196,7 @@ export default class Client {
    * @return {String}
    */
   getGameName() {
-    return this.Game.Name;
+    return this.Game.name;
   }
 
   /**
@@ -226,7 +224,7 @@ export default class Client {
   }
 
   /**
-   * @return {Client}
+   * @return {Client|boolean}
    */
   restartGame() {
     if (this.Player.status === Player.PLAYER_STATUS_NEXT) {
@@ -239,14 +237,11 @@ export default class Client {
   }
 
   setBackColor() {
-    if (isNaN(this.Game.getVar('style_backcolor'))) {
-      this.style.backgroundColor = this.Game.getVar('style_backcolor');
-    } else if (this.Game.getVar('style_backcolor') > 0) {
-      var red = (this.Game.getVar('style_backcolor') >> 16) & 0xFF;
-      var green = (this.Game.getVar('style_backcolor') >> 8) & 0xFF;
-      var blue = this.Game.getVar('style_backcolor') & 0xFF;
-
-      this.style.backgroundColor = `rgb(${blue}, ${green}, ${red})`;
+    const backColor = this.Game.getVar("style_backcolor");
+    if (isNaN(backColor)) {
+      this.style.backgroundColor = backColor;
+    } else if (backColor > 0) {
+      this.style.backgroundColor = intColorToRgb(backColor);
     }
   }
 }

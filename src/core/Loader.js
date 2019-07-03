@@ -3,16 +3,13 @@ import ZipUtils from "jszip-utils";
 import Client from "@/core/src/Client";
 import UniversalDetector from "jschardet";
 import IconvLite from "iconv-lite";
-import { getExt, MIME } from "./src/tools";
+import { getExt, MIME, readFilePromise } from "./src/tools";
 
 function isTextType(fileName) {
   return ["qst", "css", "js"].includes(getExt(fileName));
 }
 
 export default class Loader {
-  /**
-   * @constructor
-   */
   constructor() {
     /**
      * @type {string}
@@ -127,9 +124,9 @@ export default class Loader {
 
       for (let file of Array.from(files)) {
         if (isTextType(file.name)) {
-          loadedFiles[file.name] = await Loader._readFilePromise(file, "binaryString");
+          loadedFiles[file.name] = await readFilePromise(file, "binaryString");
         } else {
-          const result = await Loader._readFilePromise(file, "arrayBuffer");
+          const result = await readFilePromise(file, "arrayBuffer");
           loadedFiles[file.name] = URL.createObjectURL(
             new Blob([result], {
               type: MIME[getExt(file.name)]
@@ -149,24 +146,5 @@ export default class Loader {
    */
   static _hasUnderscore(fileName) {
     return fileName.startsWith("_") || fileName.includes("/_");
-  }
-
-  /**
-   * @param {Blob} blob
-   * @param {string} mode
-   * @return {Promise<BufferSource | Blob | string>}
-   * @private
-   */
-  static _readFilePromise(blob, mode) {
-    return new Promise(resolve => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-
-      if (mode === "binaryString") {
-        reader.readAsBinaryString(blob);
-      } else if (mode === "arrayBuffer") {
-        reader.readAsArrayBuffer(blob);
-      }
-    });
   }
 }

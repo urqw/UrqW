@@ -1,6 +1,7 @@
 {
   "loadGameHeader": "Load the game (select ALL additional files, if there's any):",
-  "chooseFile": "Choose file…",
+  "chooseFile": "Choose file or drag'n'drop it here",
+  "dropFile": "Drop file(s) here",
   "noSpecialRules": "Do not apply special rules",
   "chooseGame": "Or pick a game from the list:",
   "image": "Image",
@@ -9,6 +10,7 @@
   "close": "Close",
   "settingsTitle": "Settings",
   "settingsLang": "Language",
+  "homePage": "Home page:",
   "returnToGame": "Return to game",
   "inventory": "Inventory",
   "restartGameRequest": "Restart the game?",
@@ -17,5 +19,7 @@
   "emptyGameSlot": "Empty save slot #{i}",
   "loadGame": "Load",
   "saveGame": "Save",
+  "downloadSave": "Save to file",
+  "uploadSave": "Upload save from file",
   "pressAnyKey": "Press any key"
 }

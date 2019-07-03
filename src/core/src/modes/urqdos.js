@@ -1,4 +1,4 @@
-function set(Player) {
+export default function set(Player) {
   /**
    * следующая строка
    */
@@ -8,7 +8,7 @@ function set(Player) {
     this.Game.position++;
 
     // вырезать комментарий
-    if (line.indexOf(";") !== -1) {
+    if (line.includes(";")) {
       line = line.substring(0, line.indexOf(";"));
     }
 
@@ -26,15 +26,15 @@ function set(Player) {
    * @param {string} type
    */
   Player.prototype.goto = function(labelName, type) {
-    var label = this.Quest.getLabel(labelName);
+    const label = this.Quest.getLabel(labelName);
 
     if (label) {
       if (type !== "proc") {
         this.Game.realCurrentLoc = label.name;
       }
 
-      // todo контанты
-      if ((type === 'btn')) {
+      // TODO конcтанты
+      if (type === "btn") {
         this.Game.setVar("previous_loc", this.Game.getVar("current_loc"));
         this.Game.setVar("current_loc", labelName);
       }
@@ -59,5 +59,3 @@ function set(Player) {
 
   return Player;
 }
-
-export default set;
