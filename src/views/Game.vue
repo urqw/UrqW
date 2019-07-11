@@ -13,6 +13,12 @@
           <Content :content="Client.text" @click.native="linkClicked" />
           <Buttons :buttons="Client.buttons" @clicked="buttonClicked" />
           <Info />
+          <Inventory :isActive="isInventoryOpened"
+                     :items="Client.inventory"
+                     @close="isInventoryOpened = false"
+                     @toggle="isInventoryOpened = !isInventoryOpened"
+                     @action="Client.inventoryAction($event)"
+          />
         </template>
         <template v-if="Client && Client.isStatusInput()">
           <Input @inputDone="inputDone" />
@@ -26,6 +32,7 @@
 </template>
 
 <script>
+import Inventory from "@/components/game/Inventory.vue";
 import Navbar from "@/components/game/Navbar.vue";
 import Buttons from "@/components/game/Buttons.vue";
 import Content from "@/components/game/Content.vue";
@@ -41,6 +48,7 @@ import { VOLUMES } from "@/const.js";
 export default {
   name: "game",
   components: {
+    Inventory,
     Navbar,
     Buttons,
     Content,
@@ -52,6 +60,7 @@ export default {
   },
   data() {
     return {
+      isInventoryOpened: false,
       questName: this.$route.params.name,
       mode: this.$route.params.mode,
       /** @var {Client} Client **/
@@ -86,7 +95,7 @@ export default {
       LoaderInstance.loadZipFromLocalFolder(this.questName).then(client => {
         this.Client = client;
         this.gameStyle = this.Client.style;
-        this.processCustomResources(this.Client.Game.resources);
+        this.processCustomResources(this.Client.resources);
       });
     } else {
       this.Client = this.$route.params.Client;
@@ -151,10 +160,7 @@ export default {
         this.currentPage = "game";
       } else if (name === "restartGame") {
         if (confirm(this.$t("restartGameRequest"))) {
-          let NewClient = this.Client.restartGame();
-          if (NewClient) {
-            this.Client = NewClient;
-          }
+          this.Client.restartGame();
         }
       } else if (name === "switchVolume") {
         const currentVolumeIndex = VOLUMES.findIndex(

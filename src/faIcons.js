@@ -13,6 +13,8 @@ import { faFolderOpen } from "@fortawesome/free-solid-svg-icons/faFolderOpen";
 import { faCog } from "@fortawesome/free-solid-svg-icons/faCog";
 import { faUpload } from "@fortawesome/free-solid-svg-icons/faUpload";
 import { faDownload } from "@fortawesome/free-solid-svg-icons/faDownload";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons/faChevronDown";
+import { faChevronUp } from "@fortawesome/free-solid-svg-icons/faChevronUp";
 
 library.add(
   faArrowAltCircleLeft,
@@ -24,7 +26,9 @@ library.add(
   faFolderOpen,
   faCog,
   faUpload,
-  faDownload
+  faDownload,
+  faChevronDown,
+  faChevronUp,
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
