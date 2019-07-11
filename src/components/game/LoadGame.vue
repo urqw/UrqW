@@ -37,7 +37,7 @@
 <script>
 import SavesPanel from "../shared/SavesPanel";
 import { saveLoad } from "../shared/saveLoad";
-import { readFilePromise } from "../../core/src/tools";
+import { readFilePromise } from "../../core/tools";
 
 export default {
   name: "LoadGame",

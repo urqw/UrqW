@@ -1,9 +1,9 @@
 import JSZip from "jszip";
 import ZipUtils from "jszip-utils";
-import Client from "@/core/src/Client";
+import Client from "@urqw/core/dist/clients/WebClient";
 import UniversalDetector from "jschardet";
 import IconvLite from "iconv-lite";
-import { getExt, MIME, readFilePromise } from "./src/tools";
+import { getExt, MIME, readFilePromise } from "./tools";
 
 function isTextType(fileName) {
   return ["qst", "css", "js"].includes(getExt(fileName));
@@ -81,7 +81,7 @@ export default class Loader {
         quest += `\r\n${result}`;
       });
 
-      return Client.createGame(this.questname, quest, resources, this.mode);
+      return new Client(this.questname, quest, resources, this.mode);
     } else {
       throw new Error("URQ quest not found");
     }

@@ -19,6 +19,7 @@ $fullhd: $desktop;
 $widescreen: $desktop;
 
 @import "~bulma/bulma.sass";
+@import "~bulma-quickview/src/sass/index.sass";
 
 /*@import "assets/css/style.css";*/
 </style>
