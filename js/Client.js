@@ -186,7 +186,7 @@ Client.prototype.drawButtons = function () {
 
     $.each(GlobalPlayer.buttons, function(index, button) {
         if (button) {
-            var buttonCtrl = $('<button class="list-group-item button">').attr('data-action', button.id).html(button.desc);
+            var buttonCtrl = $('<button class="list-group-item button" tabindex="0" role="link">').attr('data-action', button.id).html(button.desc);
 
             me.crtlButtonField.append(buttonCtrl);
         }
@@ -296,7 +296,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
  * @param {int} action
  */
 Client.prototype.convertToLink = function(text, action) {
-    return "<a data-action='" + action + "' class='button'>" + text + "</a>";
+    return "<a data-action='" + action + "' class='button' tabindex='0' role='link'>" + text + "</a>";
 };
 
 /**
