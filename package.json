@@ -1,0 +1,27 @@
+{
+  "name": "urqw",
+  "version": "1.0.0",
+  "description": "you can play urq-quests with it",
+  "main": "index.html",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "akela <tinycoyote@gmail.com>",
+  "license": "GPL2",
+  "keywords": [
+    "urq",
+    "quest",
+    "text-quest",
+    "parser",
+    "interpreter"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "jquery": "^2.1.4",
+    "jszip": "^2.7.0",
+    "jszip-utils": "^0.0.2"
+  }
+}

@@ -197,27 +197,14 @@ Client.prototype.drawButtons = function () {
  * Нарисовать инвентарь
  */
 Client.prototype.drawInventory = function () {
+    var me = this;
     this.crtlInventory.empty();
     this.crtlInventory.append(this.drawItem('inv', 1));
 
     // обновляем список предметов
-    var actions = GlobalPlayer.getUseActions();
-    for (var itemName in actions) {
-        if (actions[itemName].length == 1 && actions[itemName][0].name == '' && itemName != 'inv') {
-            var a = $('<a href="#" class="item_use">').attr('data-label', actions[itemName][0].action).text(itemName);
-            a.html('<span class="glyphicon glyphicon-cog"></span> ' + a.text());
-
-            this.crtlInventory.append($('<li>').append(a));
-            break;
-        } else {
-            for (var i = 0; i < actions[itemName].length; i++) {
-                if (actions[itemName][i].quantity > 1) {
-                    actions[itemName][i].name = actions[itemName][i].name + ' (' + actions[itemName][i].quantity + ')';
-                }
-
-            }
-        }
-    }
+    $.each(Game.items, function(itemName, quantity) {
+        me.crtlInventory.append(me.drawItem(itemName, quantity));
+    });
     
     if (this.crtlInventory.find('> li').length == 0) {
         this.crtlInventory.append('<li><a href="#" class="item_use">(Пусто)</a></li>');

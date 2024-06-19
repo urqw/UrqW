@@ -200,6 +200,10 @@ $(function() {
      * Отлов нажатия клавиш
      */
     $(document).keydown(function(e){
+        if (GlobalPlayer == null) {
+            return;
+        }
+
         if (GlobalPlayer.status == PLAYER_STATUS_END) {
             if (e.keyCode == 38 || e.keyCode == 40) {
                 var active = 0;
@@ -239,6 +243,10 @@ $(function() {
     });
 
     $(document).keydown(function(e){
+        if (GlobalPlayer == null) {
+            return;
+        }
+
         if (GlobalPlayer.status == PLAYER_STATUS_END) {
             if (e.keyCode == 13) {
                 buttonField.find('button').each(function(index) {
