@@ -11,7 +11,7 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
 
 ### Установка:
  * Скачать отсюда https://github.com/narmiel/UrqW/releases веб или stand-alone версию
- * https://build.phonegap.com/apps/2457271/builds - android / windows phone
+~~* https://build.phonegap.com/apps/2457271/builds - android / windows phone~~
 
 ### Текущая цель:
  * ~~совместимость с большинством игр под досурку~~ (выполнено)
@@ -34,5 +34,6 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
  * http://forum.ifiction.ru/viewtopic.php?id=2138 - тема на форуме иффикшн про UrqW
  * http://urq.borda.ru/?1-0-0-00000495-000-0-0-1444755056 - тема на форуме urq про UrqW
  * http://rilarhiv.ru/urq.htm - библиотека urq игр
- * https://client01.chat.mibbit.com/?url=irc%3A%2F%2Firc.forestnet.org%3A6662%2F%23urq - чат об urq и не только, где ответят на любые ваши вопросы
+ * ~~https://client01.chat.mibbit.com/?url=irc%3A%2F%2Firc.forestnet.org%3A6662%2F%23urq - чат об urq и не только, где ответят на любые ваши вопросы~~
  * https://github.com/narmiel/UrqW/issues - сюда писать о ошибках и пожеланиях
+ * https://discord.com/invite/P53ZhN5hEA - дискорд 
