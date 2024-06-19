@@ -6,7 +6,7 @@ UrqW это не онлайн интерпретатор. Её можно ска
 ~~https://github.com/urqw/UrqW/releases - по этой ссылке можно найти уже собранные версии, чтобы не ставить ничего дополнительно.~~
 
 ### Онлайн версии:
- * http://urqw.github.io/UrqW/ - версия от разработчика(ов) проекта (русский и английский языки)
+ * https://urqw.github.io/UrqW/ - версия от разработчика(ов) проекта (русский и английский языки)
  * http://il.ideahost.by/game/UrqW-gh-pages/ - версия от Veresk'а (белорусский язык)
 
 ~~### Установка:~~
@@ -27,7 +27,7 @@ UrqW это не онлайн интерпретатор. Её можно ска
  * пул реквесты с исправлениями
 
 ### Документация:
- * http://urqw.github.io/UrqW/docs/urql.html - описание urq language
+ * https://urqw.github.io/UrqW/docs/urql.html - описание urq language
 
 ### Ссылки:
  * http://urq.plut.info/ - сайт urq
