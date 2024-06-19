@@ -3,14 +3,14 @@
 UrqW это не онлайн интерпретатор. Её можно скачать и запускать, например, с флешки без интернета.
 Можно разместить на своём сайте (пока только в отдельной подпапке), добавить в список свои игры и давать друзьям ссылку чтобы они поиграли.
 Когда вы загружаете игру в UrqW (даже в моей онлайн-версии) никому ничего не отправляется. Загрузка и прогрывание происходит локально в браузере. Все сохранения браузер также держит локально.
-https://github.com/narmiel/UrqW/releases - по этой ссылке можно найти уже собранные версии, чтобы не ставить ничего дополнительно.
+~~https://github.com/urqw/UrqW/releases - по этой ссылке можно найти уже собранные версии, чтобы не ставить ничего дополнительно.~~
 
 ### Онлайн версии:
- * http://narmiel.github.io/UrqW/ - версия от разработчика проекта (русский и английский языки)
+ * http://urqw.github.io/UrqW/ - версия от разработчика(ов) проекта (русский и английский языки)
  * http://il.ideahost.by/game/UrqW-gh-pages/ - версия от Veresk'а (белорусский язык)
 
-### Установка:
- * Скачать отсюда https://github.com/narmiel/UrqW/releases веб или stand-alone версию
+~~### Установка:~~
+~~* Скачать отсюда https://github.com/urqw/UrqW/releases веб или stand-alone версию~~
 ~~* https://build.phonegap.com/apps/2457271/builds - android / windows phone~~
 
 ### Текущая цель:
@@ -19,7 +19,7 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
 
 ### FAQ:
  * Как закачать игру в онлайн каталог?
- * Прислать мне её на почту, akela88 [@] bk.ru, я её добавлю. Если речь идёт о том, как добавить игру в репозиторий на своём сайте, то нужно положить квест в папку quests и отредактировать файл games.json (смотрите примеры тут https://github.com/narmiel/UrqW/archive/gh-pages.zip)
+ * Прислать мне её на почту, akela88 [@] bk.ru, я её добавлю. Если речь идёт о том, как добавить игру в репозиторий на своём сайте, то нужно положить квест в папку quests и отредактировать файл games.json
  
 ### Чем помочь проекту?
  * issue с описанием найденых багов
@@ -27,7 +27,7 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
  * пул реквесты с исправлениями
 
 ### Документация:
- * http://narmiel.github.io/UrqW/docs/urql.html - описание urq language
+ * http://urqw.github.io/UrqW/docs/urql.html - описание urq language
 
 ### Ссылки:
  * http://urq.plut.info/ - сайт urq
@@ -35,5 +35,5 @@ https://github.com/narmiel/UrqW/releases - по этой ссылке можно
  * http://urq.borda.ru/?1-0-0-00000495-000-0-0-1444755056 - тема на форуме urq про UrqW
  * http://rilarhiv.ru/urq.htm - библиотека urq игр
  * ~~https://client01.chat.mibbit.com/?url=irc%3A%2F%2Firc.forestnet.org%3A6662%2F%23urq - чат об urq и не только, где ответят на любые ваши вопросы~~
- * https://github.com/narmiel/UrqW/issues - сюда писать о ошибках и пожеланиях
+ * https://github.com/urqw/UrqW/issues - сюда писать о ошибках и пожеланиях
  * https://discord.com/invite/P53ZhN5hEA - дискорд 
