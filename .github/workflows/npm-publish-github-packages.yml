@@ -28,10 +28,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
       - run: npm ci
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -39,10 +35,11 @@ jobs:
           # Upload entire repository
           path: '.'
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
