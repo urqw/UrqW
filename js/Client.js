@@ -201,7 +201,7 @@ Client.prototype.drawButtons = function () {
 
     $.each(GlobalPlayer.buttons, function(index, button) {
         if (button) {
-            var buttonCtrl = $('<button class="list-group-item button" tabindex="0" role="link">').attr('data-action', button.id).html(button.desc);
+            var buttonCtrl = $('<button class="list-group-item button">').attr('data-action', button.id).html(button.desc);
 
             me.crtlButtonField.append(buttonCtrl);
         }
