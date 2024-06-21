@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2017 Akela <akela88@bk.ru>
+ * Copyright (C) 2015, 2017 Akela <akela88@bk.ru>
  *
  * This file is part of UrqW.
  *
