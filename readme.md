@@ -5,18 +5,18 @@
 * UrqW это не онлайн-интерпретатор. Её можно скачать и запускать, например, с флешки без интернета.
 * Можно разместить на своём сайте (пока только в отдельной подпапке), добавить в список свои игры и давать друзьям ссылку, чтобы они поиграли.
 * Когда вы загружаете игру в UrqW (даже в моей онлайн-версии), никому ничего не отправляется. Загрузка и проигрывание происходит локально в браузере. Все сохранения браузер также держит локально.
-* https://github.com/urqw/UrqW/releases - по этой ссылке можно найти уже собранные версии, чтобы не ставить ничего дополнительно.
+* [На странице релизов в GitHub](https://github.com/urqw/UrqW/releases) можно найти уже собранные версии, чтобы не ставить ничего дополнительно.
 * UrqW поддерживает плагины, которые практически безгранично расширяют возможности движка или меняют его внешний вид.
 
 ## Онлайн-версии
 
-* https://urqw.github.io/UrqW/ - версия от разработчика(ов) проекта (русский и английский языки)
-* http://il.ideahost.by/game/UrqW-gh-pages/ - версия от Veresk'а (белорусский язык)
+* [Версия от разработчика(ов) проекта (игры на русском и английском языках)](https://urqw.github.io/UrqW/)
+* [Версия от Veresk'а (игры на белорусском языке)](http://il.ideahost.by/game/UrqW-gh-pages/)
 
-## Установка
+## Приложения
 
-* Скачать отсюда https://github.com/urqw/UrqW/releases веб или stand-alone версию
-* https://build.phonegap.com/apps/2457271/builds - сборка для Android и Windows Phone
+* [Страница загрузки веб или stand-alone версии для Windows](https://github.com/urqw/UrqW/releases)
+* [Страница загрузки сборки для Android и Windows Phone](https://build.phonegap.com/apps/2457271/builds)
 
 ## Текущие цели
 
@@ -36,15 +36,15 @@
 
 ## Документация
 
-* https://urqw.github.io/UrqW/docs/urql.html - описание URQ language.
+* [Описание URQ language](https://urqw.github.io/UrqW/docs/urql.html)
 
 ## Ссылки
 
-* http://urq.plut.info/ - сайт URQ
-* http://forum.ifiction.ru/viewtopic.php?id=2138 - тема на форуме iFiction про UrqW
-* http://urq.borda.ru/?1-0-0-00000495-000-0-0-1444755056 - тема на форуме URQ про UrqW
-* https://ifwiki.ru/Категория:Игры_на_URQ категория игр на URQ в базе знаний IFВики
-* http://rilarhiv.ru/urq.htm - библиотека URQ-игр
-* https://github.com/urqw/UrqW/issues - сюда писать о ошибках и пожеланиях
-* https://client01.chat.mibbit.com/?url=irc%3A%2F%2Firc.forestnet.org%3A6662%2F%23urq - чат об URQ и не только, где ответят на любые ваши вопросы
-* https://discord.com/invite/P53ZhN5hEA - чат в Discord
+* [Сайт URQ](http://urq.plut.info/)
+* [Тема на форуме iFiction.Ru про UrqW](http://forum.ifiction.ru/viewtopic.php?id=2138)
+* [Тема на форуме URQ про UrqW](http://urq.borda.ru/?1-0-0-00000495-000-0-0-1444755056)
+* [Категория игр на URQ в базе знаний IFВики](https://ifwiki.ru/Категория:Игры_на_URQ)
+* [URQ-игры в РИЛ-архиве](http://rilarhiv.ru/urq.htm)
+* [Сюда писать о ошибках и пожеланиях](https://github.com/urqw/UrqW/issues)
+* [Чат об URQ и не только, где ответят на любые ваши вопросы](https://client01.chat.mibbit.com/?url=irc%3A%2F%2Firc.forestnet.org%3A6662%2F%23urq)
+* [Чат в Discord](https://discord.com/invite/P53ZhN5hEA)
