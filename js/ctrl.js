@@ -42,6 +42,7 @@ $(function() {
         });
 
         $('#saveslots').show();
+        returnToGame.focus();
 
         return false;
     });
@@ -107,6 +108,7 @@ $(function() {
         });
 
         $('#saveslots').show();
+        returnToGame.focus();
 
         return false;
     });
@@ -170,6 +172,7 @@ $(function() {
     returnToGame.on('click', function() {
         $('#saveslots').hide();
         $('#game').show();
+        $('#load').focus();
     });
 
     /**
