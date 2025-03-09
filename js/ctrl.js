@@ -115,19 +115,19 @@ $(function() {
         var span = $(this).find('span.glyphicon');
 
         if (volume == 1) {
-            span.find('span.sr-only').text('Выключить звук');
+            $(this).attr('aria-label', 'Выключить звук');
             volume = 2;
             gameMusic.volume = 0.5;
             span.removeClass('glyphicon-volume-up');
             span.addClass('glyphicon-volume-down');
         } else if (volume == 2) {
-            span.find('span.sr-only').text('Вернуть громкость 100%');
+            $(this).attr('aria-label', 'Вернуть громкость 100%');
             volume = 3;
             gameMusic.volume = 0;
             span.removeClass('glyphicon-volume-down');
             span.addClass('glyphicon-volume-off');
         } else if (volume == 3) {
-            span.find('span.sr-only').text('Убавить звук');
+            $(this).attr('aria-label', 'Убавить звук');
             volume = 1;
             gameMusic.volume = 1;
             span.removeClass('glyphicon-volume-off');
