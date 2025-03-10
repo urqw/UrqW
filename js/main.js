@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015, 2016 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -120,7 +121,10 @@ $(function() {
             url: 'games.json',
             dataType: "json"
         }).done(function(quests) {
+            var date;
+            var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             for (var i = 0; i < quests.length; i++) {
+                date = new Date(quests[i].date);
                 $('.gamelist').append(
                     '<a href="#" class="list-group-item gamelink" data-game="' + quests[i].folder + '">' +
                     '<div class="pull-right">' +
@@ -128,6 +132,7 @@ $(function() {
                     '</div>' +
                     '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
                     '<p class="list-group-item-text">' + quests[i].description + '</p>' +
+                    '<p class="list-group-item-text">(' + date.toLocaleDateString(undefined, dateOptions) + ')</p>' +
                     '</a>'
                 );
             }
