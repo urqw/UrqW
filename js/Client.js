@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015, 2016 Akela <akela88@bk.ru>
+ * Copyright (C) 2024, 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -163,7 +164,17 @@ Client.prototype.drawText = function () {
         me.crtlTextField.append(div);
 
         if (text[1]) {
-            me.crtlTextField.append('<div class="clearfix">');
+            /**
+             * Из-за специфики нестандартной вёрстки текстовой выдачи, когда
+             * все строки выводятся как div с отображением inline и отдельными
+             * пустыми div для переносов, программы экранного доступа
+             * (screen readers) представляют весь текст без переносов строк.
+             * Роль paragraph для div, выполняющего функцию переноса,
+             * обеспечивает обходной путь (костыль) для решения этой проблемы
+             * без внесения более существенных изменений. В будущем желательно
+             * переработать всю вёрстку текста на основе стандартных абзацев.
+             */
+            me.crtlTextField.append('<div role="paragraph" class="clearfix">');
         }
 
         if (text.rendered == undefined) {
