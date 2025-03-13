@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015, 2016, 2018 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -225,9 +226,14 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
     }
 
-    if (variable == 'time') {
+    if (variable == 'date' || variable == 'time') {
         var Datetime = new Date();
-        return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
+        switch (variable) {
+            case 'date':
+                return Math.floor(Datetime.getTime() / (1000*60*60*24));
+            case 'time':
+                return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
+        }
     }
 
     // Для выражений вроде "1 деньги"
