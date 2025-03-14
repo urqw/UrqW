@@ -226,14 +226,15 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
     }
 
-    if (variable == 'date' || variable == 'time') {
+    if (variable == 'time') {
         var Datetime = new Date();
-        switch (variable) {
-            case 'date':
-                return Math.floor(Datetime.getTime() / (1000*60*60*24));
-            case 'time':
-                return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
-        }
+        return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
+    }
+
+    // Теоретически в старых играх переменная date может использоваться как пользовательская, поэтому поддерживаем только без специальных правил urq_mode
+    if (variable == 'date' && !(this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq')) {
+        var Datetime = new Date();
+        return Math.floor(Datetime.getTime() / (1000*60*60*24));
     }
 
     // Для выражений вроде "1 деньги"
