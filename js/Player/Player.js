@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -255,7 +256,13 @@ Player.prototype.setVar = function(variable, value) {
     // todo переместить в клиента
 Player.prototype.image = function(src) {
     if (src) {
-        this.print($('<img alt="Изображение" style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
+        var alt = "Изображение";
+        var srcParts = src.split('|');
+        if (srcParts.length >= 2) {
+            src = srcParts[0];
+            alt = srcParts[1];
+        }
+        this.print($('<img alt="' + alt + '" style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
     }
 };
 
