@@ -237,6 +237,10 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Datetime.getTime() / (1000*60*60*24));
     }
 
+    if (variable == 'urqw_version') {
+        return urqw_version;
+    }
+
     // Для выражений вроде "1 деньги"
     if (variable.split(' ').length > 1) {
         var count = variable.split(' ')[0];

@@ -5,6 +5,9 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+// Bump when preparing a new version of UrqW
+var urqw_version = "1.1";
+
 var PLAYER_STATUS_NEXT = 0;
 var PLAYER_STATUS_END = 1;
 var PLAYER_STATUS_ANYKEY = 2;
