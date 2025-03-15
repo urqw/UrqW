@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015, 2018 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -160,6 +161,7 @@ Parser.prototype.parse = function(line) {
 
             // no break here
             break;
+        case 'javascript': return GlobalPlayer.javaScript(command.toString().trim());
 
         // если ничего не помогло^w^w^w не оператор
         default:

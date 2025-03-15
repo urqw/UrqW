@@ -245,6 +245,10 @@ Player.prototype.setVar = function(variable, value) {
         }
 
         this.image(file);
+    } else
+    if (variable.toLowerCase() === 'javascript') {
+        this.javaScript(value);
+        return;
     }
 
     Game.setVar(variable, value);
@@ -264,6 +268,20 @@ Player.prototype.image = function(src) {
         }
         this.print($('<img alt="' + alt + '" style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
     }
+};
+
+/**
+ * @param {String} code
+ */
+    // todo возможно, переместить в клиента, как и image
+Player.prototype.javaScript = function(code) {
+    var result;
+    if (code) {
+        result = eval(code);
+    } else {
+        result = "";
+    }
+    Game.setVar('javascript', result);
 };
 
 /**
