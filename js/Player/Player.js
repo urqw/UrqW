@@ -231,6 +231,9 @@ Player.prototype.setVar = function(variable, value) {
             Game.setVar('style_textcolor', '#FFF');
         }
     } else
+    if (variable.toLowerCase() === 'urqw_title') {
+        document.title = value;
+    } else
 
     // todo переместить
     if (variable.toLowerCase() === 'image') {

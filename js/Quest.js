@@ -237,6 +237,10 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Datetime.getTime() / (1000*60*60*24));
     }
 
+    if (variable == 'urqw_title') {
+        return document.title;
+    }
+
     if (variable == 'urqw_version') {
         return urqw_version;
     }
