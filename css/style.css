@@ -83,6 +83,9 @@ div.clearfix + div.text, #textfield div.text:first-child {
 .container .text-muted {
     margin: 20px 0;
 }
+.urqw_version {
+    font-style: italic;
+}
 
 
 /** footer */

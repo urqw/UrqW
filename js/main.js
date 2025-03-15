@@ -5,6 +5,19 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+$(document).ready(function() {
+    addVersionOnPage();
+});
+
+function addVersionOnPage() {
+    document.title = document.title + ' ' + urqw_version;
+
+    var versionElements = document.getElementsByClassName('urqw_version');
+    for(var i = 0; i < versionElements.length; i++) {
+        versionElements[i].innerHTML = urqw_version;
+    }
+}
+
 // Загрузка
 
 /**
