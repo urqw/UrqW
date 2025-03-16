@@ -42,6 +42,7 @@ quest = []; // todo
  */
 var mode;
 var manifest_urqw_title;
+var manifest_urqw_game_lang;
 var manifest_urq_mode;
 
 $(function() {
@@ -297,6 +298,7 @@ $(function() {
     function parseManifest(json) {
         var jsonObj = JSON.parse(json);
         manifest_urqw_title = jsonObj.urqw_title;
+        manifest_urqw_game_lang = jsonObj.urqw_game_lang;
         manifest_urq_mode = jsonObj.urq_mode;
     }
 
@@ -325,6 +327,13 @@ $(function() {
 
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
         if (manifest_urqw_title) GlobalPlayer.setVar('urqw_title', manifest_urqw_title);
+        var urqw_game_lang;
+        if (manifest_urqw_game_lang) {
+            urqw_game_lang = manifest_urqw_game_lang;
+        } else {
+            urqw_game_lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
+        }
+        GlobalPlayer.setVar('urqw_game_lang', urqw_game_lang);
         if (manifest_urq_mode) GlobalPlayer.setVar('urq_mode', manifest_urq_mode);
 
         GlobalPlayer.Client.crtlInfo = $('#info');

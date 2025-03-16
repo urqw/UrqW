@@ -234,6 +234,18 @@ Player.prototype.setVar = function(variable, value) {
     if (variable.toLowerCase() === 'urqw_title') {
         document.title = value;
     } else
+    if (variable.toLowerCase() === 'urqw_game_lang') {
+        // Area of text output
+        document.getElementById('textfield').setAttribute('lang', value);
+        // Area of buttons
+        document.getElementById('buttons').setAttribute('lang', value);
+        // Area of input
+        document.getElementById('input').setAttribute('lang', value);
+        // Area of inventory
+        document.getElementById('inventory').setAttribute('lang', value);
+        // Restore UrqW UI language for OK button in input area
+        document.getElementById('input_enter').setAttribute('lang', document.getElementsByTagName('HTML')[0].getAttribute('lang'));
+    } else
 
     // todo переместить
     if (variable.toLowerCase() === 'image') {

@@ -220,7 +220,9 @@ Client.prototype.drawInventory = function () {
     });
     
     if (this.crtlInventory.find('> li').length == 0) {
-        this.crtlInventory.append('<li><a href="#" class="item_use">(Пусто)</a></li>');
+        // For empty element set UrqW UI language, not game language
+        var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
+        this.crtlInventory.append('<li lang=' + lang + '><a href="#" class="item_use">(Пусто)</a></li>');
     }
 };
 
