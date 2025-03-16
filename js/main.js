@@ -41,6 +41,8 @@ quest = []; // todo
  *
  */
 var mode;
+var manifest_urqw_title;
+var manifest_urq_mode;
 
 $(function() {
     $('#something_wrong').hide();
@@ -99,6 +101,8 @@ $(function() {
                     $('#additionalstyle').find('style').append(file.asBinary());
                 } else if (file.name.split('.').pop().toLowerCase() == 'js') {
                     eval(win2unicode(file.asBinary())); // todo?
+                } else if (file.name.split('.').pop().toLowerCase() == 'json') {
+                    parseManifest(file.asText());
                 } else {
                     files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
                 }
@@ -194,6 +198,8 @@ $(function() {
                 readStyle(e.target.files[i]);
             } else if (e.target.files[i].name.toLowerCase() == 'script.js') {
                 readJs(e.target.files[i]);
+            } else if (e.target.files[i].name.toLowerCase() == 'manifest.json') {
+                readManifest(e.target.files[i]);
             } else {
                 readFile(e.target.files[i].name, e.target.files[i]);
             }
@@ -274,6 +280,27 @@ $(function() {
     }
 
     /**
+     * @param file
+     */
+    function readManifest(file) {
+        var manifest = new FileReader();
+        manifest.onload = function() {
+            parseManifest(manifest.result);
+        };
+
+        manifest.readAsText(file, 'utf-8');
+    }
+
+    /**
+     * @param (String)
+     */
+    function parseManifest(json) {
+        var jsonObj = JSON.parse(json);
+        manifest_urqw_title = jsonObj.urqw_title;
+        manifest_urq_mode = jsonObj.urq_mode;
+    }
+
+    /**
      * Запуск
      *
      * @param {String} msg тело квеста
@@ -297,6 +324,8 @@ $(function() {
         GlobalPlayer = new Player();
 
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
+        if (manifest_urqw_title) GlobalPlayer.setVar('urqw_title', manifest_urqw_title);
+        if (manifest_urq_mode) GlobalPlayer.setVar('urq_mode', manifest_urq_mode);
 
         GlobalPlayer.Client.crtlInfo = $('#info');
         GlobalPlayer.Client.crtlInput = $('#input');
