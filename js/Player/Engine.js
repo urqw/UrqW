@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015, 2017 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -56,9 +57,11 @@ Player.prototype.goto = function(labelName, type) {
  * удаление переменных
  */
 Player.prototype.perkill = function() {
+    var urqwGameLang = Game.getVar('urqw_game_lang');
     var urqMode = Game.getVar('urq_mode');
     
     Game.vars = {};
+    this.setVar('urqw_game_lang', urqwGameLang);
     this.setVar('urq_mode', urqMode);
 
     $.each(Game.items, function(index, value) {

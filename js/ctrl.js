@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015, 2016, 2018 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -152,7 +153,7 @@ $(function() {
 
             GlobalPlayer = new Player();
 
-            if (mode) GlobalPlayer.setVar('urq_mode', mode);
+            Game.sysVarInit();
 
             GlobalPlayer.Client.crtlInfo = $('#info');
             GlobalPlayer.Client.crtlInput = $('#input');

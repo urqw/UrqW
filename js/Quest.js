@@ -152,6 +152,27 @@ Quest.prototype.init = function() {
 };
 
 /**
+ * инициализация системных переменных, в т.ч. взятых из manifest.json
+ */
+Quest.prototype.sysVarInit = function() {
+    if (manifest_urqw_title) GlobalPlayer.setVar('urqw_title', manifest_urqw_title);
+
+    var urqw_game_lang;
+    if (manifest_urqw_game_lang) {
+        urqw_game_lang = manifest_urqw_game_lang;
+    } else {
+        urqw_game_lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
+    }
+    GlobalPlayer.setVar('urqw_game_lang', urqw_game_lang);
+
+    if (manifest_urq_mode) {
+        GlobalPlayer.setVar('urq_mode', manifest_urq_mode);
+    } else {
+        if (mode) GlobalPlayer.setVar('urq_mode', mode);
+    }
+};
+
+/**
  * @param name
  * @param {int} count
  */

@@ -325,16 +325,7 @@ $(function() {
 
         GlobalPlayer = new Player();
 
-        if (mode) GlobalPlayer.setVar('urq_mode', mode);
-        if (manifest_urqw_title) GlobalPlayer.setVar('urqw_title', manifest_urqw_title);
-        var urqw_game_lang;
-        if (manifest_urqw_game_lang) {
-            urqw_game_lang = manifest_urqw_game_lang;
-        } else {
-            urqw_game_lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
-        }
-        GlobalPlayer.setVar('urqw_game_lang', urqw_game_lang);
-        if (manifest_urq_mode) GlobalPlayer.setVar('urq_mode', manifest_urq_mode);
+        Game.sysVarInit();
 
         GlobalPlayer.Client.crtlInfo = $('#info');
         GlobalPlayer.Client.crtlInput = $('#input');
