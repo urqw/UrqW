@@ -167,6 +167,7 @@ Quest.prototype.sysVarInit = function() {
 
     if (manifest_urq_mode) {
         GlobalPlayer.setVar('urq_mode', manifest_urq_mode);
+        mode = manifest_urq_mode;
     } else {
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
     }
