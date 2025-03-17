@@ -106,6 +106,10 @@ $(function() {
             returnToGame.click();
 
             Game.locked = false;
+
+            // Если при присвоении значений переменным производятся дополнительные действия,
+            // то их надо повторить при загрузке сохранённой игры
+            GlobalPlayer.setVar('urqw_game_lang', Game.getVar('urqw_game_lang'));
         });
 
         $('#saveslots').show();
