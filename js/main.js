@@ -43,6 +43,7 @@ quest = []; // todo
 var mode;
 var manifest_urqw_title;
 var manifest_urqw_game_lang;
+var manifest_urqw_game_ifid;
 var manifest_urq_mode;
 
 $(function() {
@@ -299,7 +300,17 @@ $(function() {
         var jsonObj = JSON.parse(json);
         manifest_urqw_title = jsonObj.urqw_title;
         manifest_urqw_game_lang = jsonObj.urqw_game_lang;
+        manifest_urqw_game_ifid = jsonObj.urqw_game_ifid;
         manifest_urq_mode = jsonObj.urq_mode;
+
+        // Add IFID metadata if it is specified
+        if (manifest_urqw_game_ifid) {
+            var metaTag = document.createElement('meta');
+            metaTag.setAttribute('prefix', 'ifiction: https://babel.ifarchive.org/protocol/iFiction/');
+            metaTag.setAttribute('property', 'ifiction:ifid');
+            metaTag.setAttribute('content', manifest_urqw_game_ifid);
+            document.head.appendChild(metaTag);
+        }
     }
 
     /**

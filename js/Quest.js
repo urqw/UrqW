@@ -266,6 +266,15 @@ Quest.prototype.getVar = function(variable) {
         return urqw_version;
     }
 
+    if (variable == 'urqw_game_ifid') {
+        var metaTag = document.querySelector('meta[property="ifiction:ifid"]');
+        if (metaTag) {
+            return metaTag.getAttribute('content');
+        } else {
+            return '';
+        }
+    }
+
     // Для выражений вроде "1 деньги"
     if (variable.split(' ').length > 1) {
         var count = variable.split(' ')[0];
