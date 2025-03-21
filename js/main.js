@@ -123,7 +123,9 @@ $(function() {
                 manifestFile = manifestArray[0];
             }
         }
-        if (manifestFile) parseManifest(manifestFile.asText());
+        if (manifestFile) {
+            if (!parseManifest(manifestFile.asText())) return;
+        }
 
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
@@ -260,7 +262,7 @@ $(function() {
         var manifestFile = selectedFiles.find(file => file.name.toLowerCase() == 'manifest.json');
         if (manifestFile) {
             var manifestJson = await readManifest(manifestFile);
-            parseManifest(manifestJson);
+            if (!parseManifest(manifestJson)) return;
             var index = selectedFiles.indexOf(manifestFile);
             selectedFiles.splice(index, 1);
         }
@@ -312,7 +314,17 @@ $(function() {
      * @param (String)
      */
     function parseManifest(json) {
-        var jsonObj = JSON.parse(json);
+        var jsonObj;
+        try {
+            jsonObj = JSON.parse(json);
+        } catch (e) {
+            jsonObj = null;
+        }
+        if (jsonObj === null || jsonObj.manifest_version !== 1) {
+            alert('Игра имеет файл manifest.json в неподдерживаемом формате.');
+            return false;
+        }
+
         manifest_urqw_title = jsonObj.urqw_title;
         manifest_game_encoding = jsonObj.game_encoding;
         manifest_urqw_game_lang = jsonObj.urqw_game_lang;
@@ -331,6 +343,8 @@ $(function() {
             metaTag.setAttribute('content', manifest_urqw_game_ifid);
             document.head.appendChild(metaTag);
         }
+
+        return true;
     }
 
     /**
