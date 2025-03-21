@@ -1,7 +1,7 @@
 {
   "name": "urqw",
-  "version": "1.0.0",
-  "description": "you can play urq-quests with it",
+  "version": "1.1.0-beta",
+  "description": "Open source URQ games interpreter in JavaScript.",
   "main": "index.html",
   "directories": {
     "doc": "docs"
@@ -9,12 +9,28 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "akela <tinycoyote@gmail.com>",
-  "license": "GPL2",
+  "author": "Akela <tinycoyote@gmail.com>",
+  "contributors": [
+    "Nikita Tseykovets <tseikovets@rambler.ru>"
+  ],
+  "license": "GPL-2.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urqw/UrqW.git"
+  },
+  "homepage": "https://urqw.github.io/UrqW",
+  "bugs": {
+    "url": "https://github.com/urqw/UrqW/issues"
+  },
   "keywords": [
     "urq",
+    "interactive fiction",
+    "text-based game",
+    "cyoa",
+    "choose your own adventure",
+    "text adventure",
     "quest",
-    "text-quest",
+    "text quest",
     "parser",
     "interpreter"
   ],
