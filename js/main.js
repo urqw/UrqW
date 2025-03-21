@@ -227,6 +227,19 @@ $(function() {
         files = {};
         var qst = [];
 
+        if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'qsz') {
+            var fileName = selectedFiles[0].name.split('.').slice(0, -1).join('.');
+            var newFile = new File(
+                [selectedFiles[0]],
+                `${fileName}.zip`,
+                    {
+                        type: selectedFiles[0].type,
+                        lastModified: selectedFiles[0].lastModified
+                    }
+                );
+            selectedFiles[0] = newFile;
+        }
+
         if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'zip') {
             var reader = new FileReader();
             var zip = selectedFiles[0];
