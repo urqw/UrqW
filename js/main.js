@@ -41,7 +41,9 @@ quest = []; // todo
  *
  */
 var mode;
+var encoding;
 var manifest_urqw_title;
+var manifest_game_encoding;
 var manifest_urqw_game_lang;
 var manifest_urqw_game_ifid;
 var manifest_urq_mode;
@@ -90,9 +92,43 @@ $(function() {
         files = {};
         var qst = [];
 
+        mode = $('#urq_mode').val();
+        encoding = $('#game_encoding').val();
+
+        // The manifest.json file must be read first
+        // because its contents determine how other files will be read
+        var manifestArray = [];
+        for (var [name, file] of Object.entries(zip.files)) {
+            if (!file.dir) {
+                // Manifest of UrqW is file in root or in directory with one level of nesting
+                var pathParts = file.name.split('/');
+                if (pathParts.length <= 2 && pathParts.pop().toLowerCase() == 'manifest.json') {
+                manifestArray.push(file);
+                }
+            }
+        }
+        var manifestFile;
+        if (manifestArray.length == 1) {
+            manifestFile = manifestArray[0];
+        } else if (manifestArray.length > 1) {
+            // In stupid situation of several manifests,
+            // choose file from root or first one in alphabet
+            manifestFile = manifestArray.find(file => file.name.toLowerCase() == 'manifest.json');
+            if (!manifestFile) {
+                manifestArray.sort((a, b) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
+                manifestFile = manifestArray[0];
+            }
+        }
+        if (manifestFile) parseManifest(manifestFile.asText());
+
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
+                var scriptCode;
                 if (file.name.split('.').pop().toLowerCase() == 'qst') {
                     if (file.name.substr(0, 1) == '_' || file.name.indexOf('/_') != -1) {
                         qst.unshift(file);
@@ -102,9 +138,12 @@ $(function() {
                 } else if (file.name.split('.').pop().toLowerCase() == 'css') {
                     $('#additionalstyle').find('style').append(file.asBinary());
                 } else if (file.name.split('.').pop().toLowerCase() == 'js') {
-                    eval(win2unicode(file.asBinary())); // todo?
-                } else if (file.name.split('.').pop().toLowerCase() == 'json') {
-                    parseManifest(file.asText());
+                    if (encoding.toLowerCase() == 'utf-8') {
+                        scriptCode = file.asText();
+                    } else {
+                        scriptCode = win2unicode(file.asBinary())
+                    }
+                    eval(scriptCode); // todo?
                 } else {
                     files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
                 }
@@ -124,8 +163,14 @@ $(function() {
                 }
             }
 
+            var questPart;
             for (var i = 0; i < qst.length; i++) {
-                quest = quest + '\r\n' + win2unicode(qst[i].asBinary());
+                if (encoding.toLowerCase() == 'utf-8') {
+                    questPart = qst[i].asText();
+                } else {
+                    questPart = win2unicode(qst[i].asBinary());
+                }
+                quest = quest + '\r\n' + questPart;
             }
 
             start(quest, name);
@@ -176,34 +221,45 @@ $(function() {
     /**
      * Read file when change file-control
      */
-    $('#quest').on('change', function(e) {
+    $('#quest').on('change', async function(e) {
+        // Live list of selected files to array
+        var selectedFiles = Array.from(e.target.files);
         files = {};
         var qst = [];
 
-        if (e.target.files.length == 1 && e.target.files[0].name.split('.').pop().toLowerCase() == 'zip') {
+        if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'zip') {
             var reader = new FileReader();
-            var zip = e.target.files[0];
+            var zip = selectedFiles[0];
 
             reader.onload = function() {
-                mode = $('#urq_mode').val();
                 loadZip(reader.result, zip.name);
             };
-            reader.readAsBinaryString(zip, 'CP1251');
+            reader.readAsBinaryString(zip);
 
             return;
         }
 
-        for (var i = 0; i < e.target.files.length; i++) {
-            if (e.target.files[i].name.split('.').pop().toLowerCase() == 'qst') {
-                qst.push(e.target.files[i]);
-            } else if (e.target.files[i].name.toLowerCase() == 'style.css') {
-                readStyle(e.target.files[i]);
-            } else if (e.target.files[i].name.toLowerCase() == 'script.js') {
-                readJs(e.target.files[i]);
-            } else if (e.target.files[i].name.toLowerCase() == 'manifest.json') {
-                readManifest(e.target.files[i]);
+        mode = $('#urq_mode').val();
+        encoding = $('#game_encoding').val();
+
+        // The manifest.json file must be read first
+        // because its contents determine how other files will be read
+        var manifestFile = selectedFiles.find(file => file.name.toLowerCase() == 'manifest.json');
+        if (manifestFile) {
+            var manifestJson = await readManifest(manifestFile);
+            parseManifest(manifestJson);
+            var index = selectedFiles.indexOf(manifestFile);
+            selectedFiles.splice(index, 1);
+        }
+        for (var i = 0; i < selectedFiles.length; i++) {
+            if (selectedFiles[i].name.split('.').pop().toLowerCase() == 'qst') {
+                qst.push(selectedFiles[i]);
+            } else if (selectedFiles[i].name.toLowerCase() == 'style.css') {
+                readStyle(selectedFiles[i]);
+            } else if (selectedFiles[i].name.toLowerCase() == 'script.js') {
+                readJs(selectedFiles[i]);
             } else {
-                readFile(e.target.files[i].name, e.target.files[i]);
+                readFile(selectedFiles[i].name, e.target.files[i]);
             }
         }
 
@@ -212,7 +268,6 @@ $(function() {
         }
 
         var name = qst[0].name;
-        mode = $('#urq_mode').val();
         quest = [];
         var slices = qst.length;
 
@@ -231,6 +286,43 @@ $(function() {
     /**
      * @param file
      */
+    function readManifest(file) {
+    return new Promise((resolve, reject) => {
+            var manifest = new FileReader();
+            manifest.onload = () => resolve(manifest.result);
+            manifest.onerror = reject;
+            manifest.readAsText(file, 'UTF-8');
+        });
+    }
+
+    /**
+     * @param (String)
+     */
+    function parseManifest(json) {
+        var jsonObj = JSON.parse(json);
+        manifest_urqw_title = jsonObj.urqw_title;
+        manifest_game_encoding = jsonObj.game_encoding;
+        manifest_urqw_game_lang = jsonObj.urqw_game_lang;
+        manifest_urqw_game_ifid = jsonObj.urqw_game_ifid;
+        manifest_urq_mode = jsonObj.urq_mode;
+
+        // Override parameters from UI
+        if (manifest_urq_mode) mode = manifest_urq_mode;
+        if (manifest_game_encoding) encoding = manifest_game_encoding;
+
+        // Add IFID metadata if it is specified
+        if (manifest_urqw_game_ifid) {
+            var metaTag = document.createElement('meta');
+            metaTag.setAttribute('prefix', 'ifiction: https://babel.ifarchive.org/protocol/iFiction/');
+            metaTag.setAttribute('property', 'ifiction:ifid');
+            metaTag.setAttribute('content', manifest_urqw_game_ifid);
+            document.head.appendChild(metaTag);
+        }
+    }
+
+    /**
+     * @param file
+     */
     function readQst(file) {
         var reader = new FileReader();
         reader.onload = function() {
@@ -241,7 +333,7 @@ $(function() {
             }
         };
 
-        reader.readAsText(file, 'CP1251');
+        reader.readAsText(file, encoding);
     }
 
     /**
@@ -266,7 +358,7 @@ $(function() {
             $('#additionalstyle').find('style').append(style.result);
         };
 
-        style.readAsText(file, 'CP1251');
+        style.readAsText(file, encoding);
     }
 
     /**
@@ -278,39 +370,7 @@ $(function() {
             eval(script.result); // todo?
         };
 
-        script.readAsText(file, 'CP1251');
-    }
-
-    /**
-     * @param file
-     */
-    function readManifest(file) {
-        var manifest = new FileReader();
-        manifest.onload = function() {
-            parseManifest(manifest.result);
-        };
-
-        manifest.readAsText(file, 'utf-8');
-    }
-
-    /**
-     * @param (String)
-     */
-    function parseManifest(json) {
-        var jsonObj = JSON.parse(json);
-        manifest_urqw_title = jsonObj.urqw_title;
-        manifest_urqw_game_lang = jsonObj.urqw_game_lang;
-        manifest_urqw_game_ifid = jsonObj.urqw_game_ifid;
-        manifest_urq_mode = jsonObj.urq_mode;
-
-        // Add IFID metadata if it is specified
-        if (manifest_urqw_game_ifid) {
-            var metaTag = document.createElement('meta');
-            metaTag.setAttribute('prefix', 'ifiction: https://babel.ifarchive.org/protocol/iFiction/');
-            metaTag.setAttribute('property', 'ifiction:ifid');
-            metaTag.setAttribute('content', manifest_urqw_game_ifid);
-            document.head.appendChild(metaTag);
-        }
+        script.readAsText(file, encoding);
     }
 
     /**

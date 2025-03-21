@@ -165,12 +165,7 @@ Quest.prototype.sysVarInit = function() {
     }
     GlobalPlayer.setVar('urqw_game_lang', urqw_game_lang);
 
-    if (manifest_urq_mode) {
-        GlobalPlayer.setVar('urq_mode', manifest_urq_mode);
-        mode = manifest_urq_mode;
-    } else {
-        if (mode) GlobalPlayer.setVar('urq_mode', mode);
-    }
+    if (mode) GlobalPlayer.setVar('urq_mode', mode);
 };
 
 /**

@@ -56,11 +56,21 @@
     <div id="choose-game" style="display: none;">
         <div class="page-header">
             <h3>Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h3>
-            <select id="urq_mode" class="form-control">
-                <option value="urqw" selected>Не применять специальных правил</option>
-                <option value="ripurq">RipURQ 1.4</option>
-                <option value="dosurq">DOS_URQ 1.35</option>
-            </select>
+            <div class="form-group">
+                <label for="urq_mode">Режим URQ</label>
+                <select id="urq_mode" class="form-control">
+                    <option value="urqw" selected>Не применять специальных правил</option>
+                    <option value="ripurq">RipURQ 1.4</option>
+                    <option value="dosurq">DOS_URQ 1.35</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="game_encoding">Кодировка игры</label>
+                <select id="game_encoding" class="form-control">
+                    <option value="CP1251" selected>Windows-1251</option>
+                    <option value="UTF-8">UTF-8</option>
+                </select>
+            </div>
         </div>
 
         <div class="form-group">
