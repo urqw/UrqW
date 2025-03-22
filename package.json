@@ -8,7 +8,8 @@
   },
   "scripts": {
     "package-game": "node scripts/package_game.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate-games.json": "node scripts/validate-games.json.js"
   },
   "author": "Akela <tinycoyote@gmail.com>",
   "contributors": [
