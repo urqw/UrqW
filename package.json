@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "package-game": "node scripts/package_game.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akela <tinycoyote@gmail.com>",
@@ -39,5 +40,8 @@
     "jquery": "^2.1.4",
     "jszip": "^2.7.0",
     "jszip-utils": "^0.0.2"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.1"
   }
 }
