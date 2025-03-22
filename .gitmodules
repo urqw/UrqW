@@ -1,0 +1,3 @@
+[submodule "games/francis_spaight"]
+	path = games/francis_spaight
+	url = https://github.com/tseykovets/francis_spaight.git
