@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "package-game": "node scripts/package_game.js",
+    "package-game": "node scripts/package-game.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "validate-games.json": "node scripts/validate-games.json.js"
   },
