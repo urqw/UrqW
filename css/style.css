@@ -137,7 +137,9 @@ body {
     -moz-border-radius: 6px 0 0 6px;
     border-radius: 6px 0 0 6px;
 }
-.dropdown-submenu:hover>.dropdown-menu {
+.dropdown-submenu:hover>.dropdown-menu,
+.dropdown-submenu:focus-within>.dropdown-menu,
+.dropdown-submenu:focus>.dropdown-menu {
     display:block;
 }
 .dropdown-submenu>a:before {
@@ -152,7 +154,9 @@ body {
     margin-top: 5px;
     margin-left: -10px;
 }
-.dropdown-submenu:hover>a:before {
+.dropdown-submenu:hover>a:before,
+.dropdown-submenu:focus-within>a:before,
+.dropdown-submenu:focus>a:before {
     border-right-color:#ffffff;
 }
 
