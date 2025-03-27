@@ -298,7 +298,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
  * @param {int} action
  */
 Client.prototype.convertToLink = function(text, action) {
-    return "<a data-action='" + action + "' class='button' tabindex='0' role='link'>" + text + "</a>";
+    return "<a data-action='" + action + "' class='button' href='#'>" + text + "</a>";
 };
 
 /**
