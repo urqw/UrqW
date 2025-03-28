@@ -1,3 +1,96 @@
 [submodule "games/francis_spaight"]
 	path = games/francis_spaight
 	url = https://github.com/tseykovets/francis_spaight.git
+[submodule "games/99999"]
+	path = games/99999
+	url = https://github.com/urqw/99999.git
+[submodule "games/alice_urqland"]
+	path = games/alice_urqland
+	url = https://github.com/urqw/alice_urqland.git
+[submodule "games/ballad_of_knight"]
+	path = games/ballad_of_knight
+	url = https://github.com/urqw/ballad_of_knight.git
+[submodule "games/blud1"]
+	path = games/blud1
+	url = https://github.com/urqw/blud1.git
+[submodule "games/brass_skull1"]
+	path = games/brass_skull1
+	url = https://github.com/urqw/brass_skull1.git
+[submodule "games/cursed_city"]
+	path = games/cursed_city
+	url = https://github.com/urqw/cursed_city.git
+[submodule "games/dmitry_smetanin1"]
+	path = games/dmitry_smetanin1
+	url = https://github.com/urqw/dmitry_smetanin1.git
+[submodule "games/fairy_mound"]
+	path = games/fairy_mound
+	url = https://github.com/urqw/fairy_mound.git
+[submodule "games/genie_from_machine"]
+	path = games/genie_from_machine
+	url = https://github.com/urqw/genie_from_machine.git
+[submodule "games/girl_from_14"]
+	path = games/girl_from_14
+	url = https://github.com/urqw/girl_from_14.git
+[submodule "games/golden_key"]
+	path = games/golden_key
+	url = https://github.com/urqw/golden_key.git
+[submodule "games/grunk_and_cheese"]
+	path = games/grunk_and_cheese
+	url = https://github.com/urqw/grunk_and_cheese.git
+[submodule "games/hamster1"]
+	path = games/hamster1
+	url = https://github.com/urqw/hamster1.git
+[submodule "games/hamster2"]
+	path = games/hamster2
+	url = https://github.com/urqw/hamster2.git
+[submodule "games/hellish_saturday"]
+	path = games/hellish_saturday
+	url = https://github.com/urqw/hellish_saturday.git
+[submodule "games/house_that_jack_built"]
+	path = games/house_that_jack_built
+	url = https://github.com/tseykovets/house_that_jack_built.git
+[submodule "games/how_i_became_a_pirate"]
+	path = games/how_i_became_a_pirate
+	url = https://github.com/urqw/how_i_became_a_pirate.git
+[submodule "games/knights"]
+	path = games/knights
+	url = https://github.com/urqw/knights.git
+[submodule "games/mars2000"]
+	path = games/mars2000
+	url = https://github.com/urqw/mars2000.git
+[submodule "games/mary_celeste"]
+	path = games/mary_celeste
+	url = https://github.com/urqw/mary_celeste.git
+[submodule "games/mistress_sary"]
+	path = games/mistress_sary
+	url = https://github.com/urqw/mistress_sary.git
+[submodule "games/plague_doctor"]
+	path = games/plague_doctor
+	url = https://github.com/urqw/plague_doctor.git
+[submodule "games/sarah_faerman1"]
+	path = games/sarah_faerman1
+	url = https://github.com/urqw/sarah_faerman1.git
+[submodule "games/sarah_faerman2"]
+	path = games/sarah_faerman2
+	url = https://github.com/urqw/sarah_faerman2.git
+[submodule "games/shadow_over_rivercross"]
+	path = games/shadow_over_rivercross
+	url = https://github.com/urqw/shadow_over_rivercross.git
+[submodule "games/small_sketch"]
+	path = games/small_sketch
+	url = https://github.com/urqw/small_sketch.git
+[submodule "games/spoiler"]
+	path = games/spoiler
+	url = https://github.com/urqw/spoiler.git
+[submodule "games/support"]
+	path = games/support
+	url = https://github.com/urqw/support.git
+[submodule "games/wason_task"]
+	path = games/wason_task
+	url = https://github.com/urqw/wason_task.git
+[submodule "games/winnie-the-pooh"]
+	path = games/winnie-the-pooh
+	url = https://github.com/urqw/winnie-the-pooh.git
+[submodule "games/zolushka"]
+	path = games/zolushka
+	url = https://github.com/urqw/zolushka.git
