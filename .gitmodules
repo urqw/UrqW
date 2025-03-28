@@ -94,3 +94,15 @@
 [submodule "games/zolushka"]
 	path = games/zolushka
 	url = https://github.com/urqw/zolushka.git
+[submodule "games/hamster3"]
+	path = games/hamster3
+	url = https://github.com/urqw/hamster3.git
+[submodule "games/hamster4"]
+	path = games/hamster4
+	url = https://github.com/urqw/hamster4.git
+[submodule "games/hamster5"]
+	path = games/hamster5
+	url = https://github.com/urqw/hamster5.git
+[submodule "games/hamster6"]
+	path = games/hamster6
+	url = https://github.com/urqw/hamster6.git
