@@ -57,7 +57,7 @@
         <div class="page-header">
             <h3>Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h3>
             <div class="form-group">
-                <label for="urq_mode">Режим URQ</label>
+                <label for="urq_mode" class="control-label">Режим URQ</label>
                 <select id="urq_mode" class="form-control">
                     <option value="urqw" selected>Не применять специальных правил</option>
                     <option value="ripurq">RipURQ 1.4</option>
@@ -65,7 +65,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="game_encoding">Кодировка игры</label>
+                <label for="game_encoding" class="control-label">Кодировка игры</label>
                 <select id="game_encoding" class="form-control">
                     <option value="CP1251" selected>Windows-1251</option>
                     <option value="UTF-8">UTF-8</option>
@@ -76,6 +76,17 @@
         <div class="form-group">
             <input id="quest" type="file" multiple>
         </div>
+
+        <div class="form-group" id="open_game_url_form" style="display: none;">
+            <label for="game_url" class="control-label">Ссылка на файл игры</label>
+            <div class="input-group">
+                <input type="url" class="form-control" id="game_url" placeholder="https://">
+                <span class="input-group-btn">
+                    <button id="open_game_url" class="btn btn-default" type="button">Открыть</button>
+                </span>
+            </div>
+        </div>
+
         <div class="page-header">
             <h3>Или выберите игру из списка:</h3>
         </div>

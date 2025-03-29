@@ -55,6 +55,77 @@ $(function() {
     $('#additionalstyle').find('style').empty();
 
     /**
+     * Получить значение get-параметра
+     */
+    function getValParam(name) {
+        var query = window.location.search.substring(1);
+        var params = query.split('&');
+        for (var i = 0; i < params.length; i++) {
+            var param = params[i].split('=');
+            if (param[0] === name) {
+                return decodeURIComponent(param[1]);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Загрузить по URL
+     */
+    function loadFromURL(url) {
+        var fileExtension = url.split('.').pop().toLowerCase();
+        mode = $('#urq_mode').val();
+        encoding = $('#game_encoding').val();
+    
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        
+        if (fileExtension === 'qst') {
+            var mimeType = {
+                'CP1251': 'windows-1251',
+                'UTF-8': 'utf-8'
+            }[encoding] || encoding;
+            
+            xhr.overrideMimeType(`text/plain; charset=${mimeType}`);
+        } else {
+            xhr.responseType = 'arraybuffer';
+        }
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                if (xhr.response) {
+                    if (fileExtension === 'qst') {
+                        start(xhr.response, url);
+                    } else if ('zip,qsz'.includes(fileExtension)) {
+                        loadZip(xhr.response, url);
+                    } else {
+                        console.error('Unsupported file format for ', url);
+                        loadFromHashFailed();
+                    }
+                } else {
+                    console.error('No data in response for ', url);
+                    loadFromHashFailed();
+                }
+            } else {
+                console.error('Request error for ', url);
+                loadFromHashFailed();
+            }
+        };
+        
+        xhr.onerror = function() {
+            console.error('Network error for ', url);
+            loadFromHashFailed();
+        };
+        
+        xhr.ontimeout = function() {
+            console.error('Request timeout for ', url);
+            loadFromHashFailed();
+        };
+        
+        xhr.send();
+    }
+
+    /**
      * Загрузить из хеша
      */
     function loadFromHash() {
@@ -82,9 +153,14 @@ $(function() {
     }
 
     /**
-     * Попробуем загрузить квест, если в хеше что-то есть
+     * Попробуем загрузить квест по ссылке из get-параметра url, иначе из каталога, если в хеше что-то есть
      */
-    loadFromHash();
+    var gameURL = getValParam('url');
+    if (gameURL) {
+        loadFromURL(gameURL);
+    } else{
+        loadFromHash();
+    }
 
     function loadZip(data, name) {
         var zip = new JSZip(data);
@@ -187,6 +263,7 @@ $(function() {
             url: 'games.json',
             dataType: "json"
         }).done(function(quests) {
+            $('#open_game_url_form').show();
             var date;
             var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             for (var i = 0; i < quests.length; i++) {
@@ -399,6 +476,19 @@ $(function() {
 
         script.readAsText(file, encoding);
     }
+
+    $('#open_game_url').click(function(e) {
+        e.preventDefault();
+        var url = $('#game_url').val();
+        if (url) loadFromURL(url);
+    });
+
+    $('#game_url').keypress(function(e) {
+        if (e.which === 13) { // Pressing Enter key in URL input field
+            e.preventDefault();
+            $('#open_game_url').click();
+        }
+    });
 
     /**
      * Запуск
