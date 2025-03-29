@@ -153,11 +153,19 @@ $(function() {
     }
 
     /**
+     * Изменяем настройки по умолчанию в соответствии с get-параметрами
+     */
+    var getParamMode = getValParam('mode');
+    if (getParamMode && $('#urq_mode option[value="' + getParamMode + '"]').length) $('#urq_mode').val(getParamMode);
+    var getParamEncoding = getValParam('encoding');
+    if (getParamEncoding && $('#game_encoding option[value="' + getParamEncoding + '"]').length) $('#game_encoding').val(getParamEncoding);
+
+    /**
      * Попробуем загрузить квест по ссылке из get-параметра url, иначе из каталога, если в хеше что-то есть
      */
-    var gameURL = getValParam('url');
-    if (gameURL) {
-        loadFromURL(gameURL);
+    var getParamUrl = getValParam('url');
+    if (getParamUrl) {
+        loadFromURL(getParamUrl);
     } else{
         loadFromHash();
     }
