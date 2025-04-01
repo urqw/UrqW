@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,13 +9,21 @@
     <link href="css/style.css" rel="stylesheet">
     <link rel="icon" type="image/png"  href="favicon.png">
 
+    <!-- Bump when preparing a new version of UrqW -->
+    <script>var urqw_version = '1.1';</script>
+
+    <script src="node_modules/i18next/i18next.min.js"></script>
+    <script src="node_modules/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
+    <script src="locale/en.js"></script>
+    <script src="locale/ru.js"></script>
+    <script src="js/i18n.js"></script>
+
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <script src="node_modules/jszip/dist/jszip.min.js"></script>
     <script src="node_modules/jszip-utils/dist/jszip-utils.min.js"></script>
 
-    <script src="lang/ruRu.js"></script>
     <script src="js/tools.js"></script>
     <script src="js/Player/Player.js"></script>
     <script src="js/Player/Engine.js"></script>
@@ -33,11 +41,12 @@
 </div>
 
 <div class="panel panel-default" id="infopanel" style="display: none;">
+    <div class="form-group">
+        <label for="select_lang" class="control-label" data-i18n="interface_language">Interface language</label>
+        <select id="lang_select"></select>
+    </div>
     <div class="panel-body">
-        <p>Это бета-версия движка <span class="urqw_version"></span>. Могут быть ошибки, о которых можно написать
-            <a href="https://github.com/urqw/UrqW/issues" target="_blank">сюда</a>. Ссылка на репозиторий в самом низу страницы. На текущий момент поддерживаются все функции из RipURQ 1.4 и URQ_DOS 1.35 (во всяком случае, автор интерпретатора так думает). Приятной игры. Если вы хотите написать свою игру, но не знаете как, то для вас я написал
-            <a href="https://urqw.github.io/UrqW/docs/urql.html" target="_blank">документацию по языку URQL с примерами</a>. Буду рад пожеланием и отзывам
-            <a href="https://urq.borda.ru/?1-0-0-00000495-000-0-0-1444669380" target="_blank">сюда</a>. Туда же присылайте ваши игры для добавления в каталог, при условии, что они полностью протестированы и не содержат ошибок.</p>
+        <p data-i18n="welcome_message">This is the UrqW text-based game engine. Compatibility modes with RipURQ 1.4 and URQ_DOS 1.35 are supported. If you want to develop your own game but don’t know how, please refer to the <a href="https://urqw.github.io/UrqW/docs/urql.html" target="_blank">documentation</a>. The project repository is hosted on <a href="https://github.com/urqw/UrqW" target="_blank">GitHub</a>, where you can submit your games for inclusion in the catalog. Additionally, you can create an <a href="https://github.com/urqw/UrqW/issues" target="_blank">issue</a> there if you encounter any problems.</p>
     </div>
 </div>
 
@@ -47,25 +56,25 @@
     </div>
 
     <div id="something_wrong" style="text-align: center;">
-        <h3><span role="alert">Что-то пошло не так</span></h3>
+        <h3><span role="alert" data-i18n="something_went_wrong">Something went wrong</span></h3>
     </div>
 
     <div id="loading" class="page-header" style="display: none;">
-        <h3>Подождите...</h3>
+        <h3 data-i18n="wait">Wait...</h3>
     </div>
     <div id="choose-game" style="display: none;">
         <div class="page-header">
-            <h3>Загрузите игру (если есть дополнительные файлы, необходимо выбрать ВСЕ файлы игры):</h3>
+            <h3 data-i18n="upload_game">Upload the game (if there are additional files, select ALL game files):</h3>
             <div class="form-group">
-                <label for="urq_mode" class="control-label">Режим URQ</label>
+                <label for="urq_mode" class="control-label" data-i18n="urq_mode">URQ mode</label>
                 <select id="urq_mode" class="form-control">
-                    <option value="urqw" selected>Не применять специальных правил</option>
+                    <option value="urqw" selected data-i18n="do_not_apply_rules">Do not apply special rules</option>
                     <option value="ripurq">RipURQ 1.4</option>
                     <option value="dosurq">URQ_DOS 1.35</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="game_encoding" class="control-label">Кодировка игры</label>
+                <label for="game_encoding" class="control-label" data-i18n="game_encoding">Game encoding</label>
                 <select id="game_encoding" class="form-control">
                     <option value="CP1251" selected>Windows-1251</option>
                     <option value="UTF-8">UTF-8</option>
@@ -78,17 +87,17 @@
         </div>
 
         <div class="form-group" id="open_game_url_form" style="display: none;">
-            <label for="game_url" class="control-label">Ссылка на файл игры</label>
+            <label for="game_url" class="control-label" data-i18n="game_file_link">Game file link</label>
             <div class="input-group">
                 <input type="url" class="form-control" id="game_url" placeholder="https://">
                 <span class="input-group-btn">
-                    <button id="open_game_url" class="btn btn-default" type="button">Открыть</button>
+                    <button id="open_game_url" class="btn btn-default" type="button" data-i18n="open">Open</button>
                 </span>
             </div>
         </div>
 
         <div class="page-header">
-            <h3>Или выберите игру из списка:</h3>
+            <h3 data-i18n="or_choose_game">Or choose a game from the list:</h3>
         </div>
 
         <div class="list-group gamelist">
@@ -105,17 +114,17 @@
 <!--
                 <li><a href="#"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></li>
 -->
-                <li><a title="Управление громкостью" aria-label="Убавить звук" id="mute" href="#"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></a></li>
-                <li><a title="Перезапустить игру" aria-label="Перезапустить игру" id="restart" href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
-                <li><a title="Сохранить игру" aria-label="Сохранить игру" id="save" href="#"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a></li>
-                <li><a title="Загрузить игру" aria-label="Загрузить игру" id="load" href="#"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span></a></li>
+                <li><a title="Volume control" aria-label="Mute half volume" id="mute" href="#" data-i18n="[title]volume_control;[aria-label]mute_half_volume"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></a></li>
+                <li><a title="Restart the game" aria-label="Restart the game" id="restart" href="#" data-i18n="[title]restart_game;[aria-label]restart_game"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a></li>
+                <li><a title="Save game" aria-label="Save game" id="save" href="#" data-i18n="[title]save_game;[aria-label]save_game"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a></li>
+                <li><a title="Load game" aria-label="Load game" id="load" href="#" data-i18n="[title]load_game;[aria-label]load_game"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Инвентарь <span class="caret"></span></a>
-                    <a href="#" class="dropdown-toggle visible-xs" data-toggle="dropdown" aria-label="Инвентарь" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-th-list"></span></a>
+                    <a href="#" class="dropdown-toggle hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-i18n="inventory">Inventory<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle visible-xs" data-toggle="dropdown" aria-label="Inventory" role="button" aria-haspopup="true" aria-expanded="false" data-i18n="[aria-label]inventory"><span class="glyphicon glyphicon-th-list"></span></a>
                     <ul id="inventory" class="dropdown-menu dropdown-menu-left">
-                        <li><a href="#" class="item_use">(Пусто)</a></li>
+                        <li><a href="#" class="item_use" data-i18n="empty">(Empty)</a></li>
                     </ul>
                 </li>
             </ul>
@@ -128,7 +137,7 @@
         <div id="input" class="input-group" style="display: none;">
             <input type="text" class="form-control">
                 <span class="input-group-btn">
-                  <button id="input_enter" class="btn btn-default" type="button">ОК</button>
+                  <button id="input_enter" class="btn btn-default" type="button" data-i18n="ok">OK</button>
                 </span>
         </div>
         <div id="info" style="display: none;" class="well well-sm"></div>
@@ -136,8 +145,8 @@
 
     <div id="saveslots" style="display: none">
         <div class="page-header text-right">
-            <button id="return_to_game" class="btn btn-default btn-sm" type="button">
-                Назад к игре
+            <button id="return_to_game" class="btn btn-default btn-sm" type="button" data-i18n="return_to_game">
+                Return to game
             </button>
         </div>
 
@@ -149,7 +158,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">https://github.com/urqw/UrqW</p>
+        <p class="text-muted" data-i18n="powered_by_urqw">Powered by UrqW</p>
     </div>
 </footer>
 

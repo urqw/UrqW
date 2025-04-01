@@ -38,6 +38,8 @@
   ],
   "dependencies": {
     "bootstrap": "^3.4.1",
+    "i18next": "^24.2.3",
+    "i18next-browser-languagedetector": "^8.0.4",
     "jquery": "^2.1.4",
     "jszip": "^2.7.0",
     "jszip-utils": "^0.0.2"

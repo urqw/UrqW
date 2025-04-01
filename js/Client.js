@@ -73,7 +73,7 @@ Client.prototype.render = function (data) {
         this.drawInventory();
     } else if (data.status == PLAYER_STATUS_ANYKEY) {
         this.crtlButtonField.hide();
-        this.crtlInfo.text('[нажмите любую клавишу]');
+        this.crtlInfo.text(i18next.t('press_any_key'));
         this.crtlInfo.show();
     } else if (data.status == PLAYER_STATUS_INPUT) {
         this.crtlButtonField.hide();
@@ -92,7 +92,7 @@ Client.prototype.render = function (data) {
             }
         }, wait);
     } else if (data.status == PLAYER_STATUS_QUIT) {
-        this.crtlInfo.text('[игра закончена]');
+        this.crtlInfo.text(i18next.t('game_over'));
         this.crtlInfo.show();
     }
 };
@@ -222,7 +222,7 @@ Client.prototype.drawInventory = function () {
     if (this.crtlInventory.find('> li').length == 0) {
         // For empty element set UrqW UI language, not game language
         var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
-        this.crtlInventory.append('<li lang=' + lang + '><a href="#" class="item_use">(Пусто)</a></li>');
+        this.crtlInventory.append('<li lang=' + lang + '><a href="#" class="item_use">' + i18next.t('empty') + '</a></li>');
     }
 };
 
@@ -264,7 +264,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
         return $('<li>').append(a);
     } else if (actions.length > 0)  {
         if (itemName == 'inv') {
-            itemName = 'Инвентарь';
+            itemName = 'Инвентарь'; // TODO: maybe need to be replaced with i18next.t('inventory');
         } else {
             if (quantity > 1) {
                 itemName = itemName + ' (' + quantity + ')';
@@ -277,7 +277,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
 
         for (var i = 0; i < actions.length; i++) {
             if (actions[i][0] == '') {
-                actions[i][0] = 'Осмотреть';
+                actions[i][0] = 'Осмотреть'; // TODO: maybe need to be replaced with i18next.t('examine');
             }
 
             if (Game.getVar('hide_use_' + itemName + '_' + actions[i][0]) == 0) {

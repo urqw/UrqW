@@ -5,9 +5,6 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-// Bump when preparing a new version of UrqW
-var urqw_version = "1.1";
-
 var PLAYER_STATUS_NEXT = 0;
 var PLAYER_STATUS_END = 1;
 var PLAYER_STATUS_ANYKEY = 2;
@@ -278,7 +275,7 @@ Player.prototype.setVar = function(variable, value) {
     // todo переместить в клиента
 Player.prototype.image = function(src) {
     if (src) {
-        var alt = "Изображение";
+        var alt = i18next.t('image');
         var srcParts = src.split('|');
         if (srcParts.length >= 2) {
             src = srcParts[0];

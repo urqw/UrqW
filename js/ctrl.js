@@ -30,7 +30,7 @@ $(function() {
             var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
 
             if (lsname === null) {
-                btn.text('(Пустой слот сохранения)');
+                btn.text(i18next.t('empty_save_slot'));
             } else {
                 btn.text(lsname);
             }
@@ -66,7 +66,7 @@ $(function() {
             lsname = localStorage.getItem(Game.name + '_' + i + '_name');
 
             if (lsname === null) {
-                btn.text('(Пустой слот сохранения)').prop('disabled', true);
+                btn.text(i18next.t('empty_save_slot')).prop('disabled', true);
             } else {
                 btn.text(lsname);
             }
@@ -122,19 +122,19 @@ $(function() {
         var span = $(this).find('span.glyphicon');
 
         if (volume == 1) {
-            $(this).attr('aria-label', 'Выключить звук');
+            $(this).attr('aria-label', i18next.t('mute_sound'));
             volume = 2;
             gameMusic.volume = 0.5;
             span.removeClass('glyphicon-volume-up');
             span.addClass('glyphicon-volume-down');
         } else if (volume == 2) {
-            $(this).attr('aria-label', 'Вернуть громкость 100%');
+            $(this).attr('aria-label', i18next.t('restore_volume'));
             volume = 3;
             gameMusic.volume = 0;
             span.removeClass('glyphicon-volume-down');
             span.addClass('glyphicon-volume-off');
         } else if (volume == 3) {
-            $(this).attr('aria-label', 'Убавить звук');
+            $(this).attr('aria-label', i18next.t('mute_half_volume'));
             volume = 1;
             gameMusic.volume = 1;
             span.removeClass('glyphicon-volume-off');
@@ -145,7 +145,7 @@ $(function() {
     });
 
     $('#restart').on('click', function () {
-        if (confirm('Перезапустить игру?')) {
+        if (confirm(i18next.t('restart_game_confirm'))) {
 //            GlobalPlayer.status = PLAYER_STATUS_END;
             $('#info').hide();
             $('#input').hide();

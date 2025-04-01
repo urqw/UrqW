@@ -41,18 +41,7 @@ $(function() {
 
     $('#additionalstyle').find('style').empty();
 
-    addVersionOnPage();
-
-    /**
-     * Расставить на странице номер версии UrqW
-     */
-    function addVersionOnPage() {
-        document.title = document.title + ' ' + urqw_version;
-        var versionElements = document.getElementsByClassName('urqw_version');
-        for(var i = 0; i < versionElements.length; i++) {
-            versionElements[i].innerHTML = urqw_version;
-        }
-    }
+    document.title = document.title + ' ' + urqw_version;
 
     /**
      * Получить значение get-параметра
@@ -288,7 +277,7 @@ $(function() {
                 );
             }
         }).fail(function() {
-            $('.gamelist').append('<p><span role="alert">Не удалось загрузить список квестов.</span> Скорее всего, у вас браузер на основе Chromium (Chrome, Яндекс Браузер, Opera и др.), и вы запустили UrqW локально. Безопасность Chromium запрещает обращаться к каким бы то ни было локальным файлам и считывать их автоматически. Это исправляется, если запустить Chrome с флагом "--allow-file-access-from-files". В вебе такой проблемы ни у кого не будет, речь только о локальной работе. Вы всё ещё можете выбрать файлы игры вручную из папки quests и поиграть.</p>')
+            $('.gamelist').append('<p data-i18n="failed_load_game_list">' + i18next.t('failed_load_game_list') + '</p>')
         });
 
         $('#loading').hide();
@@ -406,7 +395,7 @@ $(function() {
             jsonObj = null;
         }
         if (jsonObj === null || jsonObj.manifest_version !== 1) {
-            alert('Игра имеет файл manifest.json в неподдерживаемом формате.');
+            alert(i18next.t('manifest_unsupported_format'));
             return false;
         }
 
