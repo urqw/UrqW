@@ -148,6 +148,13 @@ $(function() {
     if (getParamMode && $('#urq_mode option[value="' + getParamMode + '"]').length) $('#urq_mode').val(getParamMode);
     var getParamEncoding = getValParam('encoding');
     if (getParamEncoding && $('#game_encoding option[value="' + getParamEncoding + '"]').length) $('#game_encoding').val(getParamEncoding);
+    var getParamLang = getValParam('lang');
+    if (getParamLang && $('#lang_select option[value="' + getParamLang + '"]').length) {
+        $('#lang_select').val(getParamLang);
+        var element = document.getElementById('lang_select');
+        var event = new Event('change');
+        element.dispatchEvent(event);
+    }
 
     /**
      * Попробуем загрузить квест по ссылке из get-параметра url, иначе из каталога, если в хеше что-то есть
