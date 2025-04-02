@@ -279,7 +279,7 @@ $(function() {
                     '</div>' +
                     '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
                     '<p class="list-group-item-text">' + quests[i].description + '</p><br>' +
-                    '<p class="list-group-item-text">(' + date.toLocaleDateString(undefined, dateOptions) + ')</p>' +
+                    '<p class="list-group-item-text">(' + date.toLocaleDateString(document.documentElement.lang, dateOptions) + ')</p>' +
                     '</a>'
                 );
             }
