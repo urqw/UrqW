@@ -90,6 +90,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         langSelect.value = i18next.language;
+        // Handling situation when language code contains additional groups, e.g., en-US
+        if (!langSelect.value) {
+            var baseLanguage = i18next.language.match(/^[a-z]+/)[0];
+            langSelect.value = baseLanguage;
+        }
 
         // Add language change handler
         langSelect.addEventListener('change', function() {
