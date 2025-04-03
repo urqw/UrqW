@@ -51,7 +51,7 @@ function registerHotKey(combination, handler, allowDefault = false) {
 // Key down event handler
 document.addEventListener('keydown', (event) => {
     // Not process hot keys if player is in waiting for any key to be pressed
-    if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
+    if (GlobalPlayer && GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
         return;
     }
 
@@ -83,7 +83,7 @@ document.addEventListener('keydown', (event) => {
 // Key up event handler
 document.addEventListener('keyup', (event) => {
     // Not process hot keys if player is in waiting for any key to be pressed
-    if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) 	{
+    if (GlobalPlayer && GlobalPlayer.status == PLAYER_STATUS_ANYKEY) 	{
         return;
     }
 
