@@ -11,6 +11,7 @@ var keyHandlers = {};
 // Array of allowed combinations by key codes
 var allowedCombinations = [
     'Escape',
+    'KeyI',
     'KeyL',
     'KeyR',
     'KeyS',
@@ -129,6 +130,26 @@ function activateButtonByNumber(elementID, number) {
 registerHotKey('Escape', (event) => {
     if ($('#return_to_game').is(':visible')) {
         $('#return_to_game').click();
+    } else {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('KeyI', (event) => {
+    var $inventoryBtn = $('#inventory_btn');
+    if (!$inventoryBtn.is(':visible')) {
+        $inventoryBtn = $('#inventory_btn_xs');
+        if (!$inventoryBtn.is(':visible')) {
+            event.preventDefault(false);
+            return;
+        }
+    }
+
+    if (!isFocusWithinElement('input')) {
+        $inventoryBtn.focus();
+        if (!$inventoryBtn.parent().hasClass('open')) {
+            $inventoryBtn.click();
+        }
     } else {
         event.preventDefault(false);
     }
