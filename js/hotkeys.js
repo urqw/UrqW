@@ -11,6 +11,7 @@ var keyHandlers = {};
 // Array of allowed combinations by key codes
 var allowedCombinations = [
     'Escape',
+    'KeyA',
     'KeyI',
     'KeyL',
     'KeyR',
@@ -82,7 +83,7 @@ document.addEventListener('keydown', (event) => {
 // Key up event handler
 document.addEventListener('keyup', (event) => {
     // Not process hot keys if player is in waiting for any key to be pressed
-    if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
+    if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) 	{
         return;
     }
 
@@ -130,6 +131,23 @@ function activateButtonByNumber(elementID, number) {
 registerHotKey('Escape', (event) => {
     if ($('#return_to_game').is(':visible')) {
         $('#return_to_game').click();
+    } else {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('KeyA', (event) => {
+    if ($('#textfield').is(':visible') && !isFocusWithinElement('input')) {
+        var element = document.getElementById('textfield');
+        var content = element.innerText.trim();
+        var div = document.createElement('div');
+        div.classList.add('sr-only');
+        div.setAttribute('role', 'alert');
+        div.textContent = content;
+        document.body.appendChild(div);
+        setTimeout(() => {
+            document.body.removeChild(div);
+        }, 3000);
     } else {
         event.preventDefault(false);
     }
