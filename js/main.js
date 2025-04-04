@@ -272,7 +272,7 @@ $(function() {
             var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             for (var i = 0; i < quests.length; i++) {
                 date = new Date(quests[i].date);
-                $('.gamelist').append(
+                $('#gamelist').append(
                     '<a href="#" class="list-group-item gamelink" data-game="' + quests[i].folder + '">' +
                     '<div class="pull-right">' +
                     '<span class="text-muted">' + quests[i].author + '</span>' +
@@ -284,7 +284,7 @@ $(function() {
                 );
             }
         }).fail(function() {
-            $('.gamelist').append('<p data-i18n="failed_load_game_list">' + i18next.t('failed_load_game_list') + '</p>')
+            $('#gamelist').append('<p data-i18n="failed_load_game_list">' + i18next.t('failed_load_game_list') + '</p>')
         });
 
         $('#loading').hide();
@@ -294,7 +294,7 @@ $(function() {
     /**
      * Выбор игры из списка
      */
-    $('.gamelist').on('click', '.gamelink', function() {
+    $('#gamelist').on('click', '.gamelink', function() {
         window.location.hash = encodeURIComponent($(this).data('game'));
         loadFromHash();
 
