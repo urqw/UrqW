@@ -45,6 +45,7 @@
     "jszip-utils": "^0.0.2"
   },
   "devDependencies": {
-    "archiver": "^7.0.1"
+    "archiver": "^7.0.1",
+    "moment": "^2.30.1"
   }
 }
