@@ -263,6 +263,7 @@ $(function() {
      *
      */
     function loadFromHashFailed() {
+        $('#gamelist').empty();
         $.ajax({
             url: 'games.json',
             dataType: "json"
