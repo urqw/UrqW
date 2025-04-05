@@ -423,7 +423,7 @@ $(function() {
         // Add IFID metadata if it is specified
         if (manifest_urqw_game_ifid) {
             var metaTag = document.createElement('meta');
-            metaTag.setAttribute('prefix', 'ifiction: https://babel.ifarchive.org/protocol/iFiction/');
+            metaTag.setAttribute('prefix', 'ifiction: http://babel.ifarchive.org/protocol/iFiction/');
             metaTag.setAttribute('property', 'ifiction:ifid');
             metaTag.setAttribute('content', manifest_urqw_game_ifid);
             document.head.appendChild(metaTag);
