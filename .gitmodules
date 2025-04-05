@@ -106,3 +106,6 @@
 [submodule "games/hamster6"]
 	path = games/hamster6
 	url = https://github.com/urqw/hamster6.git
+[submodule "games/rice_exchange"]
+	path = games/rice_exchange
+	url = https://github.com/urqw/rice_exchange.git
