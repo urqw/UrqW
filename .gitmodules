@@ -109,3 +109,6 @@
 [submodule "games/rice_exchange"]
 	path = games/rice_exchange
 	url = https://github.com/urqw/rice_exchange.git
+[submodule "games/dods"]
+	path = games/dods
+	url = https://github.com/urqw/dods.git
