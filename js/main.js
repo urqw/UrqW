@@ -272,15 +272,18 @@ $(function() {
             var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             for (var i = 0; i < quests.length; i++) {
                 date = new Date(quests[i].date);
+                // Since there is no native semantics of list, do it through role attributes
+                $('#gamelist').attr('role', 'list');
                 $('#gamelist').append(
-                    '<a href="#" class="list-group-item gamelink" data-game="' + quests[i].folder + '">' +
+                    '<div class="list-group-item" role="listitem" lang="' + quests[i].lang.split(';')[0] + '">' +
+                    '<a href="#" class="gamelink" data-game="' + quests[i].folder + '">' +
                     '<div class="pull-right">' +
                     '<span class="text-muted">' + quests[i].author + '</span>' +
                     '</div>' +
                     '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
                     '<p class="list-group-item-text">' + quests[i].description + '</p><br>' +
-                    '<p class="list-group-item-text">(' + date.toLocaleDateString(document.documentElement.lang, dateOptions) + ')</p>' +
-                    '</a>'
+                    '<p class="list-group-item-text" lang="' + document.documentElement.lang + '">(' + date.toLocaleDateString(document.documentElement.lang, dateOptions) + ')</p>' +
+                    '</a></div>'
                 );
             }
         }).fail(function() {
