@@ -2,9 +2,9 @@
     {
         "author": "Nikita Tseykovets",
         "title": "This Is the House That Jack Built",
-        "description": "Cumulative interactive fiction in English and Russian based on the popular English nursery rhyme of the same name.",
+        "description": "Cumulative interactive fiction in English, Russian and Ukrainian based on the popular English nursery rhyme of the same name.",
         "date": "2025-03-28",
-        "lang": "en;ru",
+        "lang": "en;ru;uk",
         "folder": "house_that_jack_built"
     },
     {
