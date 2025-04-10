@@ -275,13 +275,25 @@ Client.prototype.drawItem = function (itemName, quantity) {
         var ul = $('<ul class="dropdown-menu">');
         var li2 = $('<li class="menu-item">');
 
+        var htmlContent = false;
+        var li2link;
         for (var i = 0; i < actions.length; i++) {
             if (actions[i][0] == '') {
-                actions[i][0] = 'Осмотреть'; // TODO: maybe need to be replaced with i18next.t('examine');
+                htmlContent = true;
+                var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
+                actions[i][0] = '<span lang="' + lang + '">' + i18next.t('examine') + '</span>';
             }
 
             if (Game.getVar('hide_use_' + itemName + '_' + actions[i][0]) == 0) {
-                li2.append($('<a href="#" class="item_use">').attr('data-label', actions[i][1]).text(actions[i][0]));
+                li2link = $('<a href="#" class="item_use">');
+                li2link.attr('data-label', actions[i][1]);
+                if (htmlContent) {
+                    li2link.html(actions[i][0]);
+                    htmlContent = false;
+                } else {
+                    li2link.text(actions[i][0]);
+                }
+                li2.append(li2link);
             }
         }
 

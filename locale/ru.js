@@ -35,7 +35,7 @@ var ru = {
     image: "Изображение",
     press_any_key: "[нажмите любую клавишу]",
     game_over: "[игра закончена]",
-    examine: "Осмотреть",
+    examine: "осмотреть",
     empty_save_slot: "(Пустой слот сохранения)",
     manifest_unsupported_format: "Игра имеет файл manifest.json в неподдерживаемом формате."
 };

@@ -35,7 +35,7 @@ var en = {
     image: "Image",
     press_any_key: "[press any key]",
     game_over: "[game over]",
-    examine: "Examine",
+    examine: "examine",
     empty_save_slot: "(Empty save slot)",
     manifest_unsupported_format: "The game has a manifest.json file in an unsupported format."
 };
