@@ -71,6 +71,22 @@ Client.prototype.render = function (data) {
     if (data.status == PLAYER_STATUS_END) {
         this.drawButtons();
         this.drawInventory();
+        // Automatically focus first interactive element of game screen:
+        // link in text, action button, or inventory button
+        var targetFocus;
+        [
+            $('#textfield a:visible:first'),
+            $('#buttons button:visible:first'),
+            $('.navbar-right a:visible:first')
+        ].some(function(element) {
+            if (element.length) {
+                targetFocus = element;
+                return true;
+            }
+        });
+        if (targetFocus) {
+            targetFocus.focus();
+        }
     } else if (data.status == PLAYER_STATUS_ANYKEY) {
         this.crtlButtonField.hide();
         this.crtlInfo.text(i18next.t('press_any_key'));
