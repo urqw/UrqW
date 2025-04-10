@@ -41,8 +41,6 @@ $(function() {
 
     $('#additionalstyle').find('style').empty();
 
-    document.title = document.title + ' ' + urqw_version;
-
     /**
      * Получить значение get-параметра
      */
