@@ -1,5 +1,5 @@
 {
-  "name": "urqw",
+  "name": "@urqw/urqw",
   "version": "1.1.0-beta",
   "description": "Open source URQ games interpreter in JavaScript.",
   "main": "index.html",
