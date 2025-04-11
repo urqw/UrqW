@@ -263,6 +263,11 @@ Client.prototype.drawItem = function (itemName, quantity) {
 
     itemName = itemName.replace(/_/g, ' ');
 
+    // Some items and actions need to be inserted with language markup,
+    // for this the following two variables are needed
+    var htmlContent = false;
+    var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
+
     if (actions.length == 0 && itemName != 'inv' || (Game.getVar('hide_use_' + itemName) > 0)) {
         if (quantity > 1) {
             itemName = itemName + ' (' + quantity + ')';
@@ -280,23 +285,30 @@ Client.prototype.drawItem = function (itemName, quantity) {
         return $('<li>').append(a);
     } else if (actions.length > 0)  {
         if (itemName == 'inv') {
-            itemName = 'Инвентарь'; // TODO: maybe need to be replaced with i18next.t('inventory');
+            htmlContent = true;
+            itemName = '<span lang="' + lang + '">' + i18next.t('inventory') + '</span>';
         } else {
             if (quantity > 1) {
                 itemName = itemName + ' (' + quantity + ')';
             }
         }
 
-        var li = $('<li>').addClass('dropdown-submenu').append($('<a href="#" class="item_use">').text(itemName));
+        var li = $('<li>').addClass('dropdown-submenu');
+        var liLink = $('<a href="#" class="item_use">');
+        if (htmlContent) {
+            liLink.html(itemName);
+            htmlContent = false;
+        } else {
+            liLink.text(itemName);
+        }
+        li.append(liLink);
         var ul = $('<ul class="dropdown-menu">');
         var li2 = $('<li class="menu-item">');
 
-        var htmlContent = false;
         var li2link;
         for (var i = 0; i < actions.length; i++) {
             if (actions[i][0] == '') {
                 htmlContent = true;
-                var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
                 actions[i][0] = '<span lang="' + lang + '">' + i18next.t('examine') + '</span>';
             }
 
