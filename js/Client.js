@@ -114,7 +114,7 @@ Client.prototype.render = function (data) {
 };
 
 /**
- * очистка экрана
+ * Screen cleaning
  */
 Client.prototype.cls = function() {
     this.clst();
@@ -122,21 +122,21 @@ Client.prototype.cls = function() {
 };
 
 /**
- * очистка текста
+ * Text cleaning
  */
 Client.prototype.clst = function() {
     this.crtlTextField.empty();
 };
 
 /**
- * очистка кнопок
+ * Buttons cleaning
  */
 Client.prototype.clsb = function() {
     this.crtlButtonField.empty();
 };
 
 /**
- * Нарисовать текст
+ * Draw text
  */
 Client.prototype.drawText = function () {
     var me = this;
@@ -181,15 +181,16 @@ Client.prototype.drawText = function () {
 
         if (text[1]) {
             /**
-             * Из-за специфики нестандартной вёрстки текстовой выдачи, когда
-             * все строки выводятся как div с отображением inline и отдельными
-             * пустыми div для переносов, программы экранного доступа
-             * (screen readers) представляют весь текст без переносов строк.
-             * Роль paragraph для div, выполняющего функцию переноса,
-             * обеспечивает обходной путь (костыль) для решения этой проблемы
-             * без внесения более существенных изменений. В будущем желательно
-             * переработать всю вёрстку текста на основе стандартных абзацев.
-             */
+             * Due to the specifics of non-standard layout of text output,
+             * when all lines are displayed as divs with inline display
+             * and separate empty divs for line breaks, screen readers
+             * present the entire text without line breaks.
+             * Assigning the "paragraph" role  to the div that performs
+             * the line break function provides a workaround for solving
+             * this problem without making more significant changes.
+             * In the future, it is advisable to redesign the entire
+             * text layout based on standard paragraphs.
+            */
             me.crtlTextField.append('<div role="paragraph" class="clearfix">');
         }
 
@@ -207,7 +208,7 @@ Client.prototype.drawText = function () {
 };
 
 /**
- * Нарисовать кнопки
+ * Draw buttons
  */
 Client.prototype.drawButtons = function () {
     var me = this;
@@ -223,14 +224,14 @@ Client.prototype.drawButtons = function () {
 };
 
 /**
- * Нарисовать инвентарь
+ * Draw inventory
  */
 Client.prototype.drawInventory = function () {
     var me = this;
     this.crtlInventory.empty();
     this.crtlInventory.append(this.drawItem('inv', 1));
 
-    // обновляем список предметов
+    // Update list of items
     $.each(Game.items, function(itemName, quantity) {
         me.crtlInventory.append(me.drawItem(itemName, quantity));
     });
@@ -333,7 +334,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
 };
 
 /**
- * превратить текст и комманду в <a> тег
+ * Convert text and command into <a> tag
  * @param {String} text
  * @param {int} action
  */
@@ -342,7 +343,7 @@ Client.prototype.convertToLink = function(text, action) {
 };
 
 /**
- * преврать текст вида <a ...>текст</a> в текст
+ * Convert text of form <a ...>text</a> to text
  * @param text
  */
 Client.prototype.disableLink = function(text) {

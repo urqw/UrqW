@@ -5,10 +5,10 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-// команды из квеста
+// Commands from quest
 
 /**
- * прыгнуть на метку
+ * Go to label
  *
  * @param {string} labelName
  * @param {string} type
@@ -21,7 +21,7 @@ Player.prototype.goto = function(labelName, type) {
             Game.realCurrentLoc = label.name;
         }
 
-        // todo контанты 
+        // todo Constants
         if ((type == 'btn' || (Game.getVar('urq_mode') != 'dosurq' && type == 'goto'))) {
             Game.setVar('previous_loc', Game.getVar('current_loc'));
             Game.setVar('current_loc', labelName);
@@ -44,7 +44,7 @@ Player.prototype.goto = function(labelName, type) {
 
         Game.position = label.pos;
 
-        // весь стек что дальше очищается
+        // Entire subsequent stack is cleared
         this.flowStack[this.flow] = []; 
 
         return true;
@@ -54,7 +54,7 @@ Player.prototype.goto = function(labelName, type) {
 };
 
 /**
- * удаление переменных
+ * Deleting variables
  */
 Player.prototype.perkill = function() {
     var urqwGameLang = Game.getVar('urqw_game_lang');
@@ -97,7 +97,7 @@ Player.prototype.clsb = function() {
 };
 
 /**
- * удаление предметов
+ * Deleting items from inventory
  *
  * @param {String} item
  */
@@ -112,7 +112,7 @@ Player.prototype.invkill = function(item) {
 };
 
 /**
- * прок
+ * proc operator (procedure)
  *
  * @param {String} label
  */
