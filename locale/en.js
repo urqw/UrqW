@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var en = {
-    welcome_message: "This is the UrqW " + urqw_version + " text-based game engine. Compatibility modes with RipURQ 1.4 and URQ_DOS 1.35 are supported. If you want to develop your own game but don’t know how, please refer to the <a href=\"https://urqw.github.io/UrqW/docs/urql.html\" target=\"_blank\">documentation</a>. The project repository is hosted on <a href=\"https://github.com/urqw/UrqW\" target=\"_blank\">GitHub</a>, where you can submit your games for inclusion in the catalog. Additionally, you can create an <a href=\"https://github.com/urqw/UrqW/issues\" target=\"_blank\">issue</a> there if you encounter any problems.",
+    welcome_message: "This is the UrqW " + urqw_version + " text-based game engine. Compatibility modes with RipURQ 1.4 and URQ_DOS 1.35 are supported. If you want to develop your own game but don't know how, please refer to the <a href=\"https://urqw.github.io/UrqW/docs/urql.html\" target=\"_blank\">documentation</a>. The project repository is hosted on <a href=\"https://github.com/urqw/UrqW\" target=\"_blank\">GitHub</a>, where you can submit your games for inclusion in the catalog. Additionally, you can create an <a href=\"https://github.com/urqw/UrqW/issues\" target=\"_blank\">issue</a> there if you encounter any problems.",
     interface_language: "Interface language",
     something_went_wrong: "Something went wrong",
     wait: "Wait...",

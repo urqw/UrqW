@@ -18,7 +18,7 @@ function Parser() {
  */
 Parser.prototype.parse = function(line) {
     line = line.replace(/^\s+/, '');
-    // просмотреть список известных операторов
+    // View list of known operators
     var expl = line.split(' ');
     var operand = expl[0].toLowerCase().trim();
     var command = expl.slice(1).join(' ');
@@ -30,7 +30,7 @@ Parser.prototype.parse = function(line) {
         var els;
         var ifline = line;
 
-        // todo переделать на обратную польскую
+        // todo Convert to Reverse Polish notation
         if (ifline.indexOf(' if ') != -1) {
             ifline = ifline.substring(0, ifline.indexOf(' if ') + 1)
         }
@@ -133,7 +133,7 @@ Parser.prototype.parse = function(line) {
             var btn = command.split(',');
 
             return GlobalPlayer.btn(btn[0].trim(), btn.slice(1).join(',').trim());
-        //рудименты далее
+        // Rudiments of "Next"
         case 'tokens':
             var reg;
 
@@ -163,9 +163,9 @@ Parser.prototype.parse = function(line) {
             break;
         case 'javascript': return GlobalPlayer.javaScript(command.toString().trim());
 
-        // если ничего не помогло^w^w^w не оператор
+        // If nothing helped ^w^w^w is not operator
         default:
-            //  это выражение?
+            //  Is this an expression?
             if (line.indexOf('=') > 0) {
                 GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1)).calc());
             } else {
@@ -176,7 +176,7 @@ Parser.prototype.parse = function(line) {
 };
 
 /**
- * Разбиваем по &
+ * Split by &
  *
  * @param line
  *
@@ -196,7 +196,7 @@ Parser.prototype.prepareLine = function (line) {
 };
 
 /**
- * Открываем #$, #%$
+ * Expand #$, #%$
  *
  * @param {String} line
  *
@@ -215,7 +215,7 @@ Parser.prototype.openTags = function (line) {
 
     while (line.search(/\#[^\#]+?\$/) != -1) {
         line = line.replace(/\#[^\#]+?\$/, function(exp) {
-            // рудимент для совместимости
+            // Rudiment for compatibility
             if (exp[1] == '%') {
                 exp = exp.substr(2, (exp.length - 3));
             } else {

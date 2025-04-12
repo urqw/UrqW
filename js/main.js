@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-// Загрузка
+// Loading
 
 /**
  * @type {Quest}
@@ -42,7 +42,7 @@ $(function() {
     $('#additionalstyle').find('style').empty();
 
     /**
-     * Получить значение get-параметра
+     * Get value of get parameter from URL
      */
     function getValParam(name) {
         var query = window.location.search.substring(1);
@@ -57,7 +57,7 @@ $(function() {
     }
 
     /**
-     * Загрузить по URL
+     * Load game from URL
      */
     function loadFromURL(url) {
         var fileExtension = url.split('.').pop().toLowerCase();
@@ -113,7 +113,7 @@ $(function() {
     }
 
     /**
-     * Загрузить из хеша
+     * Load game from hash
      */
     function loadFromHash() {
         $('#loading').show();
@@ -140,7 +140,7 @@ $(function() {
     }
 
     /**
-     * Изменяем настройки по умолчанию в соответствии с get-параметрами
+     * Change default settings according to get parameters from URL
      */
     var getParamMode = getValParam('mode');
     if (getParamMode && $('#urq_mode option[value="' + getParamMode + '"]').length) $('#urq_mode').val(getParamMode);
@@ -155,7 +155,8 @@ $(function() {
     }
 
     /**
-     * Попробуем загрузить квест по ссылке из get-параметра url, иначе из каталога, если в хеше что-то есть
+     * Try to load game by link from get parameter,
+     * otherwise from catalog, if there is something in hash
      */
     var getParamUrl = getValParam('url');
     if (getParamUrl) {
@@ -294,7 +295,7 @@ $(function() {
     }
 
     /**
-     * Выбор игры из списка
+     * Game choice from list
      */
     $('#gamelist').on('click', '.gamelink', function() {
         window.location.hash = encodeURIComponent($(this).data('game'));
@@ -497,10 +498,10 @@ $(function() {
     });
 
     /**
-     * Запуск
+     * Start game
      *
-     * @param {String} msg тело квеста
-     * @param {String} name имя игры или файла
+     * @param {String} msg (body of quest)
+     * @param {String} name (name of game or file)
      */
     function start(msg, name) {
         quest = null;

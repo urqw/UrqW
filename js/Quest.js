@@ -6,14 +6,14 @@
  */
 
 /**
- * @param {string} text тело игры
+ * @param {string} text (body of game)
  *
  * @constructor
  */
 function Quest(text) {
 
     /**
-     * @type {string} имя игры или файла для сохранения
+     * @type {string} name of game or file to save
      */
     this.name = '';
 
@@ -76,7 +76,7 @@ Quest.prototype.getLabel = function(label) {
 };
 
 /**
- * следующая строка
+ * Next line
  */
 Quest.prototype.next = function() {
     var line = this.get(this.position);
@@ -88,7 +88,7 @@ Quest.prototype.next = function() {
     }
 
     if (this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq') {
-        // вырезать комментарий
+        // Cut comment
         if (line.indexOf(';') != -1) {
             line = line.substring(0, line.indexOf(';'));
         }
@@ -98,7 +98,7 @@ Quest.prototype.next = function() {
 };
 
 /**
- * строка по номеру
+ * Line by number
  */
 Quest.prototype.get = function(i) {
     if (this.quest[i] != undefined) {
@@ -109,7 +109,7 @@ Quest.prototype.get = function(i) {
 };
 
 /**
- * инициализация
+ * Initialization
  */
 Quest.prototype.init = function() {
     this.labels = {};
@@ -122,7 +122,7 @@ Quest.prototype.init = function() {
     this.realCurrentLoc = '';
 
     /**
-     * Собираем метки
+     * Collecting labels
      */
     for (var i = this.quest.length -1; i >=0; i--) {
         var str = this.get(i);
@@ -152,7 +152,7 @@ Quest.prototype.init = function() {
 };
 
 /**
- * инициализация системных переменных, в т.ч. взятых из manifest.json
+ * Initialization of system variables, including those taken from manifest.json
  */
 Quest.prototype.sysVarInit = function() {
     if (manifest_urqw_title) GlobalPlayer.setVar('urqw_title', manifest_urqw_title);
@@ -248,7 +248,8 @@ Quest.prototype.getVar = function(variable) {
         return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
     }
 
-    // Теоретически в старых играх переменная date может использоваться как пользовательская, поэтому поддерживаем только без специальных правил urq_mode
+    // Theoretically, in older games, "date" variable can be used as a user variable,
+    // so only support urq_mode without special rules
     if (variable == 'date' && !(this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq')) {
         var Datetime = new Date();
         return Math.floor(Datetime.getTime() / (1000*60*60*24));
@@ -271,7 +272,7 @@ Quest.prototype.getVar = function(variable) {
         }
     }
 
-    // Для выражений вроде "1 деньги"
+    // For expressions like "1 money"
     if (variable.split(' ').length > 1) {
         var count = variable.split(' ')[0];
         if (!isNaN(count)) {
@@ -288,7 +289,7 @@ Quest.prototype.getVar = function(variable) {
 };
 
 /**
- * сохранение
+ * Save game
  *
  * @param {int} slot
  */
@@ -308,7 +309,7 @@ Quest.prototype.save = function(slot) {
 };
 
 /**
- * загрузка
+ * Load game
  *
  * @param {int} slot
  */

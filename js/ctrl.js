@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-// Управление квеста пользователем (события)
+// User control of quest (events)
 
 var volume = 1;
 
@@ -16,7 +16,7 @@ $(function() {
     var returnToGame = $('#return_to_game');
 
     /**
-     * Нажатие на сохранение
+     * Click on save
      */
     $('#save').on('click', function() {
         if (GlobalPlayer.lock) return false;
@@ -107,8 +107,8 @@ $(function() {
 
             Game.locked = false;
 
-            // Если при присвоении значений переменным производятся дополнительные действия,
-            // то их надо повторить при загрузке сохранённой игры
+            // If additional actions are performed when assigning values to variables,
+            // they must be repeated when loading a saved game
             GlobalPlayer.setVar('urqw_game_lang', Game.getVar('urqw_game_lang'));
         });
 
@@ -172,7 +172,7 @@ $(function() {
     });
 
     /**
-     * Нажатие на сохранение
+     * Click on save slot
      */
     returnToGame.on('click', function() {
         $('#saveslots').hide();
@@ -181,7 +181,7 @@ $(function() {
     });
 
     /**
-     * Нажатие на btn
+     * Click on btn
      */
     buttonField.on('click', '.button', function() {
         GlobalPlayer.action($(this).data('action'), false);
@@ -192,7 +192,7 @@ $(function() {
     });
 
     /**
-     * Использование предметов
+     * Using items from inventory
      */
     inventory.on('click', '.item_use', function() {
         if (GlobalPlayer.lock) return false;
@@ -207,7 +207,7 @@ $(function() {
     });
 
     /**
-     * Отлов нажатия клавиш
+     * Keystroke tracking
      */
     $(document).keydown(function(e){
         if (GlobalPlayer == null) {
@@ -222,7 +222,7 @@ $(function() {
     });
 
     /**
-     * Клики мышкой
+     * Mouse click tracking
      */
     $(document).on('click', '#textfield, #info', function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_ANYKEY) {
@@ -233,7 +233,7 @@ $(function() {
     });
 
     /**
-     * Инпут ввод (интер)
+     * Pressing Enter key in input field
      */
     $('#input').find('input').keypress(function(e){
         if (GlobalPlayer.status == PLAYER_STATUS_INPUT && e.keyCode == 13) {
@@ -242,7 +242,7 @@ $(function() {
     });
 
     /**
-     * Инпут ввод (кнопка)
+     * Click on OK button of input field
      */
     $('#input_enter').on('click', function() {
         if (GlobalPlayer.status == PLAYER_STATUS_INPUT) {

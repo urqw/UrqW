@@ -157,7 +157,7 @@ body {
     border-right-color:#ffffff;
 }
 
-/* чтобы навбар не коллапсировал */
+/* To prevent navbar from collapsing */
 .navbar-nav>li, .navbar-nav {
     float: left !important;
 }

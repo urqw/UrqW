@@ -5,7 +5,7 @@
  */
 
 /**
- * @param {string} str выражение
+ * @param {string} str Expression
  *
  * @constructor
  */
@@ -14,11 +14,11 @@ function Expression(str) {
     /**
      * @return {Array}
      *
-     * токенолизатор
+     * Tokenizer
      */
     this.tokenize = function (str) {
         str = ' ' + str + ' ';
-        str = str.replace(/ not /g, '  not  '); // пока так (чтобы not мог прилипать ко всему)
+        str = str.replace(/ not /g, '  not  '); // For now, do it this way (so that "not" can stick to everything)
         return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\))/gi);
     };
 
@@ -40,7 +40,7 @@ function Expression(str) {
 
             if (token.length == 0) continue;
 
-            // если отрицательное число
+            // If negative number
             if (lastTokenIsOperator && token == '-') {
 
                 do {
@@ -48,9 +48,9 @@ function Expression(str) {
                 } while(token.length == 0);
 
                 exitStack.push([-parseFloat(token.replace(',', '.').replace(/ /g, ''))]);
-                // если число
+                // If number
             } else if (!isNaN(token.replace(',', '.').replace(/ /g, ''))) {
-                // считываем всё число дальше
+                // Read number further
                 exitStack.push([parseFloat(token.replace(',', '.').replace(/ /g, ''))]);
             } else if (this.getPriority(token) > 0) {
                 if (token == '(') {

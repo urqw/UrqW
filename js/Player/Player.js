@@ -38,7 +38,7 @@ function Player() {
     this.lock = false;
 
     /**
-     * системные команды
+     * System commands
      */
 }
 
@@ -53,7 +53,7 @@ Player.prototype.continue = function() {
 };
 
 /**
- * рендер
+ * Render
  */
 Player.prototype.fin = function() {
     if (Game.getVar('music')) this.playMusic(Game.getVar('music'), true);
@@ -93,7 +93,7 @@ Player.prototype.play = function(line) {
 };
 
 /**
- * добавление команды в текущий поток
+ * Adding a command to the current thread
  *
  * @param {String} line
  */
@@ -102,11 +102,11 @@ Player.prototype.flowAdd = function(line) {
 };
 
 /**
- * команды далее исполняются юзером по ходу игры
+ * Commands are then executed by the user during the game
  */
 
 /**
- * коммон
+ * common
  */
 Player.prototype.common = function() {
     var commonLabel = 'common';
@@ -244,7 +244,7 @@ Player.prototype.setVar = function(variable, value) {
         document.getElementById('input_enter').setAttribute('lang', document.getElementsByTagName('HTML')[0].getAttribute('lang'));
     } else
 
-    // todo переместить
+    // todo Move
     if (variable.toLowerCase() === 'image') {
         var file = value;
         if (files != null) {
@@ -272,7 +272,7 @@ Player.prototype.setVar = function(variable, value) {
 /**
  * @param {String} src
  */
-    // todo переместить в клиента
+    // todo Move to client
 Player.prototype.image = function(src) {
     if (src) {
         var alt = i18next.t('image');
@@ -288,7 +288,7 @@ Player.prototype.image = function(src) {
 /**
  * @param {String} code
  */
-    // todo возможно, переместить в клиента, как и image
+    // todo Maybe move to client like image
 Player.prototype.javaScript = function(code) {
     var result;
     if (code) {
