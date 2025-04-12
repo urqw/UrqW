@@ -26,7 +26,8 @@ $(function() {
         $('#saveslots').find('.list-group').empty();
 
         for(var i = 1; i <= 10; i++) {
-            var btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
+            var li = $('<li class="list-group-item">');
+            var btn = $('<button class="button text-center savebtn" data-slot="' + i + '">');
             var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
 
             if (lsname === null) {
@@ -34,7 +35,8 @@ $(function() {
             } else {
                 btn.text(lsname);
             }
-            $('#saveslots').find('.list-group').append(btn);
+            li.append(btn);
+            $('#saveslots').find('.list-group').append(li);
         }
 
         $('#saveslots').find('.savebtn').on('click', function() {
@@ -53,16 +55,19 @@ $(function() {
 
         $('#saveslots').find('.list-group').empty();
 
-        var btn = $('<button class="list-group-item list-group-item-warning button text-center savebtn" data-slot="fast">');
+        var li = $('<li class="list-group-item list-group-item-warning">');
+        var btn = $('<button class="button text-center savebtn" data-slot="fast">');
         var lsname = localStorage.getItem(Game.name + '_fast_name');
 
         if (lsname != null) {
             btn.text(lsname);
-            $('#saveslots').find('.list-group').append(btn);
+            li.append(btn);
+            $('#saveslots').find('.list-group').append(li);
         }
 
         for(var i = 1; i <= 10; i++) {
-            btn = $('<button class="list-group-item button text-center savebtn" data-slot="' + i + '">');
+            li = $('<li class="list-group-item">');
+            btn = $('<button class="button text-center savebtn" data-slot="' + i + '">');
             lsname = localStorage.getItem(Game.name + '_' + i + '_name');
 
             if (lsname === null) {
@@ -70,7 +75,8 @@ $(function() {
             } else {
                 btn.text(lsname);
             }
-            $('#saveslots').find('.list-group').append(btn);
+            li.append(btn);
+            $('#saveslots').find('.list-group').append(li);
         }
 
         $('#saveslots').find('.savebtn').on('click', function() {
