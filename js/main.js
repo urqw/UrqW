@@ -165,7 +165,7 @@ $(function() {
         loadFromHash();
     }
 
-    function loadZip(data, name) {
+    function loadZip(data, gameName) {
         var zip = new JSZip(data);
 
         files = {};
@@ -254,7 +254,7 @@ $(function() {
                 quest = quest + '\r\n' + questPart;
             }
 
-            start(quest, name);
+            start(quest, gameName);
         }
     }
 
