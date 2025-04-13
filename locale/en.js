@@ -37,5 +37,14 @@ var en = {
     game_over: "[game over]",
     examine: "examine",
     empty_save_slot: "(Empty save slot)",
+    menu: "Menu",
+    rename: "Rename",
+    download: "Download",
+    clear: "Clear",
+    clear_confirm: "Are you sure you want to clear this save slot?",
+    launch: "Launch",
+    enter_save_slot_name: "Enter the save slot name:",
+    or_upload_save_file: "Or upload the save file",
+    save_file_unsupported_format: "The save file has an unsupported format.",
     manifest_unsupported_format: "The game has a manifest.json file in an unsupported format."
 };

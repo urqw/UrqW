@@ -37,5 +37,14 @@ var ru = {
     game_over: "[игра закончена]",
     examine: "осмотреть",
     empty_save_slot: "(Пустой слот сохранения)",
+    menu: "Меню",
+    rename: "Переименовать",
+    download: "Скачать",
+    clear: "Очистить",
+    clear_confirm: "Вы, действительно, хотите очистить этот слот сохранения?",
+    launch: "Запустить",
+    enter_save_slot_name: "Введите название слота сохранения:",
+    or_upload_save_file: "Или загрузите файл сохранения",
+    save_file_unsupported_format: "Файл сохранения имеет неподдерживаемый формат.",
     manifest_unsupported_format: "Игра имеет файл manifest.json в неподдерживаемом формате."
 };

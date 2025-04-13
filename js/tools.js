@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -54,6 +55,44 @@ function win2unicode(str) {
     }
     
     return res
+}
+
+/**
+ * @param {string} value
+ */
+function isValidBase64(str) {
+    // Base64 can contain A-Z, a-z, 0-9, +, / and = (for padding)
+    var base64RegExp = /^[A-Za-z0-9+/=]*$/;
+    return base64RegExp.test(str);
+}
+
+/**
+ * @param {string} value
+ */
+function unicode2base(str) {
+    try {
+        var encoder = new TextEncoder();
+        var buffer = encoder.encode(str);
+        return btoa(String.fromCharCode.apply(null, new Uint8Array(buffer)));
+    } catch(error) {
+        return '';
+    }
+}
+
+/**
+ * @param {string} value
+ */
+function base2unicode(b64) {
+    if (!isValidBase64(b64)) {
+        return '';
+    }
+    try {
+        var byteArray = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+        var decoder = new TextDecoder('utf-8');
+        return decoder.decode(byteArray);
+    } catch(error) {
+        return '';
+    }
 }
 
 

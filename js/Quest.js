@@ -313,8 +313,7 @@ Quest.prototype.save = function(slot) {
  *
  * @param {int} slot
  */
-Quest.prototype.load = function(slot) {
-    var data = JSON.parse(localStorage.getItem(this.name + '_' + slot.toString() + '_data'));
+Quest.prototype.load = function(data) {
     GlobalPlayer.status = data.status;
     GlobalPlayer.text = data.text;
     GlobalPlayer.buttons = data.buttons;
