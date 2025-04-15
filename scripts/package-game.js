@@ -56,11 +56,32 @@ async function packageGames() {
             process.exit(1);
         }
 
+        // Function to check directory size
+        async function getDirSize(dirPath) {
+            const files = await fs.promises.readdir(dirPath);
+            let size = 0;
+            for (const file of files) {
+                const filePath = path.join(dirPath, file);
+                const stats = await fs.promises.stat(filePath);
+                if (stats.isFile()) {
+                    size += stats.size;
+                }
+            }
+            return size;
+        }
+
         // Archive every game found
         for (const game of gameDirs) {
             const sourceDir = path.join(gamesDir, game);
             const outputPath = path.join(rootDir, 'quests', `${game}.zip`);
             
+            // Check if directory is empty
+            const size = await getDirSize(sourceDir);
+            if (size === 0) {
+                console.log(`Skipping empty directory: ${sourceDir}`);
+                continue;
+            }
+
             // Create new archive
             const output = fs.createWriteStream(outputPath);
             const archive = archiver('zip', {
