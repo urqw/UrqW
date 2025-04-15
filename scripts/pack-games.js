@@ -12,7 +12,7 @@ const archiver = require('archiver');
 const rootDir = path.resolve(__dirname, '..');
 
 // Get argument from command line
-const pattern = process.argv[2];
+const pattern = process.argv[2] || '*';
 
 // Check presence of argument
 if (!pattern) {
@@ -56,6 +56,9 @@ async function packageGames() {
             process.exit(1);
         }
 
+        // Initialize skipped directories counter
+        let skippedCount = 0;
+
         // Function to check directory size
         async function getDirSize(dirPath) {
             const files = await fs.promises.readdir(dirPath);
@@ -79,6 +82,7 @@ async function packageGames() {
             const size = await getDirSize(sourceDir);
             if (size === 0) {
                 console.log(`Skipping empty directory: ${sourceDir}`);
+                skippedCount++;
                 continue;
             }
 
@@ -107,6 +111,13 @@ async function packageGames() {
             });
             
             console.log(`Game ${game} successfully archived to ${outputPath}`);
+        }
+
+        if (skippedCount === 0) {
+            console.log('All games were successfully archived.');
+        } else {
+            console.log(`${skippedCount} empty directories were skipped.`);
+            process.exit(1);
         }
     } catch (error) {
         console.error(`An error occurred while archiving the game ${game}:`, error);

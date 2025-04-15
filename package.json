@@ -7,11 +7,11 @@
     "doc": "docs"
   },
   "scripts": {
-    "package-game": "node scripts/package-game.js",
-    "rss-gen": "node scripts/rss-gen.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "validate-games.json": "node scripts/validate-games.json.js",
-    "validate-games.json-and-rss-gen": "npm run validate-games.json && npm run rss-gen"
+    "gen-rss": "node scripts/gen-rss.js",
+    "pack-games": "node scripts/pack-games.js",
+    "valid-json": "node scripts/valid-json.js",
+    "build": "npm run valid-json && npm run pack-games && npm run gen-rss",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akela <tinycoyote@gmail.com>",
   "contributors": [
