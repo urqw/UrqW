@@ -96,6 +96,14 @@
         "folder": "how_i_became_a_pirate"
     },
     {
+        "author": "Admiral Jota",
+        "title": "Grunk and Cheese",
+        "description": "Grunk orc. Grunk big and green and wearing pants. That good: pants important",
+        "date": "2015-10-24",
+        "lang": "en",
+        "folder": "grunk_and_cheese"
+    },
+    {
         "author": "Юрий Павленко (Goraph)",
         "title": "Латунный череп. Глава Первая: Быкомедведь",
         "description": "В далёком будущем, когда земля была уже старой. В Прибалтике, что не так далеко отсюда...",
@@ -150,14 +158,6 @@
         "date": "2010-04-04",
         "lang": "ru",
         "folder": "sarah_faerman2"
-    },
-    {
-        "author": "Admiral Jota",
-        "title": "Grunk and Cheese",
-        "description": "Grunk orc. Grunk big and green and wearing pants. That good: pants important",
-        "date": "2009-12-16",
-        "lang": "en",
-        "folder": "grunk_and_cheese"
     },
     {
         "author": "Юрий Павленко (Goraph)",
