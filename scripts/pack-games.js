@@ -126,7 +126,7 @@ async function packageGames() {
             process.exit(1);
         }
     } catch (error) {
-        console.error(`An error occurred while archiving the game ${game}:`, error);
+        console.error('An error occurred while archiving the game:', error);
         process.exit(1);
     }
 }
