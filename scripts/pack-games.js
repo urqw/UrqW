@@ -75,9 +75,15 @@ async function packageGames() {
 
         // Archive every game found
         for (const game of gameDirs) {
-            const sourceDir = path.join(gamesDir, game);
+            let sourceDir = path.join(gamesDir, game);
             const outputPath = path.join(rootDir, 'quests', `${game}.zip`);
             
+            // If game directory contains urqw directory, then only it is archived
+            const urqwPath = path.join(sourceDir, 'urqw');
+            if (fs.existsSync(urqwPath) && fs.statSync(urqwPath).isDirectory()) {
+                sourceDir = urqwPath;
+            }
+
             // Check if directory is empty
             const size = await getDirSize(sourceDir);
             if (size === 0) {
