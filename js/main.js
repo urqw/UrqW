@@ -165,6 +165,20 @@ $(function() {
         loadFromHash();
     }
 
+    // Assign handlers to filters
+    var filtersContainer = $('#filters');
+    var showButton = $('#show_games');
+
+    filtersContainer.on('keyup', function(e) {
+        if (e.key === 'Enter') {
+            showButton.click();
+        }
+    });
+
+    showButton.on('click', function() {
+        loadFromHashFailed();
+    });
+
     function loadZip(data, gameName) {
         var zip = new JSZip(data);
 
@@ -270,6 +284,76 @@ $(function() {
             $('#open_game_url_form').show();
             var date;
             var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
+            // Add unique game languages ??to dropdown list of filter
+            var filterLangsUnique = [...new Set(quests
+                .map(quest => quest.lang.split(';'))
+                .flat())];
+
+            var filterLangSelect = $('#filter_lang');
+            var filterLang = filterLangSelect.val();
+            if (!filterLang) {
+                filterLang = 'any';
+            }
+            filterLangSelect.empty();
+
+            var availableLangs = [
+                ...filterLangsUnique.map(lang => [lang, i18next.t('language.' + lang)])
+            ];
+            var sortedAvailableLangs = availableLangs.sort((a, b) => a[1].localeCompare(b[1]));
+            availableLangs = [['any', i18next.t('language.any')], ...sortedAvailableLangs];
+
+            availableLangs.forEach(lang => {
+                var option = $('<option>');
+                option.val(lang[0]);
+                option.text(lang[1]);
+                filterLangSelect.append(option);
+            });
+            filterLangSelect.val(filterLang);
+            
+            // Parameters of filtering
+            var filterTitle = $('#filter_title').val();
+            var filterSort = $('#filter_sort').val();
+
+            // Filtering game list
+            var filteredQuests = quests.filter(quest => {
+                // Filter by language
+                if (filterLang !== 'any' && !quest.lang.split(';').includes(filterLang)) {
+                    return false;
+                }
+
+                // Filter by title (if regexp is entered)
+                if (filterTitle) {
+                    var regexp = new RegExp(filterTitle, 'i'); // Case insensitive
+                    if (!regexp.test(quest.title)) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+
+            // Sorting game list
+            quests = filteredQuests.sort((a, b) => {
+                switch (filterSort) {
+                    case 'newest':
+                        var dateA = new Date(a.date);
+                        var dateB = new Date(b.date);
+                        return dateB - dateA; // b - a to sort from largest to smallest
+                    case 'oldest':
+                        var dateA = new Date(a.date);
+                        var dateB = new Date(b.date);
+                        return dateA - dateB; // a - b to sort from smallest to largest
+                    case 'alphabetically':
+                        var titleA = a.title.toLowerCase();
+                        var titleB = b.title.toLowerCase();
+                        return titleA.localeCompare(titleB);
+                    default:
+                        return 0;
+                }
+            });
+
+            // Draw game list
             for (var i = 0; i < quests.length; i++) {
                 date = new Date(quests[i].date);
                 // Since there is no native semantics of list, do it through role attributes
