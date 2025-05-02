@@ -295,8 +295,9 @@ Quest.prototype.getVar = function(variable) {
  */
 Quest.prototype.save = function(slot) {
     var Datetime = new Date();
+    var lang = document.documentElement.lang;
 
-    localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString() + ' ' + Datetime.toLocaleTimeString());
+    localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString(lang) + ' ' + Datetime.toLocaleTimeString(lang));
     localStorage.setItem(this.name + '_' + slot.toString() + '_data', JSON.stringify({
         status: GlobalPlayer.status,
         text: GlobalPlayer.text,
