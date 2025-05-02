@@ -307,6 +307,7 @@ $(function() {
                 var option = $('<option>');
                 option.val(lang[0]);
                 option.text(lang[1]);
+                option.attr('data-i18n', 'language.' + lang[0]);
                 filterLangSelect.append(option);
             });
             filterLangSelect.val(filterLang);
