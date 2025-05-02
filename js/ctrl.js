@@ -274,6 +274,10 @@ $(function() {
         // If additional actions are performed when assigning values to variables,
         // they must be repeated when loading a saved game
         GlobalPlayer.setVar('urqw_game_lang', Game.getVar('urqw_game_lang'));
+        var urqwTitleValue = Game.vars['urqw_title'];
+        if (urqwTitleValue) {
+            document.title = urqwTitleValue;
+        }
     }
 
     $('#mute').on('click', function () {
