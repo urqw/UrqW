@@ -166,19 +166,30 @@ $(function() {
     }
 
     // Assign handlers to filters
-    var filtersContainer = $('#filters');
+    var filterTitleInput = $('#filter_title');
+    var clearFilterTitle = $('#clear_filter_title');
     var showButton = $('#show_games');
 
-    filtersContainer.on('keyup', function(e) {
+    filterTitleInput.on('keydown', function(e) {
         if (e.key === 'Enter') {
             showButton.click();
         }
+    });
+
+    filterTitleInput.on('input', function() {
+        $(this).next('span').toggle(Boolean($(this).val()));
+    });
+
+    clearFilterTitle.on('click', function() {
+        filterTitleInput.val('').focus();
+        $(this).closest('.input-group-btn').hide();
     });
 
     showButton.on('click', function() {
         loadFromHashFailed();
     });
 
+    // Load game data from ZIP file
     function loadZip(data, gameName) {
         var zip = new JSZip(data);
 

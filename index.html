@@ -116,7 +116,14 @@
 
             <div class="form-group">
                 <label for="filter_title" class="control-label" data-i18n="game_title">Game title</label>
-                <input type="search" class="form-control" id="filter_title">
+                <div class="input-group">
+                    <input type="search" class="form-control" id="filter_title">
+                    <span class="input-group-btn" style="display: none;">
+                        <button title="Clear" aria-label="Clear" class="btn btn-default" type="button" id="clear_filter_title" data-i18n="[title]clear;[aria-label]clear">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
             </div>
 
             <div class="form-group">
