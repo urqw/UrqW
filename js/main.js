@@ -282,8 +282,6 @@ $(function() {
             dataType: "json"
         }).done(function(quests) {
             // $('#open_game_url_form').show();
-            var date;
-            var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
             // Add unique game languages ??to dropdown list of filter
             var filterLangsUnique = [...new Set(quests
@@ -355,19 +353,31 @@ $(function() {
             });
 
             // Draw game list
-            for (var i = 0; i < quests.length; i++) {
-                date = new Date(quests[i].date);
+            if (quests.length > 0) {
+                var date;
+                var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
                 // Since there is no native semantics of list, do it through role attributes
                 $('#gamelist').attr('role', 'list');
+                for (var i = 0; i < quests.length; i++) {
+                    date = new Date(quests[i].date);
+                    $('#gamelist').append(
+                        '<div class="list-group-item" role="listitem" lang="' + quests[i].lang.split(';')[0] + '">' +
+                        '<a href="#" class="gamelink" data-game="' + quests[i].folder + '">' +
+                        '<div class="pull-right">' +
+                        '<span class="text-muted">' + quests[i].author + '</span>' +
+                        '</div>' +
+                        '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
+                        '<p class="list-group-item-text">' + quests[i].description + '</p><br>' +
+                        '<p class="list-group-item-text" lang="' + document.documentElement.lang + '">(' + date.toLocaleDateString(document.documentElement.lang, dateOptions) + ')</p>' +
+                        '</a></div>'
+                    );
+                }
+            } else {
+                // Remove list role because in this context it is not semantically list
+                $('#gamelist').attr('role', null);
                 $('#gamelist').append(
-                    '<div class="list-group-item" role="listitem" lang="' + quests[i].lang.split(';')[0] + '">' +
-                    '<a href="#" class="gamelink" data-game="' + quests[i].folder + '">' +
-                    '<div class="pull-right">' +
-                    '<span class="text-muted">' + quests[i].author + '</span>' +
-                    '</div>' +
-                    '<h4 class="list-group-item-heading">' + quests[i].title + '</h4>' +
-                    '<p class="list-group-item-text">' + quests[i].description + '</p><br>' +
-                    '<p class="list-group-item-text" lang="' + document.documentElement.lang + '">(' + date.toLocaleDateString(document.documentElement.lang, dateOptions) + ')</p>' +
+                    '<div class="list-group-item">' +
+                    '<p class="list-group-item-text" data-i18n="no_games_found">' + i18next.t('no_games_found') + '</p>' +
                     '</a></div>'
                 );
             }
