@@ -281,7 +281,7 @@ $(function() {
             url: 'games.json',
             dataType: "json"
         }).done(function(quests) {
-            $('#open_game_url_form').show();
+            // $('#open_game_url_form').show();
             var date;
             var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
