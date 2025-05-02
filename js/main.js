@@ -334,12 +334,20 @@ $(function() {
 
                 // Filter by title (if regexp is entered)
                 if (filterTitle) {
-                    var regexp = new RegExp(filterTitle, 'i'); // Case insensitive
-                    if (!regexp.test(quest.title)) {
-                        return false;
+                    try {
+                        // Try create regular expression
+                        var regexp = new RegExp(filterTitle, 'i'); // Case insensitive
+                        if (!regexp.test(quest.title)) {
+                            return false;
+                        }
+                    } catch (error) {
+                        // If error occurs while creating regexp, use simple string check
+                        if (quest.title.toLowerCase().indexOf(filterTitle.toLowerCase()) === -1) {
+                            return false;
+                        }
                     }
                 }
-                
+
                 return true;
             });
 
