@@ -1,5 +1,13 @@
 [
     {
+        "author": "Yuri Pavlenko (Goraph)",
+        "title": "The Rice Exchange. Osaka. 18th Century",
+        "description": "Japan, 18th Century. An old merchant lies dying in his home. He has three sons, and he calls them to his side: \"The one among you who returns with the largest sum of money in 30 days will become my heir and receive all 10,000 yen from me as inheritance.\"",
+        "date": "2025-05-03",
+        "lang": "en",
+        "folder": "rice_exchange_en"
+    },
+    {
         "author": "Nikita Tseykovets",
         "title": "This Is the House That Jack Built",
         "description": "Cumulative interactive fiction in English, Russian and Ukrainian based on the popular English nursery rhyme of the same name.",
