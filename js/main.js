@@ -365,7 +365,9 @@ $(function() {
                     case 'alphabetically':
                         var titleA = a.title.toLowerCase();
                         var titleB = b.title.toLowerCase();
-                        return titleA.localeCompare(titleB);
+                        return titleA.localeCompare(titleB, document.documentElement.lang, {
+                            numeric: true
+                        });
                     default:
                         return 0;
                 }
