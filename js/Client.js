@@ -89,8 +89,15 @@ Client.prototype.render = function (data) {
         }
     } else if (data.status == PLAYER_STATUS_ANYKEY) {
         this.crtlButtonField.hide();
-        this.crtlInfo.text(i18next.t('press_any_key'));
-        this.crtlInfo.show();
+        var span = $('<span>', {
+            tabindex: 0,
+            text: i18next.t('press_any_key')
+        });
+        this.crtlInfo.empty();
+        this.crtlInfo.append(span);
+        this.crtlInfo.show().promise().done(() => {
+            span.focus();
+        });
     } else if (data.status == PLAYER_STATUS_INPUT) {
         this.crtlButtonField.hide();
         this.crtlInput.removeClass('has-error');
@@ -108,8 +115,15 @@ Client.prototype.render = function (data) {
             }
         }, wait);
     } else if (data.status == PLAYER_STATUS_QUIT) {
-        this.crtlInfo.text(i18next.t('game_over'));
-        this.crtlInfo.show();
+        var span = $('<span>', {
+            tabindex: 0,
+            text: i18next.t('game_over')
+        });
+        this.crtlInfo.empty();
+        this.crtlInfo.append(span);
+        this.crtlInfo.show().promise().done(() => {
+            span.focus();
+        });
     }
 };
 
