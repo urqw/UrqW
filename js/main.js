@@ -155,13 +155,19 @@ $(function() {
     }
 
     /**
-     * Try to load game by link from get parameter,
+     * If variable urqw_hash is defined then load corresponding game.
+     * If not, try to load game by link from get parameter,
      * otherwise from catalog, if there is something in hash
      */
-    var getParamUrl = getValParam('url');
-    if (getParamUrl) {
-        loadFromURL(getParamUrl);
-    } else{
+    if (typeof urqw_hash === 'undefined') {
+        var getParamUrl = getValParam('url');
+        if (getParamUrl) {
+            loadFromURL(getParamUrl);
+        } else{
+            loadFromHash();
+        }
+    } else {
+        window.location.hash = urqw_hash;
         loadFromHash();
     }
 
