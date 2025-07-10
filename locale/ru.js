@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var ru = {
-    welcome_message: "Это движок текстовых игр UrqW " + urqw_version + ". Поддерживаются режимы совместимости с RipURQ 1.4 и URQ_DOS 1.35. Если вы хотите написать свою игру, но не знаете как, то ознакомьтесь с <a href=\"https://urqw.github.io/UrqW/docs/urql.html\" target=\"_blank\">документацией</a>. Репозиторий проекта находится на <a href=\"https://github.com/urqw/UrqW\" target=\"_blank\">GitHub</a>, куда  вы можете прислать свои игры для размещения в каталоге. Также там можно создать <a href=\"https://github.com/urqw/UrqW/issues\" target=\"_blank\">issue</a> при обнаружении проблем.",
+    welcome_message: "Это движок текстовых игр UrqW " + urqw_version + ". Поддерживаются режимы совместимости с RipURQ 1.4 и URQ_DOS 1.35. Если вы хотите написать свою игру, но не знаете как, то ознакомьтесь с <a href=\"" + url_docs + "\" target=\"_blank\">документацией</a>. Доступен <a href=\"" + url_repo + "\" target=\"_blank\">публичный репозиторий</a> проекта, куда  вы можете прислать свои игры для размещения в каталоге. Также там можно создать <a href=\"" + url_issues + "\" target=\"_blank\">issue</a> при обнаружении проблем.",
     interface_language: "Язык интерфейса",
     something_went_wrong: "Что-то пошло не так",
     wait: "Подождите...",
@@ -62,5 +62,15 @@ var ru = {
     enter_save_slot_name: "Введите название слота сохранения:",
     or_upload_save_file: "Или загрузите файл сохранения",
     save_file_unsupported_format: "Файл сохранения имеет неподдерживаемый формат.",
+    about_game: "Об игре",
+    undefined: "Неопределено",
+    settings: "Настройки",
+    about_urqw: "Об UrqW",
+    urqw_description: "UrqW " + urqw_version + " — это свободный движок текстовых игр с открытым исходным кодом.",
+    licenses: "Лицензии",
+    urqw_license_description: "Программное обеспечение UrqW предоставляется на условиях <a href=\"LICENSE.txt\" target=\"_blank\">Стандартной общественной лицензии GNU версии 2</a> или более поздней.",
+    third_party_licenses_description: "UrqW также включает и использует сторонние компоненты, которые предоставляются на условиях <a href=\"third-party_components.txt\" target=\"_blank\">различных свободных и открытых лицензий</a>.",
+    urqw_source_code_description: "Исходный код и информация о том, как его собрать самостоятельно, предоставляются в <a href=\"" + url_repo + "\" target=\"_blank\">публичном репозитории</a>.",
+    contributors: "Участники проекта",
     manifest_unsupported_format: "Игра имеет файл manifest.json в неподдерживаемом формате."
 };

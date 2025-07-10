@@ -16,6 +16,7 @@ var allowedCombinations = [
     'KeyA',
     'KeyI',
     'KeyL',
+    'KeyM',
     'KeyR',
     'KeyS',
     'KeyV',
@@ -301,6 +302,8 @@ function ClusterNavigation(command) {
 registerHotKey('Escape', (event) => {
     if ($('#return_to_game').is(':visible')) {
         $('#return_to_game').click();
+    } else if ($('#close_menu').is(':visible')) {
+        $('#close_menu').click();
     } else {
         event.preventDefault(false);
     }
@@ -346,6 +349,14 @@ registerHotKey('KeyI', (event) => {
 registerHotKey('KeyL', (event) => {
     if ($('#load').is(':visible') && !isFocusWithinElement($('#input'))) {
         $('#load').click();
+    } else {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('KeyM', (event) => {
+    if ($('#menu').is(':visible') && !isFocusWithinElement($('#input'))) {
+        $('#menu').click();
     } else {
         event.preventDefault(false);
     }

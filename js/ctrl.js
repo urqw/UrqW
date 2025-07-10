@@ -14,6 +14,7 @@ $(function() {
     var textfield = $('#textfield');
     var inventory = $('#inventory');
     var returnToGame = $('#return_to_game');
+    var closeMenu = $('#close_menu');
 
     /**
      * Click on save
@@ -340,6 +341,44 @@ $(function() {
         $('#saveslots').hide();
         $('#game').show();
         $('#load').focus();
+    });
+
+    /**
+     * Click on menu
+     */
+    $('#menu').on('click', function() {
+        if (GlobalPlayer.lock) return false;
+
+        $('#game').hide();
+
+        var gameLangVal = Game.vars['urqw_game_lang'];
+        var gameLangDesc;
+        if (gameLangVal) {
+            gameLangDesc = gameLangVal;
+            if (i18next.exists('language.' + gameLangVal, { lng: i18next.options.fallbackLng })) {
+                gameLangDesc += (' (<span data-i18n="language.' + gameLangVal + '">' + i18next.t('language.' + gameLangVal) + '</span>)');
+            }
+        } else {
+            gameLangDesc = i18next.t('undefined');
+        }
+
+        var cell = $('#game_language_in_menu');
+        cell.empty();
+        cell.html(gameLangDesc);
+
+        $('#menu_panel').show();
+        closeMenu.focus();
+
+        return false;
+    });
+
+    /**
+     * Click on close menu
+     */
+    closeMenu.on('click', function() {
+        $('#menu_panel').hide();
+        $('#game').show();
+        $('#menu').focus();
     });
 
     /**

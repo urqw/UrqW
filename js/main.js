@@ -653,6 +653,27 @@ $(function() {
         $('#choose-game').hide();
         $('#game').show();
 
+    // Add link to copy IFID to menu
+        if (manifest_urqw_game_ifid) {
+            var ifidCopyLink = $('<a>', {
+                href: '#',
+                text: manifest_urqw_game_ifid,
+                class: 'copy-link'
+            });
+
+            var cell = $('#ifid_in_menu');
+            cell.empty();
+            cell.append(ifidCopyLink);
+
+            ifidCopyLink.on('click', function(e) {
+                e.preventDefault();
+                navigator.clipboard.writeText(manifest_urqw_game_ifid);
+            });
+        }
+
+        // Move the interface language selector to the menu
+        $('#language_in_infopanel').contents().detach().prependTo('#language_in_settings');
+
         GlobalPlayer.continue();
     }
 });

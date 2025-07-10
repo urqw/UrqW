@@ -7,10 +7,11 @@
     "doc": "docs"
   },
   "scripts": {
+    "gen-license-report": "node scripts/gen-license-report.js",
     "gen-rss": "node scripts/gen-rss.js",
     "pack-games": "node scripts/pack-games.js",
     "valid-json": "node scripts/valid-json.js",
-    "build": "npm run valid-json && npm run pack-games && npm run gen-rss",
+    "build": "npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akela <tinycoyote@gmail.com>",
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "archiver": "^7.0.1",
+    "license-checker": "^25.0.1",
     "moment": "^2.30.1"
   }
 }
