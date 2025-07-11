@@ -215,9 +215,70 @@
         </div>
 
         <div class="panel panel-default">
+            <div id="debugging_panel" style="display: none;">
+                <div class="panel-heading"><h3>
+                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#debugging" aria-expanded="false" aria-controls="debugging">
+                        <span data-i18n="debugging">Debugging</span>
+                    </a>
+                </h3></div>
+    
+                <div id="debugging" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <h4 data-i18n="variables">Variables</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="name">Name</th>
+                                        <th data-i18n="value">Value</th>
+                                        <th data-i18n="type">Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="variable_table">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 data-i18n="items">Items</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th data-i18n="name">Name</th>
+                                        <th data-i18n="quantity">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="item_table">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4 data-i18n="other">Other</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>status</th>
+                                        <td id="status_in_menu"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>position</th>
+                                        <td id="position_in_menu"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>realCurrentLoc</th>
+                                        <td id="real_current_loc_in_menu"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="panel-heading"><h3>
                 <a href="#" class="collapsed" data-toggle="collapse" data-target="#about_game" aria-expanded="false" aria-controls="about_game">
-                    <span data-i18n="about_game">About the game</span>
+                    <span data-i18n="about_game">About the Game</span>
                 </a>
             </h3></div>
 

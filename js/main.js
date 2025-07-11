@@ -34,6 +34,7 @@ var manifest_game_encoding;
 var manifest_urqw_game_lang;
 var manifest_urqw_game_ifid;
 var manifest_urq_mode;
+var debug;
 
 $(function() {
     $('#something_wrong').hide();
@@ -152,6 +153,10 @@ $(function() {
         var element = document.getElementById('lang_select');
         var event = new Event('change');
         element.dispatchEvent(event);
+    }
+    if (getValParam('debug') === '1') {
+        debug = true;
+        $('#debugging_panel').show();
     }
 
     /**

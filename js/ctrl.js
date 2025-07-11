@@ -275,7 +275,8 @@ $(function() {
         // If additional actions are performed when assigning values to variables,
         // they must be repeated when loading a saved game
         GlobalPlayer.setVar('urqw_game_lang', Game.getVar('urqw_game_lang'));
-        var urqwTitleValue = Game.vars['urqw_title'];
+        var urqwTitleValue = Game.vars
+['urqw_title'];
         if (urqwTitleValue) {
             document.title = urqwTitleValue;
         }
@@ -351,6 +352,53 @@ $(function() {
 
         $('#game').hide();
 
+        // Refresh  information in the Debugging section
+        if (debug) {
+            var keys, tableRows;
+
+            // Variables
+            var variableTable = $('#variable_table');
+            variableTable.empty()
+            keys = Object.keys(Game.vars);
+            tableRows = $();
+            keys.reverse().forEach(key => {
+                var value = Game.vars[key];
+                var type = typeof value;
+                var row = $(`
+                    <tr>
+                        <th>${key}</th>
+                        <td>${value}</td>
+                        <td>${type}</td>
+                    </tr>
+                `);
+                tableRows = tableRows.add(row);
+            });
+            variableTable.append(tableRows);
+
+            // Items
+            var itemTable = $('#item_table');
+            itemTable.empty()
+            keys = Object.keys(Game.items);
+            tableRows = $();
+            keys.reverse().forEach(key => {
+                var quantity = Game.items[key];
+                var row = $(`
+                    <tr>
+                        <th>${key}</th>
+                        <td>${quantity}</td>
+                    </tr>
+                `);
+                tableRows = tableRows.add(row);
+            });
+            itemTable.append(tableRows);
+
+            // Other
+            $('#status_in_menu').text(GlobalPlayer.status);
+            $('#position_in_menu').text(Game.position);
+            $('#real_current_loc_in_menu').text(Game.realCurrentLoc);
+        }
+
+        // Refresh  information in the About the Game section
         var gameLangVal = Game.vars['urqw_game_lang'];
         var gameLangDesc;
         if (gameLangVal) {
