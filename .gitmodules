@@ -118,3 +118,6 @@
 [submodule "games/ancient_dagger1"]
 	path = games/ancient_dagger1
 	url = https://github.com/urqw/ancient_dagger1.git
+[submodule "games/ancient_dagger2"]
+	path = games/ancient_dagger2
+	url = https://github.com/urqw/ancient_dagger2.git
