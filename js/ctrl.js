@@ -440,6 +440,13 @@ $(function() {
         localStorage.setItem(name, JSON.stringify(isChecked));
     });
 
+    $('#close_page_confirmation').on('change', function() {
+        var name = 'close_page_confirmation';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+    });
+
     $('#numeric_keys').on('change', function() {
         var name = 'numeric_keys';
         var isChecked = $(this).prop('checked');

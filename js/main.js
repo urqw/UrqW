@@ -38,6 +38,7 @@ var debug;
 // Default settings value
 var settings = {
     automatically_focus: true,
+    close_page_confirmation: true,
     numeric_keys: true,
     alphabetic_keys: true,
     navigation_keys: true,
@@ -657,7 +658,9 @@ $(function() {
     function start(msg, name) {
         quest = null;
         window.onbeforeunload = function(e) {
-            return 'confirm please';
+            if (settings['close_page_confirmation']) {
+                return 'confirm please';
+            }
         };
 
         $('#loading').hide();

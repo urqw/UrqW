@@ -75,6 +75,7 @@ var en = {
     settings: "Settings",
     general: "General",
     automatically_focus: "Automatically focus the first control",
+    close_page_confirmation: "Close page confirmation",
     hotkeys: "Hotkeys",
     numeric_keys: "Activation of choice buttons using numeric keys",
     alphabetic_keys: "Quick actions using alphabetic keys",
