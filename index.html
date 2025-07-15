@@ -49,7 +49,7 @@
 
 <div class="panel panel-default" id="infopanel" style="display: none;">
     <div class="form-group" id="language_in_infopanel">
-        <label for="select_lang" class="control-label" data-i18n="interface_language">Interface language</label>
+        <label for="lang_select" class="control-label" data-i18n="interface_language">Interface language</label>
         <select id="lang_select"></select>
     </div>
     <div class="panel-body">
@@ -309,7 +309,40 @@
 
             <div id="settings" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <div class="form-group" id="language_in_settings"></div>
+                                        <h4 data-i18n="general">General</h4>
+                                        <div class="form-group" id="language_in_settings"></div>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="automatically_focus">
+                                                <label for="automatically_focus" data-i18n="automatically_focus">Automatically focus the first control</label>
+                                            </div>
+                                        </div>
+                                        <h4 data-i18n="hotkeys">Hotkeys</h4>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="numeric_keys">
+                                                <label for="numeric_keys" data-i18n="numeric_keys">Activation of choice buttons using numeric keys</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="alphabetic_keys">
+                                                <label for="alphabetic_keys" data-i18n="alphabetic_keys">Quick actions using alphabetic keys</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="navigation_keys">
+                                                <label for="navigation_keys" data-i18n="navigation_keys">Interface area navigation using navigation keys</label>
+                                            </div>
+                                        </div>
+                                        <h4 data-i18n="accessibility">Accessibility</h4>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="announce_description_updates">
+                                                <label for="announce_description_updates" data-i18n="announce_description_updates">Announce description updates using assistive technology</label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="announce_choice_button">
+                                                <label for="announce_choice_button" data-i18n="announce_choice_button">Announce choice button updates using assistive technology</label>
+                                            </div>
+                                        </div>
                 </div>
             </div>
 
@@ -331,52 +364,52 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="volume_control">Volume control</th>
                                     <td>V</td>
                                 </tr>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="restart_game">Restart game</th>
                                     <td>R</td>
                                 </tr>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="save_game">Save game</th>
                                     <td>S</td>
                                 </tr>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="load_game">Load game</th>
                                     <td>L</td>
                                 </tr>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="open_menu">Open menu</th>
                                     <td>M</td>
                                 </tr>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="focus_open_inventory">Focus and open inventory</th>
                                     <td>I</td>
                                 </tr>
-                                <tr>
+                                <tr class="alphabetic_keys_row">
                                     <th data-i18n="announce_description">Announce description using assistive technology</th>
                                     <td>A</td>
                                 </tr>
-                                <tr>
-                                    <th data-i18n="activating_first_ten_buttons">Activating the first ten Action choice buttons</th>
+                                <tr class="numeric_keys_row">
+                                    <th data-i18n="activating_first_ten_buttons">Activating the first ten choice buttons</th>
                                     <td>1-9, 0</td>
                                 </tr>
-                                <tr>
+                                <tr class="navigation_keys_row">
                                     <th data-i18n="focus_next_area">Focus the next interface area</th>
                                     <td data-i18n="right_arrow">Right arrow</td>
                                 </tr>
-                                <tr>
+                                <tr class="navigation_keys_row">
                                     <th data-i18n="focus_previous_area">Focus the previous interface area</th>
                                     <td data-i18n="left_arrow">Left arrow</td>
                                 </tr>
-                                <tr>
-                                    <th data-i18n="focus_next_element">Focus the next element of the current interface area</th>
+                                <tr class="navigation_keys_row">
+                                    <th data-i18n="focus_next_control">Focus the next control of the current interface area</th>
                                     <td data-i18n="down_arrow">Down arrow</td>
                                 </tr>
-                                <tr>
-                                    <th data-i18n="focus_previous_element">Focus the previous element of the current interface area</th>
+                                <tr class="navigation_keys_row">
+                                    <th data-i18n="focus_previous_control">Focus the previous control of the current interface area</th>
                                     <td data-i18n="up_arrow">Up arrow</td>
                                 </tr>
                             </tbody>

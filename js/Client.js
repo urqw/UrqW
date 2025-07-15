@@ -71,21 +71,23 @@ Client.prototype.render = function (data) {
     if (data.status == PLAYER_STATUS_END) {
         this.drawButtons();
         this.drawInventory();
-        // Automatically focus first interactive element of game screen:
+        // Automatically focus the first control of game screen:
         // link in text, action button, or inventory button
-        var targetFocus;
-        [
-            $('#textfield a:visible:first'),
-            $('#buttons button:visible:first'),
-            $('.navbar-right a:visible:first')
-        ].some(function(element) {
-            if (element.length) {
-                targetFocus = element;
-                return true;
+        if (settings['automatically_focus']) {
+            var targetFocus;
+            [
+                $('#textfield a:visible:first'),
+                $('#buttons button:visible:first'),
+                $('.navbar-right a:visible:first')
+            ].some(function(element) {
+                if (element.length) {
+                    targetFocus = element;
+                    return true;
+                }
+            });
+            if (targetFocus) {
+                targetFocus.focus();
             }
-        });
-        if (targetFocus) {
-            targetFocus.focus();
         }
     } else if (data.status == PLAYER_STATUS_ANYKEY) {
         this.crtlButtonField.hide();
@@ -93,10 +95,13 @@ Client.prototype.render = function (data) {
             tabindex: 0,
             text: i18next.t('press_any_key')
         });
+        span.attr('data-i18n', 'press_any_key');
         this.crtlInfo.empty();
         this.crtlInfo.append(span);
         this.crtlInfo.show().promise().done(() => {
-            span.focus();
+            if (settings['automatically_focus']) {
+                span.focus();
+            }
         });
     } else if (data.status == PLAYER_STATUS_INPUT) {
         this.crtlButtonField.hide();
@@ -119,10 +124,13 @@ Client.prototype.render = function (data) {
             tabindex: 0,
             text: i18next.t('game_over')
         });
+        span.attr('data-i18n', 'game_over');
         this.crtlInfo.empty();
         this.crtlInfo.append(span);
         this.crtlInfo.show().promise().done(() => {
-            span.focus();
+            if (settings['automatically_focus']) {
+                span.focus();
+            }
         });
     }
 };
@@ -230,7 +238,11 @@ Client.prototype.drawButtons = function () {
 
     $.each(GlobalPlayer.buttons, function(index, button) {
         if (button) {
-            var buttonCtrl = $('<button class="list-group-item button">').attr('data-action', button.id).html('<b>' + (index + 1) + ':</b> ' + button.desc);
+            var description = button.desc;
+            if (settings['numeric_keys']) {
+                description = '<b>' + (index + 1) + ':</b> ' + description;
+            }
+            var buttonCtrl = $('<button class="list-group-item button">').attr('data-action', button.id).html(description);
 
             me.crtlButtonField.append(buttonCtrl);
         }

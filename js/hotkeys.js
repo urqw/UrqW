@@ -149,6 +149,7 @@ function isFocusWithinElement($targetElement) {
 
 // Function to activate button inside an element by number
 function activateButtonByNumber(elementID, number) {
+    if (!settings['numeric_keys']) return false;
     var element = document.getElementById(elementID);
     if (!$('#' + elementID).is(':visible') || isFocusWithinElement($('#input'))) return false;
     var buttons = element.getElementsByTagName('button');
@@ -167,6 +168,8 @@ function isTextInput(element) {
 // Function to cluster navigation
 function ClusterNavigation(command) {
     if (!navigationClusters) return false;
+
+    if (!settings['navigation_keys']) return false;
 
     var activeElement = activeElementWhenKeyDown;
     if (isTextInput(activeElement)) return false;
@@ -310,7 +313,7 @@ registerHotKey('Escape', (event) => {
 }, true);
 
 registerHotKey('KeyA', (event) => {
-    if ($('#textfield').is(':visible') && !isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && $('#textfield').is(':visible') && !isFocusWithinElement($('#input'))) {
         var element = document.getElementById('textfield');
         var content = element.innerText.trim();
         var div = document.createElement('div');
@@ -336,7 +339,7 @@ registerHotKey('KeyI', (event) => {
         }
     }
 
-    if (!isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && !isFocusWithinElement($('#input'))) {
         $inventoryBtn.focus();
         if (!$inventoryBtn.parent().hasClass('open')) {
             $inventoryBtn.click();
@@ -347,7 +350,7 @@ registerHotKey('KeyI', (event) => {
 }, true);
 
 registerHotKey('KeyL', (event) => {
-    if ($('#load').is(':visible') && !isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && $('#load').is(':visible') && !isFocusWithinElement($('#input'))) {
         $('#load').click();
     } else {
         event.preventDefault(false);
@@ -355,7 +358,7 @@ registerHotKey('KeyL', (event) => {
 }, true);
 
 registerHotKey('KeyM', (event) => {
-    if ($('#menu').is(':visible') && !isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && $('#menu').is(':visible') && !isFocusWithinElement($('#input'))) {
         $('#menu').click();
     } else {
         event.preventDefault(false);
@@ -363,7 +366,7 @@ registerHotKey('KeyM', (event) => {
 }, true);
 
 registerHotKey('KeyR', (event) => {
-    if ($('#restart').is(':visible') && !isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && $('#restart').is(':visible') && !isFocusWithinElement($('#input'))) {
         $('#restart').click();
     } else {
         event.preventDefault(false);
@@ -371,7 +374,7 @@ registerHotKey('KeyR', (event) => {
 }, true);
 
 registerHotKey('KeyS', (event) => {
-    if ($('#save').is(':visible') && !isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && $('#save').is(':visible') && !isFocusWithinElement($('#input'))) {
         $('#save').click();
     } else {
         event.preventDefault(false);
@@ -379,7 +382,7 @@ registerHotKey('KeyS', (event) => {
 }, true);
 
 registerHotKey('KeyV', (event) => {
-    if ($('#mute').is(':visible') && !isFocusWithinElement($('#input'))) {
+    if (settings['alphabetic_keys'] && $('#mute').is(':visible') && !isFocusWithinElement($('#input'))) {
         $('#mute').click();
     } else {
         event.preventDefault(false);

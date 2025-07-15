@@ -35,6 +35,15 @@ var manifest_urqw_game_lang;
 var manifest_urqw_game_ifid;
 var manifest_urq_mode;
 var debug;
+// Default settings value
+var settings = {
+    automatically_focus: true,
+    numeric_keys: true,
+    alphabetic_keys: true,
+    navigation_keys: true,
+    announce_description_updates: true,
+    announce_choice_button: false
+};
 
 $(function() {
     $('#something_wrong').hide();
@@ -158,6 +167,21 @@ $(function() {
         debug = true;
         $('#debugging_panel').show();
     }
+
+    /**
+     * Check the settings values in the global storage
+     * and trigger event handlers of the corresponding checkboxes
+     */
+    Object.entries(settings).forEach(([key, defaultValue]) => {
+        var storedValue  = localStorage.getItem(key);
+        if (storedValue !== null) {
+            var value = JSON.parse(storedValue);
+        } else {
+            var value = defaultValue;
+        }
+        $('#' + key).prop('checked', value);
+        $('#' + key).trigger('change');
+    });
 
     /**
      * If variable urqw_hash is defined then load corresponding game.

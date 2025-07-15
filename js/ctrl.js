@@ -430,6 +430,80 @@ $(function() {
     });
 
     /**
+     * Changing checkbox states in settings
+     */
+
+    $('#automatically_focus').on('change', function() {
+        var name = 'automatically_focus';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+    });
+
+    $('#numeric_keys').on('change', function() {
+        var name = 'numeric_keys';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+        var rows = $('.' + name + '_row');
+        if (isChecked) {
+            rows.show();
+        } else {
+            rows.hide();
+        }
+    });
+
+    $('#alphabetic_keys').on('change', function() {
+        var name = 'alphabetic_keys';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+        var rows = $('.' + name + '_row');
+        if (isChecked) {
+            rows.show();
+        } else {
+            rows.hide();
+        }
+    });
+
+    $('#navigation_keys').on('change', function() {
+        var name = 'navigation_keys';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+        var rows = $('.' + name + '_row');
+        if (isChecked) {
+            rows.show();
+        } else {
+            rows.hide();
+        }
+    });
+
+    $('#announce_description_updates').on('change', function() {
+        var name = 'announce_description_updates';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+        if (isChecked) {
+            textfield.attr('aria-live', 'polite');
+        } else {
+            textfield.attr('aria-live', 'off');
+        }
+    });
+
+    $('#announce_choice_button').on('change', function() {
+        var name = 'announce_choice_button';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+        if (isChecked) {
+            buttonField.attr('aria-live', 'polite');
+        } else {
+            buttonField.attr('aria-live', 'off');
+        }
+    });
+
+    /**
      * Click on btn
      */
     buttonField.on('click', '.button', function() {
