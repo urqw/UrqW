@@ -43,7 +43,11 @@ var allowedCombinations = [
     'ArrowLeft',
     'ArrowUp',
     'ArrowRight',
-    'ArrowDown'
+    'ArrowDown',
+    'PageUp',
+    'PageDown',
+    'End',
+    'Home'
 ];
 // Objects of navigation clusters
 var navigationClusters;
@@ -199,6 +203,10 @@ function ClusterNavigation(command) {
             return goToClusterByIndex(indexOfCurrentCluster + 1);
         case 'ArrowLeft':
             return goToClusterByIndex(indexOfCurrentCluster - 1);
+        case 'Home':
+            return goToClusterByIndex(0);
+        case 'End':
+            return goToClusterByIndex(clusters.length - 1);
     }
 
     var elementsOfCurrentCluster = getInteractiveChildren(clusters[indexOfCurrentCluster]);
@@ -209,6 +217,10 @@ function ClusterNavigation(command) {
             return goToElementOfClusterByIndex(indexOfActiveElement + 1);
         case 'ArrowUp':
             return goToElementOfClusterByIndex(indexOfActiveElement - 1);
+        case 'PageDown':
+            return goToElementOfClusterByIndex(elementsOfCurrentCluster.length - 1);
+        case 'PageUp':
+            return goToElementOfClusterByIndex(0);
         default:
             return false;
     }
@@ -256,8 +268,8 @@ function ClusterNavigation(command) {
     // Go to cluster with index closest to passed argument
     function goToClusterByIndex(index) {
         var length = clusters.length;
-        if (index > length) {
-            index = length;
+        if (index >= length) {
+            index = length - 1;
         } else if (index < 0) {
             index = 0;
         }
@@ -288,8 +300,8 @@ function ClusterNavigation(command) {
             return false;
         }
         var length = elementsOfCurrentCluster.length;
-        if (index > length) {
-            index = length;
+        if (index >= length) {
+            index = length - 1;
         } else if (index < 0) {
             index = 0;
         }
@@ -522,6 +534,30 @@ registerHotKey('ArrowRight', (event) => {
 
 registerHotKey('ArrowDown', (event) => {
     if (!ClusterNavigation('ArrowDown')) {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('PageUp', (event) => {
+    if (!ClusterNavigation('PageUp')) {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('PageDown', (event) => {
+    if (!ClusterNavigation('PageDown')) {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('End', (event) => {
+    if (!ClusterNavigation('End')) {
+        event.preventDefault(false);
+    }
+}, true);
+
+registerHotKey('Home', (event) => {
+    if (!ClusterNavigation('Home')) {
         event.preventDefault(false);
     }
 }, true);
