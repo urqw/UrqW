@@ -498,8 +498,8 @@ $(function() {
         }
     });
 
-    $('#announce_choice_button').on('change', function() {
-        var name = 'announce_choice_button';
+    $('#announce_choice_button_updates').on('change', function() {
+        var name = 'announce_choice_button_updates';
         var isChecked = $(this).prop('checked');
         settings[name] = isChecked;
         localStorage.setItem(name, JSON.stringify(isChecked));

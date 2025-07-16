@@ -84,7 +84,7 @@ var en = {
     navigation_keys: "Interface area navigation using navigation keys",
     accessibility: "Accessibility",
     announce_description_updates: "Announce description updates using assistive technology",
-    announce_choice_button: "Announce choice button updates using assistive technology",
+    announce_choice_button_updates: "Announce choice button updates using assistive technology",
     announce_description_when_shaking: "Announce description using assistive technology when shaking device",
     shake_sensitivity_threshold: "Shake sensitivity threshold",
     help: "Help",

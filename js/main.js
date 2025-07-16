@@ -43,7 +43,7 @@ var settings = {
     alphabetic_keys: true,
     navigation_keys: true,
     announce_description_updates: true,
-    announce_choice_button: false,
+    announce_choice_button_updates: false,
     announce_description_when_shaking: false
 };
 var previousAcceleration; // Previous acceleration value from the sensor
