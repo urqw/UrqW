@@ -510,6 +510,27 @@ $(function() {
         }
     });
 
+    $('#announce_description_when_shaking').on('change', function() {
+        var name = 'announce_description_when_shaking';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+        var shakeThresholdGroup = $('#shake_sensitivity_threshold_group');
+        if (isChecked) {
+            var value = localStorage.getItem('shake_sensitivity_threshold');
+            if (value !== null) {
+                $('#shake_sensitivity_threshold').val(value);
+            }
+            shakeThresholdGroup.show();
+        } else {
+            shakeThresholdGroup.hide();
+        }
+    });
+
+    $('#shake_sensitivity_threshold').change(function() {
+        localStorage.setItem('shake_sensitivity_threshold', $(this).val());
+    });
+
     /**
      * Click on btn
      */

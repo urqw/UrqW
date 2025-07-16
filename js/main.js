@@ -43,8 +43,10 @@ var settings = {
     alphabetic_keys: true,
     navigation_keys: true,
     announce_description_updates: true,
-    announce_choice_button: false
+    announce_choice_button: false,
+    announce_description_when_shaking: false
 };
+var previousAcceleration; // Previous acceleration value from the sensor
 
 $(function() {
     $('#something_wrong').hide();
@@ -663,6 +665,30 @@ $(function() {
             }
         };
 
+        var descriptionID = 'textfield';
+        window.addEventListener('devicemotion', function(event) {
+            if (settings['announce_description_when_shaking'] && $('#' + descriptionID).is(':visible')) {
+                var acceleration = event.accelerationIncludingGravity;
+                if (!previousAcceleration) {
+                    previousAcceleration = acceleration;
+                    return;
+                }
+        
+                var deltaX = Math.abs(acceleration.x - previousAcceleration.x);
+                var deltaY = Math.abs(acceleration.y - previousAcceleration.y);
+                var deltaZ = Math.abs(acceleration.z - previousAcceleration.z);
+        
+                previousAcceleration = acceleration;
+        
+                var shakeThreshold = Number($('#shake_sensitivity_threshold').val());
+                if (deltaX > shakeThreshold && deltaY > shakeThreshold && deltaZ > shakeThreshold) {
+                    var element = document.getElementById(descriptionID);
+                    var content = element.innerText.trim();
+                    announceForAccessibility(content);
+                }
+            }
+        });
+
         $('#loading').hide();
         $('#infopanel').hide();
         $('#logo').hide();
@@ -685,7 +711,7 @@ $(function() {
         $('#choose-game').hide();
         $('#game').show();
 
-    // Add link to copy IFID to menu
+        // Add link to copy IFID to menu
         if (manifest_urqw_game_ifid) {
             var ifidCopyLink = $('<a>', {
                 href: '#',
