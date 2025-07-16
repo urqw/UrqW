@@ -95,6 +95,20 @@ function base2unicode(b64) {
     }
 }
 
+/**
+ * @param {string} value
+ */
+function announceForAccessibility(message) {
+    var div = document.createElement('div');
+    div.classList.add('sr-only');
+    div.setAttribute('role', 'alert');
+    div.textContent = message;
+    document.body.appendChild(div);
+    setTimeout(() => {
+        document.body.removeChild(div);
+    }, 3000);
+}
+
 
 var MIME = [];
 

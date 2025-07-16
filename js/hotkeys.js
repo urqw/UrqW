@@ -316,14 +316,7 @@ registerHotKey('KeyA', (event) => {
     if (settings['alphabetic_keys'] && $('#textfield').is(':visible') && !isFocusWithinElement($('#input'))) {
         var element = document.getElementById('textfield');
         var content = element.innerText.trim();
-        var div = document.createElement('div');
-        div.classList.add('sr-only');
-        div.setAttribute('role', 'alert');
-        div.textContent = content;
-        document.body.appendChild(div);
-        setTimeout(() => {
-            document.body.removeChild(div);
-        }, 3000);
+        announceForAccessibility(content);
     } else {
         event.preventDefault(false);
     }

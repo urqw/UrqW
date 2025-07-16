@@ -699,14 +699,19 @@ $(function() {
 
             ifidCopyLink.on('click', function(e) {
                 e.preventDefault();
+                var message;
                 var timeout = 3000;
                 try {
                     navigator.clipboard.writeText(manifest_urqw_game_ifid)
                         .then(() => {
-                            $(this).text(i18next.t('copied_to_clipboard'));
+                            message = i18next.t('copied_to_clipboard');
+                            $(this).text(message);
+                            announceForAccessibility(message);
                         })
                         .catch(() => {
-                            $(this).text(i18next.t('error_copying_to_clipboard'));
+                            message = i18next.t('error_copying_to_clipboard');
+                            $(this).text(message);
+                            announceForAccessibility(message);
                         })
                         .finally(() => {
                             setTimeout(() => {
@@ -714,7 +719,9 @@ $(function() {
                             }, timeout);
                         });
                 } catch (error) {
-                    $(this).text(i18next.t('error_copying_to_clipboard'));
+                    message = i18next.t('error_copying_to_clipboard');
+                    $(this).text(message);
+                    announceForAccessibility(message);
                     setTimeout(() => {
                         $(this).text(manifest_urqw_game_ifid);
                     }, timeout);
