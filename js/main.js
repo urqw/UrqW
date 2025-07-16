@@ -699,7 +699,26 @@ $(function() {
 
             ifidCopyLink.on('click', function(e) {
                 e.preventDefault();
-                navigator.clipboard.writeText(manifest_urqw_game_ifid);
+                var timeout = 3000;
+                try {
+                    navigator.clipboard.writeText(manifest_urqw_game_ifid)
+                        .then(() => {
+                            $(this).text(i18next.t('copied_to_clipboard'));
+                        })
+                        .catch(() => {
+                            $(this).text(i18next.t('error_copying_to_clipboard'));
+                        })
+                        .finally(() => {
+                            setTimeout(() => {
+                                $(this).text(manifest_urqw_game_ifid);
+                            }, timeout);
+                        });
+                } catch (error) {
+                    $(this).text(i18next.t('error_copying_to_clipboard'));
+                    setTimeout(() => {
+                        $(this).text(manifest_urqw_game_ifid);
+                    }, timeout);
+                }
             });
         }
 

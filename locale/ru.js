@@ -72,6 +72,8 @@ var ru = {
     other: "Прочее",
     about_game: "Об игре",
     undefined: "Неопределено",
+    copied_to_clipboard: "[скопировано в буфер обмена]",
+    error_copying_to_clipboard: "[ошибка копирования в буфер обмена]",
     settings: "Настройки",
     general: "Общие",
     automatically_focus: "Автоматически фокусировать первый элемент управления",

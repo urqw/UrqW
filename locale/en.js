@@ -72,6 +72,8 @@ var en = {
     other: "Other",
     about_game: "About the Game",
     undefined: "Undefined",
+    copied_to_clipboard: "[copied to clipboard]",
+    error_copying_to_clipboard: "[error copying to clipboard]",
     settings: "Settings",
     general: "General",
     automatically_focus: "Automatically focus the first control",
