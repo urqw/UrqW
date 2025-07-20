@@ -1,6 +1,9 @@
-/node_modules
-.DS_Store
 .idea
+docs/*
+!docs/urql.html
+/node_modules
 quests/*.zip
+.DS_Store
+changelog.html
 rss.xml
 third-party_components.txt

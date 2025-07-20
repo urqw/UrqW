@@ -1,68 +1,73 @@
-# Журнал изменений UrqW
+# Changelog for UrqW
 
-## Версия 1.1 (в разработке)
+(Adding games to the catalog is not recorded in this document.)
 
-* Интерпретатор URQL:
-	+ Добавлено: поддержка кодировки UTF-8 для игр и плагинов.
-	+ Добавлено: возможность выполнение кода JavaScript из кода URQL и получение его результата при помощи системной переменной и оператора javascript.
-	+ Добавлено: системные переменные time, date (только при отсутствии специальных правил urq_mode), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
-	+ Добавлено: поддержка пользовательских текстовых описаний для изображений, добавляемых через системную переменную или оператор image.
-	+ Исправлено: обработка переменной tokens_delim.
-	+ Исправлено: обработка goto способом, специфичным для URQ_DOS.
-* Плеер игр:
-	+ Добавлено: поддержка настраиваемой интернационализации и переводы интерфейса на русский и английский языки.
-	+ Добавлено: настройка кодировки игры при открытии с главной страницы.
-	+ Добавлено: возможность переименовать и очистить слоты сохранения через меню дополнительных действий, а также скачать и загрузить сохранение в виде файла.
-	+ Добавлено: поле даты в каталоге игр.
-	+ Добавлено: возможность фильтровать игры в каталоге по языку и названию, а также сортировать по дате и алфавиту.
-	+ Добавлено: меню с дополнительной информацией и настройками в панели инструментов.
-	+ Добавлено: RSS-канал новых игр в каталоге.
-	+ Добавлено: возможность задать игру, загружаемую при любом открытии index.html.
-	+ Добавлено: возможность задать настройки плеера через get-параметры:
-		- Язык интерфейса - lang
-		- Режим URQ - mode
-		- Кодировка игры - encoding
-		- URL для открытия игры - url
-		- Отображение раздела отладки игры в меню - debug со значением 1
-	+ Добавлено: поддержка файла manifest.json в пакете игры, использующегося для определения параметров плеера и метаданных игры, а также начальных значений некоторых системных переменных.
-	+ Добавлено: автоматическое фокусирование элементов управления при работе с модальными диалогами (меню, сохранение и загрузка игры).
-	+ Добавлено: настраиваемое автоматическое фокусирование первого интерактивного элемента на экране игры, а также надписей об ожидании любого нажатия и об окончании игры.
-	+ Добавлено: возможность настроить запрос о подтверждении закрытия страницы.
-	+ Добавлено: отключаемые горячие клавиши для активации кнопок выбора, быстрых действий и кластерной навигации по областям интерфейса (см. справку в меню).
-	+ Добавлено: нумерация кнопок выбора при включённых горячих клавишах.
-	+ Добавлено: отображение версии UrqW в интерфейсе плеера.
-	+ Добавлено: открытие игр в формате .qsz.
-	+ Изменено: отображение вариантов использования элемента инвентаря по установке системного фокуса, а не только по наведению мыши.
-	+ Изменено: отслеживание нажатий клавиш не по коду символа, а по коду клавиши.
-	+ Изменено: небольшая правка отступа информативного окна.
-	+ Удалено: отдельный курсор UrqW для выбора и активации кнопок (вызывал проблемы расхождения фокусов с активацией сразу нескольких элементов и был заменён на кластерную навигацию на основе стандартного системного фокуса).
-	+ Улучшения accessibility:
-		- Добавлено: текстовые метки у панели инструментов игры.
-		- Добавлено: текстовая метка у кнопки инвентаря в интерфейсе для экранов размера XS.
-		- Добавлено: настраиваемое объявление обновления описания с помощью вспомогательных технологий.
-		- Добавлено: настраиваемое объявление обновления кнопок выбора с помощью вспомогательных технологий.
-		- Добавлено: настраиваемое объявление описания с помощью вспомогательных технологий при нажатии горячей клавиши (см. справку в меню).
-		- Добавлено: настраиваемое объявление описания с помощью вспомогательных технологий при встряхивании устройства.
-		- Изменено: текстовые метки у графических иконок плеера.
-		- Исправлено: ссылки в тексте игры фокусируются и активируются с клавиатуры, а также имеют роль ссылки.
-		- Исправлено: корректное представление абзацев в тексте игры для программ экранного доступа.
-* Обновление документации.
-* Инфраструктура разработки и сопровождения:
-	+ Добавлено: скрипт valid-json для проверки валидности файла games.json.
-	+ Добавлено: скрипт pack-games для упаковки игр для каталога.
-	+ Добавлено: скрипт gen-rss для генерации RSS-канала новых игр в каталоге.
-	+ Добавлено: скрипт gen-license-report для генерации отчёта о лицензиях сторонних компонентов.
-	+ Добавлено: команда `npm run build` для сборки UrqW для производственных сред (последовательный вызов скриптов valid-json, pack-games, gen-rss и gen-license-report).
-	+ Изменено: все игры в каталоге добавлены как подмодули из отдельных репозиториев и перепакованы с файлом manifest.json.
+## Version 1.1 (in development)
 
-## Версия 1.0 от 20.01.2017
+* URQL interpreter:
+	+ Added: UTF-8 encoding support for games and plugins.
+	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using either the javascript system variable or the javascript operator.
+	+ Added: System variables time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
+	+ Added: Support for custom text descriptions for images added using either the image system variable or the image operator.
+	+ Fixed: Processing of the tokens_delim variable.
+	+ Fixed: Processing of the goto operator in compatibility mode with URQ-DOS.
+* Game player:
+	+ Added: Customizable internationalization support and interface translations into English and Russian.
+	+ Added: Game encoding configuration when opening from the main page.
+	+ Added: Ability to rename and clear save slots via the additional actions menu, as well as download and upload saves as files.
+	+ Added: Date field in the game catalog.
+	+ Added: Ability to filter games in the catalog by language and title, and sort by date and alphabetically.
+	+ Added: Menu with additional information and settings in the toolbar.
+	+ Added: RSS feed for new games in the catalog.
+	+ Added: Ability to set a game to load on any opening of index.html.
+	+ Added: Ability to set player settings using GET requests:
+		- Interface language - lang
+		- URQ mode - mode
+		- Game encoding - encoding
+		- URL for game opening - url
+		- Display of the game debugging section in the menu - debug with value 1
+	+ Added: Support for the manifest.json file in the game package, used to define player parameters and game metadata, as well as initial values for some system variables.
+	+ Added: Automatic focusing of controls when working with modal dialogs (menu, save and load game).
+	+ Added: Customizable automatic focusing the first control on the game screen, as well as inscription about waiting for pressing any key and game over notification.
+	+ Added: Ability to configure a request to confirm page closure.
+	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
+	+ Added: Numbering of choice buttons when hotkeys are enabled.
+	+ Added: Display of UrqW version in the player interface.
+	+ Added: Support for opening .qsz format games.
+	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
+	+ Changed: Keypress tracking by key code instead of character code.
+	+ Changed: Minor adjustment to informative window indentation.
+	+ Removed: Separate UrqW cursor for choosing and activating buttons (caused issues with simultaneous activation of two controls and was replaced with cluster navigation based on standard system focus).
+	+ Accessibility improvements:
+		- Added: Text labels for controls of the toolbar.
+		- Added: Text label for inventory button in XS-sized interface.
+		- Added: Customizable announcement description updates using assistive technology.
+		- Added: Customizable announcement choice button updates using assistive technology.
+		- Added: Customizable announcement description using assistive technology when pressing a hotkey (see help in menu).
+		- Added: Customizable announcement description using assistive technology when shaking device (see help in menu).
+		- Changed: Text labels for player graphic icons.
+		- Fixed: Links in game text are focusable and activatable with keyboard, and have link role.
+		- Fixed: Proper paragraph representation in game text for screen readers.
+* Documentation:
+	+ Added: Preparation of new documentation in Russian and English has begun.
+	+ Changed: Updating the main Russian-language documentation.
+* Development and maintenance infrastructure:
+	+ Added: valid-json script to check the validity of the games.json file.
+	+ Added: pack-games script for packaging games for the catalog.
+	+ Added: gen-rss script for generating RSS feed for new games in the catalog.
+	+ Added: gen-license-report script for generating report on third-party component licenses.
+	+ Added: gen-docs script for generating documentation in HTML format.
+	+ Added: `npm run build` command for UrqW production build (sequential execution of valid-json, pack-games, gen-rss, and gen-license-report scripts).
+	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json file.
 
-* Первая стабильная версия.
+## Version 1.0 (from 2017-01-20)
 
-## 12.10.2015
+* The first stable release.
 
-* Первая публично представленная работоспособная версия.
+## 2015-10-12
 
-## 21.09.2015
+* The first publicly presented working version.
 
-* Начало разработки (первый коммит).
+## 2015-09-21
+
+* Start of development (first commit).

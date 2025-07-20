@@ -1,17 +1,18 @@
 {
   "name": "urqw",
   "version": "1.1.0-beta",
-  "description": "Open source URQ games interpreter in JavaScript.",
+  "description": "Free and open source text-based game engine in JavaScript.",
   "main": "index.html",
   "directories": {
-    "doc": "docs"
+    "doc": "md"
   },
   "scripts": {
+    "gen-docs": "node scripts/gen-docs.js",
     "gen-license-report": "node scripts/gen-license-report.js",
     "gen-rss": "node scripts/gen-rss.js",
     "pack-games": "node scripts/pack-games.js",
     "valid-json": "node scripts/valid-json.js",
-    "build": "npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report",
+    "build": "npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report && npm run gen-docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akela <tinycoyote@gmail.com>",
@@ -28,14 +29,10 @@
     "url": "https://github.com/urqw/UrqW/issues"
   },
   "keywords": [
+    "interactive-fiction",
+    "text-based-game-engine",
+    "text-adventure-engine",
     "urq",
-    "interactive fiction",
-    "text-based game",
-    "cyoa",
-    "choose your own adventure",
-    "text adventure",
-    "quest",
-    "text quest",
     "parser",
     "interpreter"
   ],
@@ -50,6 +47,9 @@
   "devDependencies": {
     "archiver": "^7.0.1",
     "license-checker": "^25.0.1",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-table-of-contents": "^0.9.0",
     "moment": "^2.30.1"
   }
 }
