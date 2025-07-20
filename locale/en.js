@@ -107,6 +107,7 @@ var en = {
     focus_first_area: "Focus the first interface area",
     focus_last_control: "Focus the last control of the current interface area",
     focus_first_control: "Focus the first control of the current interface area",
+    urqw_docs_description: "Detailed <a href=\"" + url_docs + "\" target=\"_blank\">UrqW Documentation</a> is available separately.",
     about_urqw: "About UrqW",
     urqw_description: "UrqW " + urqw_version + " is a free and open source text-based game engine.",
     licenses: "Licenses",
