@@ -8,7 +8,7 @@
 
 *(Documentation for UrqW version 1.1. There are [versions of the documentation in other languages](../index.md) that may be more complete and up-to-date.)*
 
-Documentation is available under the [Creative Commons Attribution-ShareAlike 4.0 International](../../LICENSE.CC-BY-SA-4.0.txt) (CC BY-SA 4.0) license.
+Documentation is available under the [Creative Commons Attribution-ShareAlike 4.0 International](../../LICENSE-CC.txt) (CC BY-SA 4.0) license.
 
 **Attention! This material is under development.**
 
