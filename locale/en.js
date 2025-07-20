@@ -90,6 +90,7 @@ var en = {
     help: "Help",
     action: "Action",
     press: "Press",
+    close_dialog_box: "Close dialog box",
     open_menu: "Open menu",
     focus_open_inventory: "Focus and open inventory",
     announce_description: "Announce description using assistive technology",

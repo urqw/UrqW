@@ -90,6 +90,7 @@ var ru = {
     help: "Справка",
     action: "Действие",
     press: "Нажать",
+    close_dialog_box: "Закрыть диалоговое окно",
     open_menu: "Открыть меню",
     focus_open_inventory: "Сфокусировать и открыть инвентарь",
     announce_description: "Объявить описание с помощью вспомогательных технологий",

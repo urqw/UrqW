@@ -27,7 +27,7 @@
 		- URL for game opening - url
 		- Display of the game debugging section in the menu - debug with value 1
 	+ Added: Support for the manifest.json file in the game package, used to define player parameters and game metadata, as well as initial values for some system variables.
-	+ Added: Automatic focusing of controls when working with modal dialogs (menu, save and load game).
+	+ Added: Automatic focusing of controls when working with dialog boxes (menu, save and load game).
 	+ Added: Customizable automatic focusing the first control on the game screen, as well as inscription about waiting for pressing any key and game over notification.
 	+ Added: Ability to configure a request to confirm page closure.
 	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
