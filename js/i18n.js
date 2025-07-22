@@ -9,6 +9,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Define available languages with their names
     var availableLangs = {
+        be: {
+            name: "Belarusian (беларуская)",
+            translation: be
+        },
         en: {
             name: "English",
             translation: en
