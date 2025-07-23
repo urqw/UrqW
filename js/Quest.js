@@ -256,9 +256,8 @@ Quest.prototype.getVar = function(variable) {
     }
 
     if (variable == 'urqw_game_ifid') {
-        var metaTag = document.querySelector('meta[property="ifiction:ifid"]');
-        if (metaTag) {
-            return metaTag.getAttribute('content');
+        if (manifest['urqw_game_ifid']) {
+            return manifest['urqw_game_ifid'];
         } else {
             return '';
         }
