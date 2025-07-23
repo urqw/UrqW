@@ -155,11 +155,11 @@ Quest.prototype.init = function() {
  * Initialization of system variables, including those taken from manifest.json
  */
 Quest.prototype.sysVarInit = function() {
-    if (manifest_urqw_title) GlobalPlayer.setVar('urqw_title', manifest_urqw_title);
+    if (manifest['urqw_title']) GlobalPlayer.setVar('urqw_title', manifest['urqw_title']);
 
     var urqw_game_lang;
-    if (manifest_urqw_game_lang) {
-        urqw_game_lang = manifest_urqw_game_lang;
+    if (manifest['urqw_game_lang']) {
+        urqw_game_lang = manifest['urqw_game_lang'];
     } else {
         urqw_game_lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
     }

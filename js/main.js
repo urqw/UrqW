@@ -29,12 +29,9 @@ quest = []; // todo
  */
 var mode;
 var encoding;
-var manifest_urqw_title;
-var manifest_game_encoding;
-var manifest_urqw_game_lang;
-var manifest_urqw_game_ifid;
-var manifest_urq_mode;
 var debug;
+// Object for storing parameters of the manifest.json file
+var manifest = {};
 // Default settings value
 var settings = {
     automatically_focus: true,
@@ -499,8 +496,8 @@ $(function() {
         // because its contents determine how other files will be read
         var manifestFile = selectedFiles.find(file => file.name.toLowerCase() == 'manifest.json');
         if (manifestFile) {
-            var manifestJson = await readManifest(manifestFile);
-            if (!parseManifest(manifestJson)) return;
+            var manifestContent = await readManifest(manifestFile);
+            if (!parseManifest(manifestContent)) return;
             var index = selectedFiles.indexOf(manifestFile);
             selectedFiles.splice(index, 1);
         }
@@ -541,10 +538,10 @@ $(function() {
      */
     function readManifest(file) {
     return new Promise((resolve, reject) => {
-            var manifest = new FileReader();
-            manifest.onload = () => resolve(manifest.result);
-            manifest.onerror = reject;
-            manifest.readAsText(file, 'UTF-8');
+            var reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsText(file, 'UTF-8');
         });
     }
 
@@ -563,22 +560,43 @@ $(function() {
             return false;
         }
 
-        manifest_urqw_title = jsonObj.urqw_title;
-        manifest_game_encoding = jsonObj.game_encoding;
-        manifest_urqw_game_lang = jsonObj.urqw_game_lang;
-        manifest_urqw_game_ifid = jsonObj.urqw_game_ifid;
-        manifest_urq_mode = jsonObj.urq_mode;
+        // Validate and save parameters from manifest.json to an object if they are set
+        if (jsonObj.urqw_title) {
+manifest['urqw_title'] = jsonObj.urqw_title;
+        }
+        if (jsonObj.urqw_game_ifid) {
+            manifest['urqw_game_ifid'] = jsonObj.urqw_game_ifid;
+        }
+        if (jsonObj.urqw_game_lang) {
+            manifest['urqw_game_lang'] = jsonObj.urqw_game_lang;
+        }
+        if (jsonObj.game_encoding) {
+            if (jsonObj.game_encoding === 'UTF-8' || jsonObj.game_encoding === 'CP1251') {
+                manifest['game_encoding'] = jsonObj.game_encoding;
+            } else {
+                alert(i18next.t('manifest_unsupported_format'));
+                return false;
+            }
+        }
+        if (jsonObj.urq_mode) {
+            if (jsonObj.urq_mode === 'urqw' || jsonObj.urq_mode === 'ripurq' || jsonObj.urq_mode === 'dosurq') {
+                manifest['urq_mode'] = jsonObj.urq_mode;
+            } else {
+                alert(i18next.t('manifest_unsupported_format'));
+                return false;
+            }
+        }
 
-        // Override parameters from UI
-        if (manifest_urq_mode) mode = manifest_urq_mode;
-        if (manifest_game_encoding) encoding = manifest_game_encoding;
+// Override parameters from UI
+        if (manifest['urq_mode']) mode = manifest['urq_mode'];
+        if (manifest['game_encoding']) encoding = manifest['game_encoding'];
 
         // Add IFID metadata if it is specified
-        if (manifest_urqw_game_ifid) {
+        if (manifest['urqw_game_ifid']) {
             var metaTag = document.createElement('meta');
             metaTag.setAttribute('prefix', 'ifiction: http://babel.ifarchive.org/protocol/iFiction/');
             metaTag.setAttribute('property', 'ifiction:ifid');
-            metaTag.setAttribute('content', manifest_urqw_game_ifid);
+            metaTag.setAttribute('content', manifest['urqw_game_ifid']);
             document.head.appendChild(metaTag);
         }
 
@@ -712,10 +730,10 @@ $(function() {
         $('#game').show();
 
         // Add link to copy IFID to menu
-        if (manifest_urqw_game_ifid) {
+        if (manifest['urqw_game_ifid']) {
             var ifidCopyLink = $('<a>', {
                 href: '#',
-                text: manifest_urqw_game_ifid,
+                text: manifest['urqw_game_ifid'],
                 class: 'copy-link'
             });
 
@@ -728,7 +746,7 @@ $(function() {
                 var message;
                 var timeout = 3000;
                 try {
-                    navigator.clipboard.writeText(manifest_urqw_game_ifid)
+                    navigator.clipboard.writeText(manifest['urqw_game_ifid'])
                         .then(() => {
                             message = i18next.t('copied_to_clipboard');
                             $(this).text(message);
@@ -741,7 +759,7 @@ $(function() {
                         })
                         .finally(() => {
                             setTimeout(() => {
-                                $(this).text(manifest_urqw_game_ifid);
+                                $(this).text(manifest['urqw_game_ifid']);
                             }, timeout);
                         });
                 } catch (error) {
@@ -749,7 +767,7 @@ $(function() {
                     $(this).text(message);
                     announceForAccessibility(message);
                     setTimeout(() => {
-                        $(this).text(manifest_urqw_game_ifid);
+                        $(this).text(manifest['urqw_game_ifid']);
                     }, timeout);
                 }
             });
