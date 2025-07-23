@@ -348,8 +348,6 @@ $(function() {
      * Click on menu
      */
     $('#menu').on('click', function() {
-        if (GlobalPlayer.lock) return false;
-
         $('#game').hide();
 
         // Refresh  information in the Debugging section
