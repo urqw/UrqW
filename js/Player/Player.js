@@ -223,6 +223,10 @@ Player.prototype.setVar = function(variable, value) {
         Game.setVar('style_textcolor', dosColorToHex(value));
     } else
     if (variable.toLowerCase() === 'urq_mode') {
+        // When attempting to assign an unknown value, forcefully assign the value 'urqw'
+        if (value != 'urqw' && value != 'ripurq' && value != 'dosurq') {
+            value = 'urqw';
+        }
         if (value == 'dosurq') {
             Game.setVar('style_backcolor', '#000');
             Game.setVar('style_textcolor', '#FFF');
