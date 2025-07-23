@@ -124,3 +124,6 @@
 [submodule "games/in_depths"]
 	path = games/in_depths
 	url = https://github.com/urqw/in_depths.git
+[submodule "games/well"]
+	path = games/well
+	url = https://github.com/urqw/well.git
