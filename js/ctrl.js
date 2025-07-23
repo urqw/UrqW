@@ -280,7 +280,7 @@ $(function() {
         }
         var urqwTitleValue = Game.vars['urqw_title'];
         if (urqwTitleValue) {
-            document.title = urqwTitleValue;
+            GlobalPlayer.setVar('urqw_title', urqwTitleValue);
         }
     }
 
