@@ -61,7 +61,9 @@ Player.prototype.perkill = function() {
     var urqMode = Game.getVar('urq_mode');
     
     Game.vars = {};
-    this.setVar('urqw_game_lang', urqwGameLang);
+    if (urqwGameLang) {
+        this.setVar('urqw_game_lang', urqwGameLang);
+    }
     this.setVar('urq_mode', urqMode);
 
     $.each(Game.items, function(index, value) {

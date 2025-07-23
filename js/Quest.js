@@ -156,15 +156,7 @@ Quest.prototype.init = function() {
  */
 Quest.prototype.sysVarInit = function() {
     if (manifest['urqw_title']) GlobalPlayer.setVar('urqw_title', manifest['urqw_title']);
-
-    var urqw_game_lang;
-    if (manifest['urqw_game_lang']) {
-        urqw_game_lang = manifest['urqw_game_lang'];
-    } else {
-        urqw_game_lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
-    }
-    GlobalPlayer.setVar('urqw_game_lang', urqw_game_lang);
-
+    if (manifest['urqw_game_lang']) GlobalPlayer.setVar('urqw_game_lang', manifest['urqw_game_lang']);
     if (mode) GlobalPlayer.setVar('urq_mode', mode);
 };
 
