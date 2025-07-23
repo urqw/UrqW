@@ -57,10 +57,15 @@ Player.prototype.goto = function(labelName, type) {
  * Deleting variables
  */
 Player.prototype.perkill = function() {
+    var urqwTitle = Game.getVar('urqw_title');
     var urqwGameLang = Game.getVar('urqw_game_lang');
     var urqMode = Game.getVar('urq_mode');
     
     Game.vars = {};
+
+    if (urqwTitle) {
+        this.setVar('urqw_title', urqwTitle);
+    }
     if (urqwGameLang) {
         this.setVar('urqw_game_lang', urqwGameLang);
     }
