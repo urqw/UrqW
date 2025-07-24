@@ -1,50 +1,88 @@
-# Интерпретатор URQ-квестов на языке JS с открытым исходным кодом
+# UrqW: Web-Based Interactive Fiction Engine
 
-Кратко о:
+UrqW is an open source engine for text-based games and interactive fiction, available free of charge.
 
-* UrqW это не онлайн-интерпретатор. Её можно скачать и запускать, например, с флешки без интернета.
-* Можно разместить на своём сайте (пока только в отдельной подпапке), добавить в список свои игры и давать друзьям ссылку, чтобы они поиграли.
-* Когда вы загружаете игру в UrqW (даже в моей онлайн-версии), никому ничего не отправляется. Загрузка и проигрывание происходит локально в браузере. Все сохранения браузер также держит локально.
-* [На странице релизов в GitHub](https://github.com/urqw/UrqW/releases) можно найти уже собранные версии, чтобы не ставить ничего дополнительно.
-* UrqW поддерживает плагины, которые практически безгранично расширяют возможности движка или меняют его внешний вид.
+It is also a URQL interpreter that supports compatibility modes with the URQL dialects of RipURQ 1.4 and URQ_DOS 1.35.
 
-## Онлайн-версии
+URQL, a domain-specific language from the URQ family of text-based game engines, is designed primarily for creating choice-based interactive fiction.
+URQ engines have been in existence since 2000 and are easy to learn for non-technical authors.
+UrqW implements the URQL interpreter with additional features based on web technologies.
 
-* [Версия от разработчика(ов) проекта (игры на русском и английском языках)](https://urqw.github.io/UrqW/)
-* [Версия от Veresk'а (игры на белорусском языке)](http://il.ideahost.by/game/UrqW-gh-pages/)
+## Briefly about UrqW
 
-## Приложения
+* UrqW is not an online interpreter. It can be downloaded and run from a USB flash drive without an internet connection.
+* Users can host UrqW on their website, add any games to the catalog, and share a link that allows anyone to play online.
+* When the user runs UrqW (even in the online version), no data is sent to external servers. Loading and playback processes occur locally within the browser. The browser stores all saves locally as well.
+* UrqW supports internationalization of the user interface and game content. It features differentiated language markup corresponding to the interface and game content language. Users can leverage translation features in modern browsers to play games in languages they don’t know well or don’t know at all.
+* UrqW supports URQL integration with JavaScript and plugins that can virtually limitlessly expand the engine’s capabilities or modify its appearance.
+* UrqW offers a high level of accessibility support, including extended keyboard controls and interface adaptation for screen readers with additional settings.
 
-* [Страница загрузки веб или stand-alone версии для Windows](https://github.com/urqw/UrqW/releases)
-* [Страница загрузки сборки для Android и Windows Phone](https://build.phonegap.com/apps/2457271/builds)
+## Links
 
-## Текущие цели
+* [UrqW Online instance incorporating latest changes](https://urqw.github.io/UrqW/)
+* [UrqW documentation incorporating latest changes](https://urqw.github.io/UrqW/docs/index.html)
+* [List of all changes](https://urqw.github.io/UrqW/CHANGELOG.html)
+* [UrqW game template](https://github.com/urqw/game_template)
+* [Latest formal release of UrqW](https://github.com/urqw/UrqW/releases/latest) (hasn’t been updated for a long time)
 
-* [x] Совместимость с большинством игр под DOS_URQ (выполнено).
-* [ ] Добавлять и тестировать новые игры.
+## Heading towards the new release
 
-## FAQ
+In 2025, active development of the project was resumed with the planned version number 1.1.
 
-* Как закачать игру в онлайн-каталог?
-	- Прислать её на почту akela88 [@] bk.ru, или оформить pull request в репозиторий (см. "Добавление или обновление игры" в [CONTRIBUTING.md](CONTRIBUTING.md)). Если речь идёт о том, как добавить игру в репозиторий на своём сайте, то нужно положить квест в папку quests и отредактировать файл games.json.
- 
-## Чем помочь проекту?
+* Adding new functionality (in development until the end of 2025)
+* Preparing new documentation (in development until the end of 2025)
+* Stabilization of functionality and documentation (after completion of development  and preparation in early 2026)
+* Adding new user interface localizations (at any time as ready)
 
-* Создание [issue](https://github.com/urqw/UrqW/issues) с описанием найденных багов.
-* Добавление протестированных игр в репозиторий (см. "Добавление или обновление игры" в [CONTRIBUTING.md](CONTRIBUTING.md)).
-* Отправка pull request с исправлениями или переводами плеера на новые языки (см. [CONTRIBUTING.md](CONTRIBUTING.md)).
+Depending on circumstances, deadlines may change.
 
-## Документация
+However, the master branch always contains a stable enough version to be usable.
 
-* [Описание URQ language](https://urqw.github.io/UrqW/docs/urql.html)
+## How to Help the Project
 
-## Ссылки
+* Create [issues](https://github.com/urqw/UrqW/issues) describing the defects found.
+* Submit pull requests with fixes, new UI localizations or document translation, and new games to the catalog (see [CONTRIBUTING.md](CONTRIBUTING.md)).
+* Just create good games for UrqW!
 
-* [Сайт URQ](http://urq.plut.info/)
-* [Тема на форуме iFiction.Ru про UrqW](http://forum.ifiction.ru/viewtopic.php?id=2138)
-* [Тема на форуме URQ про UrqW](http://urq.borda.ru/?1-0-0-00000495-000-0-0-1444755056)
-* [Категория игр на URQ в базе знаний IFВики](https://ifwiki.ru/Категория:Игры_на_URQ)
-* [URQ-игры в РИЛ-архиве](http://rilarhiv.ru/urq.htm)
-* [Сюда писать о ошибках и пожеланиях](https://github.com/urqw/UrqW/issues)
-* [Чат об URQ и не только, где ответят на любые ваши вопросы](https://client01.chat.mibbit.com/?url=irc%3A%2F%2Firc.forestnet.org%3A6662%2F%23urq)
-* [Чат в Discord](https://discord.com/invite/P53ZhN5hEA)
+## Project Automation Tools
+
+For details on how to contribute to the project, see the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+The following project automation tools have been implemented:
+
+* Install all required dependencies:
+	```
+	npm install
+	```
+* Validate the /games.json file:
+	```
+	npm run valid-json
+	```
+* Package all games from the /games directory:
+	```
+	npm run pack-games
+	```
+* Package a specific game from the /games directory:
+	```
+	npm run pack-games %game_name%
+	```
+	or with wildcards:
+	```
+	npm run pack-games %part_game_name%*
+	```
+* Generate RSS feed for new games in the catalog (the /rss.xml file):
+	```
+	npm run gen-rss
+	```
+* Generate report on third-party component licenses (the /third-party_components.txt file):
+	```
+	npm run gen-license-report
+	```
+* Generate documentation (convert files from the /md directory to the /docs directory):
+	```
+	npm run gen-docs
+	```
+* Build the project (sequential execution of valid-json, pack-games, gen-rss, gen-license-report and gen-docs scripts):
+	```
+	npm run build
+	```
