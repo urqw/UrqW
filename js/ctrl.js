@@ -180,7 +180,7 @@ $(function() {
         var menu;
 
         if (lsname != null) {
-            btn.text(lsname);
+            btn.text(i18next.t('autosave') + ' ' + lsname);
             li.append(btn);
             menu = saveActionCreate('fast');
             li.append(menu);

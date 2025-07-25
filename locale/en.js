@@ -61,6 +61,7 @@ var en = {
     clear_confirm: "Are you sure you want to clear this save slot?",
     launch: "Launch",
     enter_save_slot_name: "Enter the save slot name:",
+    autosave: "Autosave:",
     or_upload_save_file: "Or upload the save file",
     save_file_unsupported_format: "The save file has an unsupported format.",
     debugging: "Debugging",
