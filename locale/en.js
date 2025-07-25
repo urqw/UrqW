@@ -53,6 +53,7 @@ var en = {
     game_over: "[game over]",
     examine: "examine",
     empty_save_slot: "(Empty save slot)",
+    overwrite_confirm: "Are you sure you want to overwrite this save slot?",
     menu: "Menu",
     rename: "Rename",
     download: "Download",

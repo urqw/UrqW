@@ -50,7 +50,12 @@ $(function() {
         }
 
         $('#saveslots').find('.savebtn').on('click', function() {
-            Game.save($(this).data('slot'));
+            var slot = $(this).data('slot');
+            var lsname = localStorage.getItem(Game.name + '_' + slot + '_name');
+            if (lsname !== null && !confirm(i18next.t('overwrite_confirm'))) {
+                return;
+            }
+            Game.save(slot);
             returnToGame.click();
         });
 
