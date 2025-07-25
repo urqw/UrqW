@@ -71,6 +71,7 @@ $(function() {
         });
 
         $('#save_upload_form').hide();
+        $('#saveslots_heading').text(i18next.t('save_game'));
         $('#saveslots').show();
         returnToGame.focus();
 
@@ -247,6 +248,7 @@ $(function() {
         });
 
         $('#save_upload_form').show();
+        $('#saveslots_heading').text(i18next.t('load_game'));
         $('#saveslots').show();
         returnToGame.focus();
 
