@@ -152,11 +152,16 @@ function isFocusWithinElement($targetElement) {
 }
 
 // Function to activate button inside an element by number
-function activateButtonByNumber(elementID, number) {
+// and with additional filtering by class, if required
+function activateButtonByNumber(number) {
     if (!settings['numeric_keys']) return false;
-    var element = document.getElementById(elementID);
-    if (!$('#' + elementID).is(':visible') || isFocusWithinElement($('#input'))) return false;
-    var buttons = element.getElementsByTagName('button');
+    if ($('#buttons').is(':visible') && !isFocusWithinElement($('#input'))) {
+        var element = document.getElementById('buttons');
+        var buttons = element.getElementsByTagName('button');
+    } else if ($('#saveslots_list').is(':visible')) {
+        var element = document.getElementById('saveslots_list');
+        var buttons = element.querySelectorAll('button.savebtn-user');
+    } else return false;
     if(number > buttons.length) return false;
     buttons[number - 1].click();
     return true;
@@ -395,121 +400,121 @@ registerHotKey('KeyV', (event) => {
 }, true);
 
 registerHotKey('Digit1', (event) => {
-    if (!activateButtonByNumber('buttons', 1)) {
+    if (!activateButtonByNumber(1)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit2', (event) => {
-    if (!activateButtonByNumber('buttons', 2)) {
+    if (!activateButtonByNumber(2)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit3', (event) => {
-    if (!activateButtonByNumber('buttons', 3)) {
+    if (!activateButtonByNumber(3)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit4', (event) => {
-    if (!activateButtonByNumber('buttons', 4)) {
+    if (!activateButtonByNumber(4)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit5', (event) => {
-    if (!activateButtonByNumber('buttons', 5)) {
+    if (!activateButtonByNumber(5)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit6', (event) => {
-    if (!activateButtonByNumber('buttons', 6)) {
+    if (!activateButtonByNumber(6)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit7', (event) => {
-    if (!activateButtonByNumber('buttons', 7)) {
+    if (!activateButtonByNumber(7)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit8', (event) => {
-    if (!activateButtonByNumber('buttons', 8)) {
+    if (!activateButtonByNumber(8)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit9', (event) => {
-    if (!activateButtonByNumber('buttons', 9)) {
+    if (!activateButtonByNumber(9)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Digit0', (event) => {
-    if (!activateButtonByNumber('buttons', 10)) {
+    if (!activateButtonByNumber(10)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad1', (event) => {
-    if (!activateButtonByNumber('buttons', 1)) {
+    if (!activateButtonByNumber(1)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad2', (event) => {
-    if (!activateButtonByNumber('buttons', 2)) {
+    if (!activateButtonByNumber(2)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad3', (event) => {
-    if (!activateButtonByNumber('buttons', 3)) {
+    if (!activateButtonByNumber(3)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad4', (event) => {
-    if (!activateButtonByNumber('buttons', 4)) {
+    if (!activateButtonByNumber(4)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad5', (event) => {
-    if (!activateButtonByNumber('buttons', 5)) {
+    if (!activateButtonByNumber(5)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad6', (event) => {
-    if (!activateButtonByNumber('buttons', 6)) {
+    if (!activateButtonByNumber(6)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad7', (event) => {
-    if (!activateButtonByNumber('buttons', 7)) {
+    if (!activateButtonByNumber(7)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad8', (event) => {
-    if (!activateButtonByNumber('buttons', 8)) {
+    if (!activateButtonByNumber(8)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad9', (event) => {
-    if (!activateButtonByNumber('buttons', 9)) {
+    if (!activateButtonByNumber(9)) {
         event.preventDefault(false);
     }
 }, true);
 
 registerHotKey('Numpad0', (event) => {
-    if (!activateButtonByNumber('buttons', 10)) {
+    if (!activateButtonByNumber(10)) {
         event.preventDefault(false);
     }
 }, true);

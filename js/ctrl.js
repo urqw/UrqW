@@ -28,17 +28,22 @@ $(function() {
 
         for(var i = 1; i <= 10; i++) {
             var li = $('<li class="list-group-item">');
-            var btn = $('<button class="button text-center savebtn" data-slot="' + i + '">');
+            var btn = $('<button class="button text-center savebtn savebtn-user" data-slot="' + i + '">');
             var lsname = localStorage.getItem(Game.name + '_' + i + '_name');
+            var description;
             var menu;
 
             if (lsname === null) {
-                btn.text(i18next.t('empty_save_slot'));
+                description = i18next.t('empty_save_slot');
                 menu = null;
             } else {
-                btn.text(lsname);
+                description = lsname;
                 menu = saveActionCreate(i);
             }
+            if (settings['numeric_keys']) {
+                description = i + ': ' + description;
+            }
+            btn.text(description);
             li.append(btn);
             if (menu) li.append(menu);
             $('#saveslots').find('.list-group').append(li);
@@ -73,8 +78,14 @@ $(function() {
     });
 
     function saveActionCreate(slot) {
+        var accesskey = '';
+        if (typeof slot === 'number' && slot >= 1 && slot <= 10) {
+            var key = slot.toString();
+            if (key === '10') key = '0';
+            accesskey = `accesskey="${key}"`;
+        }
         return $('<div class="dropdown btn-group pull-right">' +
-            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-slot="' + slot + '" data-toggle="dropdown" aria-label="' + i18next.t('menu') + '" aria-expanded="false">' +
+            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-slot="' + slot + '" data-toggle="dropdown" ' + accesskey + ' aria-label="' + i18next.t('menu') + '" aria-expanded="false">' +
             '<span class="caret" aria-hidden="true"></span>' +
             '</button>' +
             '<ul class="dropdown-menu" role="menu">' +
@@ -172,14 +183,18 @@ $(function() {
 
         for(var i = 1; i <= 10; i++) {
             li = $('<li class="list-group-item">');
-            btn = $('<button class="button text-center savebtn" data-slot="' + i + '">');
+            btn = $('<button class="button text-center savebtn savebtn-user" data-slot="' + i + '">');
             lsname = localStorage.getItem(Game.name + '_' + i + '_name');
 
             if (lsname === null) {
                 btn.text(i18next.t('empty_save_slot')).prop('disabled', true);
                 menu = null;
             } else {
-                btn.text(lsname);
+                var description = lsname;
+                if (settings['numeric_keys']) {
+                    description = i + ': ' + description;
+                }
+                btn.text(description);
                 menu = saveActionCreate(i);
             }
             li.append(btn);
