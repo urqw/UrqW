@@ -33,6 +33,7 @@
 	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
 	+ Added: Numbering of choice buttons when hotkeys are enabled.
 	+ Added: Display of UrqW version in the player interface.
+	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening .qsz format games.
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Keypress tracking by key code instead of character code.
@@ -41,6 +42,7 @@
 	+ Accessibility improvements:
 		- Added: Text labels for controls of the toolbar.
 		- Added: Text label for inventory button in XS-sized interface.
+		- Added: Text prefix to visually highlighted autosave slot
 		- Added: Customizable announcement description updates using assistive technology.
 		- Added: Customizable announcement choice button updates using assistive technology.
 		- Added: Customizable announcement description using assistive technology when pressing a hotkey (see help in menu).
@@ -57,7 +59,7 @@
 	+ Added: gen-rss script for generating RSS feed for new games in the catalog.
 	+ Added: gen-license-report script for generating report on third-party component licenses.
 	+ Added: gen-docs script for generating documentation in HTML format.
-	+ Added: `npm run build` command for UrqW production build (sequential execution of valid-json, pack-games, gen-rss, and gen-license-report scripts).
+	+ Added: `npm run build` command for UrqW production build (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, and gen-docs scripts).
 	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json file.
 
 ## Version 1.0 (from 2017-01-20)
