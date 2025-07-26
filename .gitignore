@@ -3,6 +3,7 @@ docs/*
 !docs/urql.html
 /node_modules
 quests/*.zip
+/release
 .DS_Store
 changelog.html
 rss.xml

@@ -12,7 +12,9 @@
     "gen-rss": "node scripts/gen-rss.js",
     "pack-games": "node scripts/pack-games.js",
     "valid-json": "node scripts/valid-json.js",
+    "pack-release": "node scripts/pack-release.js",
     "build": "npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report && npm run gen-docs",
+    "release": "npm run gen-license-report && npm run gen-docs && npm run pack-release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akela <tinycoyote@gmail.com>",

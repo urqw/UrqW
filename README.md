@@ -78,11 +78,19 @@ The following project automation tools have been implemented:
 	```
 	npm run gen-license-report
 	```
-* Generate documentation (convert files from the /md directory to the /docs directory):
+* Generate documentation in HTML format (convert files from the /md directory to the /docs directory):
 	```
 	npm run gen-docs
 	```
-* Build the project (sequential execution of valid-json, pack-games, gen-rss, gen-license-report and gen-docs scripts):
+* Package a release build of UrqW (just the engine and documentation, without games and development artifacts):
+	```
+	npm run pack-release
+	```
+* Build UrqW for production environments with the games catalog (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, and gen-docs scripts):
 	```
 	npm run build
+	```
+* Build UrqW for release without the games catalog (sequential execution of gen-license-report, gen-docs, and pack-release scripts):
+	```
+	npm run release
 	```

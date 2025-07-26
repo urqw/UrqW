@@ -54,12 +54,14 @@
 	+ Added: Preparation of new documentation in Russian and English has begun.
 	+ Changed: Updating the main Russian-language documentation.
 * Development and maintenance infrastructure:
-	+ Added: valid-json script to check the validity of the games.json file.
-	+ Added: pack-games script for packaging games for the catalog.
-	+ Added: gen-rss script for generating RSS feed for new games in the catalog.
-	+ Added: gen-license-report script for generating report on third-party component licenses.
-	+ Added: gen-docs script for generating documentation in HTML format.
-	+ Added: `npm run build` command for UrqW production build (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, and gen-docs scripts).
+	+ Added: valid-json script to validate the games.json file.
+	+ Added: pack-games script to package games from the games directory for the catalog.
+	+ Added: gen-rss script to generate RSS feed for new games in the catalog.
+	+ Added: gen-license-report script to generate report on third-party component licenses.
+	+ Added: gen-docs script to generate documentation in HTML format.
+	+ Added: pack-release script to package a release build of UrqW.
+	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
+	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json file.
 
 ## Version 1.0 (from 2017-01-20)
