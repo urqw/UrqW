@@ -161,7 +161,6 @@ Parser.prototype.parse = function(line) {
 
             // no break here
             break;
-        case 'javascript': return GlobalPlayer.javaScript(command.toString().trim());
 
         // If nothing helped ^w^w^w is not operator
         default:

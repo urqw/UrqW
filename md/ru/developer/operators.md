@@ -125,8 +125,6 @@
 
 ### invkill {предмет}
 
-### javascript [код]
-
 ### music [файл]
 
 ### not

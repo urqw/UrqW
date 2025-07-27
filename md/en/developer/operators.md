@@ -125,8 +125,6 @@ Operators in descending order of precedence:
 
 ### invkill {item}
 
-### javascript [code]
-
 ### music [file]
 
 ### not

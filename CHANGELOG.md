@@ -6,7 +6,7 @@
 
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
-	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using either the javascript system variable or the javascript operator.
+	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
 	+ Added: System variables time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
 	+ Added: Support for custom text descriptions for images added using either the image system variable or the image operator.
 	+ Fixed: Processing of the tokens_delim variable.
