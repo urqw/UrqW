@@ -53,9 +53,16 @@ function Quest(text) {
     this.realCurrentLoc = '';
 
     /**
-     * @type {string}
+     * @type {array of strings}
      */
-    this.quest = text.replace(/^[\n\r]+|[\n\r]+$/g,'').replace(/\/\*[\s\S.]+?\*\//g,'').split(/[\n\r]+/);
+    // Delete line breaks at the beginning and end of the text
+    text = text.replace(/^[\n\r]+|[\n\r]+$/g, '');
+    // Delete comments from the text
+    text = text.replace(/\/\*[\s\S.]+?\*\//g, '');
+    // Concatenate lines with a line continuation character
+    text = text.replace(/\\[\n\r]+/g, '');
+    // Split the text into an array of lines
+    this.quest = text.split(/[\n\r]+/);
 }
 
 
