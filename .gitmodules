@@ -127,3 +127,6 @@
 [submodule "games/cursed_city_be"]
 	path = games/cursed_city_be
 	url = https://github.com/urqw/cursed_city_be.git
+[submodule "games/last_deal"]
+	path = games/last_deal
+	url = https://github.com/urqw/last_deal.git
