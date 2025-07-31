@@ -82,9 +82,6 @@
 [submodule "games/support"]
 	path = games/support
 	url = https://github.com/urqw/support.git
-[submodule "games/wason_task"]
-	path = games/wason_task
-	url = https://github.com/urqw/wason_task.git
 [submodule "games/winnie-the-pooh"]
 	path = games/winnie-the-pooh
 	url = https://github.com/urqw/winnie-the-pooh.git
