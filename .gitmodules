@@ -124,3 +124,6 @@
 [submodule "games/girl_from_14_be"]
 	path = games/girl_from_14_be
 	url = https://github.com/urqw/girl_from_14_be.git
+[submodule "games/cursed_city_be"]
+	path = games/cursed_city_be
+	url = https://github.com/urqw/cursed_city_be.git
