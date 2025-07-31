@@ -19,9 +19,6 @@
 [submodule "games/cursed_city"]
 	path = games/cursed_city
 	url = https://github.com/urqw/cursed_city.git
-[submodule "games/dmitry_smetanin1"]
-	path = games/dmitry_smetanin1
-	url = https://github.com/urqw/dmitry_smetanin1.git
 [submodule "games/fairy_mound"]
 	path = games/fairy_mound
 	url = https://github.com/urqw/fairy_mound.git
