@@ -121,3 +121,6 @@
 [submodule "games/well"]
 	path = games/well
 	url = https://github.com/urqw/well.git
+[submodule "games/girl_from_14_be"]
+	path = games/girl_from_14_be
+	url = https://github.com/urqw/girl_from_14_be.git
