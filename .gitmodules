@@ -136,3 +136,6 @@
 [submodule "games/virus"]
 	path = games/virus
 	url = https://github.com/urqw/virus.git
+[submodule "games/virus_be"]
+	path = games/virus_be
+	url = https://github.com/urqw/virus_be.git
