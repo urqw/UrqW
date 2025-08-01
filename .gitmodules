@@ -133,3 +133,6 @@
 [submodule "games/last_deal_be"]
 	path = games/last_deal_be
 	url = https://github.com/urqw/last_deal_be.git
+[submodule "games/virus"]
+	path = games/virus
+	url = https://github.com/urqw/virus.git
