@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
         ru: {
             name: "Russian (русский)",
             translation: ru
+        },
+        uk: {
+            name: "Ukrainian (українська)",
+            translation: uk
         }
     };
 
