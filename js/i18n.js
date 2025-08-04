@@ -94,10 +94,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function fillLangSelect() {
         var langSelect = document.getElementById('lang_select');
 
-        Object.keys(availableLangs).forEach(lang => {
+        // Convert availableLangs object into array and sort by language name
+        var sortedLangs = Object.entries(availableLangs)
+            .sort((a, b) => {
+                return a[1].name.localeCompare(b[1].name, 'en');
+            });
+
+        // Add sorted languages to selector
+        sortedLangs.forEach(([lang, data]) => {
             var option = document.createElement('option');
             option.value = lang;
-            option.textContent = availableLangs[lang].name;
+            option.textContent = data.name;
             langSelect.appendChild(option);
         });
 
