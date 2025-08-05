@@ -54,6 +54,14 @@ The following project automation tools have been implemented:
 	```
 	npm install
 	```
+* General check of completeness of all localizations (display the percentage of translated strings):
+	```
+	npm run check-locale
+	```
+* Detailed check of completeness of a specific localization (display the identifiers of untranslated strings), e.g. for Russian:
+	```
+	npm run check-locale ru
+	```
 * Validate the /games.json file:
 	```
 	npm run valid-json

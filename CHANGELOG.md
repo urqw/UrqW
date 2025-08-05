@@ -55,6 +55,7 @@
 	+ Added: Preparation of new documentation in Russian and English has begun.
 	+ Changed: Updating the main Russian-language documentation.
 * Development and maintenance infrastructure:
+	+ Added: check-locale script to check completeness of localization.
 	+ Added: valid-json script to validate the games.json file.
 	+ Added: pack-games script to package games from the games directory for the catalog.
 	+ Added: gen-rss script to generate RSS feed for new games in the catalog.

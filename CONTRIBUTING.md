@@ -65,7 +65,7 @@ All files must be opened and saved in UTF-8 encoding without BOM.
 Adding a new localization:
 
 1. Determine the target language code according to the ISO 639 standard. For example, the Russian language code is "ru". For more details, see [Declaring language in HTML, Choosing language values)](https://www.w3.org/International/questions/qa-html-language-declarations.en#langvalues).
-2. In the /locale directory, create a copy of the en.js file and rename it according to the target language code, for example, ru.js for Russian. Instead of en.js, you can use another existing localization, but there is a risk of copying an incomplete translation or someone else’s translation errors, while en.js is the main localization file.
+2. In the /locale directory, create a copy of the en.js file and rename it according to the target language code, for example, ru.js for Russian. Instead of en.js, you can use another existing localization, but there is a risk of copying an incomplete translation or someone else's translation errors, while en.js is the main localization file.
 3. Open the new localization file and edit its contents:
 	* Rename the translation string object according to the target language code, for example, `var ru` for Russian.
 	* Translate all values of keys into the target language.
@@ -82,16 +82,21 @@ Adding a new localization:
 	* It is advisable to specify the target language name in English as the value of the name key, and then in brackets in the target language itself.
 6. Complete the changes to the main UrqW repository according to the general process (see "Making Changes").
 
-Updating an existing translation:
+Updating an existing localization:
 
-1. In the /locale directory, open the file with the localization for the target language, for example, ru.js for Russian.
-2. Open the /locale/en.js file with the main English localization. Instead of en.js, you can use another existing localization, but there is a risk of copying an incomplete translation or someone else’s translation errors, while en.js is the main localization file.
-3. Compare the contents of these files and bring the contents of the target language localization file in line with the contents of the main localization file.
-4. Complete the changes to the main UrqW repository according to the general process (see "Making Changes").
+1. Identify strings missing from the localization for the target language using the check-locale script, for example, for Russian: \
+	`npm run check-locale ru`
+2. In the /locale directory, open the file with the localization for the target language, for example, ru.js for Russian.
+3. Open the /locale/en.js file with the main English localization. Instead of en.js, you can use another existing localization, but there is a risk of copying an incomplete translation or someone else's translation errors, while en.js is the main localization file.
+4. Compare the contents of these files and bring the contents of the target language localization file in line with the contents of the main localization file. It is recommended to keep the same string order as in the main localization file.
+5. Complete the changes to the main UrqW repository according to the general process (see "Making Changes").
 
 ## Preparing a New Version
 
 1. Make reasonable and realistic efforts to update localizations and documentation in all supported languages. Translators and their contact information are usually listed at the beginning of the source files.
+	* Do a general check of all localizations by running the command: \
+		`npm run check-locale`
+	* Try to ensure 100% translation for all localizations before releasing.
 2. Update and synchronize the UrqW version in the following project files:
 	* In the urqw_version variable in the /index.html file.
 	* In the version parameter in the /package.json file.
