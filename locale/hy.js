@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var hy = {
-    welcome_message: "Սա է շարժիչն տեկստ խաղերի համար UrqW " + urqw_version + "։ Համատեղելվում է RipURQ 1.4 ու URQ_DOS 1.35 հետ։ Եթե ուզում ես քո խաղ գրալ, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" target=\"_blank\">փաստաթուղթեր</a>. Կա նախագիծի <a href=\"" + url_repo + "\" target=\"_blank\">հանրային պահեստ</a>, որտեղ դու կարում ես քո խաղեր տալ ի կատալոգ։ Լրացուցիչ, այնտեղ կարելի է ստեղցել <a href=\"" + url_issues + "\" target=\"_blank\">հարց</a>, եթե խնդիր իա։",
+    welcome_message: "Սա է շարժիչն տեկստ խաղերի համար UrqW " + urqw_version + "։ Համատեղելվում է RipURQ 1.4 ու URQ_DOS 1.35 հետ։ Եթե ուզում ես քո խաղ գրել, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" target=\"_blank\">փաստաթուղթեր</a>. Կա նախագիծի <a href=\"" + url_repo + "\" target=\"_blank\">հանրային պահեստ</a>, որտեղ դու կարում ես քո խաղեր տալ ի կատալոգ։ Լրացուցիչ, այնտեղ կարելի է ստեղցել <a href=\"" + url_issues + "\" target=\"_blank\">հարց</a>, եթե խնդիր կա։",
     interface_language: "Միջերես լեզու",
     something_went_wrong: "Սխալ տեղի ունեցավ",
     wait: "Սպասի...",
