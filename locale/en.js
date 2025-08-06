@@ -113,7 +113,7 @@ var en = {
     about_urqw: "About UrqW",
     urqw_description: "UrqW " + urqw_version + " is a free and open source text-based game engine.",
     licenses: "Licenses",
-    urqw_license_description: "UrqW is available under the <a href=\"LICENSE-GPL.txt\" target=\"_blank\">GNU General Public License version 2</a> or later.",
+    urqw_license_description: "The UrqW software is available under the <a href=\"LICENSE-GPL.txt\" target=\"_blank\">GNU General Public License version 2</a> or later.",
     third_party_licenses_description: "UrqW also includes and uses third-party components which are made available under <a href=\"third-party_components.txt\" target=\"_blank\">different free and open source licenses</a>.",
     urqw_source_code_description: "The source code and information about how to build it yourself are available in the <a href=\"" + url_repo + "\" target=\"_blank\">public repository</a>.",
     contributors: "Contributors",
