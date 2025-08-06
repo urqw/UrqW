@@ -61,18 +61,22 @@ $(function() {
 
         $('#saveslots').find('.saveaction_rename').on('click', function() {
             saveactionRename.call(this, 'save');
+            return false;
         });
 
         $('#saveslots').find('.saveaction_download').on('click', function() {
             saveactionDownload.call(this);
+            return false;
         });
 
         $('#saveslots').find('.saveaction_clear').on('click', function() {
             saveactionClear.call(this, 'save');
+            return false;
         });
 
         $('#saveslots').find('.saveaction_launch').on('click', function() {
             saveactionLaunch.call(this);
+            return false;
         });
 
         $('#save_upload_form').hide();
@@ -214,18 +218,22 @@ $(function() {
 
         $('#saveslots').find('.saveaction_rename').on('click', function() {
             saveactionRename.call(this, 'load');
+            return false;
         });
 
         $('#saveslots').find('.saveaction_download').on('click', function() {
             saveactionDownload.call(this);
+            return false;
         });
 
         $('#saveslots').find('.saveaction_clear').on('click', function() {
             saveactionClear.call(this, 'load');
+            return false;
         });
 
         $('#saveslots').find('.saveaction_launch').on('click', function() {
             saveactionLaunch.call(this);
+            return false;
         });
 
         // TODO: not a very elegant implementation, but for now handler is assigned every time
@@ -562,6 +570,7 @@ $(function() {
 
     textfield.on('click', 'a.button', function() {
         GlobalPlayer.action($(this).data('action'), true);
+        return false;
     });
 
     /**

@@ -729,6 +729,14 @@ manifest['urqw_title'] = jsonObj.urqw_title;
         $('#choose-game').hide();
         $('#game').show();
 
+        // Preventing hash changes when clicking on links with data-toggle="collapse"
+        // Relevant for section links in the menu
+        $('a[data-toggle="collapse"]').click(function(event) {
+            event.preventDefault();
+            var target = $(this).data('target');
+            $(target).collapse('toggle');
+        });
+
         // Add link to copy IFID to menu
         if (manifest['urqw_game_ifid']) {
             var ifidCopyLink = $('<a>', {
