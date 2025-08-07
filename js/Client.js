@@ -48,7 +48,7 @@ function Client() {
 Client.prototype.render = function (data) {
     if (this.firstRender) {
         if (Game.getVar('urq_mode') == 'dosurq') {
-            $('#additionalstyle').find('style').empty().append('#buttons .button {background-color: #000; color: #AAA;}');
+            $('#additionalstyle').empty().append('#buttons .button {background-color: #000; color: #AAA;}');
         }
 
         this.firstRender = false;

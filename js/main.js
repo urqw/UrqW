@@ -49,7 +49,7 @@ $(function() {
     $('#something_wrong').hide();
     $('#infopanel').show();
 
-    $('#additionalstyle').find('style').empty();
+    $('#additionalstyle').empty();
 
     /**
      * Get value of get parameter from URL
@@ -277,7 +277,7 @@ $(function() {
                         qst.push(file);
                     }
                 } else if (file.name.split('.').pop().toLowerCase() == 'css') {
-                    $('#additionalstyle').find('style').append(file.asBinary());
+                    $('#additionalstyle').append(file.asBinary());
                 } else if (file.name.split('.').pop().toLowerCase() == 'js') {
                     if (encoding.toLowerCase() == 'utf-8') {
                         scriptCode = file.asText();
@@ -638,7 +638,7 @@ manifest['urqw_title'] = jsonObj.urqw_title;
     function readStyle(file) {
         var style = new FileReader();
         style.onload = function() {
-            $('#additionalstyle').find('style').append(style.result);
+            $('#additionalstyle').append(style.result);
         };
 
         style.readAsText(file, encoding);
