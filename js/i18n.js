@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
             name: "English",
             translation: en
         },
+        eo: {
+            name: "Esperanto",
+            translation: eo
+        },
         hy: {
             name: "Armenian (հայերեն)",
             translation: hy
