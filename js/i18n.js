@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
             name: "Armenian (հայերեն)",
             translation: hy
         },
+        "isv-Latn": {
+            name: "Interslavic (Latin) (medžuslovjansky (latinica))",
+            translation: isv_Latn
+        },
         ru: {
             name: "Russian (русский)",
             translation: ru
