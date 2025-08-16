@@ -139,3 +139,6 @@
 [submodule "games/virus_be"]
 	path = games/virus_be
 	url = https://github.com/urqw/virus_be.git
+[submodule "games/trapped_in_time"]
+	path = games/trapped_in_time
+	url = https://github.com/tseykovets/trapped_in_time.git
