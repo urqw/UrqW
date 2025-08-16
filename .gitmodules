@@ -142,3 +142,6 @@
 [submodule "games/trapped_in_time"]
 	path = games/trapped_in_time
 	url = https://github.com/tseykovets/trapped_in_time.git
+[submodule "games/trapped_in_time_ru"]
+	path = games/trapped_in_time_ru
+	url = https://github.com/tseykovets/trapped_in_time_ru.git
