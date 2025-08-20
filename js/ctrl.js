@@ -7,7 +7,7 @@
 
 // User control of quest (events)
 
-var volume = 1;
+var volumeMultiplier = 1;
 
 $(function() {
     var buttonField = $('#buttons');
@@ -15,6 +15,9 @@ $(function() {
     var inventory = $('#inventory');
     var returnToGame = $('#return_to_game');
     var closeMenu = $('#close_menu');
+    var volumeSlider = $('#volume');
+    var decreaseVolume = $('#decrease_volume');
+    var increaseVolume = $('#increase_volume');
 
     /**
      * Click on save
@@ -316,26 +319,35 @@ $(function() {
 
     $('#mute').on('click', function () {
         var span = $(this).find('span.glyphicon');
+        var dataI18n = '[title]volume_control;[aria-label]';
+        var labelID;
 
-        if (volume == 1) {
-            $(this).attr('aria-label', i18next.t('mute_sound'));
-            volume = 2;
-            gameMusic.volume = 0.5;
-            span.removeClass('glyphicon-volume-up');
-            span.addClass('glyphicon-volume-down');
-        } else if (volume == 2) {
-            $(this).attr('aria-label', i18next.t('restore_volume'));
-            volume = 3;
-            gameMusic.volume = 0;
-            span.removeClass('glyphicon-volume-down');
-            span.addClass('glyphicon-volume-off');
-        } else if (volume == 3) {
-            $(this).attr('aria-label', i18next.t('mute_half_volume'));
-            volume = 1;
-            gameMusic.volume = 1;
-            span.removeClass('glyphicon-volume-off');
-            span.addClass('glyphicon-volume-up');
+        switch (volumeMultiplier) {
+            case 1:
+                labelID = 'mute_sound';
+                volumeMultiplier = 0.5;
+                gameMusic.volume = Number(settings['volume'])/100*volumeMultiplier;
+                span.removeClass('glyphicon-volume-up');
+                span.addClass('glyphicon-volume-down');
+                break;
+            case 0.5:
+                labelID = 'restore_normal_volume';
+    volumeMultiplier = 0;
+                gameMusic.volume = 0;
+                span.removeClass('glyphicon-volume-down');
+                span.addClass('glyphicon-volume-off');
+                break;
+            case 0:
+                labelID = 'mute_half_volume';
+                volumeMultiplier = 1;
+                gameMusic.volume = Number(settings['volume'])/100;
+                span.removeClass('glyphicon-volume-off');
+                span.addClass('glyphicon-volume-up');
+                break;
         }
+
+        $(this).attr('aria-label', i18next.t(labelID));
+        $(this).attr('data-i18n', dataI18n + labelID);
 
         return false;
     });
@@ -458,6 +470,55 @@ $(function() {
         $('#game').show();
         $('#menu').focus();
     });
+
+    /**
+     * Volume controls in settings
+     */
+
+    volumeSlider.on('change', function() {
+        var currentValue = parseInt($(this).val(), 10);
+        gameMusic.volume = currentValue/100*volumeMultiplier;
+        var name = 'volume';
+        settings[name] = currentValue;
+        localStorage.setItem(name, JSON.stringify(currentValue));
+        volumeSlider.attr('aria-valuenow', currentValue);
+        volumeSlider.attr('aria-valuetext', `${currentValue}%`);
+
+        // Managing the state of the volume slider change buttons
+        var isDecreaseVolumeDisabled = decreaseVolume.prop('disabled');
+        var isIncreaseVolumeDisabled = increaseVolume.prop('disabled');
+        var newDecreaseVolumeDisabled = false;
+        var newIncreaseVolumeDisabled = false;
+        switch (currentValue) {
+            case 0:
+                newDecreaseVolumeDisabled = true;
+                newIncreaseVolumeDisabled = false;
+                break;
+            case 100:
+                newDecreaseVolumeDisabled = false;
+                newIncreaseVolumeDisabled = true;
+                break;
+            default:
+                newDecreaseVolumeDisabled = false;
+                newIncreaseVolumeDisabled = false;
+        }
+        if (isDecreaseVolumeDisabled !== newDecreaseVolumeDisabled) {
+            decreaseVolume.prop('disabled', newDecreaseVolumeDisabled);
+        }
+        if (isIncreaseVolumeDisabled !== newIncreaseVolumeDisabled) {
+            increaseVolume.prop('disabled', newIncreaseVolumeDisabled);
+        }
+    });
+
+    decreaseVolume.on('click', () => changeVolume(-10));
+    increaseVolume.on('click', () => changeVolume(10));
+
+    function changeVolume(step) {
+        var currentValue = parseInt(volumeSlider.val(), 10);
+        var newValue = Math.max(Math.min(currentValue + step, 100), 0);
+        volumeSlider.val(newValue);
+        volumeSlider.trigger('change');
+    }
 
     /**
      * Changing checkbox states in settings

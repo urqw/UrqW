@@ -39,7 +39,6 @@ var isv_Latn = {
     volume_control: "Upravjenje vyšiny zvuka",
     mute_half_volume: "Smenjšiti vyšinu zvuka",
     mute_sound: "Odstraniti zvuk",
-    restore_volume: "Vratiti vyšinu zvuka 100%",
     restart_game: "Restartnuti igru",
     restart_game_confirm: "Restartnuti igru?",
     save_game: "Shraniti igru",

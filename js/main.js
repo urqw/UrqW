@@ -34,6 +34,7 @@ var debug;
 var manifest = {};
 // Default settings value
 var settings = {
+    volume: 50,
     automatically_focus: true,
     close_page_confirmation: true,
     numeric_keys: true,
@@ -179,7 +180,11 @@ $(function() {
         } else {
             var value = defaultValue;
         }
-        $('#' + key).prop('checked', value);
+        if (typeof value === 'boolean') {
+            $('#' + key).prop('checked', value);
+        } else {
+            $('#' + key).val(value);
+        }
         $('#' + key).trigger('change');
     });
 

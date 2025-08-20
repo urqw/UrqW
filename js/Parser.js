@@ -82,7 +82,7 @@ Parser.prototype.parse = function(line) {
         case 'image': return GlobalPlayer.image(command.toString().trim());
         case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
         case 'play':
-            if (volume == 3) return;
+            if (volumeMultiplier == 0 || Number(settings['volume']) == 0) return;
 
             var Sound;
             if (files === null) {
@@ -91,7 +91,7 @@ Parser.prototype.parse = function(line) {
                 Sound = new Audio(files[command.toString().trim()]);
             }
 
-            Sound.volume = (volume == 1) ? 1 : 0.5;
+            Sound.volume = Number(settings['volume'])/100*volumeMultiplier;
             Sound.play();
 
             break;

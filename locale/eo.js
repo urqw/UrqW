@@ -39,7 +39,6 @@ var eo = {
     volume_control: "Kontrolo de sona nivelo",
     mute_half_volume: "Malgrandigi sonan nivelon",
     mute_sound: "Elŝalti sonon",
-    restore_volume: "Redoni sonan nivelon al 100%",
     restart_game: "Restarti ludon",
     restart_game_confirm: "Restarti ludon?",
     save_game: "Konservi ludon",

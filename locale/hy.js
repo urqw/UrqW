@@ -39,7 +39,6 @@ var hy = {
     volume_control: "Ձայնի մակարդակի կառավարում",
     mute_half_volume: "Ձայնը կիսով չափ նվազեցնել",
     mute_sound: "Անջատել ձայնը",
-    restore_volume: "Վերադարձնել 100% ձայն",
     restart_game: "Վերագործարկել խաղը",
     restart_game_confirm: "Վերագործարկե՞լ խաղը",
     save_game: "Պահպանել խաղը",
