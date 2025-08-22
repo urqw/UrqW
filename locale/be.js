@@ -71,6 +71,7 @@ var be = {
     type: "Тып",
     items: "Рэчы",
     quantity: "Колькасць",
+    files: "Файлы",
     other: "Астатняе",
     about_game: "Пра гульню",
     undefined: "Не вызначана",

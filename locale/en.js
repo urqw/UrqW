@@ -71,6 +71,7 @@ var en = {
     type: "Type",
     items: "Items",
     quantity: "Quantity",
+    files: "Files",
     other: "Other",
     about_game: "About the Game",
     undefined: "Undefined",

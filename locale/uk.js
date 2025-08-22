@@ -71,6 +71,7 @@ var uk = {
     type: "Тип",
     items: "Предмети",
     quantity: "Кількість",
+    files: "Файли",
     other: "Інше",
     about_game: "Про гру",
     undefined: "Не визначено",

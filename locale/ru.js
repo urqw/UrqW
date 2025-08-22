@@ -71,6 +71,7 @@ var ru = {
     type: "Тип",
     items: "Предметы",
     quantity: "Количество",
+    files: "Файлы",
     other: "Прочее",
     about_game: "Об игре",
     undefined: "Неопределено",

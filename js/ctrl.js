@@ -434,6 +434,20 @@ $(function() {
             });
             itemTable.append(tableRows);
 
+            // Files
+            var fileList = $('#file_list');
+            if (fileList.is(':empty') && files !== null) {
+                keys = Object.keys(files);
+                if (keys.length) {
+                    keys.forEach(function(key) {
+                        var listItem = $('<li>', {
+                            text: key
+                        });
+                        fileList.append(listItem);
+                    });
+                }
+            }
+
             // Other
             $('#status_in_menu').text(GlobalPlayer.status);
             $('#position_in_menu').text(Game.position);
