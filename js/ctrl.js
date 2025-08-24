@@ -454,22 +454,6 @@ $(function() {
             $('#real_current_loc_in_menu').text(Game.realCurrentLoc);
         }
 
-        // Refresh  information in the About the Game section
-        var gameLangVal = Game.vars['urqw_game_lang'];
-        var gameLangDesc;
-        if (gameLangVal) {
-            gameLangDesc = gameLangVal;
-            if (i18next.exists('language.' + gameLangVal, { lng: i18next.options.fallbackLng })) {
-                gameLangDesc += (' (<span data-i18n="language.' + gameLangVal + '">' + i18next.t('language.' + gameLangVal) + '</span>)');
-            }
-        } else {
-            gameLangDesc = i18next.t('undefined');
-        }
-
-        var cell = $('#game_language_in_menu');
-        cell.empty();
-        cell.html(gameLangDesc);
-
         $('#menu_panel').show();
         closeMenu.focus();
 
@@ -483,6 +467,23 @@ $(function() {
         $('#menu_panel').hide();
         $('#game').show();
         $('#menu').focus();
+    });
+
+    /**
+     * Click on download iFiction record
+     */
+    $('#download_ifiction_btn').on('click', function() {
+        if (!iFictionFileKey) return false;
+        var fileURL = files[iFictionFileKey];
+        if (!fileURL) return false;
+        var a = document.createElement('a');
+        a.href = fileURL;
+        a.download = iFictionFileKey.split('/').pop();
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(fileURL);
     });
 
     /**

@@ -32,6 +32,8 @@ var encoding;
 var debug;
 // Object for storing parameters of the manifest.json file
 var manifest = {};
+// iFiction record file key in the files object
+var iFictionFileKey;
 // Default settings value
 var settings = {
     volume: 50,
@@ -241,36 +243,21 @@ $(function() {
 
         // The manifest.json file must be read first
         // because its contents determine how other files will be read
-        var manifestArray = [];
-        for (var [name, file] of Object.entries(zip.files)) {
-            if (!file.dir) {
-                // Manifest of UrqW is file in root or in directory with one level of nesting
-                var pathParts = file.name.split('/');
-                if (pathParts.length <= 2 && pathParts.pop().toLowerCase() == 'manifest.json') {
-                manifestArray.push(file);
-                }
-            }
-        }
-        var manifestFile;
-        if (manifestArray.length == 1) {
-            manifestFile = manifestArray[0];
-        } else if (manifestArray.length > 1) {
-            // In stupid situation of several manifests,
-            // choose file from root or first one in alphabet
-            manifestFile = manifestArray.find(file => file.name.toLowerCase() == 'manifest.json');
-            if (!manifestFile) {
-                manifestArray.sort((a, b) => {
-                    if (a.name < b.name) return -1;
-                    if (a.name > b.name) return 1;
-                    return 0;
-                });
-                manifestFile = manifestArray[0];
-            }
-        }
-        if (manifestFile) {
+        var manifestFile = getMetadataFile(zip, 'manifest.json');
+if (manifestFile) {
             if (!parseManifest(manifestFile.asText())) return;
         }
 
+        // iFiction record is read only if IFID is specified in manifest.json
+        if (manifest['urqw_game_ifid']) {
+            var iFictionFile = getMetadataFile(zip, manifest['urqw_game_ifid'] + '.iFiction');
+    if (iFictionFile) {
+                if (!parseIFiction(iFictionFile.asText())) return;
+                iFictionFileKey = iFictionFile.name;
+            }
+        }
+
+        // Read other files
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
@@ -306,6 +293,10 @@ $(function() {
                     var newkey = key.substr(dir.length);
                     files[newkey] = files[key];
                     delete files[key];
+                }
+
+                if (iFictionFileKey) {
+                    iFictionFileKey = iFictionFileKey.substr(dir.length);
                 }
             }
 
@@ -501,11 +492,13 @@ $(function() {
         // because its contents determine how other files will be read
         var manifestFile = selectedFiles.find(file => file.name.toLowerCase() == 'manifest.json');
         if (manifestFile) {
-            var manifestContent = await readManifest(manifestFile);
+            var manifestContent = await readMetadata(manifestFile);
             if (!parseManifest(manifestContent)) return;
             var index = selectedFiles.indexOf(manifestFile);
             selectedFiles.splice(index, 1);
         }
+
+        // Read other files
         for (var i = 0; i < selectedFiles.length; i++) {
             if (selectedFiles[i].name.split('.').pop().toLowerCase() == 'qst') {
                 qst.push(selectedFiles[i]);
@@ -514,8 +507,14 @@ $(function() {
             } else if (selectedFiles[i].name.toLowerCase() == 'script.js') {
                 readJs(selectedFiles[i]);
             } else {
-                readFile(selectedFiles[i].name, e.target.files[i]);
+                readFile(selectedFiles[i].name, selectedFiles[i]);
+                // iFiction record is read only if IFID is specified in manifest.json
+                if (manifest['urqw_game_ifid'] && selectedFiles[i].name.toLowerCase() == manifest['urqw_game_ifid'].toLowerCase() + '.ifiction') {
+                    var iFictionContent = await readMetadata(selectedFiles[i]);
+                    if (!parseIFiction(iFictionContent)) return;
+                    iFictionFileKey = selectedFiles[i].name;
             }
+        }
         }
 
         if (qst.length == 0) {
@@ -539,10 +538,44 @@ $(function() {
     });
 
     /**
+     * @param JSZip data
+     */
+    function getMetadataFile(zip, fileName) {
+        fileName = fileName.toLowerCase();
+var fileArray = [];
+        for (var [name, file] of Object.entries(zip.files)) {
+            if (!file.dir) {
+                // Metadata of UrqW is file in root or in directory with one level of nesting
+                var pathParts = file.name.split('/');
+                if (pathParts.length <= 2 && pathParts.pop().toLowerCase() == fileName) {
+                fileArray.push(file);
+                }
+            }
+        }
+        var metadataFile = false;
+        if (fileArray.length == 1) {
+            metadataFile = fileArray[0];
+        } else if (fileArray.length > 1) {
+            // In stupid situation of several files with the same name,
+            // choose file from root or first one in alphabet
+            metadataFile = fileArray.find(file => file.name.toLowerCase() == fileName);
+            if (!metadataFile) {
+                fileArray.sort((a, b) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
+                metadataFile = fileArray[0];
+            }
+        }
+        return metadataFile;
+    }
+
+    /**
      * @param file
      */
-    function readManifest(file) {
-    return new Promise((resolve, reject) => {
+    function readMetadata(file) {
+        return new Promise((resolve, reject) => {
             var reader = new FileReader();
             reader.onload = () => resolve(reader.result);
             reader.onerror = reject;
@@ -554,58 +587,227 @@ $(function() {
      * @param (String)
      */
     function parseManifest(json) {
-        var jsonObj;
         try {
-            jsonObj = JSON.parse(json);
-        } catch (e) {
-            jsonObj = null;
-        }
-        if (jsonObj === null || jsonObj.manifest_version !== 1) {
+            var jsonObj = JSON.parse(json);
+            if (jsonObj === null || jsonObj.manifest_version !== 1) {
+                throw new Error('Invalid manifest version');
+            }
+
+            // Validate and save parameters from manifest.json to an object if they are set
+            if (jsonObj.urqw_title) {
+                manifest['urqw_title'] = jsonObj.urqw_title;
+            }
+            if (jsonObj.urqw_game_ifid) {
+                manifest['urqw_game_ifid'] = jsonObj.urqw_game_ifid;
+            }
+            if (jsonObj.urqw_game_lang) {
+                manifest['urqw_game_lang'] = jsonObj.urqw_game_lang;
+            }
+            if (jsonObj.game_encoding) {
+                if (!['UTF-8', 'CP1251'].includes(jsonObj.game_encoding)) {
+                    throw new Error('Invalid game encoding');
+                }
+                manifest['game_encoding'] = jsonObj.game_encoding;
+            }
+            if (jsonObj.urq_mode) {
+                if (!['urqw', 'ripurq', 'dosurq'].includes(jsonObj.urq_mode)) {
+                    throw new Error('Invalid URQ mode');
+                }
+                manifest['urq_mode'] = jsonObj.urq_mode;
+            }
+
+            // Override parameters from UI
+            if (manifest['urq_mode']) mode = manifest['urq_mode'];
+            if (manifest['game_encoding']) encoding = manifest['game_encoding'];
+
+            // Add IFID metadata if it is specified
+            if (manifest['urqw_game_ifid']) {
+                var metaTag = document.createElement('meta');
+                metaTag.setAttribute('prefix', 'ifiction: http://babel.ifarchive.org/protocol/iFiction/');
+                metaTag.setAttribute('property', 'ifiction:ifid');
+                metaTag.setAttribute('content', manifest['urqw_game_ifid']);
+                document.head.appendChild(metaTag);
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error parsing manifest.json file:', error);
             alert(i18next.t('manifest_unsupported_format'));
             return false;
         }
+    }
 
-        // Validate and save parameters from manifest.json to an object if they are set
-        if (jsonObj.urqw_title) {
-manifest['urqw_title'] = jsonObj.urqw_title;
-        }
-        if (jsonObj.urqw_game_ifid) {
-            manifest['urqw_game_ifid'] = jsonObj.urqw_game_ifid;
-        }
-        if (jsonObj.urqw_game_lang) {
-            manifest['urqw_game_lang'] = jsonObj.urqw_game_lang;
-        }
-        if (jsonObj.game_encoding) {
-            if (jsonObj.game_encoding === 'UTF-8' || jsonObj.game_encoding === 'CP1251') {
-                manifest['game_encoding'] = jsonObj.game_encoding;
-            } else {
-                alert(i18next.t('manifest_unsupported_format'));
-                return false;
+    /**
+     * @param (String)
+     */
+    function parseIFiction(xml) {
+    /**
+     * Implemented on the basis of the Treaty of Babel,
+     * revision 12 of 16 October 2024
+     * https://babel.ifarchive.org/index.html
+     * The 'urqw' value of the `<format>` tag is in informal use
+     * and has not yet been formally incorporated into the Treaty.
+     */
+        try {
+            // Parse XML
+var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(xml, 'application/xml');
+            // Validate XML
+            var errors = xmlDoc.getElementsByTagName('parsererror');
+            if (errors.length > 0) {
+                throw new Error('iFiction is invalid XML');
             }
-        }
-        if (jsonObj.urq_mode) {
-            if (jsonObj.urq_mode === 'urqw' || jsonObj.urq_mode === 'ripurq' || jsonObj.urq_mode === 'dosurq') {
-                manifest['urq_mode'] = jsonObj.urq_mode;
-            } else {
-                alert(i18next.t('manifest_unsupported_format'));
-                return false;
+
+            // Function to get tag value by path
+            function getValue(path, defaultValue, HTML) {
+                // Create an XPath expression
+                var xpath = `/*[local-name()='ifindex']/${path.split('/').map(part => `*[local-name()='${part.trim()}']`).join('/')}`;
+                // Get an element by XPath
+                var element = xmlDoc.evaluate(xpath, xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                if (element) {
+                    if (HTML) {
+                        var value = element.innerHTML;
+                    } else {
+                        var value = element.textContent;
+                    }
+                    value = value.trim();
+                    // If the tag is found but empty, return an empty string
+                    return value === '' ? '' : value;
+                }
+                // If the tag is not found, return the default value
+                return defaultValue;
             }
+
+            // Processing of mandatory tags
+
+            // The ifid value in the iFiction record must match
+            // the urqw_game_ifid value in the manifest.json file
+            var ifid = getValue('story/identification/ifid', '');
+            if (ifid !== manifest['urqw_game_ifid']) {
+                throw new Error('IFIDs in iFiction record and manifest.json file do not match');
+            }
+            // The format value must be 'urqw'
+            var format = getValue('story/identification/format', '');
+            if (format !== 'urqw') {
+                throw new Error('The value of the form tag is not urqw');
+            }
+            // The title and author tags must have non-empty values
+            var title = getValue('story/bibliographic/title', '');
+            var author = getValue('story/bibliographic/author', '');
+            if (!title || !author) {
+                throw new Error('The title and/or author tag does not contain data');
+            }
+            // The seriesnumber value (if given) must be a non-negative integer
+            var seriesnumber = getValue('story/bibliographic/seriesnumber', '');
+            if (seriesnumber && !/^\d+$/.test(seriesnumber)) {
+                throw new Error('The seriesnumber value is not a non-negative integer');
+            }
+            // If seriesnumber is given, then it is required that series is also given
+            var series = getValue('story/bibliographic/series', '');
+            if (seriesnumber && !series) {
+                throw new Error('The seriesnumber is given without the series');
+            }
+
+            // Get values ??of remaining optional tags
+            var language = getValue('story/bibliographic/language', '');
+            var headline = getValue('story/bibliographic/headline', '');
+            var firstpublished = getValue('story/bibliographic/firstpublished', '');
+            var genre = getValue('story/bibliographic/genre', '');
+            // Get the description value along with the HTML content
+            var description = getValue('story/bibliographic/description', '', true);
+            var url = getValue('story/contacts/url', '');
+            var authoremail = getValue('story/contacts/authoremail', '');
+
+            // Metadata for table
+            var metadata = {
+                title: title,
+                headline: headline,
+                author_s: author,
+                series: series,
+                part_number: seriesnumber,
+                genre: genre,
+                primary_language: language,
+                first_published: firstpublished,
+                home_page: url,
+                contact_email: authoremail
+            };
+
+            // Add data to the table in menu
+            var metadataTable = $('#metadata_table');
+            var tableRows = $();
+            Object.keys(metadata).forEach(key => {
+                // Empty values ??are not processed
+                if (!metadata[key]) return;
+
+                var value;
+                switch (key) {
+                    case 'part_number':
+                        value = metadata[key];
+                        break;
+                    case 'primary_language':
+                        value = language;
+                        // Add the language name if it is in the localization resources
+                        if (i18next.exists('language.' + language, { lng: i18next.options.fallbackLng })) {
+                            value += ` (<span data-i18n="language.${language}">${i18next.t('language.' + language)}</span>)`;
+                        }
+                        break;
+                    case 'first_published':
+                        var date = new Date(firstpublished);
+                        var dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+                        value = date.toLocaleDateString(document.documentElement.lang, dateOptions);
+                        break;
+                    case 'home_page':
+                        value = `<a href="${url}" target="_blank">${decodeURIComponent(url)}</a>`;
+                        break;
+                    case 'contact_email':
+                        value = authoremail
+                            .split(',')
+                            .map(email => {
+                                var trimmedEmail = email.trim();
+                                return `<a href="mailto:${trimmedEmail}" target="_blank">${trimmedEmail}</a>`;
+                            })
+                            .join(', ');
+                        break;
+                    default:
+                        if (language) {
+                            value = `<span lang="${language}">${metadata[key]}</span>`;
+                        } else {
+                            value = metadata[key];
+                        }
+                }
+
+                var row = $(`
+                    <tr>
+                        <th data-i18n="${key}">${i18next.t(key)}</th>
+                        <td>${value}</td>
+                    </tr>
+                `);
+                tableRows = tableRows.add(row);
+            });
+            metadataTable.append(tableRows);
+
+            // Add and show description to menu
+            if (description) {
+                // Remove all HTML tags except for <br/>
+                var temp = $('<div>').html(description);
+                temp.find('*:not(br)').contents().appendTo(temp);
+                temp.find('*:not(br)').remove();
+                var sanitizeHTML = temp.html();
+                $('#game_description_text').html(sanitizeHTML);
+                if (language) {
+                    $('#game_description_text').attr('lang', language);
+                }
+                $('#game_description').show();
+            }
+
+            $('#download_ifiction').show();
+
+            return true;
+        } catch (error) {
+            console.error('Error parsing iFiction record:', error);
+            alert(i18next.t('ifiction_unsupported_format'));
+            return false;
         }
-
-// Override parameters from UI
-        if (manifest['urq_mode']) mode = manifest['urq_mode'];
-        if (manifest['game_encoding']) encoding = manifest['game_encoding'];
-
-        // Add IFID metadata if it is specified
-        if (manifest['urqw_game_ifid']) {
-            var metaTag = document.createElement('meta');
-            metaTag.setAttribute('prefix', 'ifiction: http://babel.ifarchive.org/protocol/iFiction/');
-            metaTag.setAttribute('property', 'ifiction:ifid');
-            metaTag.setAttribute('content', manifest['urqw_game_ifid']);
-            document.head.appendChild(metaTag);
-        }
-
-        return true;
     }
 
     /**

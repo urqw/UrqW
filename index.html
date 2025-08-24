@@ -291,19 +291,25 @@
 
             <div id="about_game" class="panel-collapse collapse">
                 <div class="panel-body">
+                    <div id="download_ifiction" class="form-group" style="display: none;">
+                        <button id="download_ifiction_btn" class="btn btn-default" type="button" data-i18n="download_ifiction_record">
+                            Download iFiction record
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered">
-                            <tbody>
+                            <caption data-i18n="metadata">Metadata</caption>
+                            <tbody id="metadata_table">
                                 <tr>
                                     <th>IFID</th>
                                     <td id="ifid_in_menu"><span data-i18n="undefined">Undefined</span></td>
                                 </tr>
-                                <tr>
-                                    <th data-i18n="game_language">Game language</th>
-                                    <td id="game_language_in_menu"><span data-i18n="undefined">Undefined</span></td>
-                                </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div id="game_description" style="display: none;">
+                        <h4 data-i18n="description">Description</h4>
+                        <div id="game_description_text"></div>
                     </div>
                 </div>
             </div>
