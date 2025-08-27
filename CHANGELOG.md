@@ -51,6 +51,8 @@
 		- Added: Customizable announcement choice button updates using assistive technology.
 		- Added: Customizable announcement description using assistive technology when pressing a hotkey (see help in menu).
 		- Added: Customizable announcement description using assistive technology when shaking device (see help in menu).
+		- Added: Designation  for assistive technologies whether an inventory item has a drop-down list.
+		- Changed: Each link in the drop-down menu of an inventory item has the role of a list item.
 		- Changed: Text labels for player graphic icons.
 		- Fixed: Links in game text are focusable and activatable with keyboard, and have link role.
 		- Fixed: Proper paragraph representation in game text for screen readers.
