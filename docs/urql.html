@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>URQ Language Documentation</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+            margin-bottom: 100px;
+        }
+
+        p {
+            margin-left: 40px;
+            text-indent: -20px;
+            max-width: 800px;
+        }
+
+        code, samp {
+            display: block;
+            margin: 5px 0 20px 40px;
+            max-width: 800px;
+        }
+
+        samp {
+            background-color: #DFF0D8;
+            padding: 2px 4px;
+            font-size: 90%;
+            border-radius: 4px;
+        }
+
+        ul, ol {
+            margin-left: 40px;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        div.example {
+            background-color: #E4E4E4;
+            max-width: 800px;
+            padding: 5px 0;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+    
+        div.example h4 {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,71 +67,25 @@ html btn
 
 -->
 
-<style>
-    .container {
-        margin-top: 20px;
-        margin-bottom: 100px;
-    }
-
-    p {
-        margin-left: 40px;
-        text-indent: -20px;
-        max-width: 800px;
-    }
-
-    code, samp {
-        display: block;
-        margin: 5px 0 20px 40px;
-        max-width: 800px;
-    }
-
-    samp {
-        background-color: #DFF0D8;
-        padding: 2px 4px;
-        font-size: 90%;
-        border-radius: 4px;
-    }
-
-    ul, ol {
-        margin-left: 40px;
-    }
-
-    a {
-        cursor: pointer;
-    }
-
-    div.example {
-        background-color: #E4E4E4;
-        max-width: 800px;
-        padding: 5px 0;
-        margin-left: 30px;
-        margin-bottom: 20px;
-    }
-
-
-    div.example h4 {
-        margin-left: 20px;
-    }
-</style>
 <div class="container">
     <h2 class="text-center">Описание языка urql</h2>
     <div>
         <h3>Содержание</h3>
-        <p><a href="#пояснение к доке">Пояснения к доке</a></p>
-        <p><a href="#что такое urq квест">Что такое urq квест?</a></p>
-        <p><a href="#системные конструкции">Системные конструкции</a></p>
-        <p><a href="#системные переменные">Системные переменные</a></p>
+        <p><a href="#пояснение_к_доке">Пояснения к доке</a></p>
+        <p><a href="#что_такое_urq_квест">Что такое urq квест?</a></p>
+        <p><a href="#системные_конструкции">Системные конструкции</a></p>
+        <p><a href="#системные_переменные">Системные переменные</a></p>
         <p><a href="#операторы">Операторы</a></p>
         <p><a href="#предметы">Предметы</a></p>
         <p><a href="#комментарии">Комментарии</a></p>
-        <p><a href="#математические и логические операторы">Математические и логические операторы</a></p>
+        <p><a href="#математические_и_логические_операторы">Математические и логические операторы</a></p>
         <p><a href="#примеры">Примеры</a></p>
-        <p><a href="#режимы urq_mode">Режимы urq_mode</a></p>
+        <p><a href="#режимы_urq_mode">Режимы urq_mode</a></p>
         <p><a href="#плагины">Плагины</a></p>
-        <p><a href="#файл manifest.json">Файл manifest.json</a></p>
+        <p><a href="#файл_manifest.json">Файл manifest.json</a></p>
     </div>
 
-    <div id="пояснение к доке">
+    <div id="пояснение_к_доке">
         <h3>Пояснения к доке</h3>
         <p>скобки [] - обязательный параметр</p>
         <p>скобки {} -  необязательный параметр</p>
@@ -93,7 +93,7 @@ html btn
             уже не актуальны или которые лучше не использовать.</p>
     </div>
 
-    <div id="что такое urq квест">
+    <div id="что_такое_urq_квест">
         <h3>Что такое urq квест?</h3>
         <p><mark>urq-квест</mark> состоит из текстового файла с расширением ".qst", и, при необходимости, файлов
             ресурсов: таких как картинки, музыка. Для удобства все файлы лучше запаковать в <mark>zip</mark> архив.</p>
@@ -105,7 +105,7 @@ html btn
         <p>Для редактирования <mark>qst</mark> файлов используйте любой текстовый редактор на ваш вкус.</p>
     </div>
 
-    <div id="системные конструкции">
+    <div id="системные_конструкции">
         <h3>Системные конструкции:</h3>
         <p><mark>#[переменная]$</mark> - вывод переменной</p>
         <p><mark>#%[переменная]$</mark> - вывод переменной</p>
@@ -133,20 +133,20 @@ html btn
     </div>
 
 
-    <div id="системные переменные">
+    <div id="системные_переменные">
         <h3>Системные переменные</h3>
         <p><mark>urq_mode</mark> - флаг, указывающий на особенности в проигрывании данного квеста (подробности ниже) нужен
             для проигрывания старых квестов, написанных под другие интерпретаторы.
-            Значение можно задать как из кода игры, так и при помощи <a href="#файл manifest.json">файла manifest.json</a>.</p>
+            Значение можно задать как из кода игры, так и при помощи <a href="#файл_manifest.json">файла manifest.json</a>.</p>
         <p><mark>urqw_title</mark> - заголовок страницы UrqW (контейнер title), на которой отображается интерфейс игры.
         Если присвоить новое значение, то заголовок страницы будет изменён.
-        Значение можно задать как из кода игры, так и при помощи <a href="#файл manifest.json">файла manifest.json</a>.</p>
+        Значение можно задать как из кода игры, так и при помощи <a href="#файл_manifest.json">файла manifest.json</a>.</p>
         <p><mark>urqw_game_ifid</mark> - идентификатор интерактивной литературы,
         который служит уникальным универсальным идентификатором для игры.
-        Значение задаётся при помощи <a href="#файл manifest.json">файла manifest.json</a>.</p>
+        Значение задаётся при помощи <a href="#файл_manifest.json">файла manifest.json</a>.</p>
         <p><mark>urqw_game_lang</mark> - язык областей интерфейса UrqW (атрибут lang), в которых отображается контент игры.
         По умолчанию - язык общего интерфейса UrqW. Если присвоить новое значение, то изменится язык только области инвентаря, текстовой выдачи, кнопок выбора и поля ввода текста.
-        Значение можно задать как из кода игры, так и при помощи <a href="#файл manifest.json">файла manifest.json</a>.</p>
+        Значение можно задать как из кода игры, так и при помощи <a href="#файл_manifest.json">файла manifest.json</a>.</p>
         <p><mark>urqw_version</mark> - версия UrqW, в которой проигрывается urq-квест.</p>
         <p><mark>count_[локация]</mark> - счётчик заходов на локацию, меняется от операторов <mark>btn</mark>, <mark>proc</mark>, <mark>goto</mark></p>
         <p><mark>music</mark> - если присвоить этой переменной файл с музыкой, то она начнёт проигрываться циклично (будет бесконечно повторяться по окончанию) (путь необходимо указывать относительно qst файла)</p>
@@ -216,7 +216,7 @@ html btn
         <samp>
             36664
         </samp>
-        </samp><p><mark>date</mark> - при каждом обращении возвращает число дней, прошедших с 1 января 1970 г.</p>
+        <p><mark>date</mark> - при каждом обращении возвращает число дней, прошедших с 1 января 1970 г.</p>
         <code>
             pln #date$<br>
         </code>
@@ -413,7 +413,7 @@ html btn
         </code>
     </div>
 
-    <div id="математические и логические операторы">
+    <div id="математические_и_логические_операторы">
 
         <h3>Математические и логические операторы в порядке убывания приоритета</h3>
 
@@ -427,10 +427,10 @@ html btn
         <p><mark>/</mark> - деление</p>
         <p><mark>+</mark> - сложение</p>
         <p><mark>-</mark> - вычитание</p>
-        <p><mark><</mark> - меньше</p>
-        <p><mark><=</mark> - меньше или равно</p>
-        <p><mark>></mark> - больше</p>
-        <p><mark>>=</mark> - больше или равно</p>
+        <p><mark>&lt;</mark> - меньше</p>
+        <p><mark>&lt;=</mark> - меньше или равно</p>
+        <p><mark>&gt;</mark> - больше</p>
+        <p><mark>&gt;=</mark> - больше или равно</p>
         <p><mark>=</mark> - равно</p>
         <p><mark>==</mark> - сравнение строк по маске, <mark>*</mark> заменяется 0 и более любых символов,
             <mark>?</mark> заменяется на один любой символ</p>
@@ -440,7 +440,7 @@ html btn
             if question == "*алмаз*" then pln - Какие алмазы? - неожиданно рассердился торговец. - Я торгую фруктами!
         </code>
         <p><mark>!=</mark> - не равно</p>
-        <p><mark><></mark> - не равно</p>
+        <p><mark>&lt;&gt;</mark> - не равно</p>
         <p><mark>&&</mark> - и</p>
         <p><mark>and</mark> - и</p>
         <p><mark>||</mark> - или</p>
@@ -470,9 +470,9 @@ html btn
             btn goto location, текст перехода <span class="text-muted">/* переход на метку location без очистки экрана и прочего */</span></code>
     </div>
 
-    <div id="режимы urq_mode">
+    <div id="режимы_urq_mode">
         <h3>Режимы urq_mode</h3>
-        <p>Режим urq_mode можно задать как из кода игры через соответствующую переменную, так и при помощи <a href="#файл manifest.json">файла manifest.json</a>.</p>
+        <p>Режим urq_mode можно задать как из кода игры через соответствующую переменную, так и при помощи <a href="#файл_manifest.json">файла manifest.json</a>.</p>
         <h5><mark>urq_mode="ripurq"</mark></h5>
         <p><mark>;</mark> - однострочный комментарий</p>
         <p>системные переменные вида <mark>count_метка</mark> теперь выглядят как просто "метка", т.е. count_ опускается</p>
@@ -494,7 +494,7 @@ html btn
         <p>Описание стилей на языке css</p>
     </div>
 
-    <div id="файл manifest.json">
+    <div id="файл_manifest.json">
         <h3>Файл manifest.json</h3>
         <p>Файлы игры могут быть дополнены специальным файлом manifest.json, который даёт возможность задать метаданные игры и присвоить начальные значения некоторым системным переменным.</p>
         <p>Это файл в стандартном формате JSON и кодировке UTF-8, поддерживающий следующие ключи:</p>
