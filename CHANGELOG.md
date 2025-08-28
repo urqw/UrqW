@@ -7,6 +7,7 @@
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
+	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
 	+ Added: System variables time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
 	+ Added: The varkill operator (a direct counterpart of the perkill operator).
 	+ Added: The backslash character (`\`) as a line continuation character to break single-line URQL instructions into multiple physical lines in the source code.

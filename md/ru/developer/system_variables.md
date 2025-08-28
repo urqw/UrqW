@@ -20,6 +20,8 @@
 
 ## date
 
+## fileread
+
 ## image
 
 ## inv_[предмет]

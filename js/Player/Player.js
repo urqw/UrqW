@@ -268,6 +268,10 @@ Player.prototype.setVar = function(variable, value) {
     if (variable.toLowerCase() === 'javascript') {
         this.javaScript(value);
         return;
+    } else
+    if (variable.toLowerCase() === 'fileread') {
+        this.fileRead(value);
+        return;
     }
 
     Game.setVar(variable, value);
@@ -301,6 +305,49 @@ Player.prototype.javaScript = function(code) {
         result = "";
     }
     Game.setVar('javascript', result);
+};
+
+/**
+ * @param {String} fileURL
+ */
+    // todo Maybe move to client like image
+Player.prototype.fileRead = function(fileURL) {
+    var result = '';
+    var errorMessage;
+
+    if (fileURL) {
+            if (files === null) {
+                fileURL = 'quests/' + Game.name + '/' + fileURL.toString().trim();
+            } else {
+                fileURL = files[fileURL.toString().trim()];
+            }
+
+            if (fileURL) {
+                $.ajax({
+                    url: fileURL,
+                    method: 'GET',
+                    dataType: 'text',
+                    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+                    async: false,
+                    success: function(data) {
+                        result = data;
+                    },
+                    error: function(xhr, status, error) {
+                        errorMessage = error;
+                    }
+                });
+            } else {
+                errorMessage = 'File not found.';
+            }
+    } else {
+        errorMessage = 'The file path is empty.';
+    }
+
+    if (errorMessage) {
+        console.error('Error reading file:', errorMessage);
+    }
+
+    Game.setVar('fileread', result);
 };
 
 /**

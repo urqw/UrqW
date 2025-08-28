@@ -20,6 +20,8 @@ UrqW System Variables are built-in variables of various data types that are crea
 
 ## date
 
+## fileread
+
 ## image
 
 ## inv_[item]
