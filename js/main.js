@@ -324,6 +324,7 @@ if (manifestFile) {
             dataType: "json"
         }).done(function(quests) {
             // $('#open_game_url_form').show();
+            $('#filters_form').show();
 
             // Add unique game languages ??to dropdown list of filter
             var filterLangsUnique = [...new Set(quests

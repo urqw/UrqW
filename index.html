@@ -111,41 +111,43 @@
             <h3 data-i18n="or_choose_game">Or choose a game from the list:</h3>
         </div>
 
-        <div class="form-group">
-            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters" data-i18n="filters">
-                Filters
-            </button>
-        </div>
-
-        <div class="collapse" id="filters">
+        <div id="filters_form" style="display: none;">
             <div class="form-group">
-                <label for="filter_lang" class="control-label" data-i18n="game_language">Game language</label>
-                <select id="filter_lang" class="form-control"></select>
+                <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#filters" aria-expanded="false" aria-controls="filters" data-i18n="filters">
+                    Filters
+                </button>
             </div>
 
-            <div class="form-group">
-                <label for="filter_title" class="control-label" data-i18n="game_title">Game title</label>
-                <div class="input-group">
-                    <input type="search" class="form-control" id="filter_title">
-                    <span class="input-group-btn" style="display: none;">
-                        <button title="Clear" aria-label="Clear" class="btn btn-default" type="button" id="clear_filter_title" data-i18n="[title]clear;[aria-label]clear">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </span>
+            <div class="collapse" id="filters">
+                <div class="form-group">
+                    <label for="filter_lang" class="control-label" data-i18n="game_language">Game language</label>
+                    <select id="filter_lang" class="form-control"></select>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="filter_sort" class="control-label" data-i18n="sort">Sort</label>
-                <select id="filter_sort" class="form-control">
-                    <option value="newest" selected data-i18n="newest_first">Newest first</option>
-                    <option value="oldest" data-i18n="oldest_first">Oldest first</option>
-                    <option value="alphabetically" data-i18n="alphabetically">Alphabetically</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="filter_title" class="control-label" data-i18n="game_title">Game title</label>
+                    <div class="input-group">
+                        <input type="search" class="form-control" id="filter_title">
+                        <span class="input-group-btn" style="display: none;">
+                            <button title="Clear" aria-label="Clear" class="btn btn-default" type="button" id="clear_filter_title" data-i18n="[title]clear;[aria-label]clear">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <button id="show_games" class="btn btn-default" type="button" data-i18n="show">Show</button>
+                <div class="form-group">
+                    <label for="filter_sort" class="control-label" data-i18n="sort">Sort</label>
+                    <select id="filter_sort" class="form-control">
+                        <option value="newest" selected data-i18n="newest_first">Newest first</option>
+                        <option value="oldest" data-i18n="oldest_first">Oldest first</option>
+                        <option value="alphabetically" data-i18n="alphabetically">Alphabetically</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button id="show_games" class="btn btn-default" type="button" data-i18n="show">Show</button>
+                </div>
             </div>
         </div>
 
