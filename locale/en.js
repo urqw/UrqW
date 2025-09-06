@@ -18,6 +18,7 @@ var en = {
     game_file_link: "Game file link",
     open: "Open",
     or_choose_game: "Or choose a game from the list:",
+    subscribe_to_rss: "Subscribe to RSS feed for new games",
     filters: "Filters",
     game_language: "Game language",
     language: {

@@ -324,6 +324,16 @@ if (manifestFile) {
             dataType: "json"
         }).done(function(quests) {
             // $('#open_game_url_form').show();
+            var rss = $('#rss');
+            if (!rss.is(':visible')) {
+                $.ajax({
+                    url: 'rss.xml',
+                    type: 'HEAD',
+                    success: function() {
+                        rss.show();
+                    }
+                });
+            }
             $('#filters_form').show();
 
             // Add unique game languages ??to dropdown list of filter

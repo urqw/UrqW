@@ -18,6 +18,7 @@ var uk = {
     game_file_link: "Посилання на файл гри",
     open: "Відкрити",
     or_choose_game: "Або виберіть гру з списка:",
+    subscribe_to_rss: "Підписатися на RSS-канал нових ігор",
     filters: "Фільтри",
     game_language: "Мова гри",
     language: {

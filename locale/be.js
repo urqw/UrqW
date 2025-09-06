@@ -18,6 +18,7 @@ var be = {
     game_file_link: "Спасылка на файл гульні",
     open: "Адкрыць",
     or_choose_game: "Альбо абярыце гульню са спісу:",
+    subscribe_to_rss: "Підпісацца на RSS-канал новых гульніц",
     filters: "фільтры",
     game_language: "Мова гульні",
     language: {
