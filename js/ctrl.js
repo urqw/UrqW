@@ -406,6 +406,10 @@ $(function() {
             keys.reverse().forEach(key => {
                 var value = Game.vars[key];
                 var type = typeof value;
+                // String variable values may contain HTML that needs to be escaped
+                if (type === 'string') {
+                    value = $('<div>').text(value).html();
+                }
                 var row = $(`
                     <tr>
                         <th>${key}</th>
