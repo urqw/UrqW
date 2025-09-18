@@ -331,6 +331,37 @@ if (manifestFile) {
                     type: 'HEAD',
                     success: function() {
                         rss.show();
+
+                        // Add link to alternate feed if it doesn't exist yet
+
+                        function getRssUrl() {
+                            var currentUrl = window.location.href;
+                            var lastSlash = currentUrl.lastIndexOf('/');
+                            if (lastSlash !== currentUrl.length - 1) {
+                                var filePart = currentUrl.substring(lastSlash + 1);
+                                var isHtmlFile = /[^\/]+\.htm[^\/]*$/.test(filePart);
+                                if (isHtmlFile) {
+                                    var directoryPath = currentUrl.substring(0, lastSlash);
+                                } else {
+                                    var directoryPath = currentUrl;
+                                }
+                                return directoryPath + '/rss.xml';
+                            }
+                            return currentUrl + 'rss.xml';
+                        }
+
+                        var rssUrl = getRssUrl();
+                        var existingLinks = $('head link[href="' + rssUrl + '"]');
+                        if (existingLinks.length === 0) {
+                            $('head').append(
+                                $('<link>', {
+                                    rel: 'alternate',
+                                    href: rssUrl,
+                                    title: 'UrqW Games',
+                                    type: 'application/rss+xml'
+                                })
+                            );
+                        }
                     }
                 });
             }
