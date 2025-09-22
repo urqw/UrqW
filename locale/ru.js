@@ -130,6 +130,7 @@ var ru = {
     urqw_docs_description: "Отдельно предоставляется подробная <a href=\"" + url_docs + "\" target=\"_blank\">Документация UrqW</a>.",
     about_urqw: "Об UrqW",
     urqw_description: "UrqW " + urqw_version + " — это свободный движок текстовых игр с открытым исходным кодом.",
+    urqw_dev_description: "Если вы хотите написать свою игру, но не знаете как, то ознакомьтесь с <a href=\"" + url_docs + "\" target=\"_blank\">документацией</a>.",
     licenses: "Лицензии",
     urqw_license_description: "Программное обеспечение UrqW предоставляется на условиях <a href=\"LICENSE-GPL.txt\" target=\"_blank\">Стандартной общественной лицензии GNU версии 2</a> или более поздней.",
     third_party_licenses_description: "UrqW также включает и использует сторонние компоненты, которые предоставляются на условиях <a href=\"third-party_components.txt\" target=\"_blank\">различных свободных и открытых лицензий</a>.",

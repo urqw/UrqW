@@ -111,6 +111,7 @@ var eo = {
     urqw_docs_description: "Aparte atingebla estas detala <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaro de la UrqW</a>.",
     about_urqw: "Pri UrqW",
     urqw_description: "UrqW " + urqw_version + " — estas libera ludmotoro por tekstaj ludoj kun malfermita fontaĵo.",
+    urqw_dev_description: "Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaron</a>.",
     licenses: "Licencoj",
     urqw_license_description: "Programaro UrqW atingebla laŭ kondiĉoj de <a href=\"LICENSE-GPL.txt\" target=\"_blank\">Norma ĝenerala licenco GNU 2</a> aŭ plej lasta.",
     third_party_licenses_description: "UrqW ankaŭ enhavas kaj uzas aliflankajn aĵojn, kiaj estas atingeblaj laŭ kondiĉoj <a href=\"third-party_components.txt\" target=\"_blank\">diversaj liberaj kaj malfermitaj licencoj</a>.",

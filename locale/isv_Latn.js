@@ -111,6 +111,7 @@ var isv_Latn = {
     urqw_docs_description: "Oddělno dostupna je podrobna detalna <a href=\"" + url_docs + "\" target=\"_blank\">Dokumentacija UrqW</a>.",
     about_urqw: "O UrqW",
     urqw_description: "UrqW " + urqw_version + " — je svobodny motor za tekstove igry s otvorjenym izhodnym kodom.",
+    urqw_dev_description: "Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaciju</a>.",
     licenses: "Licencije",
     urqw_license_description: "Softver UrqW dostupen je po uslovjah <a href=\"LICENSE-GPL.txt\" target=\"_blank\">Standardnoj spoločnoj licencije GNU 2</a> ili pozdnějšej.",
     third_party_licenses_description: "UrqW takože sodrživaje i upotrěbjaje ine komponenty, koji sut dostupne po uslovjah <a href=\"third-party_components.txt\" target=\"_blank\">različnyh svobodnyh i otvorjenyh licencij</a>.",

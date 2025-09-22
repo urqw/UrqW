@@ -111,6 +111,7 @@ var hy = {
     urqw_docs_description: "Առանձին տրամադրվում է մանրամասն <a href=\"" + url_docs + "\" target=\"_blank\">UrqW֊ի Փաստաթուղթ</a>։",
     about_urqw: "UrqW֊ի մասին",
     urqw_description: "UrqW " + urqw_version + " է ազատ տեքստային խաղերի շարժիչ բաց կոդով։",
+    urqw_dev_description: "Եթե ուզում ես քո խաղ գրել, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" target=\"_blank\">փաստաթուղթեր</a>.",
     licenses: "Արտոնագրեր",
     urqw_license_description: "UrqW ծրագրային ապահովումը տրամադրվում է <a href=\"LICENSE-GPL.txt\" target=\"_blank\">GNU 2 արտոնագրի պայմաններով</a>.",
     third_party_licenses_description: "UrqW ներառում և օգտագործում է երրորդ կողմի բաղադրիչներ, որոնք տրամադրվում են <a href=\"third-party_components.txt\" target=\"_blank\">տարբեր ազատ և բաց արտոնագրերի պայմաններով</a>։",
