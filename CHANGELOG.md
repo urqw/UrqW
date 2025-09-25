@@ -70,7 +70,7 @@
 	+ Added: pack-release script to package a release build of UrqW.
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
-	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json file.
+	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 
 ## Version 1.0 (from 2017-01-20)
 
