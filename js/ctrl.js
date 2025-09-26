@@ -453,6 +453,7 @@ $(function() {
             }
 
             // Other
+            $('#name_in_menu').text(Game.name);
             $('#status_in_menu').text(GlobalPlayer.status);
             $('#position_in_menu').text(Game.position);
             $('#real_current_loc_in_menu').text(Game.realCurrentLoc);
