@@ -272,7 +272,14 @@ $(function() {
     });
 
     function loadGameFromData(data) {
-        textfield.empty();
+        // Compare hash of game and hash of save to check compatibility
+        if (Game.hash !== data.hash) {
+            if (!confirm(i18next.t('inconsistent_save_confirm'))) {
+            return;
+            }
+        }
+        
+textfield.empty();
         buttonField.empty();
         $('#info').hide();
         $('#input').hide();
@@ -454,6 +461,7 @@ $(function() {
 
             // Other
             $('#name_in_menu').text(Game.name);
+            $('#hash_in_menu').text(Game.hash);
             $('#status_in_menu').text(GlobalPlayer.status);
             $('#position_in_menu').text(Game.position);
             $('#real_current_loc_in_menu').text(Game.realCurrentLoc);

@@ -63,6 +63,11 @@ function Quest(text) {
     text = text.replace(/\\[\n\r]+/g, '');
     // Split the text into an array of lines
     this.quest = text.split(/[\n\r]+/);
+
+    /**
+     * @type {string} MurmurHash3 hash of the quest source code
+     */
+    this.hash = murmurhash3_32(text);
 }
 
 
@@ -297,6 +302,7 @@ Quest.prototype.save = function(slot) {
 
     localStorage.setItem(this.name + '_' + slot.toString() + '_name', Datetime.toLocaleDateString(lang) + ' ' + Datetime.toLocaleTimeString(lang));
     localStorage.setItem(this.name + '_' + slot.toString() + '_data', JSON.stringify({
+        hash: this.hash,
         status: GlobalPlayer.status,
         text: GlobalPlayer.text,
         buttons: GlobalPlayer.buttons,
