@@ -98,6 +98,64 @@ function base2unicode(b64) {
 /**
  * @param {string} value
  */
+function murmurhash3_32(str) {
+    var len = str.length;
+    var seed = 0; // Any initial value is acceptable
+    var nblocks = len - 4;
+    var h1 = seed;
+    var c1 = 0xcc9e2d51;
+    var c2 = 0x1b873593;
+    var i = -1;
+    var k1 = 0;
+    var tmp;
+
+    while (i < nblocks) {
+        i += 4;
+        k1 = str.charCodeAt(i) & 0xff |
+             (str.charCodeAt(i + 1) & 0xff) << 8 |
+             (str.charCodeAt(i + 2) & 0xff) << 16 |
+             (str.charCodeAt(i + 3) & 0xff) << 24;
+
+        k1 = rotl32(k1 * c1, 15);
+        k1 = k1 * c2;
+
+        h1 ^= k1;
+        h1 = rotl32(h1, 13);
+        h1 = h1 * 5 + 0xe6546b64;
+    }
+
+    k1 = 0;
+    switch (len % 4) {
+        case 3: k1 ^= str.charCodeAt(i + 2) << 16;
+        case 2: k1 ^= str.charCodeAt(i + 1) << 8;
+        case 1: k1 ^= str.charCodeAt(i + 0);
+            k1 *= c1;
+            k1 = rotl32(k1, 15);
+            k1 *= c2;
+            h1 ^= k1;
+    }
+
+    h1 ^= len;
+    h1 = fmix(h1);
+    return h1 >>> 0;
+
+    function rotl32(x, r) {
+        return (x << r) | (x >>> (32 - r));
+    }
+
+    function fmix(h) {
+        h ^= h >>> 16;
+        h = (h * 0x85ebca6b) & 0xffffffff;
+        h ^= h >>> 13;
+        h = (h * 0xc2b2ae35) & 0xffffffff;
+        h ^= h >>> 16;
+        return h;
+    }
+}
+
+/**
+ * @param {string} value
+ */
 function announceForAccessibility(message) {
     var div = document.createElement('div');
     div.classList.add('sr-only');

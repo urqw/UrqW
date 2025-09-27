@@ -39,6 +39,7 @@ var settings = {
     volume: 50,
     automatically_focus: true,
     close_page_confirmation: true,
+    inconsistent_save_confirmation: true,
     numeric_keys: true,
     alphabetic_keys: true,
     navigation_keys: true,
