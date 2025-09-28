@@ -37,6 +37,7 @@ var iFictionFileKey;
 // Default settings value
 var settings = {
     volume: 50,
+    continue_game: true,
     automatically_focus: true,
     close_page_confirmation: true,
     inconsistent_save_confirmation: true,
@@ -1037,6 +1038,15 @@ var parser = new DOMParser();
         // Move the interface language selector to the menu
         $('#language_in_infopanel').contents().detach().prependTo('#language_in_settings');
 
-        GlobalPlayer.continue();
+        // Continue the game with saving progress or start new game
+        var data = localStorage.getItem(Game.name + '_continue_data');
+        if (settings['continue_game'] && data) {
+            if (!loadGameFromData(JSON.parse(data))) {
+                // Most likely, the user refused to load a save with a different hash
+                GlobalPlayer.continue();
+            }
+        } else {
+            GlobalPlayer.continue();
+        }
     }
 });

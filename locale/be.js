@@ -97,6 +97,7 @@ var be = {
     volume: "Гучнасць",
     decrease: "Паменшыць",
     increase: "Павялічыць",
+    continue_game: "Пры загрузцы працягваць гульню з захаваннем прагрэсу",
     automatically_focus: "Аўтаматычна факусаваць першы элемент кіравання",
     close_page_confirmation: "Пацвярджэнне закрыцця старонкі",
     inconsistent_save_confirmation: "Пацвярджэнне загрузкі захавання для іншай версіі гульні",

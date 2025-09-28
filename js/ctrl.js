@@ -271,16 +271,16 @@ $(function() {
         return false;
     });
 
-    function loadGameFromData(data) {
+    var loadGameFromData = function(data) {
         // Compare hash of game and hash of save to check compatibility
         if (settings['inconsistent_save_confirmation'] && (Game.hash !== data.hash)) {
             if (!confirm(i18next.t('inconsistent_save_confirm'))) {
-            return;
+            return false;
             }
         }
         
-textfield.empty();
-        buttonField.empty();
+        $('#textfield').empty();
+        $('#buttons').empty();
         $('#info').hide();
         $('#input').hide();
 
@@ -308,7 +308,9 @@ textfield.empty();
             GlobalPlayer.continue();
         }
 
-        returnToGame.click();
+        if ($('#return_to_game').is(':visible')) {
+            $('#return_to_game').click();
+        }
 
         Game.locked = false;
 
@@ -322,7 +324,11 @@ textfield.empty();
         if (urqwTitleValue) {
             GlobalPlayer.setVar('urqw_title', urqwTitleValue);
         }
+
+        return true;
     }
+    // Make a variable global so that a function is available in other namespaces
+    window.loadGameFromData = loadGameFromData;
 
     $('#mute').on('click', function () {
         var span = $(this).find('span.glyphicon');
@@ -551,6 +557,13 @@ textfield.empty();
     /**
      * Changing checkbox states in settings
      */
+
+    $('#continue_game').on('change', function() {
+        var name = 'continue_game';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+    });
 
     $('#automatically_focus').on('change', function() {
         var name = 'automatically_focus';

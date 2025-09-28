@@ -89,6 +89,8 @@ Client.prototype.render = function (data) {
                 targetFocus.focus();
             }
         }
+        // Save the game to be able to continue with saving progress
+        Game.save('continue');
     } else if (data.status == PLAYER_STATUS_ANYKEY) {
         this.crtlButtonField.hide();
         var span = $('<span>', {
