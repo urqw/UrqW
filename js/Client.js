@@ -169,7 +169,13 @@ Client.prototype.drawText = function () {
     this.crtlTextField.empty();
 
     $.each(GlobalPlayer.text, function(index, text) {
-        var div = $('<div>').html(text[0]);
+        // RipURQ and URQ_DOS do not support HTML
+        var div;
+        if (['ripurq', 'dosurq'].includes(Game.getVar('urq_mode'))) {
+            div = $('<div>').text(text[0]);
+        } else {
+            div = $('<div>').html(text[0]);
+        }
 
         if (div.find('*:not(a, s, b, small, span, q, i)').length == 0) {
             div.addClass('text');
@@ -241,6 +247,10 @@ Client.prototype.drawButtons = function () {
     $.each(GlobalPlayer.buttons, function(index, button) {
         if (button) {
             var description = button.desc;
+            // RipURQ and URQ_DOS do not support HTML
+            if (['ripurq', 'dosurq'].includes(Game.getVar('urq_mode'))) {
+                description = $('<div>').text(description).html();
+            }
             if (settings['numeric_keys']) {
                 description = '<b>' + (index + 1) + ':</b> ' + description;
             }
