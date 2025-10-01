@@ -12,7 +12,7 @@ Documentation is available under the [Creative Commons Attribution-ShareAlike 4.
 
 **Attention! This material is under development.**
 
-UrqW is a text-based game engine and URQL interpreter that supports compatibility modes with RipURQ 1.4 and URQ_DOS 1.35.
+UrqW is a text-based game engine and URQL interpreter that supports compatibility modes with RipURQ 1.4, URQ_DOS 1.35 and AkURQ 1.28.
 
 This documentation contains information for those who want to play games in UrqW, create their own games, and publish their own and other people's games written in URQL.
 

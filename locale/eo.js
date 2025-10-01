@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var eo = {
-    welcome_message: "Ĉi tio estas ludmotoro por tekstaj ludoj UrqW " + urqw_version + ". Apogas reĝimojn de kongrueco kun RipURQ 1.4 kaj URQ_DOS 1.35. Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaron</a>. Atingebla estas <a href=\"" + url_repo + "\" target=\"_blank\">publika deponejo</a> de la projekto, kien ci povas sendi ciajn ludojn por publikado en katalogon. Ankaŭ tie eble krei <a href=\"" + url_issues + "\" target=\"_blank\">demandon (issue)</a> pro aperado de problemoj.",
+    welcome_message: "Ĉi tio estas ludmotoro por tekstaj ludoj UrqW " + urqw_version + ". Apogas reĝimojn de kongrueco kun RipURQ 1.4, URQ_DOS 1.35 kaj AkURQ 1.28. Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaron</a>. Atingebla estas <a href=\"" + url_repo + "\" target=\"_blank\">publika deponejo</a> de la projekto, kien ci povas sendi ciajn ludojn por publikado en katalogon. Ankaŭ tie eble krei <a href=\"" + url_issues + "\" target=\"_blank\">demandon (issue)</a> pro aperado de problemoj.",
     interface_language: "Lingvo de la interfaco",
     something_went_wrong: "Io malsukcesis",
     wait: "Atendu...",

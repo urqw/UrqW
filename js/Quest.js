@@ -99,7 +99,7 @@ Quest.prototype.next = function() {
         return false;
     }
 
-    if (this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq') {
+    if (['ripurq', 'dosurq', 'akurq'].includes(this.getVar('urq_mode'))) {
         // Cut comment
         if (line.indexOf(';') != -1) {
             line = line.substring(0, line.indexOf(';'));
@@ -254,7 +254,7 @@ Quest.prototype.getVar = function(variable) {
 
     // Theoretically, in older games, "date" variable can be used as a user variable,
     // so only support urq_mode without special rules
-    if (variable == 'date' && !(this.getVar('urq_mode') == 'ripurq' || this.getVar('urq_mode') == 'dosurq')) {
+    if (variable == 'date' && this.getVar('urq_mode') == 'urqw') {
         var Datetime = new Date();
         return Math.floor(Datetime.getTime() / (1000*60*60*24));
     }

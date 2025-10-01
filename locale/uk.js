@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var uk = {
-    welcome_message: "Це рушій текстових ігор UrqW " + urqw_version + ". Підтримуються режими сумісності з RipURQ 1.4 и URQ_DOS 1.35. Якщо ви хочете написати свою гру, але не знаєте як, то ознайомтесь з <a href=\"" + url_docs + "\" target=\"_blank\">документацієй</a>. Існує <a href=\"" + url_repo + "\" target=\"_blank\">публічний репозиторій</a> проєкта, куди ви можете прислати свої ігри для розміщення у каталозі. Також там можна створити <a href=\"" + url_issues + "\" target=\"_blank\">issue</a> якщо знайдено проблему.",
+    welcome_message: "Це рушій текстових ігор UrqW " + urqw_version + ". Підтримуються режими сумісності з RipURQ 1.4, URQ_DOS 1.35 и AkURQ 1.28. Якщо ви хочете написати свою гру, але не знаєте як, то ознайомтесь з <a href=\"" + url_docs + "\" target=\"_blank\">документацієй</a>. Існує <a href=\"" + url_repo + "\" target=\"_blank\">публічний репозиторій</a> проєкта, куди ви можете прислати свої ігри для розміщення у каталозі. Також там можна створити <a href=\"" + url_issues + "\" target=\"_blank\">issue</a> якщо знайдено проблему.",
     interface_language: "Мова інтерфейса",
     something_went_wrong: "Щось пішло не так",
     wait: "Зачекайте...",
