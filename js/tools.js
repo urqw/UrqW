@@ -154,6 +154,46 @@ function murmurhash3_32(str) {
 }
 
 /**
+ * @param {string} content with HTML
+ * @param {array} allowed tags
+ */
+function getEscapedHtmlWithAllowedTags(html, allowedTags) {
+    if (!allowedTags || !Array.isArray(allowedTags)) {
+        allowedTags = [];
+    }
+
+    // Regular expression for searching tags and text
+    var tagRegex = /<([^>]+)>|[^<>]+/g;
+
+    // Function to process each part
+    function processPart(match) {
+        // If it is a tag
+        if (match.startsWith('<')) {
+            var content = match.slice(1, -1);
+            var tagName = content.match(/^\/?\s*([a-zA-Z]+)/);
+            
+            if (tagName && allowedTags.includes(tagName[1].toLowerCase())) {
+                return match; // Return the tag as is
+            }
+            
+            // Escape disallowed tag
+            return match
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+        
+        // If it is text, escape only the necessary characters
+        return $('<div>')
+            .text(match)
+            .html()
+            .replace(/&amp;/g, '&'); // Restore ampersands
+    }
+
+    // Split the HTML into parts and process each one
+    return html.replace(tagRegex, processPart);
+}
+
+/**
  * @param {string} value
  */
 function announceForAccessibility(message) {
