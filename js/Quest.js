@@ -61,6 +61,10 @@ function Quest(text) {
     text = text.replace(/\/\*[\s\S.]+?\*\//g, '');
     // Trim leading whitespaces from each line
     text = text.replace(/^\s+/gm, '');
+    // Convert specific AkURQ constructs to UrqW constructs
+    if (mode === 'akurq') {
+        text = preparserForAkURQ(text);
+    }
     // Split the text into an array of lines
     this.quest = text.split(/[\n\r]+/);
 
@@ -68,6 +72,31 @@ function Quest(text) {
      * @type {string} MurmurHash3 hash of the quest source code
      */
     this.hash = murmurhash3_32(text);
+
+    /**
+     * @type {string} URQL code with possible AkURQ-specific constructs
+     */
+    function preparserForAkURQ(code) {
+        // Regular expression for finding HTML blocks
+        var htmlPattern = /<html>[\s\S]*?<\/html>/gi;
+        // Perform a replacement
+        code = code.replace(htmlPattern, (match) => {
+            // Delete the <html> and </html> tags
+            var content = match.replace(/^<html>\s*|\s*<\/html>$/gi, '');
+            // Delete single-line comments from semicolon to end of line
+            content = content.replace(/;.*$/gm, '');
+            // Replace line breaks with spaces
+            content = content.replace(/[\r\n]+/g, ' ');
+            // Trim spaces at the ends
+            content = content.trim();
+            // Replace AkURQ links with UrqW links
+            // (e.g., replace '<a href="btn:label">name</a>' with '[[name|label]]')
+            content = content.replace(/<a\s+href="btn:([^"]+)"\s*>\s*([^<]+?)\s*<\/a>/gi, '[[$2|$1]]');
+            // Forming the final line for UrqW
+            return 'pln <div class="akurq_html">' + content + '</div>\n';
+        });
+        return code;
+    }
 }
 
 

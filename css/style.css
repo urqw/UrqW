@@ -121,6 +121,11 @@ div.clearfix + div.text, #textfield div.text:first-child {
     margin-right: 10px;
 }
 
+.akurq_html p {
+    display: block;
+    margin: 10px 0;
+}
+
 
 /** footer */
 
