@@ -289,7 +289,16 @@ Player.prototype.image = function(src) {
             src = srcParts[0];
             alt = srcParts[1];
         }
-        this.print($('<img alt="' + alt + '" style="margin: 5px auto; display: block;">').attr('src', src).prop('outerHTML'), true);
+        var imageHtml = $('<img>').attr({
+            'src': src,
+            'alt': alt,
+            'style': 'margin: 5px auto; display: block;'
+        }).prop('outerHTML');
+        var caption = Game.getVar('image_caption');
+        if (caption) {
+            imageHtml = `<figure> ${imageHtml} <figcaption>${caption}</figcaption> </figure>`;
+        }
+        this.print(imageHtml, true);
     }
 };
 

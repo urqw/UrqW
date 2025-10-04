@@ -44,6 +44,25 @@ div.clearfix + div.text, #textfield div.text:first-child {
     max-width: 100%;
 }
 
+#textfield figure,
+#textfield figcaption {
+    text-align: center;
+}
+
+#textfield figure {
+    margin: 5px 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid currentColor; /* Рамка цвета текста */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#textfield figcaption {
+    margin-top: 5px;
+    font-style: italic;
+}
+
 #textfield a.button {
     cursor: pointer;
 }
