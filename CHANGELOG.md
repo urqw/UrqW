@@ -9,6 +9,7 @@
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
 	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
 	+ Added: System variables image_caption, time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
+	+ Added: The clst operator to clear the screen of text.
 	+ Added: The varkill operator (a direct counterpart of the perkill operator).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace at the beginning of any lines.

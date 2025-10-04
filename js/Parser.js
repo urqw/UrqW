@@ -96,6 +96,7 @@ Parser.prototype.parse = function(line) {
 
             break;
         case 'clsb': return GlobalPlayer.clsb();
+        case 'clst': return GlobalPlayer.clst();
         case 'cls': return GlobalPlayer.cls();
         case 'forget_procs': return GlobalPlayer.forgetProcs();
         case 'proc': return GlobalPlayer.proc(command.toString().trim());

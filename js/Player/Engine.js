@@ -88,7 +88,7 @@ Player.prototype.cls = function() {
 };
 
 /**
- * cls
+ * clsb
  */
 Player.prototype.clsb = function() {
     this.buttons = [];
@@ -101,6 +101,16 @@ Player.prototype.clsb = function() {
     }
 
     this.Client.clsb();
+};
+
+/**
+ * clst
+ */
+Player.prototype.clst = function() {
+    this.text = [];
+    this.links = [];
+
+    this.Client.clst();
 };
 
 /**
