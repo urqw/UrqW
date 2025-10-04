@@ -12,6 +12,7 @@
 	+ Added: The varkill operator (a direct counterpart of the perkill operator).
 	+ Added: The backslash character (`\`) as a line continuation character to break single-line URQL instructions into multiple physical lines in the source code.
 	+ Added: Support for custom text descriptions for images added using either the image system variable or the image operator.
+	+ Added: Ignore whitespace at the beginning of any lines.
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping in compatibility modes with RipURQ and URQ_DOS.
 	+ Fixed: Processing of the tokens_delim variable.

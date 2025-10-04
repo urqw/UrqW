@@ -61,6 +61,8 @@ function Quest(text) {
     text = text.replace(/\/\*[\s\S.]+?\*\//g, '');
     // Concatenate lines with a line continuation character
     text = text.replace(/\\[\n\r]+/g, '');
+    // Trim leading whitespaces from each line
+    text = text.replace(/^\s+/gm, '');
     // Split the text into an array of lines
     this.quest = text.split(/[\n\r]+/);
 
