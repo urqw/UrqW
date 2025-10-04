@@ -59,8 +59,6 @@ function Quest(text) {
     text = text.replace(/^[\n\r]+|[\n\r]+$/g, '');
     // Delete comments from the text
     text = text.replace(/\/\*[\s\S.]+?\*\//g, '');
-    // Concatenate lines with a line continuation character
-    text = text.replace(/\\[\n\r]+/g, '');
     // Trim leading whitespaces from each line
     text = text.replace(/^\s+/gm, '');
     // Split the text into an array of lines

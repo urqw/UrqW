@@ -144,7 +144,7 @@ This will display a button with the name "Take a screwdriver and go to the garag
 
 Please note that in some cases, it may be preferable to create and call a procedure with multiple actions using the [proc](operators.md#proc-%5Blabel%5D) operator.
 
-Also, long sequences of operators combined using this construct can be written on separate lines using the [line continuation character `\`](#%5C).
+Also, long sequences of operators combined using this construct can be written on separate lines using the [line continuation character `\`](#_).
 
 ## /* {comment} */
 
@@ -167,14 +167,14 @@ This will display on the screen:
 
 Please note that it is important to both open the comment block with the symbols "`/*`" and close it with the symbols "`*/`". This construct requires both of these elements.
 
-## \
+## _
 
 This construct is designed to line continuation, to break a single-line instructions into multiple physical lines in the source code. For example:
 
 ```
-if key = 1 \
-	then door = 0 \
-	else door = 1
+if key = 1
+_ then door = 0
+_ else door = 1
 ```
 
 This code is equivalent to the code:
@@ -183,4 +183,4 @@ This code is equivalent to the code:
 if key = 1 then door = 0 else door = 1
 ```
 
-The `\` character must be the last character of the line. There may be any number of blank lines after a line ending in `\`: all of them will be skipped and the next non-blank line will be considered the continuation.
+The `\` character must be the first character of the line (excluding leading whitespaces, which is ignored), and the character following it must not be an underscore.
