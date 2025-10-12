@@ -177,7 +177,7 @@ Client.prototype.drawText = function () {
         }
         var div = $('<div>').html(content);
 
-        if (div.find('*:not(a, s, b, small, span, q, i)').length == 0) {
+        if (div.find('*:not(a, s, b, small, span, q, i, br)').length == 0) {
             div.addClass('text');
         }
 

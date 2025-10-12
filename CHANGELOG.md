@@ -48,6 +48,7 @@
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Minor adjustment to informative window indentation.
+	+ Fixed: Text output containing line breaks is always displayed as a block element.
 	+ Removed: Separate UrqW cursor for choosing and activating buttons (caused issues with simultaneous activation of two controls and was replaced with cluster navigation based on standard system focus).
 	+ Accessibility improvements:
 		- Added: Text labels for controls of the toolbar.
