@@ -60,8 +60,8 @@
 		- Added: Designation  for assistive technologies whether an inventory item has a drop-down list.
 		- Changed: Each link in the drop-down menu of an inventory item has the role of a list item.
 		- Changed: Text labels for player graphic icons.
-		- Fixed: Links in game text are focusable and activatable with keyboard, and have link role.
-		- Fixed: Proper paragraph representation in game text for screen readers.
+		- Fixed: Links in game text are not focusable with keyboard, and do not have link role.
+		- Fixed: Incorrect paragraph representation in game text for screen readers.
 * Documentation:
 	+ Added: Preparation of new documentation in Russian and English has begun.
 	+ Changed: Updating the main Russian-language documentation.
