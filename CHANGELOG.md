@@ -49,6 +49,7 @@
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Text output containing line breaks is always displayed as a block element.
+	+ Fixed: Paragraphs containing text output with block elements do not have left padding.
 	+ Removed: Separate UrqW cursor for choosing and activating buttons (caused issues with simultaneous activation of two controls and was replaced with cluster navigation based on standard system focus).
 	+ Accessibility improvements:
 		- Added: Text labels for controls of the toolbar.

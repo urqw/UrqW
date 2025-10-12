@@ -32,7 +32,8 @@ div.text {
     display: inline;
 }
 
-div.clearfix + div.text, #textfield div.text:first-child {
+div.clearfix + div,
+#textfield div:first-child {
     padding-left: 20px;
 }
 
