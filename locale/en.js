@@ -37,6 +37,7 @@ var en = {
     no_games_found: "No games found.",
     failed_load_game_list: "Failed to load the game list. Most likely, you have launched UrqW locally, and browser security policies prohibit accessing and automatically reading any local files. Currently, you can select game files for launch manually only.",
     powered_by_urqw: "Powered by UrqW " + urqw_version,
+    logo: "Logo",
     volume_control: "Volume control",
     mute_half_volume: "Mute half volume",
     mute_sound: "Mute sound",
