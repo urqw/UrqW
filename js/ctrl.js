@@ -43,10 +43,11 @@ $(function() {
                 description = lsname;
                 menu = saveActionCreate(i);
             }
+            description = $('<div>').text(description).html();
             if (settings['numeric_keys']) {
-                description = i + ': ' + description;
+                description = `<b>${i}:</b> ${description}`;
             }
-            btn.text(description);
+            btn.html(description);
             li.append(btn);
             if (menu) li.append(menu);
             $('#saveslots').find('.list-group').append(li);
@@ -203,11 +204,11 @@ $(function() {
                 btn.text(i18next.t('empty_save_slot')).prop('disabled', true);
                 menu = null;
             } else {
-                var description = lsname;
+                var description = $('<div>').text(lsname).html();
                 if (settings['numeric_keys']) {
-                    description = i + ': ' + description;
+                    description = `<b>${i}:</b> ${description}`;
                 }
-                btn.text(description);
+                btn.html(description);
                 menu = saveActionCreate(i);
             }
             li.append(btn);
