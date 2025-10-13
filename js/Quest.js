@@ -335,6 +335,7 @@ Quest.prototype.save = function(slot) {
         status: GlobalPlayer.status,
         text: GlobalPlayer.text,
         buttons: GlobalPlayer.buttons,
+        links: GlobalPlayer.links,
         items: this.items,
         vars: this.vars,
         position: this.position,
@@ -351,6 +352,7 @@ Quest.prototype.load = function(data) {
     GlobalPlayer.status = data.status;
     GlobalPlayer.text = data.text;
     GlobalPlayer.buttons = data.buttons;
+    GlobalPlayer.links = data.links;
     this.items = data.items;
     this.vars = data.vars;
     this.position = data.position;
