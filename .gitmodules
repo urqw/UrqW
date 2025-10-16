@@ -151,3 +151,9 @@
 [submodule "games/doll_of_lolita"]
 	path = games/doll_of_lolita
 	url = https://github.com/urqw/doll_of_lolita.git
+[submodule "games/unexpected_passenger"]
+	path = games/unexpected_passenger
+	url = https://github.com/urqw/unexpected_passenger.git
+[submodule "games/keperleys"]
+	path = games/keperleys
+	url = https://github.com/urqw/keperleys.git
