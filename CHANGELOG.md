@@ -16,6 +16,7 @@
 	+ Added: Ignore whitespace at the beginning of any lines.
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping in compatibility modes with RipURQ and URQ_DOS.
+	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: Processing of the tokens_delim variable.
 	+ Fixed: Processing of the goto operator in compatibility mode with URQ-DOS.
 * Game player:

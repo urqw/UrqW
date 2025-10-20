@@ -302,7 +302,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
         }
     });
 
-    itemName = itemName.replace(/_/g, ' ');
+    var itemDisplayName = itemName.replace(/_/g, ' ');
 
     // Some items and actions need to be inserted with language markup,
     // for this the following two variables are needed
@@ -311,26 +311,26 @@ Client.prototype.drawItem = function (itemName, quantity) {
 
     if (actions.length == 0 && itemName != 'inv' || (Game.getVar('hide_use_' + itemName) > 0)) {
         if (quantity > 1) {
-            itemName = itemName + ' (' + quantity + ')';
+            itemDisplayName = itemDisplayName + ' (' + quantity + ')';
         }
 
-        return '<li><a href="#" class="item_use">' + itemName + '</a></li>';
+        return '<li><a href="#" class="item_use">' + itemDisplayName + '</a></li>';
     } if (actions.length == 1 && itemName != 'inv' && actions[0][0] == '') {
         if (quantity > 1) {
-            itemName = itemName + ' (' + quantity + ')';
+            itemDisplayName = itemDisplayName + ' (' + quantity + ')';
         }
 
-        var a = $('<a href="#" class="item_use">').attr('data-label', actions[0][1]).text(itemName);
+        var a = $('<a href="#" class="item_use">').attr('data-label', actions[0][1]).text(itemDisplayName);
         a.html('<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> ' + a.text());
 
         return $('<li>').append(a);
     } else if (actions.length > 0)  {
         if (itemName == 'inv') {
             htmlContent = true;
-            itemName = '<span lang="' + lang + '">' + i18next.t('inventory') + '</span>';
+            itemDisplayName = '<span lang="' + lang + '">' + i18next.t('inventory') + '</span>';
         } else {
             if (quantity > 1) {
-                itemName = itemName + ' (' + quantity + ')';
+                itemDisplayName = itemDisplayName + ' (' + quantity + ')';
             }
         }
 
@@ -338,10 +338,10 @@ Client.prototype.drawItem = function (itemName, quantity) {
         var liLink = $('<a href="#" class="item_use">');
         liLink.attr('aria-haspopup', 'listbox');
         if (htmlContent) {
-            liLink.html(itemName);
+            liLink.html(itemDisplayName);
             htmlContent = false;
         } else {
-            liLink.text(itemName);
+            liLink.text(itemDisplayName);
         }
         li.append(liLink);
         /**
