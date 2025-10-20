@@ -6,6 +6,7 @@
 
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
+	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables.
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
 	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
 	+ Added: System variables image_caption, time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.

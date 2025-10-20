@@ -392,7 +392,7 @@ var ul = $('<ul role="presentation" class="dropdown-menu">');
  * @param {int} action
  */
 Client.prototype.convertToLink = function(text, action) {
-    return "<a data-action='" + action + "' class='button' href='#'>" + text + "</a>";
+    return '<a data-action="' + action + '" class="button" href="#">' + text + '</a>';
 };
 
 /**

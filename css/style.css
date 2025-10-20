@@ -54,7 +54,7 @@ div.clearfix + div,
     margin: 5px 0;
     max-width: 100%;
     box-sizing: border-box;
-    border: 1px solid currentColor; /* Рамка цвета текста */
+    border: 1px solid currentColor; /* Text color frame */
     padding: 10px;
     border-radius: 5px;
 }
@@ -125,6 +125,18 @@ div.clearfix + div,
 .akurq_html p {
     display: block;
     margin: 10px 0;
+}
+
+
+/* Drop-down menu links */
+
+.dropdownmenulinks > ul.dropdown-menu > li {
+    padding: 3px 20px;
+    color: #939191;
+}
+
+.dropdownmenulinks > ul.dropdown-menu > li > a {
+    padding: 0;
 }
 
 

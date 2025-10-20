@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2015, 2018 Akela <akela88@bk.ru>
+ * Copyright (C) 2015, 2017, 2018 Akela <akela88@bk.ru>
  * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
@@ -245,8 +245,47 @@ Parser.prototype.openLinks = function(line) {
 
             if (exp.indexOf('|') > 0) {
                 var exptmp = exp.split('|');
-                command = exptmp.slice(1).join('|').trim();
+                command = exptmp[1].trim();
                 text = exptmp[0].trim();
+
+                // Link with drop-down menu
+                if ((exp.match(/\|/g) || []).length > 1) {
+                    var command2 = exptmp[2].split(',');
+
+                    var links = [];
+                    var action = '';
+                    var label;
+                    for (var i = 0; i < command2.length; i++) {
+                        label = command + '_' + command2[i].trim();
+                        if (Game.getVar('hide_' + label) > 0) {
+                            continue;
+                        }
+                        if (Game.getLabel(label)) {
+                            action = label;
+                        } else {
+                            action = '';
+                            // The label was not found, so there is no such action.
+                            // You can execute something here, for example:
+                            // action = `pln You cannot ${command2[i].trim()} ${command}!`;
+                        }
+
+                        var actionNum = GlobalPlayer.link(action);
+                        links.push(`<li><a data-action="${actionNum}" class="button" href="#">${command2[i].replace(/_/g, ' ').trim()}</a></li>`);
+                    }
+
+                    if (links.length == 0) {
+                        return text;
+                    } else {
+                        return '<span class="dropdown dropdownmenulinks">' +
+                            '<a href="#" class="dropdown dropdown-toggle" type="button" id="dropdownMenu' + actionNum + '" data-toggle="dropdown">' +
+                            text +
+                            '</a>' +
+                            '<ul class="dropdown-menu">' +
+                            links.join('') +
+                            '</ul>' +
+                            '</span>';
+                    }
+                }
             } else {
                 command = exp.trim();
                 text = exp;
