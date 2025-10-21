@@ -279,7 +279,7 @@ Client.prototype.drawInventory = function () {
     if (this.crtlInventory.find('> li').length == 0) {
         // For empty element set UrqW UI language, not game language
         var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
-        this.crtlInventory.append('<li lang=' + lang + '><a href="#" class="item_use">' + i18next.t('empty') + '</a></li>');
+        this.crtlInventory.append('<li lang=' + lang + '><a href="#" class="item_use" aria-disabled="true">' + i18next.t('empty') + '</a></li>');
     }
 };
 
@@ -320,7 +320,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
             itemDisplayName = itemDisplayName + ' (' + quantity + ')';
         }
 
-        return '<li><a href="#" class="item_use">' + itemDisplayName + '</a></li>';
+        return '<li><a href="#" class="item_use" aria-disabled="true">' + itemDisplayName + '</a></li>';
     } if (actions.length == 1 && itemName != 'inv' && actions[0][0] == '') {
         if (quantity > 1) {
             itemDisplayName = itemDisplayName + ' (' + quantity + ')';
