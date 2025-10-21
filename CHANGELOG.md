@@ -10,6 +10,7 @@
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
 	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
 	+ Added: System variables image_caption, time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
+	+ Added: Ability to set arbitrary names for inventory items, for inventory item usage options, and for drop-down menu items of links in text instead of names based on variable and labels names (special variables with the `display_` prefix are used).
 	+ Added: The clst operator to clear the screen of text.
 	+ Added: The varkill operator (a direct counterpart of the perkill operator).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
@@ -48,6 +49,7 @@
 	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening .qsz format games.
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
+	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Links disappear from the text when loading a saved game.

@@ -302,7 +302,13 @@ Client.prototype.drawItem = function (itemName, quantity) {
         }
     });
 
-    var itemDisplayName = itemName.replace(/_/g, ' ');
+    var displayName = Game.getVar('display_use_' + itemName);
+    var itemDisplayName;
+    if (displayName) {
+        itemDisplayName = displayName;
+    } else {
+        itemDisplayName = itemName.replace(/_/g, ' ');
+    }
 
     // Some items and actions need to be inserted with language markup,
     // for this the following two variables are needed
@@ -365,13 +371,21 @@ var ul = $('<ul role="presentation" class="dropdown-menu">');
             }
 
             if (Game.getVar('hide_use_' + itemName + '_' + actions[i][0]) == 0) {
-                li2link = $('<a href="#" class="item_use">');
+                displayName = Game.getVar('display_use_' + itemName + '_' + actions[i][0]);
+                var actionDisplayName;
+                if (displayName) {
+                    actionDisplayName = displayName;
+                } else {
+                    actionDisplayName = actions[i][0].replace(/_/g, ' ');
+                }
+                
+li2link = $('<a href="#" class="item_use">');
                 li2link.attr('data-label', actions[i][1]);
                 if (htmlContent) {
-                    li2link.html(actions[i][0]);
+                    li2link.html(actionDisplayName);
                     htmlContent = false;
                 } else {
-                    li2link.text(actions[i][0]);
+                    li2link.text(actionDisplayName);
                 }
                 // A11Y modification: Place links in elements with the list item role
                 li2link = $('<span role="listitem">').append(li2link);

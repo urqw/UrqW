@@ -269,8 +269,16 @@ Parser.prototype.openLinks = function(line) {
                             // action = `pln You cannot ${command2[i].trim()} ${command}!`;
                         }
 
+                        var displayName = Game.getVar('display_' + label);
+                        var actionDisplayName;
+                        if (displayName) {
+                            actionDisplayName = displayName;
+                        } else {
+                            actionDisplayName = command2[i].replace(/_/g, ' ').trim();
+                        }
+
                         var actionNum = GlobalPlayer.link(action);
-                        links.push(`<li><a data-action="${actionNum}" class="button" href="#">${command2[i].replace(/_/g, ' ').trim()}</a></li>`);
+                        links.push(`<li><a data-action="${actionNum}" class="button" href="#">${actionDisplayName}</a></li>`);
                     }
 
                     if (links.length == 0) {
