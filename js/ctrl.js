@@ -103,10 +103,10 @@ $(function() {
             '<span class="caret" aria-hidden="true"></span>' +
             '</button>' +
             '<ul class="dropdown-menu" role="menu">' +
-            '<li class="dropdown-item" role="menuitem"><a href="#" class="saveaction_rename" data-slot="' + slot + '">' + i18next.t('rename') + '</a></li>' +
-            '<li class="dropdown-item" role="menuitem"><a href="#" class="saveaction_download" data-slot="' + slot + '">' + i18next.t('download') + '</a></li>' +
-            '<li class="dropdown-item" role="menuitem"><a href="#" class="saveaction_clear" data-slot="' + slot + '">' + i18next.t('clear') + '</a></li>' +
-            '<li class="dropdown-item" role="menuitem"><a href="#" class="saveaction_launch" data-slot="' + slot + '">' + i18next.t('launch') + '</a></li>' +
+            '<li class="dropdown-item" role="presentation"><a role="menuitem" href="#" class="saveaction_rename" data-slot="' + slot + '">' + i18next.t('rename') + '</a></li>' +
+            '<li class="dropdown-item" role="presentation"><a role="menuitem" href="#" class="saveaction_download" data-slot="' + slot + '">' + i18next.t('download') + '</a></li>' +
+            '<li class="dropdown-item" role="presentation"><a role="menuitem" href="#" class="saveaction_clear" data-slot="' + slot + '">' + i18next.t('clear') + '</a></li>' +
+            '<li class="dropdown-item" role="presentation"><a role="menuitem" href="#" class="saveaction_launch" data-slot="' + slot + '">' + i18next.t('launch') + '</a></li>' +
             '</ul>' +
             '</div>');
     }
