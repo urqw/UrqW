@@ -12,11 +12,13 @@
 	+ Added: System variables image_caption, time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version.
 	+ Added: Ability to set arbitrary names for inventory items, for inventory item usage options, and for drop-down menu items of links in text instead of names based on variable and labels names (special variables with the `display_` prefix are used).
 	+ Added: The clst operator to clear the screen of text.
+	+ Added: The clsl operator to clear links from the text.
 	+ Added: The varkill operator (a direct counterpart of the perkill operator).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace at the beginning of any lines.
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping in compatibility modes with RipURQ and URQ_DOS.
+	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: Processing of the tokens_delim variable.
 	+ Fixed: Processing of the goto operator in compatibility mode with URQ-DOS.

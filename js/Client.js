@@ -142,6 +142,7 @@ Client.prototype.render = function (data) {
  */
 Client.prototype.cls = function() {
     this.clst();
+    //this.clsl();
     this.clsb();
 };
 
@@ -150,6 +151,13 @@ Client.prototype.cls = function() {
  */
 Client.prototype.clst = function() {
     this.crtlTextField.empty();
+};
+
+/**
+ * Links cleaning
+ */
+Client.prototype.clsl = function() {
+    // No action is required, but the function is reserved for future use
 };
 
 /**
@@ -415,7 +423,7 @@ Client.prototype.convertToLink = function(text, action) {
  */
 Client.prototype.disableLink = function(text) {
     var a = $(text);
-    if (a.hasClass('button')) {
+    if (a.hasClass('button') || a.hasClass('dropdown-toggle')) {
         return a.text();
     } else {
         return text;

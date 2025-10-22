@@ -92,6 +92,14 @@ Player.prototype.cls = function() {
  */
 Player.prototype.clsb = function() {
     this.buttons = [];
+
+    this.Client.clsb();
+};
+
+/**
+ * clsl
+ */
+Player.prototype.clsl = function() {
     this.links = [];
     
     for(var i = 0; i < this.text.length; i++) {
@@ -100,7 +108,7 @@ Player.prototype.clsb = function() {
         });
     }
 
-    this.Client.clsb();
+    this.Client.clsl();
 };
 
 /**
