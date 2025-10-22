@@ -350,7 +350,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
 
         var li = $('<li>').addClass('dropdown-submenu');
         var liLink = $('<a href="#" class="item_use">');
-        liLink.attr('aria-haspopup', 'listbox');
+        liLink.attr('aria-haspopup', 'menu');
         if (htmlContent) {
             liLink.html(itemDisplayName);
             htmlContent = false;
@@ -358,18 +358,8 @@ Client.prototype.drawItem = function (itemName, quantity) {
             liLink.text(itemDisplayName);
         }
         li.append(liLink);
-        /**
-         * To improve accessibility, the semantics are modified here using WAI-ARIA.
-         * The original layout consists of a list, a single list item,
-         * and links within the list item. For assistive technologies,
-         * each link is made a list item (see comments on specific lines of code).
-         * In the future, everything can be brought to a single layout
-         * if the graphic design is adapted.
-         */
-        // A11Y modification: Remove list semantics using the presentation role
-var ul = $('<ul role="presentation" class="dropdown-menu">');
-        // A11Y modification: Redefine the list item semantics as a list using the list role
-        var li2 = $('<li role="list" class="menu-item">');
+var ul = $('<ul role="menu" class="dropdown-menu">');
+        var li2 = $('<li role="presentation" class="menu-item">');
 
         var li2link;
         for (var i = 0; i < actions.length; i++) {
@@ -387,7 +377,7 @@ var ul = $('<ul role="presentation" class="dropdown-menu">');
                     actionDisplayName = actions[i][0].replace(/_/g, ' ');
                 }
                 
-li2link = $('<a href="#" class="item_use">');
+li2link = $('<a role="menuitem" href="#" class="item_use">');
                 li2link.attr('data-label', actions[i][1]);
                 if (htmlContent) {
                     li2link.html(actionDisplayName);
@@ -395,8 +385,6 @@ li2link = $('<a href="#" class="item_use">');
                 } else {
                     li2link.text(actionDisplayName);
                 }
-                // A11Y modification: Place links in elements with the list item role
-                li2link = $('<span role="listitem">').append(li2link);
                 li2.append(li2link);
             }
         }

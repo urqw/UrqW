@@ -67,8 +67,8 @@
 		- Added: Customizable announcement description using assistive technology when pressing a hotkey (see help in menu).
 		- Added: Customizable announcement description using assistive technology when shaking device (see help in menu).
 		- Added: Inventory panel links that do not perform any actions have the aria-disabled attribute, which indicates that there is no associated action but does not suppress the element focusability.
-		- Added: Designation  for assistive technologies whether an inventory item has a drop-down list.
-		- Changed: Each link in the drop-down menu of an inventory item has the role of a list item.
+		- Added: Designation  for assistive technologies whether an inventory item has a drop-down menu.
+		- Changed: Each link in the drop-down menu of an inventory item has the role of a menu item.
 		- Changed: Text labels for player graphic icons.
 		- Fixed: Links in game text are not focusable with keyboard, and do not have link role.
 		- Fixed: Incorrect paragraph representation in game text for screen readers.
