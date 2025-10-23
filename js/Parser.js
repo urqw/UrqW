@@ -257,7 +257,7 @@ Parser.prototype.openLinks = function(line) {
                     var action = '';
                     var label;
                     for (var i = 0; i < command2.length; i++) {
-                        label = command + '_' + command2[i].trim();
+                        label = command + command2[i].trim();
                         if (Game.getVar('hide_' + label) > 0) {
                             continue;
                         }
