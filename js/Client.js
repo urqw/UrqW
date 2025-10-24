@@ -122,6 +122,8 @@ Client.prototype.render = function (data) {
             }
         }, wait);
     } else if (data.status == PLAYER_STATUS_QUIT) {
+        GlobalPlayer.clsl();
+        this.clsb();
         var span = $('<span>', {
             tabindex: 0,
             text: i18next.t('game_over')
@@ -157,7 +159,7 @@ Client.prototype.clst = function() {
  * Links cleaning
  */
 Client.prototype.clsl = function() {
-    // No action is required, but the function is reserved for future use
+    this.drawText();
 };
 
 /**

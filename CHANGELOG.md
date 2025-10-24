@@ -52,6 +52,7 @@
 	+ Added: Support for opening .qsz format games.
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
+	+ Changed: When the game over through the quit operator, links and buttons are deleted instead of just stopping response to user actions.
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Links disappear from the text when loading a saved game.
