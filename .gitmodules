@@ -157,3 +157,6 @@
 [submodule "games/keperleys"]
 	path = games/keperleys
 	url = https://github.com/urqw/keperleys.git
+[submodule "games/gad"]
+	path = games/gad
+	url = https://github.com/tseykovets/gad.git
