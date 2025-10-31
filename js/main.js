@@ -135,18 +135,19 @@ $(function() {
         $('#choose-game').hide();
 
         if (window.location.hash.length > 0) {
-            JSZipUtils.getBinaryContent('quests/' + window.location.hash.substr(1) + '.zip', function(err, data) {
+            var name = window.location.hash.substr(1);
+            JSZipUtils.getBinaryContent('quests/' + name + '.zip', function(err, data) {
                 if (err) {
                     $.ajax({
-                        url: 'quests/' + window.location.hash.substr(1) + '/quest.qst',
+                        url: 'quests/' + name + '/quest.qst',
                         dataType: "text"
                     }).done(function(msg) {
-                        start(msg, window.location.hash.substr(1));
+                        start(msg, name);
                     }).fail(function () {
                         loadFromHashFailed();
                     });
                 } else {
-                    loadZip(data, window.location.hash.substr(1));
+                    loadZip(data, name);
                 }
             });
         } else {
@@ -233,7 +234,9 @@ $(function() {
         loadFromHashFailed();
     });
 
-    // Load game data from ZIP file
+    /**
+     * Load game data from ZIP file
+     */
     function loadZip(data, gameName) {
         var zip = new JSZip(data);
 
