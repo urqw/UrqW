@@ -200,7 +200,7 @@ Client.prototype.drawText = function () {
             var src = $(this).attr('src');
             if (src && src.indexOf('http://') == -1 && src.indexOf('https://') == -1) {
                 if (files === null) {
-                    $(this).attr('src', 'quests/' + Game.name + '/' + src);
+                    $(this).attr('src', questPath + '/' + src);
                 } else {
                     $(this).attr('src', files[src]); // todo
                 }

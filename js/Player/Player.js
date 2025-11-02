@@ -326,7 +326,7 @@ Player.prototype.fileRead = function(fileURL) {
 
     if (fileURL) {
             if (files === null) {
-                fileURL = 'quests/' + Game.name + '/' + fileURL.toString().trim();
+                fileURL = questPath + '/' + fileURL.toString().trim();
             } else {
                 fileURL = files[fileURL.toString().trim()];
             }
@@ -367,7 +367,7 @@ Player.prototype.playMusic = function(src, loop) {
     var file;
 
     if (files === null) {
-        file = 'quests/' + Game.name + '/' + src;
+        file = questPath + '/' + src;
     } else {
         file = files[src];
     }

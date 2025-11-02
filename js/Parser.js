@@ -86,7 +86,7 @@ Parser.prototype.parse = function(line) {
 
             var Sound;
             if (files === null) {
-                Sound = new Audio('quests/' + Game.name + '/' + command.toString().trim());
+                Sound = new Audio(questPath + '/' + command.toString().trim());
             } else {
                 Sound = new Audio(files[command.toString().trim()]);
             }

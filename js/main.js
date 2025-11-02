@@ -34,6 +34,8 @@ var debug;
 var manifest = {};
 // iFiction record file key in the files object
 var iFictionFileKey;
+// Path to the folder with the main quest file (important for games loaded from a folder)
+var questPath = '';
 // Default settings value
 var settings = {
     volume: 50,
@@ -138,14 +140,7 @@ $(function() {
             var name = window.location.hash.substr(1);
             JSZipUtils.getBinaryContent('quests/' + name + '.zip', function(err, data) {
                 if (err) {
-                    $.ajax({
-                        url: 'quests/' + name + '/quest.qst',
-                        dataType: "text"
-                    }).done(function(msg) {
-                        start(msg, name);
-                    }).fail(function () {
-                        loadFromHashFailed();
-                    });
+                    loadFromFolder(name);
                 } else {
                     loadZip(data, name);
                 }
@@ -233,6 +228,100 @@ $(function() {
     showButton.on('click', function() {
         loadFromHashFailed();
     });
+
+    /**
+     * Load game from folder
+     */
+    async function loadFromFolder(name) {
+        var folder = 'quests/' + name + '/urqw';
+        var mainURL = folder + '/main.qst';
+        if (!checkFileAvailability(mainURL, false)) {
+            folder = 'quests/' + name;
+            mainURL = folder + '/main.qst';
+            if (!checkFileAvailability(mainURL, false)) {
+                loadFromHashFailed();
+                return;
+            }
+        }
+        questPath = folder;
+        var manifestURL = folder + '/manifest.json';
+        var scriptURL = folder + '/script.js';
+        var styleURL = folder + '/style.css';
+
+        mode = $('#urq_mode').val();
+        encoding = $('#game_encoding').val();
+
+        async function getData(fileURL, fileEncoding) {
+            try {
+                var response = await fetch(fileURL);
+                if (!response.ok) return false;
+                if (fileEncoding === 'CP1251') {
+                    var arrayBuffer = await response.arrayBuffer();
+                    var uint8Array = new Uint8Array(arrayBuffer);
+                    var byteString = String.fromCharCode.apply(null, uint8Array);
+                    return win2unicode(byteString);
+                } else {
+                    return await response.text();
+                }
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // Request and process data from all files
+
+        var manifestData = await getData(manifestURL, 'UTF-8');
+        if (manifestData) {
+            if (!parseManifest(manifestData)) return;
+        }
+
+        if (manifest['urqw_game_ifid']) {
+            var iFictionURL = folder + '/' + manifest['urqw_game_ifid'] + '.iFiction';
+            var iFictionData = await getData(iFictionURL, 'UTF-8');
+            if (iFictionData) {
+                if (!parseIFiction(iFictionData)) return;
+            }
+        }
+
+        var scriptData = await getData(scriptURL, encoding);
+        if (scriptData) {
+            eval(scriptData); // todo?
+        }
+
+        var styleData = await getData(styleURL, encoding);
+        if (styleData) {
+            $('#additionalstyle').append(styleData);
+        }
+
+        var mainData = await getData(mainURL, encoding);
+        if (mainData) {
+            start(mainData, name);
+        } else {
+            loadFromHashFailed();
+        }
+    }
+
+    /**
+     * Check file availability via get request
+     * @param {string} url - file URL
+     * @param {boolean} async - asynchronous request
+     * @returns {boolean} file available
+     */
+    function checkFileAvailability(url, async) {
+        var availability = false;
+        $.ajax({
+            url: url,
+            type: 'HEAD',
+            async: async,
+            success: function() {
+                availability = true;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                availability = false;
+            }
+        });
+        return availability;
+    }
 
     /**
      * Load game data from ZIP file

@@ -493,17 +493,22 @@ $(function() {
      * Click on download iFiction record
      */
     $('#download_ifiction_btn').on('click', function() {
-        if (!iFictionFileKey) return false;
-        var fileURL = files[iFictionFileKey];
+        var fileURL, fileName;
+        if (iFictionFileKey) {
+            fileURL = files[iFictionFileKey];
+            fileName = iFictionFileKey.split('/').pop();
+        } else {
+            fileURL = questPath + '/' + manifest['urqw_game_ifid'] + '.iFiction';
+            fileName = fileURL.split('/').pop();
+        }
         if (!fileURL) return false;
         var a = document.createElement('a');
         a.href = fileURL;
-        a.download = iFictionFileKey.split('/').pop();
+        a.download = fileName;
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        window.URL.revokeObjectURL(fileURL);
     });
 
     /**
