@@ -84,12 +84,13 @@ Parser.prototype.parse = function(line) {
         case 'play':
             if (volumeMultiplier == 0 || Number(settings['volume']) == 0) return;
 
-            var Sound;
+            var src;
             if (files === null) {
-                Sound = new Audio(questPath + '/' + command.toString().trim());
+                src = normalizeInternalPath(questPath + '/' + command.toString().trim());
             } else {
-                Sound = new Audio(files[command.toString().trim()]);
+                src = files[normalizeInternalPath(command.toString().trim())];
             }
+            var Sound = new Audio(src);
 
             Sound.volume = Number(settings['volume'])/100*volumeMultiplier;
             Sound.play();

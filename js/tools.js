@@ -194,6 +194,16 @@ function getEscapedHtmlWithAllowedTags(html, allowedTags) {
 }
 
 /**
+ * Function for normalizing internal paths to game files
+  * @param {string} value
+ */
+function normalizeInternalPath(path) {
+    path = path.replace(/\\/g, '/');
+    path = path.replace(/^\/+/, '');
+    return path;
+}
+
+/**
  * @param {string} value
  */
 function announceForAccessibility(message) {

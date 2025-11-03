@@ -200,10 +200,11 @@ Client.prototype.drawText = function () {
             var src = $(this).attr('src');
             if (src && src.indexOf('http://') == -1 && src.indexOf('https://') == -1) {
                 if (files === null) {
-                    $(this).attr('src', questPath + '/' + src);
+                    src = normalizeInternalPath(questPath + '/' + src);
                 } else {
-                    $(this).attr('src', files[src]); // todo
+                    src = files[normalizeInternalPath(src)]; // todo
                 }
+                $(this).attr('src', src);
             }
         });
 

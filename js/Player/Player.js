@@ -326,9 +326,9 @@ Player.prototype.fileRead = function(fileURL) {
 
     if (fileURL) {
             if (files === null) {
-                fileURL = questPath + '/' + fileURL.toString().trim();
+                fileURL = normalizeInternalPath(questPath + '/' + fileURL.toString().trim());
             } else {
-                fileURL = files[fileURL.toString().trim()];
+                fileURL = files[normalizeInternalPath(fileURL.toString().trim())];
             }
 
             if (fileURL) {
@@ -367,9 +367,9 @@ Player.prototype.playMusic = function(src, loop) {
     var file;
 
     if (files === null) {
-        file = questPath + '/' + src;
+        file = normalizeInternalPath(questPath + '/' + src);
     } else {
-        file = files[src];
+        file = files[normalizeInternalPath(src)];
     }
 
     if (src) {

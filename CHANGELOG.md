@@ -16,6 +16,7 @@
 	+ Added: The varkill operator (a direct counterpart of the perkill operator).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace at the beginning of any lines.
+	+ Added: Automatic normalization of internal file paths: reverse soliduses (backslashes are replaced with soliduses (slashes), and all soliduses at the beginning of the path are removed.
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping in compatibility modes with RipURQ and URQ_DOS.
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
