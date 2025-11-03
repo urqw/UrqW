@@ -1,15 +1,23 @@
 # Changelog for UrqW
 
-(Adding games to the catalog is not recorded in this document.)
+(Changes to the game catalog is not recorded in this document.)
 
 ## Version 1.1 (in development)
 
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
-	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables.
+	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
 	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
-	+ Added: System variables image_caption, time, date (only when urq_mode specific rules are absent), urqw_title, urqw_game_ifid, urqw_game_lang, urqw_version, quest_path (only for compatibility mode with akURQ).
+	+ Added: System variables:
+		- date - get the current date (only when urq_mode specific rules are absent).
+		- image_caption - set or get the visible caption for an image.
+		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ)
+		- time - get the current time.
+		- urqw_game_ifid - get the game's IFID (or an empty string if it lacks one).
+		- urqw_game_lang - set or get the game content language.
+		- urqw_title - set or get the UrqW page title.
+		- urqw_version - get the UrqW version.
 	+ Added: Ability to set arbitrary names for inventory items, for inventory item usage options, and for drop-down menu items of links in text instead of names based on variable and labels names (special variables with the `display_` prefix are used).
 	+ Added: The clst operator to clear the screen of text.
 	+ Added: The clsl operator to clear links from the text.
@@ -35,11 +43,11 @@
 	+ Added: RSS feed for new games in the catalog.
 	+ Added: Ability to set a game to load on any opening of index.html.
 	+ Added: Ability to set player settings using GET requests:
-		- Interface language - lang
-		- URQ mode - mode
-		- Game encoding - encoding
-		- URL for game opening - url
-		- Display of the game debugging section in the menu - debug with value 1
+		- Interface language - lang (value: localization code).
+		- URQ mode - mode (value: "urqw", "ripurq", "dosurq" or "akurq").
+		- Game encoding - encoding (value: "UTF-8" or "CP1251").
+		- URL for game opening - url (value: URL string).
+		- Display of the game debugging section in the menu - debug with value "1".
 	+ Added: Support for the manifest.json file in the game package, which is used to define player parameters and game metadata, as well as initial values for some system variables.
 	+ Added: Support for the iFiction record from the Treaty of Babel in the game package, which is used to store extended game metadata in a unified format.
 	+ Added: Automatic focusing of controls when working with dialog boxes (menu, save and load game).
@@ -55,7 +63,7 @@
 	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
 	+ Changed: When the game over through the quit operator, links and buttons are deleted instead of just stopping response to user actions.
 	+ Changed: When launching a game by fragment identifier (hash) from a folder, the player searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
-	+ Changed: When launching a game by fragment identifier (hash) from a folder, the manifest.json and iFiction record files, and plugin files (script.js and style.css) are loaded and processed first, and only then the main.qst game file.
+	+ Changed: When launching a game by fragment identifier (hash) from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Links disappear from the text when loading a saved game.
@@ -69,7 +77,7 @@
 		- Added: Customizable announcement description updates using assistive technology.
 		- Added: Customizable announcement choice button updates using assistive technology.
 		- Added: Customizable announcement description using assistive technology when pressing a hotkey (see help in menu).
-		- Added: Customizable announcement description using assistive technology when shaking device (see help in menu).
+		- Added: Customizable announcement description using assistive technology when shaking device.
 		- Added: Inventory panel links that do not perform any actions have the aria-disabled attribute, which indicates that there is no associated action but does not suppress the element focusability.
 		- Added: Designation  for assistive technologies whether an inventory item has a drop-down menu.
 		- Changed: Each link in the drop-down menu of an inventory item has the role of a menu item.
@@ -78,6 +86,7 @@
 		- Fixed: Incorrect paragraph representation in game text for screen readers.
 * Documentation:
 	+ Added: Preparation of new documentation in Russian and English has begun.
+	+ Added: The guide for contributors (see the CONTRIBUTING.md file in the repository).
 	+ Changed: Updating the main Russian-language documentation.
 * Development and maintenance infrastructure:
 	+ Added: check-locale script to check completeness of localization.
@@ -90,6 +99,7 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
+	+ Changed: Tests to ensure the engine is working correctly have been moved to the quests/tests directory.
 
 ## Version 1.0 (from 2017-01-20)
 
