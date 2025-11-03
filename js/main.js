@@ -355,7 +355,7 @@ if (manifestFile) {
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
-                var scriptCode;
+                var styleContent, scriptCode;
                 if (file.name.split('.').pop().toLowerCase() == 'qst') {
                     if (file.name.substr(0, 1) == '_' || file.name.indexOf('/_') != -1) {
                         qst.unshift(file);
@@ -363,12 +363,17 @@ if (manifestFile) {
                         qst.push(file);
                     }
                 } else if (file.name.split('.').pop().toLowerCase() == 'css') {
-                    $('#additionalstyle').append(file.asBinary());
+                    if (encoding.toLowerCase() == 'utf-8') {
+                        styleContent = file.asText();
+                    } else {
+                        styleContent = win2unicode(file.asBinary());
+                    }
+                    $('#additionalstyle').append(styleContent);
                 } else if (file.name.split('.').pop().toLowerCase() == 'js') {
                     if (encoding.toLowerCase() == 'utf-8') {
                         scriptCode = file.asText();
                     } else {
-                        scriptCode = win2unicode(file.asBinary())
+                        scriptCode = win2unicode(file.asBinary());
                     }
                     eval(scriptCode); // todo?
                 } else {
