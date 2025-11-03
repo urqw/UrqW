@@ -304,6 +304,11 @@ Quest.prototype.getVar = function(variable) {
         }
     }
 
+    // quest_path system variable for backward compatibility with AkURQ only
+    if (variable == 'quest_path' && this.getVar('urq_mode') == 'akurq') {
+        return ''; // Always an empty string, not an absolute path to the quest
+    }
+
     // For expressions like "1 money"
     if (variable.split(' ').length > 1) {
         var count = variable.split(' ')[0];
