@@ -62,6 +62,7 @@
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
 	+ Changed: When the game over through the quit operator, links and buttons are deleted instead of just stopping response to user actions.
+	+ Changed: When loading a game from an archive, files named style.css and script.js are read and loaded as plugins (as documented), rather than all .css and .js files (as was actually the case).
 	+ Changed: When launching a game by fragment identifier (hash) from a folder, the player searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
 	+ Changed: When launching a game by fragment identifier (hash) from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
 	+ Changed: Keypress tracking by key code instead of character code.

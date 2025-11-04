@@ -337,45 +337,52 @@ $(function() {
 
         // The manifest.json file must be read first
         // because its contents determine how other files will be read
-        var manifestFile = getMetadataFile(zip, 'manifest.json');
+        var manifestFile = getSystemFile(zip, 'manifest.json');
 if (manifestFile) {
             if (!parseManifest(manifestFile.asText())) return;
         }
 
         // iFiction record is read only if IFID is specified in manifest.json
         if (manifest['urqw_game_ifid']) {
-            var iFictionFile = getMetadataFile(zip, manifest['urqw_game_ifid'] + '.iFiction');
+            var iFictionFile = getSystemFile(zip, manifest['urqw_game_ifid'] + '.iFiction');
     if (iFictionFile) {
                 if (!parseIFiction(iFictionFile.asText())) return;
                 iFictionFileKey = iFictionFile.name;
             }
         }
 
+        // Read and load plugins
+        var styleFile = getSystemFile(zip, 'style.css');
+if (styleFile) {
+            var styleContent;
+            if (encoding.toLowerCase() == 'utf-8') {
+                styleContent = styleFile.asText();
+            } else {
+                styleContent = win2unicode(styleFile.asBinary());
+            }
+            $('#additionalstyle').append(styleContent);
+        }
+        var scriptFile = getSystemFile(zip, 'script.js');
+        if (scriptFile) {
+            var scriptCode;
+            if (encoding.toLowerCase() == 'utf-8') {
+                scriptCode = scriptFile.asText();
+            } else {
+                scriptCode = win2unicode(scriptFile.asBinary());
+            }
+            eval(scriptCode); // todo?
+        }
+
         // Read other files
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
-                var styleContent, scriptCode;
                 if (file.name.split('.').pop().toLowerCase() == 'qst') {
                     if (file.name.substr(0, 1) == '_' || file.name.indexOf('/_') != -1) {
                         qst.unshift(file);
                     } else {
                         qst.push(file);
                     }
-                } else if (file.name.split('.').pop().toLowerCase() == 'css') {
-                    if (encoding.toLowerCase() == 'utf-8') {
-                        styleContent = file.asText();
-                    } else {
-                        styleContent = win2unicode(file.asBinary());
-                    }
-                    $('#additionalstyle').append(styleContent);
-                } else if (file.name.split('.').pop().toLowerCase() == 'js') {
-                    if (encoding.toLowerCase() == 'utf-8') {
-                        scriptCode = file.asText();
-                    } else {
-                        scriptCode = win2unicode(file.asBinary());
-                    }
-                    eval(scriptCode); // todo?
                 } else {
                     files[file.name] = URL.createObjectURL(new Blob([(file.asArrayBuffer())], {type: MIME[file.name.split('.').pop()]}));
                 }
@@ -681,35 +688,35 @@ if (manifestFile) {
     /**
      * @param JSZip data
      */
-    function getMetadataFile(zip, fileName) {
+    function getSystemFile(zip, fileName) {
         fileName = fileName.toLowerCase();
 var fileArray = [];
         for (var [name, file] of Object.entries(zip.files)) {
             if (!file.dir) {
-                // Metadata of UrqW is file in root or in directory with one level of nesting
+                // System file of UrqW is file in root or in directory with one level of nesting
                 var pathParts = file.name.split('/');
                 if (pathParts.length <= 2 && pathParts.pop().toLowerCase() == fileName) {
                 fileArray.push(file);
                 }
             }
         }
-        var metadataFile = false;
+        var systemFile = false;
         if (fileArray.length == 1) {
-            metadataFile = fileArray[0];
+            systemFile = fileArray[0];
         } else if (fileArray.length > 1) {
             // In stupid situation of several files with the same name,
             // choose file from root or first one in alphabet
-            metadataFile = fileArray.find(file => file.name.toLowerCase() == fileName);
-            if (!metadataFile) {
+            systemFile = fileArray.find(file => file.name.toLowerCase() == fileName);
+            if (!systemFile) {
                 fileArray.sort((a, b) => {
                     if (a.name < b.name) return -1;
                     if (a.name > b.name) return 1;
                     return 0;
                 });
-                metadataFile = fileArray[0];
+                systemFile = fileArray[0];
             }
         }
-        return metadataFile;
+        return systemFile;
     }
 
     /**
