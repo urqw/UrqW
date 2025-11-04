@@ -160,3 +160,15 @@
 [submodule "games/gad"]
 	path = games/gad
 	url = https://github.com/tseykovets/gad.git
+[submodule "quests/disable_free_saves"]
+	path = quests/disable_free_saves
+	url = https://github.com/urqw/disable_free_saves.git
+[submodule "quests/feedback_for_actions"]
+	path = quests/feedback_for_actions
+	url = https://github.com/urqw/feedback_for_actions.git
+[submodule "quests/shuffle_buttons"]
+	path = quests/shuffle_buttons
+	url = https://github.com/urqw/shuffle_buttons.git
+[submodule "quests/typography"]
+	path = quests/typography
+	url = https://github.com/urqw/typography.git
