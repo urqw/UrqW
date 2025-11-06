@@ -85,6 +85,7 @@
 		- Changed: Text labels for player graphic icons.
 		- Fixed: Links in game text are not focusable with keyboard, and do not have link role.
 		- Fixed: Incorrect paragraph representation in game text for screen readers.
+		- Fixed: The inventory button in XS-sized interface does not change its semantic state (collapsed/expanded) after the first activation.
 * Documentation:
 	+ Added: Preparation of new documentation in Russian and English has begun.
 	+ Added: The guide for contributors (see the CONTRIBUTING.md file in the repository).

@@ -689,6 +689,18 @@ $(function() {
     });
 
     /**
+     * An additional handler for opening and closing the inventory drop-down menu,
+     * which synchronizes the semantic state of both buttons for different screen resolutions
+     */
+    $('#inventory_dropdown').on('shown.bs.dropdown', function() {
+        $('#inventory_btn').attr('aria-expanded', 'true');
+        $('#inventory_btn_xs').attr('aria-expanded', 'true');
+    }).on('hidden.bs.dropdown', function() {
+        $('#inventory_btn').attr('aria-expanded', 'false');
+        $('#inventory_btn_xs').attr('aria-expanded', 'false');
+    });
+
+    /**
      * Using items from inventory
      */
     inventory.on('click', '.item_use', function() {
