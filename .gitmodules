@@ -172,3 +172,6 @@
 [submodule "quests/typography"]
 	path = quests/typography
 	url = https://github.com/urqw/typography.git
+[submodule "quests/multiplugin"]
+	path = quests/multiplugin
+	url = https://github.com/urqw/multiplugin.git
