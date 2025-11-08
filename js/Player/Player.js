@@ -13,6 +13,7 @@ var PLAYER_STATUS_INPUT = 4;
 var PLAYER_STATUS_QUIT = 5;
 
 var gameMusic = new Audio();
+var gameSound = new Audio();
 
 /**
  * @constructor

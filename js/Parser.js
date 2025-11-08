@@ -90,10 +90,10 @@ Parser.prototype.parse = function(line) {
             } else {
                 src = files[normalizeInternalPath(command.toString().trim())];
             }
-            var Sound = new Audio(src);
 
-            Sound.volume = Number(settings['volume'])/100*volumeMultiplier;
-            Sound.play();
+            gameSound.src = src;
+            gameSound.volume = Number(settings['volume'])/100*volumeMultiplier;
+            gameSound.play();
 
             break;
         case 'clsb': return GlobalPlayer.clsb();
