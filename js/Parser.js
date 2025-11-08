@@ -84,6 +84,8 @@ Parser.prototype.parse = function(line) {
         case 'play':
             if (volumeMultiplier == 0 || Number(settings['volume']) == 0) return;
 
+            resetAudio(gameSound);
+
             var src;
             if (files === null) {
                 src = normalizeInternalPath(questPath + '/' + command.toString().trim());

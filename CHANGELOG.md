@@ -71,6 +71,7 @@
 	+ Fixed: Links disappear from the text when loading a saved game.
 	+ Fixed: Text output containing line breaks is always displayed as a block element.
 	+ Fixed: Paragraphs containing text output with block elements do not have left padding.
+	+ Fixed: Music and game sounds do not stop playing when restarting or loading from a save.
 	+ Removed: Separate UrqW cursor for choosing and activating buttons (caused issues with simultaneous activation of two controls and was replaced with cluster navigation based on standard system focus).
 	+ Accessibility improvements:
 		- Added: Text labels for controls of the toolbar.

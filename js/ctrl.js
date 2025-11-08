@@ -287,6 +287,9 @@ $(function() {
 
         Game.locked = true;
 
+        resetAudio(gameMusic);
+        resetAudio(gameSound);
+
         GlobalPlayer = new Player();
 
         if (mode) GlobalPlayer.setVar('urq_mode', mode);
@@ -331,6 +334,19 @@ $(function() {
     // Make a variable global so that a function is available in other namespaces
     window.loadGameFromData = loadGameFromData;
 
+    // Function to reset an Audio object
+    var resetAudio = function(audio) {
+        if (!audio.paused) {
+            audio.pause();
+        }
+        audio.currentTime = 0;
+        audio.loop = false;
+        audio.src = '';
+        audio.load();
+    }
+    // Make a variable global so that a function is available in other namespaces
+    window.resetAudio = resetAudio;
+
     $('#mute').on('click', function () {
         var span = $(this).find('span.glyphicon');
         var dataI18n = '[title]volume_control;[aria-label]';
@@ -374,6 +390,9 @@ $(function() {
 
             textfield.empty();
             buttonField.empty();
+
+            resetAudio(gameMusic);
+            resetAudio(gameSound);
 
             Game.init();
 
