@@ -273,6 +273,9 @@ Player.prototype.setVar = function(variable, value) {
     if (variable.toLowerCase() === 'fileread') {
         this.fileRead(value);
         return;
+    } else
+    if (variable.toLowerCase() === 'music') {
+        if (value === '') resetAudio(gameMusic);
     }
 
     Game.setVar(variable, value);
@@ -365,29 +368,40 @@ Player.prototype.fileRead = function(fileURL) {
  * @param {Boolean} loop
  */
 Player.prototype.playMusic = function(src, loop) {
-    var file;
-
-    if (files === null) {
-        file = normalizeInternalPath(questPath + '/' + src);
-    } else {
-        file = files[normalizeInternalPath(src)];
-    }
-
     if (src) {
-        if (gameMusic.getAttribute('src') != file) {
-            gameMusic.src = file;
-
-            if (loop) {
-                gameMusic.addEventListener('ended', function() {
+        var file;
+        if (files === null) {
+            file = normalizeInternalPath(questPath + '/' + src);
+        } else {
+            file = files[normalizeInternalPath(src)];
+        }
+    
+        if (loop) {
+            // Music is played in a loop using the system variable
+            if (gameMusic.paused) {
+                // Music is not currently playing
+                resetAudio(gameMusic);
+                gameMusic.src = file;
+                gameMusic.loop = true;
+                gameMusic.play();
+            } else {
+                // Music is currently playing
+                if (gameMusic.getAttribute('src') != file || !gameMusic.loop) {
+                    // The file has changed or the file is not playing in a loop
+                    resetAudio(gameMusic);
                     gameMusic.src = file;
+                    gameMusic.loop = true;
                     gameMusic.play();
-                }, false);
+                }
             }
-
+        } else {
+            // Music is played once using the operator
+            resetAudio(gameMusic);
+            gameMusic.src = file;
             gameMusic.play();
         }
     } else {
-        gameMusic.pause();
+        resetAudio(gameMusic);
     }
 };
 

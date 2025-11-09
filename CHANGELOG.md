@@ -52,6 +52,7 @@
 	+ Added: Support for the iFiction record from the Treaty of Babel in the game package, which is used to store extended game metadata in a unified format.
 	+ Added: Automatic focusing of controls when working with dialog boxes (menu, save and load game).
 	+ Added: Volume level setting for game sounds.
+	+ Added: Assigning an empty string value to the music variable stops the audio file from playing in a loop.
 	+ Added: Customizable automatic focusing the first control on the game screen, as well as inscription about waiting for pressing any key and game over notification.
 	+ Added: Ability to configure a request to confirm page closure.
 	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
@@ -72,6 +73,7 @@
 	+ Fixed: Text output containing line breaks is always displayed as a block element.
 	+ Fixed: Paragraphs containing text output with block elements do not have left padding.
 	+ Fixed: Music and game sounds do not stop playing when restarting or loading from a save.
+	+ Fixed: When the music operator is executed  again with the same audio file, the file is not played again.
 	+ Removed: Separate UrqW cursor for choosing and activating buttons (caused issues with simultaneous activation of two controls and was replaced with cluster navigation based on standard system focus).
 	+ Accessibility improvements:
 		- Added: Text labels for controls of the toolbar.
