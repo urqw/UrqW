@@ -92,7 +92,6 @@ Parser.prototype.parse = function(line) {
             }
 
             gameSound.src = src;
-            gameSound.volume = Number(settings['volume'])/100*volumeMultiplier;
             gameSound.play();
 
             break;

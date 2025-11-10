@@ -67,6 +67,7 @@
 	+ Changed: When launching a game by fragment identifier (hash) from a folder, the player searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
 	+ Changed: When launching a game by fragment identifier (hash) from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
 	+ Changed: A new sound played using the play operator stops the previous one (the original behavior of RipURQ, URQ_DOS (WCL), and AkURQ), rather than playing in parallel.
+	+ Changed: Game sounds initiated via the play operator at zero volume begin playing at zero volume instead of being ignored.
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Links disappear from the text when loading a saved game.

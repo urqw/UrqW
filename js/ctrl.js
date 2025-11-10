@@ -341,6 +341,7 @@ $(function() {
         }
         audio.currentTime = 0;
         audio.loop = false;
+        audio.volume = Number(settings['volume'])/100*volumeMultiplier;
         audio.src = '';
         audio.load();
     }
