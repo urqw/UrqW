@@ -82,8 +82,6 @@ Parser.prototype.parse = function(line) {
         case 'image': return GlobalPlayer.image(command.toString().trim());
         case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
         case 'play':
-            if (volumeMultiplier == 0 || Number(settings['volume']) == 0) return;
-
             resetAudio(gameSound);
 
             var src;

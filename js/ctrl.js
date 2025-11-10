@@ -350,31 +350,35 @@ $(function() {
     $('#mute').on('click', function () {
         var span = $(this).find('span.glyphicon');
         var dataI18n = '[title]volume_control;[aria-label]';
+        var volumeLevel;
         var labelID;
 
         switch (volumeMultiplier) {
             case 1:
                 labelID = 'mute_sound';
                 volumeMultiplier = 0.5;
-                gameMusic.volume = Number(settings['volume'])/100*volumeMultiplier;
+                volumeLevel = Number(settings['volume'])/100*volumeMultiplier;
                 span.removeClass('glyphicon-volume-up');
                 span.addClass('glyphicon-volume-down');
                 break;
             case 0.5:
                 labelID = 'restore_normal_volume';
     volumeMultiplier = 0;
-                gameMusic.volume = 0;
+                volumeLevel = 0;
                 span.removeClass('glyphicon-volume-down');
                 span.addClass('glyphicon-volume-off');
                 break;
             case 0:
                 labelID = 'mute_half_volume';
                 volumeMultiplier = 1;
-                gameMusic.volume = Number(settings['volume'])/100;
+                volumeLevel = Number(settings['volume'])/100;
                 span.removeClass('glyphicon-volume-off');
                 span.addClass('glyphicon-volume-up');
                 break;
         }
+
+        gameMusic.volume = volumeLevel;
+        gameSound.volume = volumeLevel;
 
         $(this).attr('aria-label', i18next.t(labelID));
         $(this).attr('data-i18n', dataI18n + labelID);
@@ -536,7 +540,9 @@ $(function() {
 
     volumeSlider.on('change', function() {
         var currentValue = parseInt($(this).val(), 10);
-        gameMusic.volume = currentValue/100*volumeMultiplier;
+        var volumeLevel = currentValue/100*volumeMultiplier;
+        gameMusic.volume = volumeLevel;
+        gameSound.volume = volumeLevel;
         var name = 'volume';
         settings[name] = currentValue;
         localStorage.setItem(name, JSON.stringify(currentValue));
