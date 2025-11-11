@@ -199,11 +199,7 @@ Client.prototype.drawText = function () {
         div.find('img').each(function(index) {
             var src = $(this).attr('src');
             if (src && src.indexOf('http://') == -1 && src.indexOf('https://') == -1) {
-                if (files === null) {
-                    src = normalizeInternalPath(questPath + '/' + src);
-                } else {
-                    src = files[normalizeInternalPath(src)]; // todo
-                }
+                src = getGameFileURL(normalizeInternalPath(src));
                 $(this).attr('src', src);
             }
         });

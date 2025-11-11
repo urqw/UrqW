@@ -53,6 +53,7 @@
 	+ Added: Automatic focusing of controls when working with dialog boxes (menu, save and load game).
 	+ Added: Volume level setting for game sounds.
 	+ Added: Assigning an empty string value to the music variable stops the audio file from playing in a loop.
+	+ Added: The music and game sounds that are playing are remembered when the game is saved, and they resume from the same point when loading from the save.”
 	+ Added: Customizable automatic focusing the first control on the game screen, as well as inscription about waiting for pressing any key and game over notification.
 	+ Added: Ability to configure a request to confirm page closure.
 	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).

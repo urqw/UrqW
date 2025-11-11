@@ -324,17 +324,12 @@ Player.prototype.javaScript = function(code) {
  * @param {String} fileURL
  */
     // todo Maybe move to client like image
-Player.prototype.fileRead = function(fileURL) {
+Player.prototype.fileRead = function(filePath) {
     var result = '';
     var errorMessage;
 
-    if (fileURL) {
-            if (files === null) {
-                fileURL = normalizeInternalPath(questPath + '/' + fileURL.toString().trim());
-            } else {
-                fileURL = files[normalizeInternalPath(fileURL.toString().trim())];
-            }
-
+    if (filePath) {
+            var fileURL = getGameFileURL(normalizeInternalPath(filePath));
             if (fileURL) {
                 $.ajax({
                     url: fileURL,
@@ -369,27 +364,25 @@ Player.prototype.fileRead = function(fileURL) {
  */
 Player.prototype.playMusic = function(src, loop) {
     if (src) {
-        var file;
-        if (files === null) {
-            file = normalizeInternalPath(questPath + '/' + src);
-        } else {
-            file = files[normalizeInternalPath(src)];
-        }
-    
+        var filePath = normalizeInternalPath(src);
+        var fileURL = getGameFileURL(filePath);
+   
         if (loop) {
             // Music is played in a loop using the system variable
             if (gameMusic.paused) {
                 // Music is not currently playing
                 resetAudio(gameMusic);
-                gameMusic.src = file;
+                gameMusic.src = fileURL;
+                gameMusic.srcUrqW = filePath;
                 gameMusic.loop = true;
                 gameMusic.play();
             } else {
                 // Music is currently playing
-                if (gameMusic.getAttribute('src') != file || !gameMusic.loop) {
+                if (gameMusic.getAttribute('src') != fileURL || !gameMusic.loop) {
                     // The file has changed or the file is not playing in a loop
                     resetAudio(gameMusic);
-                    gameMusic.src = file;
+                    gameMusic.src = fileURL;
+                    gameMusic.srcUrqW = filePath;
                     gameMusic.loop = true;
                     gameMusic.play();
                 }
@@ -397,20 +390,11 @@ Player.prototype.playMusic = function(src, loop) {
         } else {
             // Music is played once using the operator
             resetAudio(gameMusic);
-            gameMusic.src = file;
+            gameMusic.src = fileURL;
+            gameMusic.srcUrqW = filePath;
             gameMusic.play();
         }
     } else {
         resetAudio(gameMusic);
     }
 };
-
-
-
-
-
-
-
-
-
-

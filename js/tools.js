@@ -195,12 +195,26 @@ function getEscapedHtmlWithAllowedTags(html, allowedTags) {
 
 /**
  * Function for normalizing internal paths to game files
-  * @param {string} value
+ * @param {string} value
  */
 function normalizeInternalPath(path) {
+    path = path.toString().trim();
     path = path.replace(/\\/g, '/');
     path = path.replace(/^\/+/, '');
     return path;
+}
+
+/**
+ * Function to get the URL of a game file by its normalized internal path
+ * @param {string} value
+ */
+function getGameFileURL(filePath) {
+    if (files === null) {
+        filePath = questPath + '/' + filePath;
+    } else {
+        filePath = files[filePath]; // todo
+    }
+    return filePath;
 }
 
 /**

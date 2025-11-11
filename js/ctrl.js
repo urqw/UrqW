@@ -304,6 +304,9 @@ $(function() {
 
         GlobalPlayer.goto(Game.realCurrentLoc, 'return');
 
+        if (!data.music.paused) gameMusic.play();
+        if (!data.sound.paused) gameSound.play();
+
         if (GlobalPlayer.status != PLAYER_STATUS_NEXT) {
             GlobalPlayer.fin();
         } else {
@@ -343,6 +346,7 @@ $(function() {
         audio.loop = false;
         audio.volume = Number(settings['volume'])/100*volumeMultiplier;
         audio.src = '';
+        audio.srcUrqW = '';
         audio.load();
     }
     // Make a variable global so that a function is available in other namespaces

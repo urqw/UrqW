@@ -343,6 +343,17 @@ Quest.prototype.save = function(slot) {
         links: GlobalPlayer.links,
         items: this.items,
         vars: this.vars,
+        music: {
+            paused: gameMusic.paused,
+            srcUrqW: gameMusic.srcUrqW || '',
+            currentTime: gameMusic.currentTime,
+            loop: gameMusic.loop
+        },
+        sound: {
+            paused: gameSound.paused,
+            srcUrqW: gameSound.srcUrqW || '',
+            currentTime: gameSound.currentTime
+        },
         position: this.position,
         realCurrentLoc: this.realCurrentLoc
     }));
@@ -360,6 +371,13 @@ Quest.prototype.load = function(data) {
     GlobalPlayer.links = data.links;
     this.items = data.items;
     this.vars = data.vars;
+    gameMusic.src = data.music.srcUrqW ? getGameFileURL(data.music.srcUrqW) : '';
+    gameMusic.srcUrqW = data.music.srcUrqW;
+    gameMusic.currentTime = data.music.currentTime;
+    gameMusic.loop = data.music.loop;
+    gameSound.src = data.sound.srcUrqW ? getGameFileURL(data.sound.srcUrqW) : '';
+    gameSound.srcUrqW = data.sound.srcUrqW;
+    gameSound.currentTime = data.sound.currentTime;
     this.position = data.position;
     this.realCurrentLoc = data.realCurrentLoc;
 };

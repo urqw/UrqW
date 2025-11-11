@@ -83,17 +83,11 @@ Parser.prototype.parse = function(line) {
         case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
         case 'play':
             resetAudio(gameSound);
-
-            var src;
-            if (files === null) {
-                src = normalizeInternalPath(questPath + '/' + command.toString().trim());
-            } else {
-                src = files[normalizeInternalPath(command.toString().trim())];
-            }
-
-            gameSound.src = src;
+            var filePath = normalizeInternalPath(command);
+            var fileURL = getGameFileURL(filePath);
+            gameSound.src = fileURL;
+            gameSound.srcUrqW = filePath;
             gameSound.play();
-
             break;
         case 'clsb': return GlobalPlayer.clsb();
         case 'clsl': return GlobalPlayer.clsl();
