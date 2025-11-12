@@ -274,6 +274,10 @@ Player.prototype.setVar = function(variable, value) {
         this.fileRead(value);
         return;
     } else
+    if (variable.toLowerCase() === 'file_url') {
+        this.fileURL(value);
+        return;
+    } else
     if (variable.toLowerCase() === 'music') {
         if (value === '') resetAudio(gameMusic);
     }
@@ -356,6 +360,14 @@ Player.prototype.fileRead = function(filePath) {
     }
 
     Game.setVar('fileread', result);
+};
+
+/**
+ * @param {String} filePath - internal file path
+ */
+    // todo Maybe move to client like image
+Player.prototype.fileURL = function(filePath) {
+    Game.setVar('file_url', getGameFileURL(normalizeInternalPath(filePath)));
 };
 
 /**

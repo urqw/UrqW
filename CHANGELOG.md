@@ -11,6 +11,7 @@
 	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
 	+ Added: System variables:
 		- date - get the current date (only when urq_mode specific rules are absent).
+		- file_url - get the relative URL of a file from the game package by its internal path.
 		- image_caption - set or get the visible caption for an image.
 		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ)
 		- time - get the current time.
