@@ -8,10 +8,10 @@
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
-	+ Added: Ability to read any file from the game package and get its contents as text using the fileread system variable.
 	+ Added: System variables:
 		- date - get the current date (only when urq_mode specific rules are absent).
-		- file_url - get the relative URL of a file from the game package by its internal path.
+		- file_content - get the contents of a file from a game package as text by its internal path.
+		- file_url - get the relative URL of a file from a game package by its internal path.
 		- image_caption - set or get the visible caption for an image.
 		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ)
 		- time - get the current time.

@@ -270,8 +270,8 @@ Player.prototype.setVar = function(variable, value) {
         this.javaScript(value);
         return;
     } else
-    if (variable.toLowerCase() === 'fileread') {
-        this.fileRead(value);
+    if (variable.toLowerCase() === 'file_content') {
+        this.fileContent(value);
         return;
     } else
     if (variable.toLowerCase() === 'file_url') {
@@ -325,10 +325,10 @@ Player.prototype.javaScript = function(code) {
 };
 
 /**
- * @param {String} fileURL
+ * @param {String} filePath - internal file path
  */
     // todo Maybe move to client like image
-Player.prototype.fileRead = function(filePath) {
+Player.prototype.fileContent = function(filePath) {
     var result = '';
     var errorMessage;
 
@@ -359,7 +359,7 @@ Player.prototype.fileRead = function(filePath) {
         console.error('Error reading file:', errorMessage);
     }
 
-    Game.setVar('fileread', result);
+    Game.setVar('file_content', result);
 };
 
 /**
