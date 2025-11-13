@@ -202,6 +202,9 @@ Client.prototype.drawText = function () {
                 src = getGameFileURL(normalizeInternalPath(src));
                 $(this).attr('src', src);
             }
+            if (settings['images_focusable']) {
+                $(this).attr('tabindex', '0');
+            }
         });
 
         div.find('a.button').each(function(index) {

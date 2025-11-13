@@ -706,6 +706,13 @@ $(function() {
         localStorage.setItem('shake_sensitivity_threshold', $(this).val());
     });
 
+    $('#images_focusable').on('change', function() {
+        var name = 'images_focusable';
+        var isChecked = $(this).prop('checked');
+        settings[name] = isChecked;
+        localStorage.setItem(name, JSON.stringify(isChecked));
+    });
+
     /**
      * Click on btn
      */
