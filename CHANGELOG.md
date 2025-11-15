@@ -31,7 +31,7 @@
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: Processing of the tokens_delim variable.
-	+ Fixed: Processing of the goto operator in compatibility mode with URQ-DOS.
+	+ Fixed: Processing of the goto operator in compatibility mode with URQ_DOS.
 * Game player:
 	+ Added: Customizable internationalization support and interface translations into English, Armenian, Belarusian, Esperanto, Interslavic (Latin), Russian, and Ukrainian.
 	+ Added: Game encoding configuration when opening from the main page.

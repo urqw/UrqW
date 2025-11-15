@@ -22,7 +22,7 @@ Player.prototype.goto = function(labelName, type) {
         }
 
         // todo Constants
-        if ((type == 'btn' || (Game.getVar('urq_mode') != 'dosurq' && type == 'goto'))) {
+        if ((type == 'btn' || (!['dosurq', 'akurq'].includes(Game.getVar('urq_mode')) && type == 'goto'))) {
             Game.setVar('previous_loc', Game.getVar('current_loc'));
             Game.setVar('current_loc', labelName);
         }
