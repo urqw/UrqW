@@ -288,6 +288,10 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Datetime.getTime() / (1000*60*60*24));
     }
 
+    if (variable == 'urq_type' && this.getVar('urq_mode') == 'akurq') {
+        return 1;
+    }
+
     if (variable == 'urqw_title') {
         return document.title;
     }
