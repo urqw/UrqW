@@ -136,6 +136,7 @@ Player.prototype.action = function(actionId, link) {
         for (var key in this.buttons) {
             if (this.buttons[key].id == actionId) {
                 command = this.buttons[key].command;
+                Game.setVar('last_btn_caption', this.buttons[key].desc);
                 delete this.buttons[key];
 
                 break

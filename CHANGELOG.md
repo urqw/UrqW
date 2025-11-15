@@ -13,7 +13,8 @@
 		- file_content - get the contents of a file from a game package as text by its internal path.
 		- file_url - get the relative URL of a file from a game package by its internal path.
 		- image_caption - set or get the visible caption for an image.
-		- location - the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
+		- last_btn_caption - get the name of the last activated choice button.
+		- location - get the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
 		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ).
 		- time - get the current time.
 		- urq_type - always has a value 1 (only for compatibility mode with akURQ).
