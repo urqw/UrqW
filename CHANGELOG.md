@@ -13,9 +13,10 @@
 		- file_content - get the contents of a file from a game package as text by its internal path.
 		- file_url - get the relative URL of a file from a game package by its internal path.
 		- image_caption - set or get the visible caption for an image.
-		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ)
-		- urq_type - always has a value 1 (only for compatibility mode with akURQ)
+		- location - the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
+		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ).
 		- time - get the current time.
+		- urq_type - always has a value 1 (only for compatibility mode with akURQ).
 		- urqw_game_ifid - get the game's IFID (or an empty string if it lacks one).
 		- urqw_game_lang - set or get the game content language.
 		- urqw_title - set or get the UrqW page title.

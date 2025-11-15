@@ -42,6 +42,10 @@ Player.prototype.goto = function(labelName, type) {
             }
         }
 
+        if (Game.getVar('urq_mode') == 'akurq') {
+            Game.setVar('location', label.name);
+        }
+
         Game.position = label.pos;
 
         // Entire subsequent stack is cleared
