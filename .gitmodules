@@ -175,3 +175,9 @@
 [submodule "quests/multiplugin"]
 	path = quests/multiplugin
 	url = https://github.com/urqw/multiplugin.git
+[submodule "games/hair_s_breadth_from_death"]
+	path = games/hair_s_breadth_from_death
+	url = https://github.com/urqw/hair_s_breadth_from_death.git
+[submodule "games/mirrored_spaceman"]
+	path = games/mirrored_spaceman
+	url = https://github.com/urqw/mirrored_spaceman.git
