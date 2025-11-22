@@ -79,8 +79,26 @@ Parser.prototype.parse = function(line) {
 
     switch (operand) {
         case 'save': return Game.save('fast');
-        case 'image': return GlobalPlayer.image(command);
-        case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
+        case 'image':
+            // An operator or an assignment of a value to a variable of the same name
+            if (command.trim().startsWith('=')) {
+                // Assigning a value to a variable
+                GlobalPlayer.setVar(operand, new Expression(command.slice(command.indexOf('=') + 1)).calc());
+                return;
+            } else {
+                // Operator execution
+                return GlobalPlayer.image(command);
+            }
+        case 'music':
+            // An operator or an assignment of a value to a variable of the same name
+            if (command.trim().startsWith('=')) {
+                // Assigning a value to a variable
+                GlobalPlayer.setVar(operand, new Expression(command.slice(command.indexOf('=') + 1)).calc());
+                return;
+            } else {
+                // Operator execution
+                return GlobalPlayer.playMusic(command.toString().trim(), false);
+            }
         case 'play':
             resetAudio(gameSound);
             var filePath = normalizeInternalPath(command);
