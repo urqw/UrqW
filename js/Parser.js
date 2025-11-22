@@ -79,7 +79,7 @@ Parser.prototype.parse = function(line) {
 
     switch (operand) {
         case 'save': return Game.save('fast');
-        case 'image': return GlobalPlayer.image(command.toString().trim());
+        case 'image': return GlobalPlayer.image(command);
         case 'music': return GlobalPlayer.playMusic(command.toString().trim(), false);
         case 'play':
             resetAudio(gameSound);

@@ -292,6 +292,7 @@ Player.prototype.setVar = function(variable, value) {
     // todo Move to client
 Player.prototype.image = function(src) {
     if (src) {
+        src = src.toString().trim();
         var alt = i18next.t('image');
         var srcParts = src.split('|');
         if (srcParts.length >= 2) {
