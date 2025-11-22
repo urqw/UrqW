@@ -13,6 +13,7 @@
 		- file_content - get the contents of a file from a game package as text by its internal path.
 		- file_url - get the relative URL of a file from a game package by its internal path.
 		- image_caption - set or get the visible caption for an image.
+		- instr_leave_spc - set or get the space handling mode for the instr operator.
 		- last_btn_caption - get the name of the last activated choice button.
 		- location - get the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
 		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ).
@@ -32,6 +33,7 @@
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping in compatibility modes with RipURQ and URQ_DOS.
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
+	+ Changed: Initializing a variable using the instr operator without assigning a value initializes the variable with a value of the empty string rather than being ignored.
 	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: Processing of the tokens_delim variable.
 	+ Fixed: Processing of the goto operator in compatibility mode with URQ_DOS.

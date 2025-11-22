@@ -152,9 +152,18 @@ Parser.prototype.parse = function(line) {
         case 'instr':
             line = command;
 
+            var instrName, instrVal;
             if (line.indexOf('=') > 0) {
-                GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc());
+                instrName = line.substring(0, line.indexOf('=')).trim();
+                instrVal = new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc();
+                if (Game.getVar('instr_leave_spc') === 0) {
+                    instrVal = instrVal.trim();
+                }
+            } else {
+                instrName = line.trim();
+                instrVal = '';
             }
+            GlobalPlayer.setVar(instrName, instrVal);
 
             // no break here
             break;
