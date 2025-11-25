@@ -31,7 +31,7 @@
 	+ Added: Ignore whitespace at the beginning of any lines.
 	+ Added: Automatic normalization of internal file paths: reverse soliduses (backslashes are replaced with soliduses (slashes), and all soliduses at the beginning of the path are removed.
 	+ Added: Compatibility mode with AkURQ.
-	+ Added: Automatic HTML escaping in compatibility modes with RipURQ and URQ_DOS.
+	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: Initializing a variable using the instr operator without assigning a value initializes the variable with a value of the empty string rather than being ignored.
 	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.

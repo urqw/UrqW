@@ -29,6 +29,7 @@ quest = []; // todo
  */
 var mode;
 var encoding;
+var htmlSupport;
 var debug;
 // Object for storing parameters of the manifest.json file
 var manifest = {};
@@ -75,12 +76,21 @@ $(function() {
     }
 
     /**
+     * Get the default HTML support value according to the URQ mode
+     */
+    function htmlSupportByDefault(urq_mode) {
+        // RipURQ and URQ_DOS did not originally support HTML
+        return !['ripurq', 'dosurq'].includes(urq_mode);
+    }
+
+    /**
      * Load game from URL
      */
     function loadFromURL(url) {
         var fileExtension = url.split('.').pop().toLowerCase();
         mode = $('#urq_mode').val();
         encoding = $('#game_encoding').val();
+        htmlSupport = htmlSupportByDefault(mode);
     
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
@@ -251,6 +261,7 @@ $(function() {
 
         mode = $('#urq_mode').val();
         encoding = $('#game_encoding').val();
+        htmlSupport = htmlSupportByDefault(mode);
 
         async function getData(fileURL, fileEncoding) {
             try {
@@ -335,6 +346,7 @@ $(function() {
 
         mode = $('#urq_mode').val();
         encoding = $('#game_encoding').val();
+        htmlSupport = htmlSupportByDefault(mode);
 
         // The manifest.json file must be read first
         // because its contents determine how other files will be read
@@ -636,6 +648,7 @@ if (styleFile) {
 
         mode = $('#urq_mode').val();
         encoding = $('#game_encoding').val();
+        htmlSupport = htmlSupportByDefault(mode);
 
         // The manifest.json file must be read first
         // because its contents determine how other files will be read
@@ -764,10 +777,18 @@ var fileArray = [];
                 }
                 manifest['urq_mode'] = jsonObj.urq_mode;
             }
+            if (jsonObj.hasOwnProperty('html_support')) {
+                if (typeof jsonObj.html_support !== 'boolean') {
+                    throw new Error('Invalid HTML support');
+                }
+                manifest['html_support'] = jsonObj.html_support;
+            }
 
             // Override parameters from UI
             if (manifest['urq_mode']) mode = manifest['urq_mode'];
             if (manifest['game_encoding']) encoding = manifest['game_encoding'];
+            htmlSupport = htmlSupportByDefault(mode);
+            if (manifest.hasOwnProperty('html_support')) htmlSupport = manifest['html_support'];
 
             // Add IFID metadata if it is specified
             if (manifest['urqw_game_ifid']) {
