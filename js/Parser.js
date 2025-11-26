@@ -265,7 +265,12 @@ Parser.prototype.openLinks = function(line) {
             var command;
             exp = exp.substr(2, (exp.length - 4));
 
-            if (exp.indexOf('|') > 0) {
+            if (!htmlSupport) {
+                text = exp.split('|')[0].trim();
+                return text;
+            }
+
+if (exp.indexOf('|') > 0) {
                 var exptmp = exp.split('|');
                 command = exptmp[1].trim();
                 text = exptmp[0].trim();
