@@ -231,323 +231,311 @@
             </button>
         </div>
 
-        <div class="panel panel-default">
-            <div id="debugging_panel" style="display: none;">
-                <div class="panel-heading"><h3>
-                    <a href="#" class="collapsed" data-toggle="collapse" data-target="#debugging" aria-expanded="false" aria-controls="debugging">
-                        <span data-i18n="debugging">Debugging</span>
-                    </a>
-                </h3></div>
-    
-                <div id="debugging" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <h4 data-i18n="variables">Variables</h4>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" data-i18n="name">Name</th>
-                                        <th scope="col" data-i18n="value">Value</th>
-                                        <th scope="col" data-i18n="type">Type</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="variable_table">
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h4 data-i18n="items">Items</h4>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" data-i18n="name">Name</th>
-                                        <th scope="col" data-i18n="quantity">Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="item_table">
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <h4 data-i18n="files">Files</h4>
-                        <ol id="file_list"></ol>
-
-                        <h4 data-i18n="other">Other</h4>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">name</th>
-                                        <td id="name_in_menu"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">hash</th>
-                                        <td id="hash_in_menu"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">status</th>
-                                        <td id="status_in_menu"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">position</th>
-                                        <td id="position_in_menu"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">realCurrentLoc</th>
-                                        <td id="real_current_loc_in_menu"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel-heading"><h3>
-                <a href="#" class="collapsed" data-toggle="collapse" data-target="#about_game" aria-expanded="false" aria-controls="about_game">
-                    <span data-i18n="about_game">About the Game</span>
+        <div id="debugging_panel" style="display: none;">
+            <div class="page-header"><h3>
+                <a href="#" class="collapsed" data-toggle="collapse" data-target="#debugging" aria-expanded="false" aria-controls="debugging">
+                    <span data-i18n="debugging">Debugging</span>
                 </a>
             </h3></div>
 
-            <div id="about_game" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div id="download_ifiction" class="form-group" style="display: none;">
-                        <button id="download_ifiction_btn" class="btn btn-default" type="button" data-i18n="download_ifiction_record">
-                            Download iFiction record
-                        </button>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <caption data-i18n="metadata">Metadata</caption>
-                            <tbody id="metadata_table">
-                                <tr>
-                                    <th scope="row">IFID</th>
-                                    <td id="ifid_in_menu"><span data-i18n="undefined">Undefined</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="game_description" style="display: none;">
-                        <h4 data-i18n="description">Description</h4>
-                        <div id="game_description_text"></div>
-                    </div>
+            <div id="debugging" class="collapse">
+                <h4 data-i18n="variables">Variables</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-i18n="name">Name</th>
+                                <th scope="col" data-i18n="value">Value</th>
+                                <th scope="col" data-i18n="type">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody id="variable_table">
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 data-i18n="items">Items</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-i18n="name">Name</th>
+                                <th scope="col" data-i18n="quantity">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="item_table">
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 data-i18n="files">Files</h4>
+                <ol id="file_list"></ol>
+
+                <h4 data-i18n="other">Other</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th scope="row">name</th>
+                                <td id="name_in_menu"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">hash</th>
+                                <td id="hash_in_menu"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">status</th>
+                                <td id="status_in_menu"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">position</th>
+                                <td id="position_in_menu"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">realCurrentLoc</th>
+                                <td id="real_current_loc_in_menu"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
 
-            <div class="panel-heading"><h3>
-                <a href="#" class="collapsed" data-toggle="collapse" data-target="#settings" aria-expanded="false" aria-controls="settings">
-                    <span data-i18n="settings">Settings</span>
-                </a>
-            </h3></div>
+        <div class="page-header"><h3>
+            <a href="#" class="collapsed" data-toggle="collapse" data-target="#about_game" aria-expanded="false" aria-controls="about_game">
+                <span data-i18n="about_game">About the Game</span>
+            </a>
+        </h3></div>
 
-            <div id="settings" class="panel-collapse collapse">
-                <div class="panel-body">
-                                        <h4 data-i18n="general">General</h4>
-                                        <div class="form-group" id="language_in_settings"></div>
-                                        <div class="form-group">
-                                            <label for="volume" class="control-label" data-i18n="volume">Volume</label>
-                                            <div class="input-group">
-                                                <input type="range" class="form-control" id="volume" min="0" max="100" step="1">
-                                                <span class="input-group-addon" aria-hidden="true">%</span>
-                                            </div>
-                                            <div class="btn-group btn-group-justified" style="margin-top: 5px;">
-                                                <button id="decrease_volume" aria-label="Decrease" tabindex="-1" class="btn btn-default" data-i18n="[aria-label]decrease">
-                                                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                                </button>
-                                                <button id="increase_volume" aria-label="Increase" tabindex="-1" type="button" class="btn btn-default" data-i18n="[aria-label]increase">
-                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="continue_game">
-                                                <label for="continue_game" data-i18n="continue_game">When loading, continue the game with saving progress</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="automatically_focus">
-                                                <label for="automatically_focus" data-i18n="automatically_focus">Automatically focus the first control</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="close_page_confirmation">
-                                                <label for="close_page_confirmation" data-i18n="close_page_confirmation">Confirmation of page closing</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="inconsistent_save_confirmation">
-                                                <label for="inconsistent_save_confirmation" data-i18n="inconsistent_save_confirmation">Confirmation of loading save for a different game version</label>
-                                            </div>
-                                        </div>
-                                        <h4 data-i18n="hotkeys">Hotkeys</h4>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="numeric_keys">
-                                                <label for="numeric_keys" data-i18n="numeric_keys">Activation of choice buttons using numeric keys</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="alphabetic_keys">
-                                                <label for="alphabetic_keys" data-i18n="alphabetic_keys">Quick actions using alphabetic keys</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="navigation_keys">
-                                                <label for="navigation_keys" data-i18n="navigation_keys">Interface area navigation using navigation keys</label>
-                                            </div>
-                                        </div>
-                                        <h4 data-i18n="accessibility">Accessibility</h4>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="announce_description_updates">
-                                                <label for="announce_description_updates" data-i18n="announce_description_updates">Announce description updates using assistive technology</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="announce_choice_button_updates">
-                                                <label for="announce_choice_button_updates" data-i18n="announce_choice_button_updates">Announce choice button updates using assistive technology</label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="announce_description_when_shaking">
-                                                <label for="announce_description_when_shaking" data-i18n="announce_description_when_shaking">Announce description using assistive technology when shaking device</label>
-                                            </div>
-                                            <div class="form-group" id="shake_sensitivity_threshold_group">
-                                                <label for="shake_sensitivity_threshold" class="control-label" data-i18n="shake_sensitivity_threshold">Shake sensitivity threshold</label>
-                                                <select id="shake_sensitivity_threshold" class="form-control">
-                                                    <option value="1">1</option>
-                                                    <option value="3">3</option>
-                                                    <option value="5" selected>5</option>
-                                                    <option value="7">7</option>
-                                                    <option value="9">9</option>
-                                                </select>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="images_focusable">
-                                                <label for="images_focusable" data-i18n="images_focusable">Make images focusable</label>
-                                            </div>
-                                        </div>
+        <div id="about_game" class="collapse">
+            <div id="download_ifiction" class="form-group" style="display: none;">
+                <button id="download_ifiction_btn" class="btn btn-default" type="button" data-i18n="download_ifiction_record">
+                    Download iFiction record
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <caption data-i18n="metadata">Metadata</caption>
+                    <tbody id="metadata_table">
+                        <tr>
+                            <th scope="row">IFID</th>
+                            <td id="ifid_in_menu"><span data-i18n="undefined">Undefined</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="game_description" style="display: none;">
+                <h4 data-i18n="description">Description</h4>
+                <div id="game_description_text"></div>
+            </div>
+        </div>
+
+        <div class="page-header"><h3>
+            <a href="#" class="collapsed" data-toggle="collapse" data-target="#settings" aria-expanded="false" aria-controls="settings">
+                <span data-i18n="settings">Settings</span>
+            </a>
+        </h3></div>
+
+        <div id="settings" class="collapse">
+            <h4 data-i18n="general">General</h4>
+            <div class="form-group" id="language_in_settings"></div>
+            <div class="form-group">
+                <label for="volume" class="control-label" data-i18n="volume">Volume</label>
+                <div class="input-group">
+                    <input type="range" class="form-control" id="volume" min="0" max="100" step="1">
+                    <span class="input-group-addon" aria-hidden="true">%</span>
+                </div>
+                <div class="btn-group btn-group-justified" style="margin-top: 5px;">
+                    <button id="decrease_volume" aria-label="Decrease" tabindex="-1" class="btn btn-default" data-i18n="[aria-label]decrease">
+                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                    </button>
+                    <button id="increase_volume" aria-label="Increase" tabindex="-1" type="button" class="btn btn-default" data-i18n="[aria-label]increase">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
-
-            <div class="panel-heading"><h3>
-                <a href="#" class="collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="help">
-                    <span data-i18n="help">Help</span>
-                </a>
-            </h3></div>
-
-            <div id="help" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered caption-top">
-                            <caption data-i18n="hotkeys">Hotkeys</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col" data-i18n="action">Action</th>
-                                    <th scope="col" data-i18n="press">Press</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" data-i18n="close_dialog_box">Close dialog box</th>
-                                    <td>Escape</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="volume_control">Volume control</th>
-                                    <td>V</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="restart_game">Restart game</th>
-                                    <td>R</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="save_game">Save game</th>
-                                    <td>S</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="load_game">Load game</th>
-                                    <td>L</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="open_menu">Open menu</th>
-                                    <td>M</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="focus_open_inventory">Focus and open inventory</th>
-                                    <td>I</td>
-                                </tr>
-                                <tr class="alphabetic_keys_row">
-                                    <th scope="row" data-i18n="announce_description">Announce description using assistive technology</th>
-                                    <td>A</td>
-                                </tr>
-                                <tr class="numeric_keys_row">
-                                    <th scope="row" data-i18n="activating_first_ten_buttons">Activating the first ten choice buttons</th>
-                                    <td>1-9, 0</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_next_area">Focus the next interface area</th>
-                                    <td data-i18n="right_arrow">Right arrow</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_previous_area">Focus the previous interface area</th>
-                                    <td data-i18n="left_arrow">Left arrow</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_next_control">Focus the next control of the current interface area</th>
-                                    <td data-i18n="down_arrow">Down arrow</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_previous_control">Focus the previous control of the current interface area</th>
-                                    <td data-i18n="up_arrow">Up arrow</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_last_area">Focus the last interface area</th>
-                                    <td>End</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_first_area">Focus the first interface area</th>
-                                    <td>Home</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_last_control">Focus the last control of the current interface area</th>
-                                    <td>PageDown</td>
-                                </tr>
-                                <tr class="navigation_keys_row">
-                                    <th scope="row" data-i18n="focus_first_control">Focus the first control of the current interface area</th>
-                                    <td>PageUp</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="paragraph-block" data-i18n="urqw_docs_description">Detailed <a href="docs/index.html" target="_blank">UrqW Documentation</a> is available separately.</p>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="continue_game">
+                    <label for="continue_game" data-i18n="continue_game">When loading, continue the game with saving progress</label>
                 </div>
             </div>
-
-            <div class="panel-heading"><h3>
-                <a href="#" class="collapsed" data-toggle="collapse" data-target="#about_urqw" aria-expanded="false" aria-controls="about_urqw">
-                    <span data-i18n="about_urqw">About UrqW</span>
-                </a>
-            </h3></div>
-
-            <div id="about_urqw" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <p class="paragraph-block" data-i18n="urqw_description">UrqW is a free and open source text-based game engine.</p>
-                    <p class="paragraph-block" data-i18n="urqw_dev_description">UrqW is a free and open source text-based game engine.</p>
-                    <h4 data-i18n="licenses">Licenses</h4>
-                    <p class="paragraph-block" data-i18n="urqw_license_description">UrqW is available under the <a href="LICENSE-GPL.txt" target="_blank">GNU General Public License version 2</a> or later.</p>
-                    <p class="paragraph-block" data-i18n="third_party_licenses_description">UrqW also includes and uses third-party components which are made available under <a href="third-party_components.txt" target="_blank">different free and open source licenses</a>.</p>
-                    <p class="paragraph-block" data-i18n="urqw_source_code_description">The source code and information about how to build it yourself are available in the public repository.</p>
-                    <h4 data-i18n="contributors">Contributors</h4>
-                    <ul class="list-group" lang="en">
-                        <li class="list-group-item">Alexander Sevryugin, a.k.a. Akela (development, documentation)</li>
-                        <li class="list-group-item">Nikita Tseykovets (development, documentation, localization)</li>
-                        <li class="list-group-item">Uladzimir Charaukhin (Belarusian localization)</li>
-                        <li class="list-group-item">Serhii Pustovoitov, a.k.a. Prool (Ukrainian localization)</li>
-                        <li class="list-group-item">Artur Ajvazjan (Armenian, Esperanto, and Interslavic (Latin) localization)</li>
-                    </ul>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="automatically_focus">
+                    <label for="automatically_focus" data-i18n="automatically_focus">Automatically focus the first control</label>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="close_page_confirmation">
+                    <label for="close_page_confirmation" data-i18n="close_page_confirmation">Confirmation of page closing</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="inconsistent_save_confirmation">
+                    <label for="inconsistent_save_confirmation" data-i18n="inconsistent_save_confirmation">Confirmation of loading save for a different game version</label>
+                </div>
+            </div>
+            <h4 data-i18n="hotkeys">Hotkeys</h4>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="numeric_keys">
+                    <label for="numeric_keys" data-i18n="numeric_keys">Activation of choice buttons using numeric keys</label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="alphabetic_keys">
+                    <label for="alphabetic_keys" data-i18n="alphabetic_keys">Quick actions using alphabetic keys</label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="navigation_keys">
+                    <label for="navigation_keys" data-i18n="navigation_keys">Interface area navigation using navigation keys</label>
+                </div>
+            </div>
+            <h4 data-i18n="accessibility">Accessibility</h4>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" id="announce_description_updates">
+                    <label for="announce_description_updates" data-i18n="announce_description_updates">Announce description updates using assistive technology</label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="announce_choice_button_updates">
+                    <label for="announce_choice_button_updates" data-i18n="announce_choice_button_updates">Announce choice button updates using assistive technology</label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="announce_description_when_shaking">
+                    <label for="announce_description_when_shaking" data-i18n="announce_description_when_shaking">Announce description using assistive technology when shaking device</label>
+                </div>
+                <div class="form-group" id="shake_sensitivity_threshold_group">
+                    <label for="shake_sensitivity_threshold" class="control-label" data-i18n="shake_sensitivity_threshold">Shake sensitivity threshold</label>
+                    <select id="shake_sensitivity_threshold" class="form-control">
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                        <option value="5" selected>5</option>
+                        <option value="7">7</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="images_focusable">
+                    <label for="images_focusable" data-i18n="images_focusable">Make images focusable</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-header"><h3>
+            <a href="#" class="collapsed" data-toggle="collapse" data-target="#help" aria-expanded="false" aria-controls="help">
+                <span data-i18n="help">Help</span>
+            </a>
+        </h3></div>
+
+        <div id="help" class="collapse">
+            <div class="table-responsive">
+                <table class="table table-bordered caption-top">
+                    <caption data-i18n="hotkeys">Hotkeys</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" data-i18n="action">Action</th>
+                            <th scope="col" data-i18n="press">Press</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" data-i18n="close_dialog_box">Close dialog box</th>
+                            <td>Escape</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="volume_control">Volume control</th>
+                            <td>V</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="restart_game">Restart game</th>
+                            <td>R</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="save_game">Save game</th>
+                            <td>S</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="load_game">Load game</th>
+                            <td>L</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="open_menu">Open menu</th>
+                            <td>M</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="focus_open_inventory">Focus and open inventory</th>
+                            <td>I</td>
+                        </tr>
+                        <tr class="alphabetic_keys_row">
+                            <th scope="row" data-i18n="announce_description">Announce description using assistive technology</th>
+                            <td>A</td>
+                        </tr>
+                        <tr class="numeric_keys_row">
+                            <th scope="row" data-i18n="activating_first_ten_buttons">Activating the first ten choice buttons</th>
+                            <td>1-9, 0</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_next_area">Focus the next interface area</th>
+                            <td data-i18n="right_arrow">Right arrow</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_previous_area">Focus the previous interface area</th>
+                            <td data-i18n="left_arrow">Left arrow</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_next_control">Focus the next control of the current interface area</th>
+                            <td data-i18n="down_arrow">Down arrow</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_previous_control">Focus the previous control of the current interface area</th>
+                            <td data-i18n="up_arrow">Up arrow</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_last_area">Focus the last interface area</th>
+                            <td>End</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_first_area">Focus the first interface area</th>
+                            <td>Home</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_last_control">Focus the last control of the current interface area</th>
+                            <td>PageDown</td>
+                        </tr>
+                        <tr class="navigation_keys_row">
+                            <th scope="row" data-i18n="focus_first_control">Focus the first control of the current interface area</th>
+                            <td>PageUp</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="paragraph-block" data-i18n="urqw_docs_description">Detailed <a href="docs/index.html" target="_blank">UrqW Documentation</a> is available separately.</p>
+        </div>
+
+        <div class="page-header"><h3>
+            <a href="#" class="collapsed" data-toggle="collapse" data-target="#about_urqw" aria-expanded="false" aria-controls="about_urqw">
+                <span data-i18n="about_urqw">About UrqW</span>
+            </a>
+        </h3></div>
+
+        <div id="about_urqw" class="collapse">
+            <p class="paragraph-block" data-i18n="urqw_description">UrqW is a free and open source text-based game engine.</p>
+            <p class="paragraph-block" data-i18n="urqw_dev_description">UrqW is a free and open source text-based game engine.</p>
+            <h4 data-i18n="licenses">Licenses</h4>
+            <p class="paragraph-block" data-i18n="urqw_license_description">UrqW is available under the <a href="LICENSE-GPL.txt" target="_blank">GNU General Public License version 2</a> or later.</p>
+            <p class="paragraph-block" data-i18n="third_party_licenses_description">UrqW also includes and uses third-party components which are made available under <a href="third-party_components.txt" target="_blank">different free and open source licenses</a>.</p>
+            <p class="paragraph-block" data-i18n="urqw_source_code_description">The source code and information about how to build it yourself are available in the public repository.</p>
+            <h4 data-i18n="contributors">Contributors</h4>
+            <ul class="list-group" lang="en">
+                <li class="list-group-item">Alexander Sevryugin, a.k.a. Akela (development, documentation)</li>
+                <li class="list-group-item">Nikita Tseykovets (development, documentation, localization)</li>
+                <li class="list-group-item">Uladzimir Charaukhin (Belarusian localization)</li>
+                <li class="list-group-item">Serhii Pustovoitov, a.k.a. Prool (Ukrainian localization)</li>
+                <li class="list-group-item">Artur Ajvazjan (Armenian, Esperanto, and Interslavic (Latin) localization)</li>
+            </ul>
         </div>
     </div>
 </div>
