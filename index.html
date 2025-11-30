@@ -72,6 +72,7 @@
     <div id="loading" class="page-header" style="display: none;">
         <h3 data-i18n="wait">Wait...</h3>
     </div>
+
     <div id="choose-game" style="display: none;">
         <div class="page-header">
             <h3 data-i18n="upload_game">Upload the game (if there are additional files, select ALL game files):</h3>
@@ -161,8 +162,33 @@
             </div>
         </div>
 
-        <div id="gamelist" class="list-group">
-        </div>
+        <div id="gamelist" class="list-group"></div>
+
+        <div id="about_on_main_page">
+            <div class="page-header"><h3>
+                <a href="#" class="collapsed collapsible-toggler" data-toggle="collapse" data-target="#about_urqw" aria-expanded="false" aria-controls="about_urqw">
+                    <span data-i18n="about_urqw">About UrqW</span>
+                    <span class="glyphicon glyphicon-chevron-down pull-right" aria-hidden="true"></span>
+                </a>
+            </h3></div>
+
+            <div id="about_urqw" class="collapse">
+                <p class="paragraph-block" data-i18n="urqw_description">UrqW is a free and open source text-based game engine.</p>
+                <p class="paragraph-block" data-i18n="urqw_dev_description">UrqW is a free and open source text-based game engine.</p>
+                <h4 data-i18n="licenses">Licenses</h4>
+                <p class="paragraph-block" data-i18n="urqw_license_description">UrqW is available under the <a href="LICENSE-GPL.txt" target="_blank">GNU General Public License version 2</a> or later.</p>
+                <p class="paragraph-block" data-i18n="third_party_licenses_description">UrqW also includes and uses third-party components which are made available under <a href="third-party_components.txt" target="_blank">different free and open source licenses</a>.</p>
+                <p class="paragraph-block" data-i18n="urqw_source_code_description">The source code and information about how to build it yourself are available in the public repository.</p>
+                <h4 data-i18n="contributors">Contributors</h4>
+                <ul class="list-group" lang="en">
+                    <li class="list-group-item">Alexander Sevryugin, a.k.a. Akela (development, documentation)</li>
+                    <li class="list-group-item">Nikita Tseykovets (development, documentation, localization)</li>
+                    <li class="list-group-item">Uladzimir Charaukhin (Belarusian localization)</li>
+                    <li class="list-group-item">Serhii Pustovoitov, a.k.a. Prool (Ukrainian localization)</li>
+                    <li class="list-group-item">Artur Ajvazjan (Armenian, Esperanto, and Interslavic (Latin) localization)</li>
+                </ul>
+            </div>
+</div>
     </div>
 
     <div id="game" style="display: none">
@@ -520,29 +546,7 @@
             <p class="paragraph-block" data-i18n="urqw_docs_description">Detailed <a href="docs/index.html" target="_blank">UrqW Documentation</a> is available separately.</p>
         </div>
 
-        <div class="page-header"><h3>
-            <a href="#" class="collapsed collapsible-toggler" data-toggle="collapse" data-target="#about_urqw" aria-expanded="false" aria-controls="about_urqw">
-                <span data-i18n="about_urqw">About UrqW</span>
-                <span class="glyphicon glyphicon-chevron-down pull-right" aria-hidden="true"></span>
-            </a>
-        </h3></div>
-
-        <div id="about_urqw" class="collapse">
-            <p class="paragraph-block" data-i18n="urqw_description">UrqW is a free and open source text-based game engine.</p>
-            <p class="paragraph-block" data-i18n="urqw_dev_description">UrqW is a free and open source text-based game engine.</p>
-            <h4 data-i18n="licenses">Licenses</h4>
-            <p class="paragraph-block" data-i18n="urqw_license_description">UrqW is available under the <a href="LICENSE-GPL.txt" target="_blank">GNU General Public License version 2</a> or later.</p>
-            <p class="paragraph-block" data-i18n="third_party_licenses_description">UrqW also includes and uses third-party components which are made available under <a href="third-party_components.txt" target="_blank">different free and open source licenses</a>.</p>
-            <p class="paragraph-block" data-i18n="urqw_source_code_description">The source code and information about how to build it yourself are available in the public repository.</p>
-            <h4 data-i18n="contributors">Contributors</h4>
-            <ul class="list-group" lang="en">
-                <li class="list-group-item">Alexander Sevryugin, a.k.a. Akela (development, documentation)</li>
-                <li class="list-group-item">Nikita Tseykovets (development, documentation, localization)</li>
-                <li class="list-group-item">Uladzimir Charaukhin (Belarusian localization)</li>
-                <li class="list-group-item">Serhii Pustovoitov, a.k.a. Prool (Ukrainian localization)</li>
-                <li class="list-group-item">Artur Ajvazjan (Armenian, Esperanto, and Interslavic (Latin) localization)</li>
-            </ul>
-        </div>
+        <div id="about_in_menu"></div>
     </div>
 </div>
 

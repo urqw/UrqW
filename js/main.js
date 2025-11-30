@@ -1195,8 +1195,9 @@ var parser = new DOMParser();
             });
         }
 
-        // Move the interface language selector to the menu
+        // Move the interface language selector and the about section to the menu
         $('#language_in_infopanel').contents().detach().prependTo('#language_in_settings');
+        $('#about_on_main_page').contents().detach().prependTo('#about_in_menu');
 
         // Continue the game with saving progress or start new game
         var data = localStorage.getItem(Game.name + '_continue_data');
