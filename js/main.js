@@ -60,6 +60,40 @@ $(function() {
 
     $('#additionalstyle').empty();
 
+    // Find all toggler with the collapsible-toggler class to control the icon
+    $('.collapsible-toggler').each(function() {
+        var $toggler = $(this);
+        var $icon = $toggler.find('.glyphicon');
+        var $target = $($toggler.data('target'));
+
+        // Function for icon update
+        function updateIcon() {
+            $icon = $toggler.find('.glyphicon');
+            if ($target.hasClass('in')) {
+                // The block is expanded, so show the up arrow
+                $icon
+                    .removeClass('glyphicon-chevron-down')
+                    .addClass('glyphicon-chevron-up');
+            } else {
+                // The block is collapsed, so show the down arrow
+                $icon
+                    .removeClass('glyphicon-chevron-up')
+                    .addClass('glyphicon-chevron-down');
+            }
+        }
+
+        // Initialize icon on load
+        updateIcon();
+
+        // Assign event handlers for showing and hiding content
+        $target.on('shown.bs.collapse', function() {
+            updateIcon();
+        });
+        $target.on('hidden.bs.collapse', function() {
+            updateIcon();
+        });
+    });
+
     /**
      * Get value of get parameter from URL
      */
