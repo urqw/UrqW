@@ -50,11 +50,11 @@
 <body>
 
 <div class="panel panel-default" id="infopanel" style="display: none;">
-    <div class="form-group" id="language_in_infopanel">
-        <label for="lang_select" class="control-label" data-i18n="interface_language">Interface language</label>
-        <select id="lang_select"></select>
-    </div>
     <div class="panel-body">
+        <div class="form-group" id="language_in_infopanel">
+            <label for="lang_select" class="control-label" data-i18n="interface_language">Interface language</label>
+            <select id="lang_select"></select>
+        </div>
         <p data-i18n="welcome_message">This is the UrqW text-based game engine. Compatibility modes with RipURQ 1.4 and URQ_DOS 1.35 are supported. If you want to develop your own game but don't know how, please refer to the documentation. The public repository of the project is available, where you can submit your games for inclusion in the catalog. Additionally, you can create an issue there if you encounter any problems.</p>
     </div>
 </div>
@@ -75,22 +75,24 @@
     <div id="choose-game" style="display: none;">
         <div class="page-header">
             <h3 data-i18n="upload_game">Upload the game (if there are additional files, select ALL game files):</h3>
-            <div class="form-group">
-                <label for="urq_mode" class="control-label" data-i18n="urq_mode">URQ mode</label>
-                <select id="urq_mode" class="form-control">
-                    <option value="urqw" selected data-i18n="do_not_apply_rules">Do not apply special rules</option>
-                    <option value="ripurq">RipURQ 1.4</option>
-                    <option value="dosurq">URQ_DOS 1.35</option>
-                    <option value="akurq">AkURQ 1.28</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="game_encoding" class="control-label" data-i18n="game_encoding">Game encoding</label>
-                <select id="game_encoding" class="form-control">
-                    <option value="CP1251" selected>Windows-1251</option>
-                    <option value="UTF-8">UTF-8</option>
-                </select>
-            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="urq_mode" class="control-label" data-i18n="urq_mode">URQ mode</label>
+            <select id="urq_mode" class="form-control">
+                <option value="urqw" selected data-i18n="do_not_apply_rules">Do not apply special rules</option>
+                <option value="ripurq">RipURQ 1.4</option>
+                <option value="dosurq">URQ_DOS 1.35</option>
+                <option value="akurq">AkURQ 1.28</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="game_encoding" class="control-label" data-i18n="game_encoding">Game encoding</label>
+            <select id="game_encoding" class="form-control">
+                <option value="CP1251" selected>Windows-1251</option>
+                <option value="UTF-8">UTF-8</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -196,9 +198,10 @@
         <div id="input" class="input-group" style="display: none;">
             <input type="text" class="form-control">
                 <span class="input-group-btn">
-                  <button id="input_enter" class="btn btn-default" type="button" data-i18n="ok">OK</button>
+                    <button id="input_enter" class="btn btn-default" type="button" data-i18n="ok">OK</button>
                 </span>
         </div>
+
         <div id="info" style="display: none;" class="well well-sm"></div>
     </div>
 
@@ -546,10 +549,8 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-
 
 <footer class="footer">
     <div class="container">
