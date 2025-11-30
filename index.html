@@ -243,9 +243,9 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th data-i18n="name">Name</th>
-                                        <th data-i18n="value">Value</th>
-                                        <th data-i18n="type">Type</th>
+                                        <th scope="col" data-i18n="name">Name</th>
+                                        <th scope="col" data-i18n="value">Value</th>
+                                        <th scope="col" data-i18n="type">Type</th>
                                     </tr>
                                 </thead>
                                 <tbody id="variable_table">
@@ -258,8 +258,8 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th data-i18n="name">Name</th>
-                                        <th data-i18n="quantity">Quantity</th>
+                                        <th scope="col" data-i18n="name">Name</th>
+                                        <th scope="col" data-i18n="quantity">Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody id="item_table">
@@ -275,23 +275,23 @@
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th>name</th>
+                                        <th scope="row">name</th>
                                         <td id="name_in_menu"></td>
                                     </tr>
                                     <tr>
-                                        <th>hash</th>
+                                        <th scope="row">hash</th>
                                         <td id="hash_in_menu"></td>
                                     </tr>
                                     <tr>
-                                        <th>status</th>
+                                        <th scope="row">status</th>
                                         <td id="status_in_menu"></td>
                                     </tr>
                                     <tr>
-                                        <th>position</th>
+                                        <th scope="row">position</th>
                                         <td id="position_in_menu"></td>
                                     </tr>
                                     <tr>
-                                        <th>realCurrentLoc</th>
+                                        <th scope="row">realCurrentLoc</th>
                                         <td id="real_current_loc_in_menu"></td>
                                     </tr>
                                 </tbody>
@@ -319,7 +319,7 @@
                             <caption data-i18n="metadata">Metadata</caption>
                             <tbody id="metadata_table">
                                 <tr>
-                                    <th>IFID</th>
+                                    <th scope="row">IFID</th>
                                     <td id="ifid_in_menu"><span data-i18n="undefined">Undefined</span></td>
                                 </tr>
                             </tbody>
@@ -441,77 +441,77 @@
                             <caption data-i18n="hotkeys">Hotkeys</caption>
                             <thead>
                                 <tr>
-                                    <th data-i18n="action">Action</th>
-                                    <th data-i18n="press">Press</th>
+                                    <th scope="col" data-i18n="action">Action</th>
+                                    <th scope="col" data-i18n="press">Press</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th data-i18n="close_dialog_box">Close dialog box</th>
+                                    <th scope="row" data-i18n="close_dialog_box">Close dialog box</th>
                                     <td>Escape</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="volume_control">Volume control</th>
+                                    <th scope="row" data-i18n="volume_control">Volume control</th>
                                     <td>V</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="restart_game">Restart game</th>
+                                    <th scope="row" data-i18n="restart_game">Restart game</th>
                                     <td>R</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="save_game">Save game</th>
+                                    <th scope="row" data-i18n="save_game">Save game</th>
                                     <td>S</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="load_game">Load game</th>
+                                    <th scope="row" data-i18n="load_game">Load game</th>
                                     <td>L</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="open_menu">Open menu</th>
+                                    <th scope="row" data-i18n="open_menu">Open menu</th>
                                     <td>M</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="focus_open_inventory">Focus and open inventory</th>
+                                    <th scope="row" data-i18n="focus_open_inventory">Focus and open inventory</th>
                                     <td>I</td>
                                 </tr>
                                 <tr class="alphabetic_keys_row">
-                                    <th data-i18n="announce_description">Announce description using assistive technology</th>
+                                    <th scope="row" data-i18n="announce_description">Announce description using assistive technology</th>
                                     <td>A</td>
                                 </tr>
                                 <tr class="numeric_keys_row">
-                                    <th data-i18n="activating_first_ten_buttons">Activating the first ten choice buttons</th>
+                                    <th scope="row" data-i18n="activating_first_ten_buttons">Activating the first ten choice buttons</th>
                                     <td>1-9, 0</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_next_area">Focus the next interface area</th>
+                                    <th scope="row" data-i18n="focus_next_area">Focus the next interface area</th>
                                     <td data-i18n="right_arrow">Right arrow</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_previous_area">Focus the previous interface area</th>
+                                    <th scope="row" data-i18n="focus_previous_area">Focus the previous interface area</th>
                                     <td data-i18n="left_arrow">Left arrow</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_next_control">Focus the next control of the current interface area</th>
+                                    <th scope="row" data-i18n="focus_next_control">Focus the next control of the current interface area</th>
                                     <td data-i18n="down_arrow">Down arrow</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_previous_control">Focus the previous control of the current interface area</th>
+                                    <th scope="row" data-i18n="focus_previous_control">Focus the previous control of the current interface area</th>
                                     <td data-i18n="up_arrow">Up arrow</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_last_area">Focus the last interface area</th>
+                                    <th scope="row" data-i18n="focus_last_area">Focus the last interface area</th>
                                     <td>End</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_first_area">Focus the first interface area</th>
+                                    <th scope="row" data-i18n="focus_first_area">Focus the first interface area</th>
                                     <td>Home</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_last_control">Focus the last control of the current interface area</th>
+                                    <th scope="row" data-i18n="focus_last_control">Focus the last control of the current interface area</th>
                                     <td>PageDown</td>
                                 </tr>
                                 <tr class="navigation_keys_row">
-                                    <th data-i18n="focus_first_control">Focus the first control of the current interface area</th>
+                                    <th scope="row" data-i18n="focus_first_control">Focus the first control of the current interface area</th>
                                     <td>PageUp</td>
                                 </tr>
                             </tbody>

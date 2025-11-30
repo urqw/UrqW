@@ -454,7 +454,7 @@ $(function() {
                 }
                 var row = $(`
                     <tr>
-                        <th>${key}</th>
+                        <th scope="row">${key}</th>
                         <td>${value}</td>
                         <td>${type}</td>
                     </tr>
@@ -472,7 +472,7 @@ $(function() {
                 var quantity = Game.items[key];
                 var row = $(`
                     <tr>
-                        <th>${key}</th>
+                        <th scope="row">${key}</th>
                         <td>${quantity}</td>
                     </tr>
                 `);

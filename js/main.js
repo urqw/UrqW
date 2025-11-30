@@ -951,7 +951,7 @@ var parser = new DOMParser();
 
                 var row = $(`
                     <tr>
-                        <th data-i18n="${key}">${i18next.t(key)}</th>
+                        <th scope="row" data-i18n="${key}">${i18next.t(key)}</th>
                         <td>${value}</td>
                     </tr>
                 `);
