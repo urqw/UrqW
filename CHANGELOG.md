@@ -65,6 +65,7 @@
 	+ Added: Ability to configure a request to confirm page closure.
 	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
 	+ Added: Numbering of choice buttons when hotkeys are enabled.
+	+ Added: Ability to collapse and expand sections on the main page.
 	+ Added: Display detailed information about UrqW on the main page.
 	+ Added: Display of UrqW version in the player interface.
 	+ Added: Titles for save and load game dialog boxes.
