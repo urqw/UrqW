@@ -1,5 +1,6 @@
 /**
  * Copyright (C) 2015 Akela <akela88@bk.ru>
+ * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -18,6 +19,8 @@ function Expression(str) {
      */
     this.tokenize = function (str) {
         str = ' ' + str + ' ';
+        // The not operator immediately after the left parenthesis is not processed correctly
+        str = str.replace(/\(not /g, '\( not ');
         str = str.replace(/ not /g, '  not  '); // For now, do it this way (so that "not" can stick to everything)
         return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\))/gi);
     };
