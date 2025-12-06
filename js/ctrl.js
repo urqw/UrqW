@@ -721,6 +721,7 @@ $(function() {
     });
 
     textfield.on('click', 'a.button', function() {
+        GlobalPlayer.setVar('last_btn_caption', $(this).html());
         GlobalPlayer.action($(this).data('action'), true);
         return false;
     });

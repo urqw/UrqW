@@ -14,7 +14,7 @@
 		- file_url - get the relative URL of a file from a game package by its internal path.
 		- image_caption - set or get the visible caption for an image.
 		- instr_leave_spc - set or get the space handling mode for the instr operator.
-		- last_btn_caption - get the name of the last activated choice button.
+		- last_btn_caption - get the name of the last activated choice button or link in the text.
 		- location - get the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
 		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ).
 		- time - get the current time.
