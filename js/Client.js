@@ -86,7 +86,7 @@ Client.prototype.render = function (data) {
                 }
             });
             if (targetFocus) {
-                targetFocus.focus();
+                targetFocus[0].focus({ preventScroll: true });
             }
         }
         // Save the game to be able to continue with saving progress
@@ -102,7 +102,7 @@ Client.prototype.render = function (data) {
         this.crtlInfo.append(span);
         this.crtlInfo.show().promise().done(() => {
             if (settings['automatically_focus']) {
-                span.focus();
+                span[0].focus({ preventScroll: true });
             }
         });
     } else if (data.status == PLAYER_STATUS_INPUT) {
@@ -133,7 +133,7 @@ Client.prototype.render = function (data) {
         this.crtlInfo.append(span);
         this.crtlInfo.show().promise().done(() => {
             if (settings['automatically_focus']) {
-                span.focus();
+                span[0].focus({ preventScroll: true });
             }
         });
     }
