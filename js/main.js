@@ -53,6 +53,16 @@ var settings = {
     images_focusable: false
 };
 var previousAcceleration; // Previous acceleration value from the sensor
+// URL of the root directory without index.html (and without parameters and hash)
+var rootURL = (function() {
+    var origin = window.location.origin;
+    var pathname = window.location.pathname;
+    var cleanPath = pathname.replace(/\/index\.html[^\/]*$/, '/');
+    if (cleanPath.charAt(cleanPath.length - 1) !== '/') {
+        cleanPath += '/';
+    }
+    return origin + cleanPath;
+})();
 
 $(function() {
     $('#something_wrong').hide();
@@ -486,30 +496,13 @@ if (styleFile) {
                         rss.show();
 
                         // Add link to alternate feed if it doesn't exist yet
-
-                        function getRssUrl() {
-                            var currentUrl = window.location.href;
-                            var lastSlash = currentUrl.lastIndexOf('/');
-                            if (lastSlash !== currentUrl.length - 1) {
-                                var filePart = currentUrl.substring(lastSlash + 1);
-                                var isHtmlFile = /[^\/]+\.htm[^\/]*$/.test(filePart);
-                                if (isHtmlFile) {
-                                    var directoryPath = currentUrl.substring(0, lastSlash);
-                                } else {
-                                    var directoryPath = currentUrl;
-                                }
-                                return directoryPath + '/rss.xml';
-                            }
-                            return currentUrl + 'rss.xml';
-                        }
-
-                        var rssUrl = getRssUrl();
-                        var existingLinks = $('head link[href="' + rssUrl + '"]');
+                        var rssURL = rootURL + 'rss.xml';
+                        var existingLinks = $('head link[href="' + rssURL + '"]');
                         if (existingLinks.length === 0) {
                             $('head').append(
                                 $('<link>', {
                                     rel: 'alternate',
-                                    href: rssUrl,
+                                    href: rssURL,
                                     title: 'UrqW Games',
                                     type: 'application/rss+xml'
                                 })
