@@ -50,8 +50,11 @@
 	+ Added: Ability to filter games in the catalog by language and title, and sort by date and alphabetically.
 	+ Added: Menu with additional information and settings in the toolbar.
 	+ Added: RSS feed for new games in the catalog.
+	+ Added: Games added to the catalog have separate URLs for identification and indexing by search engines.
+	+ Added: Meta tag with canonical URL (separate URLs for the main page with a game catalog and for each game launched by identifier).
 	+ Added: Ability to set a game to load on any opening of index.html.
-	+ Added: Ability to set player settings using GET requests:
+	+ Added: Ability to set player settings using GET parameters:
+		- Identifier of a game to launch - id (value: identifier).
 		- Interface language - lang (value: localization code).
 		- URQ mode - mode (value: "urqw", "ripurq", "dosurq" or "akurq").
 		- Game encoding - encoding (value: "UTF-8" or "CP1251").
@@ -75,9 +78,10 @@
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
 	+ Changed: When the game over through the quit operator, links and buttons are deleted instead of just stopping response to user actions.
+	+ Changed: When launching a game by identifier, preference is given to the game identifier from the id get parameter (support for launching a game by fragment identifier (hash) is retained, but only if the id GET parameter is absent).
 	+ Changed: When loading a game from an archive, files named style.css and script.js are read and loaded as plugins (as documented), rather than all .css and .js files (as was actually the case).
-	+ Changed: When launching a game by fragment identifier (hash) from a folder, the player searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
-	+ Changed: When launching a game by fragment identifier (hash) from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
+	+ Changed: When launching a game by identifier from a folder, the player searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
+	+ Changed: When launching a game by identifier from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
 	+ Changed: A new sound played using the play operator stops the previous one (the original behavior of RipURQ, URQ_DOS (WCL), and AkURQ), rather than playing in parallel.
 	+ Changed: Game sounds initiated via the play operator at zero volume begin playing at zero volume instead of being ignored.
 	+ Changed: Keypress tracking by key code instead of character code.

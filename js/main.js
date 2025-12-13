@@ -65,6 +65,7 @@ var rootURL = (function() {
 })();
 
 $(function() {
+    setCanonicalURL(rootURL);
     $('#something_wrong').hide();
     $('#infopanel').show();
 
@@ -120,6 +121,21 @@ $(function() {
     }
 
     /**
+     * Set canonical URL in meta tag
+     */
+    function setCanonicalURL(url) {
+        var $canonical = $('link[rel="canonical"]');
+        if ($canonical.length) {
+            $canonical.attr('href', url);
+        } else {
+            $('<link>')
+                .attr('rel', 'canonical')
+                .attr('href', url)
+                .appendTo('head');
+        }
+    }
+
+    /**
      * Get the default HTML support value according to the URQ mode
      */
     function htmlSupportByDefault(urq_mode) {
@@ -159,40 +175,71 @@ $(function() {
                         loadZip(xhr.response, url);
                     } else {
                         console.error('Unsupported file format for ', url);
-                        loadFromHashFailed();
+                        loadFromCatalogFailed();
                     }
                 } else {
                     console.error('No data in response for ', url);
-                    loadFromHashFailed();
+                    loadFromCatalogFailed();
                 }
             } else {
                 console.error('Request error for ', url);
-                loadFromHashFailed();
+                loadFromCatalogFailed();
             }
         };
         
         xhr.onerror = function() {
             console.error('Network error for ', url);
-            loadFromHashFailed();
+            loadFromCatalogFailed();
         };
         
         xhr.ontimeout = function() {
             console.error('Request timeout for ', url);
-            loadFromHashFailed();
+            loadFromCatalogFailed();
         };
         
         xhr.send();
     }
 
     /**
-     * Load game from hash
+     * Load game from catalog
      */
-    function loadFromHash() {
+    function loadFromCatalog(gameId) {
+        // Determine the name of the game to load from the catalog
+        var name = '';
+        if (typeof urqw_default_game !== 'undefined') {
+            name = encodeURIComponent(urqw_default_game);
+        } else if (typeof gameId !== 'undefined') {
+            name = encodeURIComponent(gameId);
+        } else {
+            var getParamId = getValParam('id');
+            if (getParamId) {
+                name = getParamId;
+            } else {
+                var hash = window.location.hash;
+                if (hash.length > 0) {
+                    name = hash.substr(1);
+                }
+            }
+        }
+
+        setCanonicalURL(rootURL + '?id=' + name);
         $('#loading').show();
         $('#choose-game').hide();
 
-        if (window.location.hash.length > 0) {
-            var name = window.location.hash.substr(1);
+        // Modify URL without reloading the page if the History API is supported
+        if (name && typeof urqw_default_game === 'undefined'
+            && window.history && window.history.replaceState) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('id', name);
+            url.hash = '';
+            window.history.replaceState(
+                {}, // State object
+                '', // Title
+                url.toString() // New URL
+            );
+        }
+
+        if (name) {
             JSZipUtils.getBinaryContent('quests/' + name + '.zip', function(err, data) {
                 if (err) {
                     loadFromFolder(name);
@@ -201,7 +248,7 @@ $(function() {
                 }
             });
         } else {
-            loadFromHashFailed();
+            loadFromCatalogFailed();
         }
     }
 
@@ -244,20 +291,13 @@ $(function() {
     });
 
     /**
-     * If variable urqw_hash is defined then load corresponding game.
-     * If not, try to load game by link from get parameter,
-     * otherwise from catalog, if there is something in hash
+     * Try to load game by link from get parameter, otherwise from catalog
      */
-    if (typeof urqw_hash === 'undefined') {
-        var getParamUrl = getValParam('url');
-        if (getParamUrl) {
-            loadFromURL(getParamUrl);
-        } else{
-            loadFromHash();
-        }
+    var getParamUrl = getValParam('url');
+    if (getParamUrl) {
+        loadFromURL(getParamUrl);
     } else {
-        window.location.hash = urqw_hash;
-        loadFromHash();
+        loadFromCatalog();
     }
 
     // Assign handlers to filters
@@ -281,7 +321,7 @@ $(function() {
     });
 
     showButton.on('click', function() {
-        loadFromHashFailed();
+        loadFromCatalogFailed();
     });
 
     /**
@@ -294,7 +334,7 @@ $(function() {
             folder = 'quests/' + name;
             mainURL = folder + '/main.qst';
             if (!checkFileAvailability(mainURL, false)) {
-                loadFromHashFailed();
+                loadFromCatalogFailed();
                 return;
             }
         }
@@ -353,7 +393,7 @@ $(function() {
         if (mainData) {
             start(mainData, name);
         } else {
-            loadFromHashFailed();
+            loadFromCatalogFailed();
         }
     }
 
@@ -480,7 +520,8 @@ if (styleFile) {
     /**
      *
      */
-    function loadFromHashFailed() {
+    function loadFromCatalogFailed() {
+        setCanonicalURL(rootURL);
         $('#gamelist').empty();
         $.ajax({
             url: 'games.json',
@@ -602,7 +643,7 @@ if (styleFile) {
                     date = new Date(quests[i].date);
                     $('#gamelist').append(
                         '<div class="list-group-item" role="listitem" lang="' + quests[i].lang.split(';')[0] + '">' +
-                        '<a href="#" class="gamelink" data-game="' + quests[i].folder + '">' +
+                        '<a href="?id=' + encodeURIComponent(quests[i].folder) + '" class="gamelink" data-game="' + quests[i].folder + '">' +
                         '<div class="pull-right">' +
                         '<span class="text-muted">' + quests[i].author + '</span>' +
                         '</div>' +
@@ -633,9 +674,7 @@ if (styleFile) {
      * Game choice from list
      */
     $('#gamelist').on('click', '.gamelink', function() {
-        window.location.hash = encodeURIComponent($(this).data('game'));
-        loadFromHash();
-
+        loadFromCatalog($(this).data('game'));
         return false;
     });
 
