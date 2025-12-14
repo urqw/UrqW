@@ -455,7 +455,7 @@ $(function() {
                 var row = $(`
                     <tr>
                         <th scope="row">${key}</th>
-                        <td>${value}</td>
+                        <td style="white-space: pre-wrap;">${value}</td>
                         <td>${type}</td>
                     </tr>
                 `);
