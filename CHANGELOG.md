@@ -42,6 +42,7 @@
 	+ Fixed: Incorrect processing of the goto operator in compatibility mode with URQ_DOS.
 * Game player:
 	+ Added: Customizable internationalization support and interface translations into English, Armenian, Belarusian, Esperanto, Interslavic (Latin), Russian, and Ukrainian.
+	+ Added: Differentiated language markup corresponding to the interface language and the game content language.
 	+ Added: Game encoding configuration when opening from the main page.
 	+ Added: Ability to rename and clear save slots via the additional actions menu, as well as download and upload saves as files.
 	+ Added: Customizable game loading with automatic progress saving between sessions.
@@ -51,8 +52,11 @@
 	+ Added: Menu with additional information and settings in the toolbar.
 	+ Added: RSS feed for new games in the catalog.
 	+ Added: Games added to the catalog have separate URLs for identification and indexing by search engines.
-	+ Added: Meta tag with canonical URL (separate URLs for the main page with a game catalog and for each game launched by identifier).
+	+ Added: Tag with canonical URL (separate URLs for the main page with a game catalog and for each game launched by identifier).
 	+ Added: Ability to set a game to load on any opening of index.html.
+	+ Added: New keys of a game object in the games.json file:
+		- date - to specify the game's first publication date.
+		- lang - to specify one or more game languages.
 	+ Added: Ability to set player settings using GET parameters:
 		- Identifier of a game to launch - id (value: identifier).
 		- Interface language - lang (value: localization code).
@@ -65,10 +69,10 @@
 	+ Added: Automatic focusing of controls when working with dialog boxes (menu, save and load game).
 	+ Added: Volume level setting for game sounds.
 	+ Added: Assigning an empty string value to the music variable stops the audio file from playing in a loop.
-	+ Added: The music and game sounds that are playing are remembered when the game is saved, and they resume from the same point when loading from the save.”
+	+ Added: The music and game sounds that are playing are remembered when the game is saved, and they resume from the same point when loading from the save.
 	+ Added: Customizable automatic focusing the first control on the game screen, as well as inscription about waiting for pressing any key and game over notification.
 	+ Added: Ability to configure a request to confirm page closure.
-	+ Added: Disabled  hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
+	+ Added: Disabled hotkeys for activating choice buttons, quick actions, and cluster navigation through interface areas (see help in menu).
 	+ Added: Numbering of choice buttons when hotkeys are enabled.
 	+ Added: Ability to collapse and expand sections on the main page.
 	+ Added: Display detailed information about UrqW on the main page.
@@ -85,12 +89,13 @@
 	+ Changed: A new sound played using the play operator stops the previous one (the original behavior of RipURQ, URQ_DOS (WCL), and AkURQ), rather than playing in parallel.
 	+ Changed: Game sounds initiated via the play operator at zero volume begin playing at zero volume instead of being ignored.
 	+ Changed: Keypress tracking by key code instead of character code.
+	+ Changed: Layout optimization, including for HTML validity and search engine optimization.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Links disappear from the text when loading a saved game.
 	+ Fixed: Text output containing line breaks is always displayed as a block element.
 	+ Fixed: Paragraphs containing text output with block elements do not have left padding.
 	+ Fixed: Music and game sounds do not stop playing when restarting or loading from a save.
-	+ Fixed: When the music operator is executed  again with the same audio file, the file is not played again.
+	+ Fixed: When the music operator is executed again with the same audio file, the file is not played again.
 	+ Removed: Separate UrqW cursor for choosing and activating buttons (caused issues with simultaneous activation of two controls and was replaced with cluster navigation based on standard system focus).
 	+ Accessibility improvements:
 		- Added: Text labels for controls of the toolbar.
@@ -102,7 +107,7 @@
 		- Added: Customizable announcement description using assistive technology when shaking device.
 		- Added: Customizable images focusability using the keyboard.
 		- Added: Inventory panel links that do not perform any actions have the aria-disabled attribute, which indicates that there is no associated action but does not suppress the element focusability.
-		- Added: Designation  for assistive technologies whether an inventory item has a drop-down menu.
+		- Added: Designation for assistive technologies whether an inventory item has a drop-down menu.
 		- Changed: Each link in the drop-down menu of an inventory item has the role of a menu item.
 		- Changed: Text labels for player graphic icons.
 		- Fixed: Links in game text are not focusable with keyboard, and do not have link role.
