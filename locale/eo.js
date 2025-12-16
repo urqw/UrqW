@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var eo = {
-    welcome_message: "Ĉi tio estas ludmotoro por tekstaj ludoj UrqW " + urqw_version + ". Apogas reĝimojn de kongrueco kun RipURQ 1.4, URQ_DOS 1.35 kaj AkURQ 1.28. Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaron</a>. Atingebla estas <a href=\"" + url_repo + "\" target=\"_blank\">publika deponejo</a> de la projekto, kien ci povas sendi ciajn ludojn por publikado en katalogon. Ankaŭ tie eble krei <a href=\"" + url_issues + "\" target=\"_blank\">demandon (issue)</a> pro aperado de problemoj.",
+    welcome_message: "Ĉi tio estas ludmotoro por tekstaj ludoj UrqW " + urqw_version + ". Apogas reĝimojn de kongrueco kun RipURQ 1.4, URQ_DOS 1.35 kaj AkURQ 1.28. Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaron</a>. Atingebla estas <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">publika deponejo</a> de la projekto, kien ci povas sendi ciajn ludojn por publikado en katalogon. Ankaŭ tie eble krei <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">demandon (issue)</a> pro aperado de problemoj.",
     interface_language: "Lingvo de la interfaco",
     something_went_wrong: "Io malsukcesis",
     wait: "Atendu...",
@@ -109,14 +109,14 @@ var eo = {
     focus_first_area: "Fokusi unuan interfacan areon",
     focus_last_control: "Fokusi lastan elementon de la kontrolo de kuranta interfaca areo",
     focus_first_control: "Fokusi unuan elementon de la kontrolo de kuranta interfaca areo",
-    urqw_docs_description: "Aparte atingebla estas detala <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaro de la UrqW</a>.",
+    urqw_docs_description: "Aparte atingebla estas detala <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaro de la UrqW</a>.",
     about_urqw: "Pri UrqW",
     urqw_description: "UrqW " + urqw_version + " — estas libera ludmotoro por tekstaj ludoj kun malfermita fontaĵo.",
-    urqw_dev_description: "Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaron</a>.",
+    urqw_dev_description: "Se ci volas skribi cian ludon, sed ne konas kiel, do legu <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaron</a>.",
     licenses: "Licencoj",
-    urqw_license_description: "Programaro UrqW atingebla laŭ kondiĉoj de <a href=\"LICENSE-GPL.txt\" target=\"_blank\">Norma ĝenerala licenco GNU 2</a> aŭ plej lasta.",
-    third_party_licenses_description: "UrqW ankaŭ enhavas kaj uzas aliflankajn aĵojn, kiaj estas atingeblaj laŭ kondiĉoj <a href=\"third-party_components.txt\" target=\"_blank\">diversaj liberaj kaj malfermitaj licencoj</a>.",
-    urqw_source_code_description: "Fontaĵo kaj informaĵo pri tio, kiel munti ĝin mem, estas atingebla en <a href=\"" + url_repo + "\" target=\"_blank\">publika deponejo</a>.",
+    urqw_license_description: "Programaro UrqW atingebla laŭ kondiĉoj de <a href=\"LICENSE-GPL.txt\" rel=\"jslicense\" target=\"_blank\">Norma ĝenerala licenco GNU 2</a> aŭ plej lasta.",
+    third_party_licenses_description: "UrqW ankaŭ enhavas kaj uzas aliflankajn aĵojn, kiaj estas atingeblaj laŭ kondiĉoj <a href=\"third-party_components.txt\" rel=\"jslicense\" target=\"_blank\">diversaj liberaj kaj malfermitaj licencoj</a>.",
+    urqw_source_code_description: "Fontaĵo kaj informaĵo pri tio, kiel munti ĝin mem, estas atingebla en <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">publika deponejo</a>.",
     contributors: "Projektanoj",
     manifest_unsupported_format: "Ludo havas dosieron manifest.json de malapoganta formato."
 };

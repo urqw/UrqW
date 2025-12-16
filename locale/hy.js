@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var hy = {
-    welcome_message: "Սա է շարժիչն տեկստ խաղերի համար UrqW " + urqw_version + "։ Համատեղելվում է RipURQ 1.4, URQ_DOS 1.35 ու AkURQ 1.28 հետ։ Եթե ուզում ես քո խաղ գրել, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" target=\"_blank\">փաստաթուղթեր</a>. Կա նախագիծի <a href=\"" + url_repo + "\" target=\"_blank\">հանրային պահեստ</a>, որտեղ դու կարում ես քո խաղեր տալ ի կատալոգ։ Լրացուցիչ, այնտեղ կարելի է ստեղցել <a href=\"" + url_issues + "\" target=\"_blank\">հարց</a>, եթե խնդիր կա։",
+    welcome_message: "Սա է շարժիչն տեկստ խաղերի համար UrqW " + urqw_version + "։ Համատեղելվում է RipURQ 1.4, URQ_DOS 1.35 ու AkURQ 1.28 հետ։ Եթե ուզում ես քո խաղ գրել, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">փաստաթուղթեր</a>. Կա նախագիծի <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">հանրային պահեստ</a>, որտեղ դու կարում ես քո խաղեր տալ ի կատալոգ։ Լրացուցիչ, այնտեղ կարելի է ստեղցել <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">հարց</a>, եթե խնդիր կա։",
     interface_language: "Միջերես լեզու",
     something_went_wrong: "Սխալ տեղի ունեցավ",
     wait: "Սպասի...",
@@ -109,14 +109,14 @@ var hy = {
     focus_first_area: "Կենտրոնանալ միջերեսի առաջին տարածքը",
     focus_last_control: "Կենտրոնանալ ընթացիկ տարածքի վերջին կառավարման ելեմենտնին",
     focus_first_control: "Կենտրոնանալ ընթացիկ տարածքի առաջին կառավարման ելեմենտնին",
-    urqw_docs_description: "Առանձին տրամադրվում է մանրամասն <a href=\"" + url_docs + "\" target=\"_blank\">UrqW֊ի Փաստաթուղթ</a>։",
+    urqw_docs_description: "Առանձին տրամադրվում է մանրամասն <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">UrqW֊ի Փաստաթուղթ</a>։",
     about_urqw: "UrqW֊ի մասին",
     urqw_description: "UrqW " + urqw_version + " է ազատ տեքստային խաղերի շարժիչ բաց կոդով։",
-    urqw_dev_description: "Եթե ուզում ես քո խաղ գրել, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" target=\"_blank\">փաստաթուղթեր</a>.",
+    urqw_dev_description: "Եթե ուզում ես քո խաղ գրել, բայց չգիտես ոնց, կարդա <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">փաստաթուղթեր</a>.",
     licenses: "Արտոնագրեր",
-    urqw_license_description: "UrqW ծրագրային ապահովումը տրամադրվում է <a href=\"LICENSE-GPL.txt\" target=\"_blank\">GNU 2 արտոնագրի պայմաններով</a>.",
-    third_party_licenses_description: "UrqW ներառում և օգտագործում է երրորդ կողմի բաղադրիչներ, որոնք տրամադրվում են <a href=\"third-party_components.txt\" target=\"_blank\">տարբեր ազատ և բաց արտոնագրերի պայմաններով</a>։",
-    urqw_source_code_description: "Ծրագրի կոդը և այն ինքնուրույն հավաքելու մասին տեղեկատվությունը հասանելի են <a href=\"" + url_repo + "\" target=\"_blank\">հանրային պահոցում</a>։",
+    urqw_license_description: "UrqW ծրագրային ապահովումը տրամադրվում է <a href=\"LICENSE-GPL.txt\" rel=\"jslicense\" target=\"_blank\">GNU 2 արտոնագրի պայմաններով</a>.",
+    third_party_licenses_description: "UrqW ներառում և օգտագործում է երրորդ կողմի բաղադրիչներ, որոնք տրամադրվում են <a href=\"third-party_components.txt\" rel=\"jslicense\" target=\"_blank\">տարբեր ազատ և բաց արտոնագրերի պայմաններով</a>։",
+    urqw_source_code_description: "Ծրագրի կոդը և այն ինքնուրույն հավաքելու մասին տեղեկատվությունը հասանելի են <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">հանրային պահոցում</a>։",
     contributors: "Նախագծի մասնակիցներ",
     manifest_unsupported_format: "Խաղն ունի manifest.json֊նիշք չաջակցվող ձևաչափով։"
 };

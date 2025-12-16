@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var en = {
-    welcome_message: "This is the UrqW " + urqw_version + " text-based game engine. Compatibility modes with RipURQ 1.4, URQ_DOS 1.35 and AkURQ 1.28 are supported. If you want to develop your own game but don't know how, please refer to the <a href=\"" + url_docs + "\" target=\"_blank\">documentation</a>. The <a href=\"" + url_repo + "\" target=\"_blank\">public repository</a> of the project is available, where you can submit your games for inclusion in the catalog. Additionally, you can create an <a href=\"" + url_issues + "\" target=\"_blank\">issue</a> there if you encounter any problems.",
+    welcome_message: "This is the UrqW " + urqw_version + " text-based game engine. Compatibility modes with RipURQ 1.4, URQ_DOS 1.35 and AkURQ 1.28 are supported. If you want to develop your own game but don't know how, please refer to the <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">documentation</a>. The <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">public repository</a> of the project is available, where you can submit your games for inclusion in the catalog. Additionally, you can create an <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">issue</a> there if you encounter any problems.",
     interface_language: "Interface language",
     something_went_wrong: "Something went wrong",
     wait: "Wait...",
@@ -133,14 +133,14 @@ undefined: "Undefined",
     focus_first_area: "Focus the first interface area",
     focus_last_control: "Focus the last control of the current interface area",
     focus_first_control: "Focus the first control of the current interface area",
-    urqw_docs_description: "Detailed <a href=\"" + url_docs + "\" target=\"_blank\">UrqW Documentation</a> is available separately.",
+    urqw_docs_description: "Detailed <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">UrqW Documentation</a> is available separately.",
     about_urqw: "About UrqW",
     urqw_description: "UrqW " + urqw_version + " is a free and open source text-based game engine.",
-    urqw_dev_description: "If you want to develop your own game but don't know how, please refer to the <a href=\"" + url_docs + "\" target=\"_blank\">documentation</a>.",
+    urqw_dev_description: "If you want to develop your own game but don't know how, please refer to the <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">documentation</a>.",
     licenses: "Licenses",
-    urqw_license_description: "The UrqW software is available under the <a href=\"LICENSE-GPL.txt\" target=\"_blank\">GNU General Public License version 2</a> or later.",
-    third_party_licenses_description: "UrqW also includes and uses third-party components which are made available under <a href=\"third-party_components.txt\" target=\"_blank\">different free and open source licenses</a>.",
-    urqw_source_code_description: "The source code and information about how to build it yourself are available in the <a href=\"" + url_repo + "\" target=\"_blank\">public repository</a>.",
+    urqw_license_description: "The UrqW software is available under the <a href=\"LICENSE-GPL.txt\" rel=\"jslicense\" target=\"_blank\">GNU General Public License version 2</a> or later.",
+    third_party_licenses_description: "UrqW also includes and uses third-party components which are made available under <a href=\"third-party_components.txt\" rel=\"jslicense\" target=\"_blank\">different free and open source licenses</a>.",
+    urqw_source_code_description: "The source code and information about how to build it yourself are available in the <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">public repository</a>.",
     contributors: "Contributors",
     manifest_unsupported_format: "The game has a manifest.json file in an unsupported format.",
     ifiction_unsupported_format: "The game has a iFiction record in an unsupported format."

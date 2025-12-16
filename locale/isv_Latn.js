@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var isv_Latn = {
-    welcome_message: "To je motor za tekstove igry UrqW " + urqw_version + ". On ima suměstimost/kompatibilnost s RipURQ 1.4, URQ_DOS 1.35 i AkURQ 1.28. Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaciju</a>. Dostupen je <a href=\"" + url_repo + "\" target=\"_blank\">publičny javny repozitorij</a> projekta, dokud vy možete posylati svoje igry da by razměstiti jih v katalogu. Takože tam možno stvoriti <a href=\"" + url_issues + "\" target=\"_blank\">issue</a>, ako li budete uviděti problem.",
+    welcome_message: "To je motor za tekstove igry UrqW " + urqw_version + ". On ima suměstimost/kompatibilnost s RipURQ 1.4, URQ_DOS 1.35 i AkURQ 1.28. Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaciju</a>. Dostupen je <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">publičny javny repozitorij</a> projekta, dokud vy možete posylati svoje igry da by razměstiti jih v katalogu. Takože tam možno stvoriti <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">issue</a>, ako li budete uviděti problem.",
     interface_language: "Jezyk interfejsa",
     something_went_wrong: "Vozniknula nekoja grěška",
     wait: "Počekajte...",
@@ -109,14 +109,14 @@ var isv_Latn = {
     focus_first_area: "Fokusovati prvu zonu interfejsa",
     focus_last_control: "Fokusovati poslědny element upravjenja tutoj zony interfejsa",
     focus_first_control: "Fokusovati prvy element upravjenja tutoj zony interfejsa",
-    urqw_docs_description: "Oddělno dostupna je podrobna detalna <a href=\"" + url_docs + "\" target=\"_blank\">Dokumentacija UrqW</a>.",
+    urqw_docs_description: "Oddělno dostupna je podrobna detalna <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">Dokumentacija UrqW</a>.",
     about_urqw: "O UrqW",
     urqw_description: "UrqW " + urqw_version + " — je svobodny motor za tekstove igry s otvorjenym izhodnym kodom.",
-    urqw_dev_description: "Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" target=\"_blank\">dokumentaciju</a>.",
+    urqw_dev_description: "Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaciju</a>.",
     licenses: "Licencije",
-    urqw_license_description: "Softver UrqW dostupen je po uslovjah <a href=\"LICENSE-GPL.txt\" target=\"_blank\">Standardnoj spoločnoj licencije GNU 2</a> ili pozdnějšej.",
-    third_party_licenses_description: "UrqW takože sodrživaje i upotrěbjaje ine komponenty, koji sut dostupne po uslovjah <a href=\"third-party_components.txt\" target=\"_blank\">različnyh svobodnyh i otvorjenyh licencij</a>.",
-    urqw_source_code_description: "Izhodny kod i informacija o tom, kako sobrati jego samostojno nezavisno, dostupen je v <a href=\"" + url_repo + "\" target=\"_blank\">publičnom repozitoriju</a>.",
+    urqw_license_description: "Softver UrqW dostupen je po uslovjah <a href=\"LICENSE-GPL.txt\" rel=\"jslicense\" target=\"_blank\">Standardnoj spoločnoj licencije GNU 2</a> ili pozdnějšej.",
+    third_party_licenses_description: "UrqW takože sodrživaje i upotrěbjaje ine komponenty, koji sut dostupne po uslovjah <a href=\"third-party_components.txt\" rel=\"jslicense\" target=\"_blank\">različnyh svobodnyh i otvorjenyh licencij</a>.",
+    urqw_source_code_description: "Izhodny kod i informacija o tom, kako sobrati jego samostojno nezavisno, dostupen je v <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">publičnom repozitoriju</a>.",
     contributors: "Učestniki projekta",
     manifest_unsupported_format: "Igra imaje fajl manifest.json v nepoddrživajemom formatu."
 };

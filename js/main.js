@@ -998,11 +998,11 @@ var parser = new DOMParser();
                     case 'contact_email':
                         var emailList = authoremail.split(',').map(email => email.trim());
                         if (emailList.length === 1) {
-                            value = `<a href="mailto:${emailList[0]}" target="_blank">${emailList[0]}</a>`;
+                            value = `<a href="mailto:${emailList[0]}" rel="author" target="_blank">${emailList[0]}</a>`;
                         } else {
                             value = `<ul style="list-style-type: none;">
                                 ${emailList.map(email => {
-                                    return `<li><a href="mailto:${email}" target="_blank">${email}</a></li>`;
+                                    return `<li><a href="mailto:${email}" rel="author" target="_blank">${email}</a></li>`;
                                 }).join('')}
                             </ul>`;
                         }

@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var be = {
-    welcome_message: "Гэта рухавічок тэкставых гульняў UrqW " + urqw_version + ". Падтрымліваюцца рэжымы сумяшчальнасці з RipURQ 1.4, URQ_DOS 1.35 і AkURQ 1.28. Калі вы хочаце напісаць сваю гульню, але не ведаеце як, то азнаёмцеся з <a href=\"" + url_docs + "\" target=\"_blank\">дакументацыяй</a>. Даступны <a href=\"" + url_repo + "\" target=\"_blank\">публічны рэпазіторый</a> праекта, куды вы можаце прыслаць свае гульні для змяшчэння ў каталогу. Таксама там можна стварыць <a href=\"" + url_issues + "\" target=\"_blank\">issue</a> пры выяўленні праблем.",
+    welcome_message: "Гэта рухавічок тэкставых гульняў UrqW " + urqw_version + ". Падтрымліваюцца рэжымы сумяшчальнасці з RipURQ 1.4, URQ_DOS 1.35 і AkURQ 1.28. Калі вы хочаце напісаць сваю гульню, але не ведаеце як, то азнаёмцеся з <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">дакументацыяй</a>. Даступны <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">публічны рэпазіторый</a> праекта, куды вы можаце прыслаць свае гульні для змяшчэння ў каталогу. Таксама там можна стварыць <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">issue</a> пры выяўленні праблем.",
     interface_language: "Мова інтэрфейсу",
     something_went_wrong: "Нешта пайшло не так",
     wait: "Пачакайце...",
@@ -133,14 +133,14 @@ var be = {
     focus_first_area: "Зфакусаваць першую вобласць інтэрфейсу",
     focus_last_control: "Зфакусаваць апошні элемент кіравання бягучай вобласці інтэрфейсу",
     focus_first_control: "Зфакусаваць першы элемент кіравання бягучай вобласці інтэрфейсу",
-    urqw_docs_description: "Асобна даецца падрабязная <a href=\"" + url_docs + "\" target=\"_blank\">Дакументацыя UrqW</a>.",
+    urqw_docs_description: "Асобна даецца падрабязная <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">Дакументацыя UrqW</a>.",
     about_urqw: "Пра UrqW",
     urqw_description: "UrqW " + urqw_version + " — гэта свабодны рухавічок тэкставых гульняў з адкрытым зыходным кодам.",
-    urqw_dev_description: "Калі вы хочаце напісаць сваю гульню, але не ведаеце як, то азнаёмцеся з <a href=\"" + url_docs + "\" target=\"_blank\">дакументацыяй</a>.",
+    urqw_dev_description: "Калі вы хочаце напісаць сваю гульню, але не ведаеце як, то азнаёмцеся з <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">дакументацыяй</a>.",
     licenses: "Ліцэнзіі",
-    urqw_license_description: "Праграмнае забеспячэнне UrqW даецца на ўмовах <a href=\"LICENSE-GPL.txt\" target=\"_blank\">Стандартнай грамадскай ліцэнзіі GNU версіі 2</a> альбо больш позняй.",
-    third_party_licenses_description: "UrqW таксама ўключае і выкарыстоўвае староннія кампаненты, якія даюцца на ўмовах <a href=\"third-party_components.txt\" target=\"_blank\">розных свабодных і адкрытых ліцэнзій</a>.",
-    urqw_source_code_description: "Зыходны код і інфармацыя пра тое, як яго сабраць самастойна, даецца ў <a href=\"" + url_repo + "\" target=\"_blank\">публічным рэпазіторыі</a>.",
+    urqw_license_description: "Праграмнае забеспячэнне UrqW даецца на ўмовах <a href=\"LICENSE-GPL.txt\" rel=\"jslicense\" target=\"_blank\">Стандартнай грамадскай ліцэнзіі GNU версіі 2</a> альбо больш позняй.",
+    third_party_licenses_description: "UrqW таксама ўключае і выкарыстоўвае староннія кампаненты, якія даюцца на ўмовах <a href=\"third-party_components.txt\" rel=\"jslicense\" target=\"_blank\">розных свабодных і адкрытых ліцэнзій</a>.",
+    urqw_source_code_description: "Зыходны код і інфармацыя пра тое, як яго сабраць самастойна, даецца ў <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">публічным рэпазіторыі</a>.",
     contributors: "Удзельнікі праекта",
     manifest_unsupported_format: "Гульня мае файл manifest.json у фармаце, які не падтрымліваецца.",
     ifiction_unsupported_format: "Гульня мае запіс iFiction у фармаце, які не падтрымліваецца."
