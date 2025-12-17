@@ -90,11 +90,15 @@ The following project automation tools have been implemented:
 	```
 	npm run gen-docs
 	```
+* Generate a sitemap for search engines (the /sitemap.xml file):
+	```
+	npm run gen-sitemap
+	```
 * Package a release build of UrqW (just the engine and documentation, without games and development artifacts):
 	```
 	npm run pack-release
 	```
-* Build UrqW for production environments with the games catalog (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, and gen-docs scripts):
+* Build UrqW for production environments with the games catalog (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, gen-docs, and gen-sitemap scripts):
 	```
 	npm run build
 	```

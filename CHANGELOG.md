@@ -53,6 +53,7 @@
 	+ Added: RSS feed for new games in the catalog.
 	+ Added: Games added to the catalog have separate URLs for identification and indexing by search engines.
 	+ Added: Tag with canonical URL (separate URLs for the main page with a game catalog and for each game launched by identifier).
+	+ Added: Sitemap for search engines.
 	+ Added: Ability to set a game to load on any opening of index.html.
 	+ Added: New keys of a game object in the games.json file:
 		- date - to specify the game's first publication date.
@@ -125,6 +126,7 @@
 	+ Added: gen-rss script to generate RSS feed for new games in the catalog.
 	+ Added: gen-license-report script to generate report on third-party component licenses.
 	+ Added: gen-docs script to generate documentation in HTML format.
+	+ Added: gen-sitemap script to generate a sitemap for search engines.
 	+ Added: pack-release script to package a release build of UrqW.
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.

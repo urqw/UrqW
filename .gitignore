@@ -7,4 +7,5 @@ quests/*.zip
 .DS_Store
 changelog.html
 rss.xml
+sitemap.xml
 third-party_components.txt
