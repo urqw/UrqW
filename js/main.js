@@ -223,7 +223,10 @@ $(function() {
             }
         }
 
-        setCanonicalURL(rootURL + '?id=' + name);
+        if (name) {
+            setCanonicalURL(rootURL + '?id=' + name);
+        }
+
         $('#loading').show();
         $('#choose-game').hide();
 
