@@ -147,6 +147,7 @@ $(function() {
      * Load game from URL
      */
     function loadFromURL(url) {
+        setCanonicalURL(rootURL + '?url=' + url);
         var fileExtension = url.split('.').pop().toLowerCase();
         mode = $('#urq_mode').val();
         encoding = $('#game_encoding').val();
