@@ -225,25 +225,22 @@ $(function() {
 
         if (name) {
             setCanonicalURL(rootURL + '?id=' + name);
-        }
+            $('#loading').show();
+            $('#choose-game').hide();
 
-        $('#loading').show();
-        $('#choose-game').hide();
+            // Modify URL without reloading the page if the History API is supported
+            if (typeof urqw_default_game === 'undefined'
+                && window.history && window.history.replaceState) {
+                var url = new URL(window.location.href);
+                url.searchParams.set('id', name);
+                url.hash = '';
+                window.history.replaceState(
+                    {}, // State object
+                    '', // Title
+                    url.toString() // New URL
+                );
+            }
 
-        // Modify URL without reloading the page if the History API is supported
-        if (name && typeof urqw_default_game === 'undefined'
-            && window.history && window.history.replaceState) {
-            var url = new URL(window.location.href);
-            url.searchParams.set('id', name);
-            url.hash = '';
-            window.history.replaceState(
-                {}, // State object
-                '', // Title
-                url.toString() // New URL
-            );
-        }
-
-        if (name) {
             JSZipUtils.getBinaryContent('quests/' + name + '.zip', function(err, data) {
                 if (err) {
                     loadFromFolder(name);
