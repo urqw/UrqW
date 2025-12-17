@@ -8,20 +8,22 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 
+const { urqwURL, urqwRepoURL } = require('./common');
+
 // Get path to games.json and rss.xml files
 const gamesJsonPath = path.resolve(__dirname, '..', 'games.json');
 const rssFile = 'rss.xml';
 const rssXmlPath = path.resolve(__dirname, '..', rssFile);
 // Define general parameters of rss channel and its items
 const channelTitle = 'UrqW Games';
-const channelLink = 'https://urqw.github.io/UrqW';
-const channelSelfLink = channelLink + '/' + rssFile;
+const channelLink = urqwURL;
+const channelSelfLink = channelLink + rssFile;
 const channelDescription = 'Latest games on UrqW engine';
 const channelLanguage = 'en';
 const channelTTL = '60';
 const numberOfLatestGames = 10;
 const itemPublisher = 'UrqW';
-const itemPublisherURL = 'https://github.io/urqw/UrqW';
+const itemPublisherURL = urqwRepoURL;
 const itemType = 'InteractiveResource';
 const itemFormat = 'text/html';
 
@@ -71,7 +73,7 @@ async function generateRSS() {
 
         latestGames.forEach(game => {
             const langCode = game.lang.split(';')[0];
-            const gameURL = `${channelLink}/#${game.folder}`;
+            const gameURL = `${channelLink}?id=${game.folder}`;
 
             // Format game date without taking into account local time
             const utcGameDate = moment.utc(game.date);
