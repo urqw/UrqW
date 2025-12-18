@@ -209,6 +209,8 @@ $(function() {
         var name = '';
         if (typeof urqw_default_game !== 'undefined') {
             name = encodeURIComponent(urqw_default_game);
+            // Make the link to the main page unclickable
+            $('#link_brand').removeAttr('href').removeAttr('rel');
         } else if (typeof gameId !== 'undefined') {
             name = encodeURIComponent(gameId);
         } else {
