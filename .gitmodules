@@ -52,9 +52,6 @@
 [submodule "games/knights"]
 	path = games/knights
 	url = https://github.com/urqw/knights.git
-[submodule "games/mars2000"]
-	path = games/mars2000
-	url = https://github.com/urqw/mars2000.git
 [submodule "games/mary_celeste"]
 	path = games/mary_celeste
 	url = https://github.com/urqw/mary_celeste.git
@@ -73,9 +70,6 @@
 [submodule "games/shadow_over_rivercross"]
 	path = games/shadow_over_rivercross
 	url = https://github.com/urqw/shadow_over_rivercross.git
-[submodule "games/small_sketch"]
-	path = games/small_sketch
-	url = https://github.com/urqw/small_sketch.git
 [submodule "games/spoiler"]
 	path = games/spoiler
 	url = https://github.com/urqw/spoiler.git
