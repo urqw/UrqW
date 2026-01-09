@@ -27,14 +27,13 @@ UrqW implements the URQL interpreter with additional features based on web techn
 
 ## Heading towards the new release
 
-In 2025, active development of the project was resumed with the planned version number 1.1.
+Version 1.1 is in development with significant fixes and improvements (see [CHANGELOG.md](CHANGELOG.md)).
 
-* Adding new functionality (in development until the end of 2025)
-* Preparing new documentation (in development until the end of 2025)
-* Stabilization of functionality and documentation (after completion of development  and preparation in early 2026)
+Key tasks on the way to the new release:
+
+* Stabilization of functionality (in testing)
+* Preparing new documentation (in development)
 * Adding new user interface localizations (at any time as ready)
-
-Depending on circumstances, deadlines may change.
 
 However, the master branch always contains a stable enough version to be usable.
 
