@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015, 2016, 2018 Akela <akela88@bk.ru>
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -352,41 +352,49 @@ $(function() {
     // Make a variable global so that a function is available in other namespaces
     window.resetAudio = resetAudio;
 
-    $('#mute').on('click', function () {
-        var span = $(this).find('span.glyphicon');
-        var dataI18n = '[title]volume_control;[aria-label]';
+    // Handler for clicks on both the volume control link on the toolbar
+    // and the volume control button in the settings section of the menu
+    $('#mute, #mute_btn').on('click', function () {
+        var muteLnk = $('#mute'); // Link on the toolbar
+        var muteBtn = $('#mute_btn'); // Button in the settings
+        var spanLnk = muteLnk.find('span.glyphicon');
+        var dataI18nLnk = '[title]volume_control;[aria-label]';
         var volumeLevel;
         var labelID;
+        var glyphiconClass;
 
         switch (volumeMultiplier) {
             case 1:
                 labelID = 'mute_sound';
                 volumeMultiplier = 0.5;
                 volumeLevel = Number(settings['volume'])/100*volumeMultiplier;
-                span.removeClass('glyphicon-volume-up');
-                span.addClass('glyphicon-volume-down');
+                spanLnk.removeClass('glyphicon-volume-up');
+                glyphiconClass = 'glyphicon-volume-down';
                 break;
             case 0.5:
                 labelID = 'restore_normal_volume';
     volumeMultiplier = 0;
                 volumeLevel = 0;
-                span.removeClass('glyphicon-volume-down');
-                span.addClass('glyphicon-volume-off');
+                spanLnk.removeClass('glyphicon-volume-down');
+                glyphiconClass = 'glyphicon-volume-off';
                 break;
             case 0:
                 labelID = 'mute_half_volume';
                 volumeMultiplier = 1;
                 volumeLevel = Number(settings['volume'])/100;
-                span.removeClass('glyphicon-volume-off');
-                span.addClass('glyphicon-volume-up');
+                spanLnk.removeClass('glyphicon-volume-off');
+                glyphiconClass = 'glyphicon-volume-up';
                 break;
         }
 
         gameMusic.volume = volumeLevel;
         gameSound.volume = volumeLevel;
 
-        $(this).attr('aria-label', i18next.t(labelID));
-        $(this).attr('data-i18n', dataI18n + labelID);
+        var labelStr = i18next.t(labelID);
+        spanLnk.addClass(glyphiconClass);
+        muteLnk.attr('aria-label', labelStr);
+        muteLnk.attr('data-i18n', dataI18nLnk + labelID);
+        muteBtn.html(`<span class="glyphicon ${glyphiconClass}" aria-hidden="true"></span>&nbsp;<span data-i18n="${labelID}">${labelStr}</span>`);
 
         return false;
     });
