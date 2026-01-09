@@ -99,7 +99,7 @@ $(function() {
             accesskey = `accesskey="${key}"`;
         }
         return $('<div class="dropdown btn-group pull-right">' +
-            '<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-slot="' + slot + '" data-toggle="dropdown" ' + accesskey + ' aria-label="' + i18next.t('menu') + '" aria-expanded="false">' +
+            '<button type="button" class="btn btn-default btn-lg dropdown-toggle" data-slot="' + slot + '" data-toggle="dropdown" ' + accesskey + ' aria-label="' + i18next.t('menu') + '" aria-expanded="false">' +
             '<span class="caret" aria-hidden="true"></span>' +
             '</button>' +
             '<ul class="dropdown-menu" role="menu">' +
