@@ -25,6 +25,7 @@ var en = {
     language: {
         be: "Belarusian",
         en: "English",
+        es: "Spanish",
         ru: "Russian",
         uk: "Ukrainian",
         any: "Any"
