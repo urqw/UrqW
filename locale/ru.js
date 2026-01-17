@@ -7,6 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var ru = {
+    meta_description: "Текстовые игры и интерактивная литература. Каталог игр и интерпретатор URQL. Играйте, создавайте и делитесь своими интерактивными историями!",
     welcome_message: "Это движок текстовых игр UrqW " + urqw_version + ". Поддерживаются режимы совместимости с RipURQ 1.4, URQ_DOS 1.35 и AkURQ 1.28. Если вы хотите написать свою игру, но не знаете как, то ознакомьтесь с <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">документацией</a>. Доступен <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">публичный репозиторий</a> проекта, куда  вы можете прислать свои игры для размещения в каталоге. Также там можно создать <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">issue</a> при обнаружении проблем.",
     interface_language: "Язык интерфейса",
     something_went_wrong: "Что-то пошло не так",

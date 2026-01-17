@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015, 2016 Akela <akela88@bk.ru>
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -1125,6 +1125,17 @@ var parser = new DOMParser();
      * @param {String} name (name of game or file)
      */
     function start(msg, name) {
+        var $gamDesc = $('#game_description_text');
+        if ($gamDesc.length && $gamDesc.html()) {
+            var gamDesc = $gamDesc.html();
+            gamDesc = gamDesc.replace(/<br\b[^>]*>/gi, ' ');
+            $('#meta_description')
+                .attr('content', gamDesc)
+                .removeAttr('data-i18n');
+        } else {
+            $('#meta_description').remove();
+        }
+
         quest = null;
         window.onbeforeunload = function(e) {
             if (settings['close_page_confirmation']) {
