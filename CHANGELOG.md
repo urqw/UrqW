@@ -41,7 +41,7 @@
 	+ Fixed: Incorrect processing of the tokens_delim variable.
 	+ Fixed: Incorrect processing of the goto operator in compatibility mode with URQ_DOS.
 * Game player:
-	+ Added: Customizable internationalization support and interface translations into English, Armenian, Belarusian, Esperanto, Interslavic (Latin), Russian, and Ukrainian.
+	+ Added: Customizable internationalization support and interface translations into English, Armenian, Belarusian, Esperanto, Interslavic (Latin), Russian, Spanish, and Ukrainian.
 	+ Added: Differentiated language markup corresponding to the interface language and the game content language.
 	+ Added: Game encoding configuration when opening from the main page.
 	+ Added: Ability to rename and clear save slots via the additional actions menu, as well as download and upload saves as files.

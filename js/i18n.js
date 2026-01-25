@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
             name: "Esperanto",
             translation: eo
         },
+        es: {
+            name: "Spanish (español)",
+            translation: es
+        },
         hy: {
             name: "Armenian (հայերեն)",
             translation: hy
