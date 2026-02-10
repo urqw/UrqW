@@ -145,5 +145,6 @@ undefined: "Indefinido",
     urqw_source_code_description: "El código fuente y la información sobre cómo compilarlo tú mismo están disponibles en el <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">repositorio público</a>.",
     contributors: "Colaboradores",
     manifest_unsupported_format: "El juego tiene un archivo manifest.json en un formato no compatible.",
-    ifiction_unsupported_format: "El juego tiene un registro de iFiction en un formato no compatible."
+    ifiction_unsupported_format: "El juego tiene un registro de iFiction en un formato no compatible.",
+    game_unsupported_format: "El juego tiene un formato no compatible."
 };

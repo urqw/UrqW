@@ -145,5 +145,6 @@ var be = {
     urqw_source_code_description: "Зыходны код і інфармацыя пра тое, як яго сабраць самастойна, даецца ў <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">публічным рэпазіторыі</a>.",
     contributors: "Удзельнікі праекта",
     manifest_unsupported_format: "Гульня мае файл manifest.json у фармаце, які не падтрымліваецца.",
-    ifiction_unsupported_format: "Гульня мае запіс iFiction у фармаце, які не падтрымліваецца."
+    ifiction_unsupported_format: "Гульня мае запіс iFiction у фармаце, які не падтрымліваецца.",
+    game_unsupported_format: "Гульня мае фармац, які не падтрымліваецца."
 };

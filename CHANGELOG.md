@@ -78,6 +78,7 @@
 	+ Added: Ability to collapse and expand sections on the main page.
 	+ Added: Display detailed information about UrqW on the main page.
 	+ Added: Display of UrqW version in the player interface.
+	+ Added: Display information about unsupported game format and the process of unpacking the uploaded game.
 	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening .qsz format games.
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.

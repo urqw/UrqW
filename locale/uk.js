@@ -145,5 +145,6 @@ var uk = {
     urqw_source_code_description: "Вихадний код і інформація, як його зібрати самостійно, надані у <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">публічному репозіторії</a>.",
     contributors: "Учасники проекту",
     manifest_unsupported_format: "Гра має файл manifest.json у форматі, який не пітримується.",
-    ifiction_unsupported_format: "Гра має запис iFiction у форматі, який не пітримується."
+    ifiction_unsupported_format: "Гра має запис iFiction у форматі, який не пітримується.",
+    game_unsupported_format: "Гра має формат, який не пітримується."
 };

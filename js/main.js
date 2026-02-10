@@ -144,10 +144,28 @@ $(function() {
     }
 
     /**
+     * Switch the interface state when loading data
+     */
+    function waitState(value) {
+        if (value) {
+            $('#infopanel').hide();
+            //$('#logo').hide();
+            $('#loading').show();
+            $('#choose-game').hide();
+        } else {
+            $('#infopanel').show();
+            //$('#logo').show();
+            $('#loading').hide();
+            $('#choose-game').show();
+        }
+    }
+
+    /**
      * Load game from URL
      */
     function loadFromURL(url) {
         setCanonicalURL(rootURL + '?url=' + url);
+        waitState(true);
         var fileExtension = url.split('.').pop().toLowerCase();
         mode = $('#urq_mode').val();
         encoding = $('#game_encoding').val();
@@ -176,6 +194,7 @@ $(function() {
                         loadZip(xhr.response, url);
                     } else {
                         console.error('Unsupported file format for ', url);
+                        alert(i18next.t('game_unsupported_format'));
                         loadFromCatalogFailed();
                     }
                 } else {
@@ -227,8 +246,7 @@ $(function() {
 
         if (name) {
             setCanonicalURL(rootURL + '?id=' + name);
-            $('#loading').show();
-            $('#choose-game').hide();
+            waitState(true);
 
             // Modify URL without reloading the page if the History API is supported
             if (typeof urqw_default_game === 'undefined'
@@ -517,6 +535,9 @@ if (styleFile) {
             }
 
             start(quest, gameName);
+        } else {
+            alert(i18next.t('game_unsupported_format'));
+            waitState(false);
         }
     }
 
@@ -669,8 +690,7 @@ if (styleFile) {
             $('#gamelist').append('<p data-i18n="failed_load_game_list">' + i18next.t('failed_load_game_list') + '</p>')
         });
 
-        $('#loading').hide();
-        $('#choose-game').show();
+        waitState(false);
     }
 
     /**
@@ -685,6 +705,7 @@ if (styleFile) {
      * Read file when change file-control
      */
     $('#quest').on('change', async function(e) {
+        waitState(true);
         // Live list of selected files to array
         var selectedFiles = Array.from(e.target.files);
         files = {};
@@ -749,6 +770,8 @@ if (styleFile) {
         }
 
         if (qst.length == 0) {
+            alert(i18next.t('game_unsupported_format'));
+            waitState(false);
             return;
         }
 
@@ -872,6 +895,7 @@ var fileArray = [];
         } catch (error) {
             console.error('Error parsing manifest.json file:', error);
             alert(i18next.t('manifest_unsupported_format'));
+            waitState(false);
             return false;
         }
     }
@@ -1048,6 +1072,7 @@ var parser = new DOMParser();
         } catch (error) {
             console.error('Error parsing iFiction record:', error);
             alert(i18next.t('ifiction_unsupported_format'));
+            waitState(false);
             return false;
         }
     }
@@ -1168,7 +1193,6 @@ var parser = new DOMParser();
         });
 
         $('#loading').hide();
-        $('#infopanel').hide();
         $('#logo').hide();
 
         Game = new Quest(msg);
@@ -1186,7 +1210,6 @@ var parser = new DOMParser();
         GlobalPlayer.Client.crtlTextField = $('#textfield');
         GlobalPlayer.Client.crtlInventory = $('#inventory');
 
-        $('#choose-game').hide();
         $('#game').show();
 
         // Preventing hash changes when clicking on links with data-toggle="collapse"

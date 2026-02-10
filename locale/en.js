@@ -145,5 +145,6 @@ undefined: "Undefined",
     urqw_source_code_description: "The source code and information about how to build it yourself are available in the <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">public repository</a>.",
     contributors: "Contributors",
     manifest_unsupported_format: "The game has a manifest.json file in an unsupported format.",
-    ifiction_unsupported_format: "The game has a iFiction record in an unsupported format."
+    ifiction_unsupported_format: "The game has a iFiction record in an unsupported format.",
+    game_unsupported_format: "The game has an unsupported format."
 };

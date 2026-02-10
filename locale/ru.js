@@ -145,5 +145,6 @@ var ru = {
     urqw_source_code_description: "Исходный код и информация о том, как его собрать самостоятельно, предоставляются в <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">публичном репозитории</a>.",
     contributors: "Участники проекта",
     manifest_unsupported_format: "Игра имеет файл manifest.json в неподдерживаемом формате.",
-    ifiction_unsupported_format: "Игра имеет запись iFiction в неподдерживаемом формате."
+    ifiction_unsupported_format: "Игра имеет запись iFiction в неподдерживаемом формате.",
+    game_unsupported_format: "Игра имеет неподдерживаемый формат."
 };
