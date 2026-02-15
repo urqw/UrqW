@@ -175,3 +175,9 @@
 [submodule "games/mirrored_spaceman"]
 	path = games/mirrored_spaceman
 	url = https://github.com/urqw/mirrored_spaceman.git
+[submodule "games/jim_from_outer_space"]
+	path = games/jim_from_outer_space
+	url = https://github.com/tseykovets/jim_from_outer_space.git
+[submodule "games/jim_from_outer_space_ru"]
+	path = games/jim_from_outer_space_ru
+	url = https://github.com/tseykovets/jim_from_outer_space_ru.git

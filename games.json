@@ -1,5 +1,21 @@
 [
     {
+        "author": "Даниэль Родригес Риверо",
+        "title": "Джим из Космоса",
+        "description": "Ты — Джим, сотрудник полицейского участка «Космос 1», самого эксцентричного в галактике. Твоя смена вот-вот закончится, когда начальник вызывает тебя в свой кабинет. Вселенная нуждается в тебе. Готов ли ты принять этот вызов?",
+        "date": "2026-02-16",
+        "lang": "ru",
+        "folder": "jim_from_outer_space_ru"
+    },
+    {
+        "author": "Daniel Rodríguez Rivero",
+        "title": "Jim del Espacio Exterior",
+        "description": "Eres Jim, miembro de la Espacio Exterior 1, la comisaría de policía más estrafalaria de toda la galaxia. Tu turno está a punto de terminar cuando el jefe te llama su despacho. El universo te necesita. ¿Estás preparado para aceptar la llamada?",
+        "date": "2026-02-16",
+        "lang": "es",
+        "folder": "jim_from_outer_space"
+    },
+    {
         "author": "Davarg, Nunhan и Никита Цейковец",
         "title": "Гэд",
         "description": "\"Дрянная жизнь\", - думал ты, ехав в город Гэд. Если бы ты родился в другой семье, может тебе бы никогда и не пришлось отвозить заказ Лормана (небольшую повозку, доверху забитую тканями) в этот город нищеты. Но, как всегда бывает, уже почти у города тебя ограбили и притом хорошо ударили по голове. Когда ты очнулся, тебя осенила идея, что Лорман спустит с тебя три шкуры за его товар, поэтому немедленно надо его вернуть и доставить на рынок.",
