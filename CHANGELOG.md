@@ -90,6 +90,7 @@
 	+ Changed: When launching a game by identifier from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
 	+ Changed: A new sound played using the play operator stops the previous one (the original behavior of RipURQ, URQ_DOS (WCL), and AkURQ), rather than playing in parallel.
 	+ Changed: Game sounds initiated via the play operator at zero volume begin playing at zero volume instead of being ignored.
+	+ Changed: UI areas for inventory, text, and choice  buttons are only redrawn when the content being displayed changes, rather than every time the game state changes.
 	+ Changed: Keypress tracking by key code instead of character code.
 	+ Changed: Layout optimization, including for HTML validity and search engine optimization.
 	+ Changed: Minor adjustment to informative window indentation.

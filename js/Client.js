@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015, 2016 Akela <akela88@bk.ru>
- * Copyright (C) 2024, 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2024-2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -174,6 +174,14 @@ Client.prototype.clsb = function() {
  */
 Client.prototype.drawText = function () {
     var me = this;
+
+    // If the text hasn't changed, then don't redraw it
+    if (JSON.stringify(GlobalPlayer.text) === me.previousRenderedText) {
+        return;
+    } else {
+        me.previousRenderedText = JSON.stringify(GlobalPlayer.text);
+    }
+
     var scrolled = false;
 
     this.crtlTextField.empty();
@@ -252,6 +260,14 @@ Client.prototype.drawText = function () {
  */
 Client.prototype.drawButtons = function () {
     var me = this;
+
+    // If the buttons hasn't changed, then don't redraw them
+    if (JSON.stringify(GlobalPlayer.buttons) === me.previousRenderedButtons) {
+        return;
+    } else {
+        me.previousRenderedButtons = JSON.stringify(GlobalPlayer.buttons);
+    }
+
     this.crtlButtonField.empty();
 
     $.each(GlobalPlayer.buttons, function(index, button) {
@@ -276,6 +292,14 @@ Client.prototype.drawButtons = function () {
  */
 Client.prototype.drawInventory = function () {
     var me = this;
+
+    // If the inventory hasn't changed, then don't redraw it
+    if (JSON.stringify(Game.items) === me.previousRenderedInventory) {
+        return;
+    } else {
+        me.previousRenderedInventory = JSON.stringify(Game.items);
+    }
+
     this.crtlInventory.empty();
     this.crtlInventory.append(this.drawItem('inv', 1));
 
