@@ -153,6 +153,7 @@ Client.prototype.cls = function() {
  */
 Client.prototype.clst = function() {
     this.crtlTextField.empty();
+    this.previousRenderedText = '';
 };
 
 /**
@@ -167,6 +168,7 @@ Client.prototype.clsl = function() {
  */
 Client.prototype.clsb = function() {
     this.crtlButtonField.empty();
+    this.previousRenderedButtons = '';
 };
 
 /**
