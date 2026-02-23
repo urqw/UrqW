@@ -181,3 +181,6 @@
 [submodule "games/jim_from_outer_space_ru"]
 	path = games/jim_from_outer_space_ru
 	url = https://github.com/tseykovets/jim_from_outer_space_ru.git
+[submodule "games/dead_or_alive"]
+	path = games/dead_or_alive
+	url = https://github.com/tseykovets/dead_or_alive.git
