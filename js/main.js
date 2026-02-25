@@ -74,6 +74,16 @@ $(function() {
     // Find all toggler with the collapsible-toggler class to control the icon
     $('.collapsible-toggler').each(function() {
         var $toggler = $(this);
+
+        // Preventing hash changes when clicking on links
+        if ($toggler.is('a')) {
+            $toggler.click(function(event) {
+                event.preventDefault();
+                var target = $toggler.data('target');
+                $(target).collapse('toggle');
+            });
+        }
+
         var $icon = $toggler.find('.glyphicon');
         var $target = $($toggler.data('target'));
 
@@ -1211,14 +1221,6 @@ var parser = new DOMParser();
         GlobalPlayer.Client.crtlInventory = $('#inventory');
 
         $('#game').show();
-
-        // Preventing hash changes when clicking on links with data-toggle="collapse"
-        // Relevant for section links in the menu
-        $('a[data-toggle="collapse"]').click(function(event) {
-            event.preventDefault();
-            var target = $(this).data('target');
-            $(target).collapse('toggle');
-        });
 
         // Add link to copy IFID to menu
         if (manifest['urqw_game_ifid']) {
