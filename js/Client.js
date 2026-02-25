@@ -71,24 +71,7 @@ Client.prototype.render = function (data) {
     if (data.status == PLAYER_STATUS_END) {
         this.drawButtons();
         this.drawInventory();
-        // Automatically focus the first control of game screen:
-        // link in text, action button, or inventory button
-        if (settings['automatically_focus']) {
-            var targetFocus;
-            [
-                $('#textfield a:visible:first'),
-                $('#buttons button:visible:first'),
-                $('.navbar-right a:visible:first')
-            ].some(function(element) {
-                if (element.length) {
-                    targetFocus = element;
-                    return true;
-                }
-            });
-            if (targetFocus) {
-                targetFocus[0].focus({ preventScroll: true });
-            }
-        }
+        automaticallyFocusFirstControl(true);
         // Save the game to be able to continue with saving progress
         Game.save('continue');
     } else if (data.status == PLAYER_STATUS_ANYKEY) {
@@ -121,6 +104,7 @@ Client.prototype.render = function (data) {
                 GlobalPlayer.continue();
             }
         }, wait);
+        automaticallyFocusFirstControl(false);
     } else if (data.status == PLAYER_STATUS_QUIT) {
         GlobalPlayer.clsl();
         this.clsb();
@@ -136,6 +120,39 @@ Client.prototype.render = function (data) {
                 span[0].focus({ preventScroll: true });
             }
         });
+    }
+
+    /*
+     * Automatically focus the first control of game screen:
+     * link in text, action button, or inventory button
+     **/
+    function automaticallyFocusFirstControl(force = true) {
+        if (!settings['automatically_focus']) {
+            return;
+        }
+
+        if (!force) {
+            var $currentFocus = $(document.activeElement);
+            var isFocusInsideAreas = $currentFocus.closest('#textfield, #buttons, .navbar-right').length > 0;
+            if (isFocusInsideAreas) {
+                return;
+            }
+        }
+
+        var targetFocus;
+        [
+            $('#textfield a:visible:first'),
+            $('#buttons button:visible:first'),
+            $('.navbar-right a:visible:first')
+        ].some(function(element) {
+            if (element.length) {
+                targetFocus = element;
+                return true;
+            }
+        });
+        if (targetFocus) {
+            targetFocus[0].focus({ preventScroll: true });
+        }
     }
 };
 
