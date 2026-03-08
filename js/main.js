@@ -17,7 +17,7 @@ Game = null;
  */
 GlobalPlayer = null;
 
-function resolveUrqFile(fileName, defaultExt) {
+function resolveFile(fileName, defaultExt) {
     fileName = fileName.toString().trim();
     if (fileName.indexOf('.') !== -1) return normalizeInternalPath(fileName);
 
@@ -40,7 +40,7 @@ $(function() {
                 if (window.gameMusic) window.gameMusic.pause();
                 return;
             }
-            var resolvedPath = resolveUrqFile(url, ".mid");
+            var resolvedPath = resolveFile(url, ".mid");
             var fullURL = getGameFileURL(resolvedPath);
             if (window.urqwMidi && window.urqwMidi.currentUrl === fullURL) return;
             var ext = resolvedPath.split('.').pop().toLowerCase();
@@ -58,7 +58,7 @@ $(function() {
 
         Player.prototype.playSound = function(url) {
             if (!url) return;
-            var resolvedPath = resolveUrqFile(url, ".wav");
+            var resolvedPath = resolveFile(url, ".wav");
             var fullURL = getGameFileURL(resolvedPath);
             var ext = resolvedPath.split('.').pop().toLowerCase();
             if (ext === 'mid' || ext === 'midi') {
