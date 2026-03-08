@@ -337,18 +337,24 @@ $(function() {
     // Make a variable global so that a function is available in other namespaces
     window.loadGameFromData = loadGameFromData;
 
-    // Function to reset an Audio object
     var resetAudio = function(audio) {
-        if (!audio.paused) {
+        if (audio === window.gameMusic && window.urqwMidi) {
+            window.urqwMidi.stop();
+        }
+        if (audio && !audio.paused) {
             audio.pause();
         }
-        audio.currentTime = 0;
-        audio.loop = false;
-        audio.volume = Number(settings['volume'])/100*volumeMultiplier;
-        audio.src = '';
-        audio.srcUrqW = '';
-        audio.load();
+        if (audio) {
+            audio.currentTime = 0;
+            audio.loop = false;
+            audio.volume = Number(settings['volume'])/100*volumeMultiplier;
+            audio.src = '';
+            audio.srcUrqW = '';
+            try { audio.load(); } catch(e) {}
+        }
     }
+
+    // Function to reset an Audio object
     // Make a variable global so that a function is available in other namespaces
     window.resetAudio = resetAudio;
 
