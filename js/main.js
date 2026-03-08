@@ -17,6 +17,62 @@ Game = null;
  */
 GlobalPlayer = null;
 
+function resolveUrqFile(fileName, defaultExt) {
+    fileName = fileName.toString().trim();
+    if (fileName.indexOf('.') !== -1) return normalizeInternalPath(fileName);
+
+    var exts = [defaultExt, ".wav", ".mp3", ".ogg", ".mid", ".midi"];
+    
+    for (var i = 0; i < exts.length; i++) {
+        var testPath = normalizeInternalPath(fileName + exts[i]);
+        if (window.files && window.files[testPath]) {
+            return testPath;
+        }
+    }
+    return normalizeInternalPath(fileName + defaultExt);
+}
+
+$(function() {
+    if (typeof Player !== 'undefined') {
+        Player.prototype.playMusic = function(url, isLoop) {
+            if (!url || url === "0" || url === 0) {
+                if (window.urqwMidi) window.urqwMidi.stop();
+                if (window.gameMusic) window.gameMusic.pause();
+                return;
+            }
+            var resolvedPath = resolveUrqFile(url, ".mid");
+            var fullURL = getGameFileURL(resolvedPath);
+            if (window.urqwMidi && window.urqwMidi.currentUrl === fullURL) return;
+            var ext = resolvedPath.split('.').pop().toLowerCase();
+            if (ext === 'mid' || ext === 'midi') {
+                if (window.gameMusic) { window.gameMusic.pause(); window.gameMusic.src = ""; }
+                if (window.urqwMidi) window.urqwMidi.play(fullURL, isLoop);
+            } else {
+                if (window.urqwMidi) window.urqwMidi.stop();
+                window.gameMusic.src = fullURL;
+                window.gameMusic.loop = isLoop;
+                var p = window.gameMusic.play();
+                if (p && p.catch) p.catch(e => {});
+            }
+        };
+
+        Player.prototype.playSound = function(url) {
+            if (!url) return;
+            var resolvedPath = resolveUrqFile(url, ".wav");
+            var fullURL = getGameFileURL(resolvedPath);
+            var ext = resolvedPath.split('.').pop().toLowerCase();
+            if (ext === 'mid' || ext === 'midi') {
+                if (window.urqwMidi) window.urqwMidi.play(fullURL, false);
+            } else {
+                if (typeof resetAudio === 'function') resetAudio(window.gameSound);
+                window.gameSound.src = fullURL;
+                var p = window.gameSound.play();
+                if (p && p.catch) p.catch(e => {});
+            }
+        };
+    }
+});
+
 /**
  * Files
  */
@@ -1282,3 +1338,69 @@ var parser = new DOMParser();
         }
     }
 });
+
+window.urqwMidi = {
+    synth: null,
+    sequencer: null,
+    audioCtx: null,
+    isReady: false,
+    currentUrl: null,
+    currentBlobUrl: null,
+
+    init: async function() {
+        if (this.isReady) return;
+        var self = this;
+        var AudioClass = window.AudioContext || window.webkitAudioContext;
+        this.audioCtx = new AudioClass();
+        await this.audioCtx.audioWorklet.addModule('js/spessasynth_processor.min.js');
+        const sf2Res = await fetch('default.sf2');
+        const sf2Buffer = await sf2Res.arrayBuffer();
+        this.synth = new SpessaSynth.WorkletSynthesizer(this.audioCtx);
+        this.synth.connect(this.audioCtx.destination);
+        await this.synth.soundBankManager.addSoundBank(sf2Buffer, 'default');
+        this.sequencer = new SpessaSynth.Sequencer(this.synth);
+        this.isReady = true;
+    },
+
+    play: async function(url, loop) {
+        if (!url || url.includes('undefined')) return;
+        await this.init();
+        if (this.audioCtx.state === 'suspended') await this.audioCtx.resume();
+        this.currentUrl = url;
+        try {
+            const res = await fetch(url);
+            const buffer = await res.arrayBuffer();
+            const view = new DataView(buffer);
+            const isTrueMidi = (buffer.byteLength > 4 && view.getUint32(0, false) === 0x4D546864);            
+            if (isTrueMidi) {
+                if (window.gameMusic) { window.gameMusic.pause(); window.gameMusic.src = ""; }
+                this.sequencer.pause();
+                this.sequencer.loadNewSongList([{
+                    binary: buffer,
+                    fileName: "track.mid"
+                }]);
+                this.sequencer.loopCount = (loop !== false) ? 9999 : 0;
+                this.sequencer.play();
+            } else {                
+                if (this.sequencer) this.sequencer.pause();
+                if (this.currentBlobUrl) URL.revokeObjectURL(this.currentBlobUrl);
+                const blob = new Blob([buffer]);
+                this.currentBlobUrl = URL.createObjectURL(blob);
+                if (window.gameMusic) {
+                    window.gameMusic.src = this.currentBlobUrl;
+                    window.gameMusic.loop = (loop !== false);
+                    var p = window.gameMusic.play();
+                    if (p && p.catch) p.catch(e => {});
+                }
+            }
+        } catch (e) {
+            this.currentUrl = null;
+        }
+    },
+
+    stop: function() {
+        this.currentUrl = null;
+        this.sequencer.pause();
+        this.synth.stopAll(true);
+    }
+};
