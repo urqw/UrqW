@@ -35,7 +35,7 @@ function resolveFile(fileName, defaultExt) {
 $(function() {
     if (typeof Player !== 'undefined') {
         Player.prototype.playMusic = function(url, isLoop) {
-            if (!url || url === "0" || url === 0) {
+            if (!url) {
                 if (window.urqwMidi) window.urqwMidi.stop();
                 if (window.gameMusic) window.gameMusic.pause();
                 return;
@@ -1375,6 +1375,8 @@ window.urqwMidi = {
             if (isTrueMidi) {
                 if (window.gameMusic) { window.gameMusic.pause(); window.gameMusic.src = ""; }
                 this.sequencer.pause();
+                var currentVol = (Number(window.settings['volume']) / 100) * (window.volumeMultiplier || 1);
+                this.setVolume(currentVol);
                 this.sequencer.loadNewSongList([{
                     binary: buffer,
                     fileName: "track.mid"
@@ -1402,5 +1404,11 @@ window.urqwMidi = {
         this.currentUrl = null;
         this.sequencer.pause();
         this.synth.stopAll(true);
+    },
+
+    setVolume: function(val) {
+        if (this.synth) {
+            this.synth.setMasterParameter("masterGain", val);
+        }
     }
 };

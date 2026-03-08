@@ -395,7 +395,7 @@ $(function() {
 
         gameMusic.volume = volumeLevel;
         gameSound.volume = volumeLevel;
-
+        if (window.urqwMidi) window.urqwMidi.setVolume(volumeLevel);
         var labelStr = i18next.t(labelID);
         spanLnk.addClass(glyphiconClass);
         muteLnk.attr('aria-label', labelStr);
@@ -562,6 +562,7 @@ $(function() {
         var volumeLevel = currentValue/100*volumeMultiplier;
         gameMusic.volume = volumeLevel;
         gameSound.volume = volumeLevel;
+        if (window.urqwMidi) window.urqwMidi.setVolume(volumeLevel);
         var name = 'volume';
         settings[name] = currentValue;
         localStorage.setItem(name, JSON.stringify(currentValue));
