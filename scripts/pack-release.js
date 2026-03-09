@@ -62,6 +62,7 @@ async function packRelease() {
             'js',
             'locale',
             'CHANGELOG.html',
+            'default.sf2',
             'favicon.png',
             'index.html',
             'LICENSE-CC.txt',
