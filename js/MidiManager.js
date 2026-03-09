@@ -12,7 +12,7 @@ window.urqwMidi = {
         var self = this;
         const AudioClass = window.AudioContext || window.webkitAudioContext;
         this.audioCtx = new AudioClass();
-        await this.audioCtx.audioWorklet.addModule('js/spessasynth_processor.min.js');
+        await this.audioCtx.audioWorklet.addModule('node_modules/spessasynth_lib/dist/spessasynth_processor.min.js');
         const sf2Res = await fetch('default.sf2');
         const sf2Buffer = await sf2Res.arrayBuffer();
         this.synth = new WorkletSynthesizer(this.audioCtx);

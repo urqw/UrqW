@@ -15,7 +15,7 @@
     "pack-games": "node scripts/pack-games.js",
     "valid-json": "node scripts/valid-json.js",
     "pack-release": "node scripts/pack-release.js",
-    "prepare-midi": "esbuild js/MidiManager.js --bundle --minify --platform=browser --outfile=js/midi.js && node scripts/copy-midi.js",
+    "prepare-midi": "esbuild js/MidiManager.js --bundle --minify --platform=browser --outfile=js/midi.js",
     "build": "npm run prepare-midi && npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report && npm run gen-docs && npm run gen-sitemap",
     "release": "npm run prepare-midi && npm run gen-license-report && npm run gen-docs && npm run pack-release",
     "test": "echo \"Error: no test specified\" && exit 1"
