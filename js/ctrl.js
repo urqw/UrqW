@@ -350,7 +350,7 @@ $(function() {
             audio.volume = Number(settings['volume'])/100*volumeMultiplier;
             audio.src = '';
             audio.srcUrqW = '';
-            try { audio.load(); } catch(e) {}
+            audio.load();
         }
     }
 
@@ -416,7 +416,6 @@ $(function() {
 
             resetAudio(gameMusic);
             resetAudio(gameSound);
-
             Game.init();
 
             GlobalPlayer = new Player();

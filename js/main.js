@@ -17,62 +17,6 @@ Game = null;
  */
 GlobalPlayer = null;
 
-function resolveFile(fileName, defaultExt) {
-    fileName = fileName.toString().trim();
-    if (fileName.indexOf('.') !== -1) return normalizeInternalPath(fileName);
-
-    var exts = [defaultExt, ".wav", ".mp3", ".ogg", ".mid", ".midi"];
-    
-    for (var i = 0; i < exts.length; i++) {
-        var testPath = normalizeInternalPath(fileName + exts[i]);
-        if (window.files && window.files[testPath]) {
-            return testPath;
-        }
-    }
-    return normalizeInternalPath(fileName + defaultExt);
-}
-
-$(function() {
-    if (typeof Player !== 'undefined') {
-        Player.prototype.playMusic = function(url, isLoop) {
-            if (!url) {
-                if (window.urqwMidi) window.urqwMidi.stop();
-                if (window.gameMusic) window.gameMusic.pause();
-                return;
-            }
-            var resolvedPath = resolveFile(url, ".mid");
-            var fullURL = getGameFileURL(resolvedPath);
-            if (window.urqwMidi && window.urqwMidi.currentUrl === fullURL) return;
-            var ext = resolvedPath.split('.').pop().toLowerCase();
-            if (ext === 'mid' || ext === 'midi') {
-                if (window.gameMusic) { window.gameMusic.pause(); window.gameMusic.src = ""; }
-                if (window.urqwMidi) window.urqwMidi.play(fullURL, isLoop);
-            } else {
-                if (window.urqwMidi) window.urqwMidi.stop();
-                window.gameMusic.src = fullURL;
-                window.gameMusic.loop = isLoop;
-                var p = window.gameMusic.play();
-                if (p && p.catch) p.catch(e => {});
-            }
-        };
-
-        Player.prototype.playSound = function(url) {
-            if (!url) return;
-            var resolvedPath = resolveFile(url, ".wav");
-            var fullURL = getGameFileURL(resolvedPath);
-            var ext = resolvedPath.split('.').pop().toLowerCase();
-            if (ext === 'mid' || ext === 'midi') {
-                if (window.urqwMidi) window.urqwMidi.play(fullURL, false);
-            } else {
-                if (typeof resetAudio === 'function') resetAudio(window.gameSound);
-                window.gameSound.src = fullURL;
-                var p = window.gameSound.play();
-                if (p && p.catch) p.catch(e => {});
-            }
-        };
-    }
-});
-
 /**
  * Files
  */
@@ -1339,6 +1283,19 @@ var parser = new DOMParser();
     }
 });
 
+function resolveFile(fileName, defaultExt) {
+    fileName = fileName.toString().trim();
+    if (fileName.indexOf('.') !== -1) return normalizeInternalPath(fileName);
+    var exts = [defaultExt, ".wav", ".mp3", ".ogg", ".mid", ".midi"];
+    for (var i = 0; i < exts.length; i++) {
+        var testPath = normalizeInternalPath(fileName + exts[i]);
+        if (window.files && window.files[testPath]) {
+            return testPath;
+        }
+    }
+    return normalizeInternalPath(fileName + defaultExt);
+}
+
 window.urqwMidi = {
     synth: null,
     sequencer: null,
@@ -1400,11 +1357,22 @@ window.urqwMidi = {
         }
     },
 
-    stop: function() {
-        this.currentUrl = null;
-        this.sequencer.pause();
-        this.synth.stopAll(true);
-    },
+stop: function() {
+    this.currentUrl = null;
+    if (this.sequencer) {
+        try {
+            this.sequencer.pause();
+        } catch(e) {}
+    }
+    if (this.synth) {
+        try {
+                this.synth.stopAll(true);
+        } catch(e) {
+            console.warn("MIDI Hard Stop failed:", e);
+        }
+    }
+    console.log("MIDI: Полная остановка и сброс эффектов.");
+},
 
     setVolume: function(val) {
         if (this.synth) {
