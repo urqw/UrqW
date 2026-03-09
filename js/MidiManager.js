@@ -15,10 +15,10 @@ window.urqwMidi = {
         await this.audioCtx.audioWorklet.addModule('js/spessasynth_processor.min.js');
         const sf2Res = await fetch('default.sf2');
         const sf2Buffer = await sf2Res.arrayBuffer();
-        this.synth = new SpessaSynth.WorkletSynthesizer(this.audioCtx);
+        this.synth = new WorkletSynthesizer(this.audioCtx);
         this.synth.connect(this.audioCtx.destination);
         await this.synth.soundBankManager.addSoundBank(sf2Buffer, 'default');
-        this.sequencer = new SpessaSynth.Sequencer(this.synth);
+        this.sequencer = new Sequencer(this.synth);
         this.isReady = true;
     },
 
@@ -60,26 +60,17 @@ window.urqwMidi = {
         }
     },
 
-stop: function() {
-    this.currentUrl = null;
-    if (this.sequencer) {
-        try {
-            this.sequencer.pause();
-        } catch(e) {}
-    }
-    if (this.synth) {
-        try {
-                this.synth.stopAll(true);
-        } catch(e) {
-            console.warn("MIDI Hard Stop failed:", e);
+    stop: function() {
+        this.currentUrl = null;
+        if (this.sequencer) {
+            try { this.sequencer.pause(); } catch(e) {}
         }
-    }
-    console.log("MIDI: Полная остановка и сброс эффектов.");
-},
+        if (this.synth) {
+            try { this.synth.stopAll(true); } catch(e) {}
+        }
+    },
 
     setVolume: function(val) {
-        if (this.synth) {
-            this.synth.setMasterParameter("masterGain", val);
-        }
+        if (this.synth) this.synth.setMasterParameter("masterGain", val);
     }
 };
