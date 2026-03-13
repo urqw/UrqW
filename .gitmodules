@@ -184,3 +184,6 @@
 [submodule "games/dead_or_alive"]
 	path = games/dead_or_alive
 	url = https://github.com/tseykovets/dead_or_alive.git
+[submodule "games/night_of_dead"]
+	path = games/night_of_dead
+	url = https://github.com/urqw/night_of_dead.git
