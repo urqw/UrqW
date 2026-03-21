@@ -80,7 +80,7 @@
 	+ Added: Display of UrqW version in the player interface.
 	+ Added: Display information about unsupported game format and the process of unpacking the uploaded game.
 	+ Added: Titles for save and load game dialog boxes.
-	+ Added: Support for opening .qsz format games.
+	+ Added: Support for opening games in .qs1, .qs2 and .qsz formats.
 	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
 	+ Changed: When the game over through the quit operator, links and buttons are deleted instead of just stopping response to user actions.

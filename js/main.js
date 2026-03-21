@@ -505,7 +505,7 @@ if (styleFile) {
         for (var key in zip.files) {
             if (!zip.files[key].dir) {
                 var file = zip.file(key);
-                if (file.name.split('.').pop().toLowerCase() == 'qst') {
+                if (['qst', 'qs1', 'qs2'].includes(file.name.split('.').pop().toLowerCase())) {
                     if (file.name.substr(0, 1) == '_' || file.name.indexOf('/_') != -1) {
                         qst.unshift(file);
                     } else {
@@ -534,12 +534,33 @@ if (styleFile) {
                 }
             }
 
-            var questPart;
+            var questPart, extension;
             for (var i = 0; i < qst.length; i++) {
-                if (encoding.toLowerCase() == 'utf-8') {
-                    questPart = qst[i].asText();
+                extension = qst[i].name.split('.').pop().toLowerCase();
+                if (extension === 'qst') {
+                    if (encoding.toLowerCase() == 'utf-8') {
+                        questPart = qst[i].asText();
+                    } else {
+                        questPart = win2unicode(qst[i].asBinary());
+                    }
                 } else {
-                    questPart = win2unicode(qst[i].asBinary());
+                    var arrayBuffer = qst[i].asArrayBuffer();
+                    var uint8Array = new Uint8Array(arrayBuffer);
+                    switch (extension) {
+                        case 'qs1':
+                            uint8Array = qs1ToQst(uint8Array);
+                            break;
+                        case 'qs2':
+                            uint8Array = qs2ToQst(uint8Array);
+                            break;
+                    }
+                    if (encoding.toLowerCase() == 'utf-8') {
+                        var decoder = new TextDecoder(encoding);
+                        questPart = decoder.decode(uint8Array);
+                    } else {
+                        var byteString = String.fromCharCode.apply(null, uint8Array);
+                        questPart = win2unicode(byteString);
+                    }
                 }
                 quest = quest + '\r\n' + questPart;
             }
@@ -762,7 +783,7 @@ if (styleFile) {
 
         // Read other files
         for (var i = 0; i < selectedFiles.length; i++) {
-            if (selectedFiles[i].name.split('.').pop().toLowerCase() == 'qst') {
+            if (['qst', 'qs1', 'qs2'].includes(selectedFiles[i].name.split('.').pop().toLowerCase())) {
                 qst.push(selectedFiles[i]);
             } else if (selectedFiles[i].name.toLowerCase() == 'style.css') {
                 readStyle(selectedFiles[i]);
@@ -1092,15 +1113,43 @@ var parser = new DOMParser();
      */
     function readQst(file) {
         var reader = new FileReader();
+        var extension = file.name.split('.').pop().toLowerCase();
+
         reader.onload = function() {
-            if (file.name.substr(0, 1) == '_') {
-                quest.unshift(reader.result);
+            var qstText;
+            if (extension === 'qst') {
+                qstText = reader.result;
             } else {
-                quest.push(reader.result);
+                var uint8Array = new Uint8Array(reader.result);
+                switch (extension) {
+                    case 'qs1':
+                        uint8Array = qs1ToQst(uint8Array);
+                        break;
+                    case 'qs2':
+                        uint8Array = qs2ToQst(uint8Array);
+                        break;
+                }
+                if (encoding.toLowerCase() == 'utf-8') {
+                    var decoder = new TextDecoder(encoding);
+                    qstText = decoder.decode(uint8Array);
+                } else {
+                    var byteString = String.fromCharCode.apply(null, uint8Array);
+                    qstText = win2unicode(byteString);
+                }
+            }
+
+            if (file.name.substr(0, 1) == '_') {
+                quest.unshift(qstText);
+            } else {
+                quest.push(qstText);
             }
         };
 
-        reader.readAsText(file, encoding);
+        if (extension === 'qst') {
+            reader.readAsText(file, encoding);
+        } else {
+            reader.readAsArrayBuffer(file);
+        }
     }
 
     /**
