@@ -200,7 +200,7 @@ $(function() {
                 if (xhr.response) {
                     if (fileExtension === 'qst') {
                         start(xhr.response, url);
-                    } else if ('zip,qsz'.includes(fileExtension)) {
+                    } else if (['zip', 'qsz'].includes(fileExtension)) {
                         loadZip(xhr.response, url);
                     } else {
                         console.error('Unsupported file format for ', url);
