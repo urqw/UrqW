@@ -187,3 +187,6 @@
 [submodule "games/night_of_dead"]
 	path = games/night_of_dead
 	url = https://github.com/urqw/night_of_dead.git
+[submodule "games/magic_spring"]
+	path = games/magic_spring
+	url = https://github.com/urqw/magic_spring.git
