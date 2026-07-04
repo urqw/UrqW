@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -36,12 +36,18 @@ async function packRelease() {
     try {
         const rootPath = path.resolve(__dirname, '..');
         const releasePath = path.join(rootPath, 'release');
-        const packagePath = path.join(rootPath, 'package.json');
 
-        // Name and version of build
-        const packageData = await fs.promises.readFile(packagePath, 'utf8');
-        const { name, version } = JSON.parse(packageData);
-        const buildName = `${name}_${version}`;
+        // If argument is passed, use it as build name
+        const customBuildName = process.argv[2];
+        let buildName;
+        if (customBuildName) {
+            buildName = customBuildName;
+        } else {
+            const packagePath = path.join(rootPath, 'package.json');
+            const packageData = await fs.promises.readFile(packagePath, 'utf8');
+            const { name, version } = JSON.parse(packageData);
+            buildName = `${name}_${version}`;
+        }
         const buildPath = path.join(releasePath, buildName);
 
         // Check the existence and clean the release directory

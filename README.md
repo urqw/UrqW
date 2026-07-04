@@ -97,6 +97,10 @@ The following project automation tools have been implemented:
 	```
 	npm run pack-release
 	```
+	or with custom build name:
+	```
+	npm run pack-release -- build_name
+	```
 * Build UrqW for production environments with the games catalog (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, gen-docs, and gen-sitemap scripts):
 	```
 	npm run build
