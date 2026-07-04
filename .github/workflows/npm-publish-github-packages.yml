@@ -33,6 +33,7 @@ jobs:
           node-version: 16
       - run: npm ci
       - run: npm run build
+      - run: npm run pack-release -- urqw-master-build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

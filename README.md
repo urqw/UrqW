@@ -20,7 +20,8 @@ UrqW implements the URQL interpreter with additional features based on web techn
 ## Links
 
 * [UrqW Online instance incorporating latest changes](https://urqw.github.io/UrqW/)
-* [UrqW documentation incorporating latest changes](https://urqw.github.io/UrqW/docs/index.html)
+* [UrqW online documentation incorporating latest changes](https://urqw.github.io/UrqW/docs/index.html)
+* [UrqW local build incorporating latest changes](https://urqw.github.io/UrqW/release/urqw-master-build.zip) (for offline use and self-hosting)
 * [List of all changes](https://urqw.github.io/UrqW/CHANGELOG.html)
 * [UrqW game template](https://github.com/urqw/game_template)
 * [Latest formal release of UrqW](https://github.com/urqw/UrqW/releases/latest) (hasn’t been updated for a long time)
