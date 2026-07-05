@@ -100,12 +100,7 @@ Parser.prototype.parse = function(line) {
                 return GlobalPlayer.playMusic(command.toString().trim(), false);
             }
         case 'play':
-            resetAudio(gameSound);
-            var filePath = normalizeInternalPath(command);
-            var fileURL = getGameFileURL(filePath);
-            gameSound.src = fileURL;
-            gameSound.srcUrqW = filePath;
-            gameSound.play();
+            GlobalPlayer.playSound(command);
             break;
         case 'clsb': return GlobalPlayer.clsb();
         case 'clsl': return GlobalPlayer.clsl();
