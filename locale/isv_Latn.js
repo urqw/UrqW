@@ -7,7 +7,7 @@
 // The file encoding is UTF-8 without BOM
 
 var isv_Latn = {
-    welcome_message: "To je motor za tekstove igry UrqW " + urqw_version + ". On ima suměstimost/kompatibilnost s RipURQ 1.4, URQ_DOS 1.35 i AkURQ 1.28. Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaciju</a>. Dostupen je <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">publičny javny repozitorij</a> projekta, dokud vy možete posylati svoje igry da by razměstiti jih v katalogu. Takože tam možno stvoriti <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">issue</a>, ako li budete uviděti problem.",
+    welcome_message: "To je motor za tekstove igry UrqW " + urqw_version + ". On ima suměstimost/kompatibilnost s RipURQ, URQ_DOS i AkURQ. Ako li vy hčete napisati svoju igru, ale ne znajete kako, gledajte <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">dokumentaciju</a>. Dostupen je <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">publičny javny repozitorij</a> projekta, dokud vy možete posylati svoje igry da by razměstiti jih v katalogu. Takože tam možno stvoriti <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">issue</a>, ako li budete uviděti problem.",
     interface_language: "Jezyk interfejsa",
     something_went_wrong: "Vozniknula nekoja grěška",
     wait: "Počekajte...",

@@ -8,7 +8,7 @@
 
 var es = {
     meta_description: "Juegos basados ​​en texto y ficción interactiva. Catálogo de juegos e intérprete URQL. ¡Juega, crea y comparte tus propias historias interactivas!",
-    welcome_message: "Este es el motor de creación de juegos basado en texto: UrqW " + urqw_version + ". Es compatible con RipURQ 1.4, URQ_DOS 1.35 and AkURQ 1.28. Si quieres desarrollar tu propio juego pero no sabes cómo hacerlo, por favor, dirígete a la <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">documentación</a>. El <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">repositorio público</a> del proyecto está disponible. Allí podrás enviar tus juegos para que se incluyan en el catálogo. Además, puedes crear una <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">incidencia</a> si encuentras algún problema.",
+    welcome_message: "Este es el motor de creación de juegos basado en texto: UrqW " + urqw_version + ". Es compatible con RipURQ, URQ_DOS and AkURQ. Si quieres desarrollar tu propio juego pero no sabes cómo hacerlo, por favor, dirígete a la <a href=\"" + url_docs + "\" rel=\"help\" target=\"_blank\">documentación</a>. El <a href=\"" + url_repo + "\" rel=\"external\" target=\"_blank\">repositorio público</a> del proyecto está disponible. Allí podrás enviar tus juegos para que se incluyan en el catálogo. Además, puedes crear una <a href=\"" + url_issues + "\" rel=\"external\" target=\"_blank\">incidencia</a> si encuentras algún problema.",
     interface_language: "Idioma de la interfaz",
     something_went_wrong: "Algo salió mal",
     wait: "Espera...",
