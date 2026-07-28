@@ -1,62 +1,196 @@
-/*
-* These are tests to ensure the engine is working correctly
-*/
+/**
+ * Copyright (C) 2026 Nikita Tseykovets <tseikovets@rambler.ru>
+ * This file is part of UrqW.
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 
 :start
-inv- 1,Gold
-inv+ 1,Gold
-btn proc test_proc, Test PROC
-btn proc test_input, Test INPUT
+pln <h3>UrqW Tests</h3>
+pln These are tests to ensure the UrqW engine is working correctly.
+invkill
+varkill
+btn operators, Operators
+btn ui, User interface
 end
 
-/*
-* PROC
-*/
 
-:test_proc
-pln Next are the numbers from 1 to 3 in order:
-proc 123
+:passed
+passed = passed + 1
+status = '<span style="color: #00aa00;">passed</span>'
 end
 
-:123
-proc 1
+
+:failed
+failed = failed + 1
+status = '<span style="color: #aa0000;">failed</span>'
 end
 
-:1
-pln 1
-proc 2
+
+:total
+pln <h4>Total</h4>
+pln Tests: #passed + failed$
+pln Passed: #passed$
+pln Failed: #failed$
 end
 
-:2
-pln 2
-proc 3
+
+:operators
+pln <h3>Operators</h3>
+pln These are automatic tests of programming language operators.
+pln All tests must be passed (green).
+
+pln <h4>URQL</h4>
+x = 5
+varkill
+if x = 5 then proc failed else proc passed
+pln varkill: #status$
+x = 0
+proc operators_goto
+if x = 5 then proc passed else proc failed
+pln goto: #status$
+inv+ Item
+if item = 1 then proc passed else proc failed
+pln inv+ Item: #status$
+inv+ 2, Item
+if item = 3 then proc passed else proc failed
+pln inv+ 2, Item: #status$
+inv- Item
+if item = 2 then proc passed else proc failed
+pln inv- Item: #status$
+inv- 3, Item
+if item = 0 then proc passed else proc failed
+pln inv- 3, Item: #status$
+inv+ 5, Item
+invkill
+if item = 0 then proc passed else proc failed
+pln invkill: #status$
+
+pln <h4>Mathematical</h4>
+x = 1 + 2 +3+ 4+5
+if x = 15 then proc passed else proc failed
+pln 1 + 2 +3+ 4+5 =##62$ 15: #status$
+x = 15 - 1 -2- 3-4
+if x = 5 then proc passed else proc failed
+pln 15 - 1 -2- 3-4 =##62$ 5: #status$
+x = 2.5*4
+if x = 10 then proc passed else proc failed
+pln 2.5*4 =##62$ 10: #status$
+x = 9/3
+if x = 3 then proc passed else proc failed
+pln 9/3 =##62$ 3: #status$
+x = 2*(2+2)
+if x = 8 then proc passed else proc failed
+pln 2*(2+2) =##62$ 8: #status$
+
+pln <h4>Comparison</h4>
+if 1<2 then proc passed else proc failed
+pln 1##60$2 =##62$ true: #status$
+if 1>2 then proc failed else proc passed
+pln 1##62$2 =##62$ false: #status$
+if 1<=2 then proc passed else proc failed
+pln 1##60$=2 =##62$ true: #status$
+if 2<=2 then proc passed else proc failed
+pln 2##60$=2 =##62$ true: #status$
+if 2<=1 then proc failed else proc passed
+pln 2##60$=1 =##62$ false: #status$
+if 2>=1 then proc passed else proc failed
+pln 2##62$=1 =##62$ true: #status$
+if 2>=2 then proc passed else proc failed
+pln 2##62$=2 =##62$ true: #status$
+if 1>=2 then proc failed else proc passed
+pln 1##62$=2 =##62$ false: #status$
+if 1<>2 then proc passed else proc failed
+pln 1##60$##62$2 =##62$ true: #status$
+if 2<>2 then proc failed else proc passed
+pln 2##60$##62$2 =##62$ false: #status$
+if 2!=2 then proc failed else proc passed
+pln 2!=2 =##62$ false: #status$
+if 2=2 then proc passed else proc failed
+pln 2=2 =##62$ true: #status$
+if 1 = 2 then proc failed else proc passed
+pln 1 = 2 =##62$ false: #status$
+if "abc"=="a?c" then proc passed else proc failed
+pln "abc"=="a?c" =##62$ true: #status$
+if "abc"=="a*" then proc passed else proc failed
+pln "abc"=="a*" =##62$ true: #status$
+if "abc"=="ABC" then proc faild else proc passed
+pln "abc"=="ABC" =##62$ false: #status$
+
+pln <h4>Logical</h4>
+x = 1
+y = 2
+z = 3
+pln Let x = #x$, y = #y$, and z = #z$
+if x<y and z>y then proc passed else proc failed
+pln x##60$y and z##62$y =##62$ true: #status$
+if x<y&&z>y then proc passed else proc failed
+pln x##60$y##38$##38$z##62$y =##62$ true: #status$
+if x<y and y>z then proc failed else proc passed
+pln x##60$y and y##62$z =##62$ false: #status$
+if x<y&&y>z then proc failed else proc passed
+pln x##60$y##38$##38$y##62$z =##62$ false: #status$
+if x>y or z>y then proc passed else proc failed
+pln x##62$y or z##62$y =##62$ true: #status$
+if x>y||z>y then proc passed else proc failed
+pln x##62$y##124$##124$z##62$y =##62$ true: #status$
+if x>y or y>z then proc failed else proc passed
+pln x##62$y or y##62$z =##62$ false: #status$
+if x>y||y>z then proc failed else proc passed
+pln x##62$y##124$##124$y##62$z =##62$ false: #status$
+if not x then proc failed else proc passed
+pln not x =##62$ false: #status$
+if not unknown_variable then proc passed else proc failed
+pln not unknown_variable =##62$ true: #status$
+if not (not x) then proc passed else proc failed
+pln not (not x) =##62$ true: #status$
+
+proc total
+btn start, Back
 end
 
-:3
-pln 3
+
+:operators_goto
+x = x + 1
+if x < 5 then goto operators_goto
 end
 
-/*
-* INPUT
-*/
 
-:common
+:ui
+invkill
+varkill
+pln <h3>User Interface</h3>
+pln These are non-automated tests of the player's user interface.
+btn ui_anykey, anykey
+btn ui_input, input
+btn ui_quit, quit
+btn start, Back
 end
 
-:test_input
+
+:ui_anykey
+pln <h3>anykey</h3>
+pln Press the Escape key
+anykey x
+pln You pressed the key with the code #x$.
+if x = 27 then pln This is the Escape key code. else pln This is not the Escape key code.
+btn ui, Back
+end
+
+
+:ui_input
+pln <h3>input</h3>
 pln Enter something:
 input x
 pln This is what you entered: #x$
+btn ui, Back
 end
 
-:Use_Gold_Examine.
-pln Gold coins that can be used to buy everything, everywhere.
-end
 
-:Use_Gold_Throw.
-pln How much gold to throw away?
-input namegold
-if namegold>0 then pln You threw away the gold.
-if namegold>0 then inv- #namegold$,Gold
-if namegold<0 then pln What a crook you are!!! No, that won't work.
+:ui_quit
+pln <h3>quit</h3>
+pln If you don't see the Back choice button, the test has passed.
+pln Use the Restart game icon in the toolbar.
+quit
+btn ui, Back
 end

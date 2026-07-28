@@ -132,6 +132,7 @@
 	+ Added: pack-release script to package a release build of UrqW.
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
+	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
 	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 	+ Changed: Supported plugins with usage examples (functional tests) are added as submodules from separate repositories and placed in the quests directory as game packages.
 	+ Changed: Tests to ensure the engine is working correctly have been moved to the quests/tests directory.
