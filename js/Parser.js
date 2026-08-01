@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015, 2017, 2018 Akela <akela88@bk.ru>
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -71,6 +71,38 @@ Parser.prototype.parse = function(line) {
 
     //todo
     line = this.prepareLine(line);
+
+    // Handling compound assignment operators
+    var re = /^(\S+)\s*([+\-*/]=)\s*(.*)$/;
+    var match = line.match(re);
+    if (match) {
+        var variable = match[1];
+        var operator = match[2];
+        var expr = match[3];
+        var currentValue = Game.getVar(variable);
+        var rightValue = new Expression(expr).calc();
+        var newValue;
+        switch (operator) {
+            case '+=':
+                newValue = currentValue + rightValue;
+                break;
+            case '-=':
+                newValue = currentValue - rightValue;
+                break;
+            case '*=':
+                newValue = currentValue * rightValue;
+                break;
+            case '/=':
+                newValue = currentValue / rightValue;
+                break;
+            default:
+                return; // Unknown operator
+        }
+        GlobalPlayer.setVar(variable, newValue);
+        return;
+    }
+
+    // Other operators
     expl = line.split(' ');
     operand = expl[0].toLowerCase().trim();
     command = expl.slice(1).join(' ');

@@ -146,6 +146,40 @@ pln not unknown_variable =##62$ true: #status$
 if not (not x) then proc passed else proc failed
 pln not (not x) =##62$ true: #status$
 
+pln <h4>Compound Assignment</h4>
+a = 1
+b = 2
+c = 3
+d = 4
+pln Let a = #a$, b = #b$, c = #c$, and d = #d$
+a+=3
+if a = 4 then proc passed else proc failed
+pln a+=3 =##62$ a = 4: #status$
+b -=-1
+if b = 3 then proc passed else proc failed
+pln b -=-1 =##62$ b = 3: #status$
+c*= 0.75
+if c = 2.25 then proc passed else proc failed
+pln c*= 0.75 =##62$ c = 2.25: #status$
+d /= 4
+if d = 1 then proc passed else proc failed
+pln d /= 4 =##62$ d = 1: #status$
+a /= b*(c+d) - 1.75
+if a = 0.5 then proc passed else proc failed
+pln a /= b*(c+d) - 1.75 =##62$ a = 0.5: #status$
+c += "abc"
+if c = "2.25abc" then proc passed else proc failed
+pln c += "abc" =##62$ c = "2.25abc": #status$
+if a = 0.5 then a += (d + 1.5)*b
+if a = 8 then proc passed else proc failed
+pln if a = 0.5 then a += (d + 1.5)*b =##62$ a = 8: #status$
+if b = 2 then b += 0.5 else b -= b/0.5 -(d - 3.5)
+if b = -5.5 then proc passed else proc failed
+pln if b = 2 then b += 0.5 else b -= b/0.5 -(d - 3.5) =##62$ b = -5.5: #status$
+x = "one" & x += " two"
+if x = "one two" then proc passed else proc failed
+pln x = "one" ##38$ x += " two" =##62$ x = "one two": #status$
+
 proc total
 btn start, Back
 end
