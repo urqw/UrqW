@@ -80,9 +80,15 @@ pln 2.5*4 =##62$ 10: #status$
 x = 9/3
 if x = 3 then proc passed else proc failed
 pln 9/3 =##62$ 3: #status$
-x = 2*(2+2)
+x = 2^3
 if x = 8 then proc passed else proc failed
-pln 2*(2+2) =##62$ 8: #status$
+pln 2^3 =##62$ 8: #status$
+x = 2^3^2
+if x = 512 then proc passed else proc failed
+pln 2^3^2 =##62$ 512: #status$
+x = 2*(2+2)^(3 - 1)
+if x = 32 then proc passed else proc failed
+pln 2*(2+2)^(3 - 1) =##62$ 32: #status$
 
 pln <h4>Comparison</h4>
 if 1<2 then proc passed else proc failed

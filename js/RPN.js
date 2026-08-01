@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015 Akela <akela88@bk.ru>
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -22,7 +22,7 @@ function Expression(str) {
         // The not operator immediately after the left parenthesis is not processed correctly
         str = str.replace(/\(not /g, '\( not ');
         str = str.replace(/ not /g, '  not  '); // For now, do it this way (so that "not" can stick to everything)
-        return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\+|\-|\*|\/|>|<|=|\(|\))/gi);
+        return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\^|\+|\-|\*|\/|>|<|=|\(|\))/gi);
     };
 
     /**
@@ -65,9 +65,21 @@ function Expression(str) {
 
                     operStack.pop();
                 } else {
-                    while (this.getPriority(token) <= this.getPriority(operStack[operStack.length - 1])) {
-                        if (operStack.length == 0) break;
-                        exitStack.push(operStack.pop());
+                    var tokenPriority = this.getPriority(token);
+                    var topPriority = operStack.length > 0 ? this.getPriority(operStack[operStack.length - 1]) : 0;
+                    // For right-associative operators
+                    if (token === '^') {
+                        while (tokenPriority < topPriority) {
+                            exitStack.push(operStack.pop());
+                            topPriority = operStack.length > 0 ? this.getPriority(operStack[operStack.length - 1]) : 0;
+                        }
+                    } else {
+                        // For left-associative operators
+                        while (tokenPriority <= topPriority) {
+                            if (operStack.length == 0) break;
+                            exitStack.push(operStack.pop());
+                            topPriority = operStack.length > 0 ? this.getPriority(operStack[operStack.length - 1]) : 0;
+                        }
                     }
 
                     operStack.push(token);
@@ -125,6 +137,9 @@ function Expression(str) {
                             break;
                         case '/':
                             result = b / a;
+                            break;
+                        case '^':
+                            result = b ** a;
                             break;
                         case '+':
                             result = b + a;
@@ -195,6 +210,8 @@ function Expression(str) {
     this.getPriority = function (operand) {
         switch (operand) {
             case 'not':
+                return 16;
+            case '^':
                 return 15;
             case '*':
             case '/':

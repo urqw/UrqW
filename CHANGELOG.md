@@ -8,6 +8,7 @@
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
 	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
+	+ Added: Exponentiation operator `^` (right-associative).
 	+ Added: Compound assignment operators, such as `+=`, `-=`, `*=` and `/=`.
 	+ Added: System variables:
 		- date - get the current date (only when urq_mode specific rules are absent).
