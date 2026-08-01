@@ -21,7 +21,8 @@ function Expression(str) {
         str = ' ' + str + ' ';
         // The not operator immediately after the left parenthesis is not processed correctly
         str = str.replace(/\(not /g, '\( not ');
-        str = str.replace(/ not /g, '  not  '); // For now, do it this way (so that "not" can stick to everything)
+        // For now, do it this way (so that "not" can stick to everything)
+        str = str.replace(/ not /g, '  not  ');
         return str.split(/(".+?"|'.+?'| AND | OR | NOT |\|\||&&|<>|!=|==|<=|>=|\^|\+|\-|\*|\/|>|<|=|\(|\))/gi);
     };
 
@@ -36,34 +37,44 @@ function Expression(str) {
     this.toRPN = function () {
         var exitStack = [];
         var operStack = [];
-        var lastTokenIsOperator = true;
+        var lastWasOperand = false;
 
         for (var i = 0; i < this.expr.length; i++) {
             var token = this.expr[i].trim();
 
             if (token.length == 0) continue;
 
-            // If negative number
-            if (lastTokenIsOperator && token == '-') {
+            // Unary operators
+            if ((token == '-' || token == '+') && !lastWasOperand) {
+                token = (token == '-') ? 'u-' : 'u+';
+                var tokenPriority = this.getPriority(token);
+                var topPriority = operStack.length > 0 ? this.getPriority(operStack[operStack.length - 1]) : 0;
 
-                do {
-                    token = this.expr[++i].trim();
-                } while(token.length == 0);
-
-                exitStack.push([-parseFloat(token.replace(',', '.').replace(/ /g, ''))]);
-                // If number
-            } else if (!isNaN(token.replace(',', '.').replace(/ /g, ''))) {
+                while (tokenPriority <= topPriority) {
+                    exitStack.push(operStack.pop());
+                    topPriority = operStack.length > 0 ? this.getPriority(operStack[operStack.length - 1]) : 0;
+                }
+                operStack.push(token);
+                continue; 
+            }
+            
+            // ordinary number
+            if (!isNaN(token.replace(',', '.').replace(/ /g, ''))) {
                 // Read number further
                 exitStack.push([parseFloat(token.replace(',', '.').replace(/ /g, ''))]);
+                lastWasOperand = true;
             } else if (this.getPriority(token) > 0) {
+                // binary operator
                 if (token == '(') {
                     operStack.push(token);
+                    lastWasOperand = false;
                 } else if (token == ')') {
                     while (operStack[operStack.length - 1] != '(') {
                         exitStack.push(operStack.pop());
                     }
 
                     operStack.pop();
+                    lastWasOperand = true;
                 } else {
                     var tokenPriority = this.getPriority(token);
                     var topPriority = operStack.length > 0 ? this.getPriority(operStack[operStack.length - 1]) : 0;
@@ -83,6 +94,7 @@ function Expression(str) {
                     }
 
                     operStack.push(token);
+                    lastWasOperand = false;
                 }
             } else {
                 var variable = Game.getVar(token);
@@ -96,9 +108,8 @@ function Expression(str) {
                 }
 
                 exitStack.push([variable]);
+                lastWasOperand = true;
             }
-
-            lastTokenIsOperator = (this.getPriority(token) > 1);
         }
 
         while (operStack.length > 0) {
@@ -122,6 +133,29 @@ function Expression(str) {
 
             if (this.getPriority(token) > 0) {
                 var result;
+
+                // Handling unary operators
+                if (token == 'u-') {
+                    var a = temp.pop();
+                    if (typeof a === 'boolean') {
+                        result = !a;
+                    } else {
+                        result = -a;
+                    }
+                    temp.push(result);
+                    continue;
+                }
+
+                if (token == 'u+') {
+                    var a = temp.pop();
+                    if (typeof a === 'number') {
+                        result = +a; 
+                    } else {
+                        result = a;
+                    }
+                    temp.push(result);
+                    continue;
+                }
 
                 if (/*token == '!' ||*/ token == 'not') {
                     var variable = temp.pop();
@@ -213,12 +247,15 @@ function Expression(str) {
                 return 16;
             case '^':
                 return 15;
+            case 'u+':
+            case 'u-':
+                return 14;
             case '*':
             case '/':
-                return 14;
+                return 13;
             case '+':
             case '-':
-                return 13;
+                return 12;
             case '<':
             case '<=':
             case '>':

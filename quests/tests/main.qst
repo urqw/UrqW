@@ -68,6 +68,33 @@ if item = 0 then proc passed else proc failed
 pln invkill: #status$
 
 pln <h4>Mathematical</h4>
+x = 3
+y = -3
+pln Let x = #x$ and y = #y$
+z = - x
+if z = -3 then proc passed else proc failed
+pln - x =##62$ -3: #status$
+z = -x
+if z = -3 then proc passed else proc failed
+pln -x =##62$ -3: #status$
+z = -(x+1)
+if z = -4 then proc passed else proc failed
+pln -(x+1) =##62$ -4: #status$
+z =+y
+if z = -3 then proc passed else proc failed
+pln +y =##62$ -3: #status$
+z = -y
+if z = 3 then proc passed else proc failed
+pln -y =##62$ 3: #status$
+z = - (- y)
+if z = -3 then proc passed else proc failed
+pln - (- y) =##62$ -3: #status$
+z = - y*2
+if z = 6 then proc passed else proc failed
+pln - y*2 =##62$ 6: #status$
+z = 10 -y*2
+if z = 16 then proc passed else proc failed
+pln 10 -y*2 =##62$ 16: #status$
 x = 1 + 2 +3+ 4+5
 if x = 15 then proc passed else proc failed
 pln 1 + 2 +3+ 4+5 =##62$ 15: #status$
@@ -83,6 +110,9 @@ pln 9/3 =##62$ 3: #status$
 x = 2^3
 if x = 8 then proc passed else proc failed
 pln 2^3 =##62$ 8: #status$
+x = -2^3
+if x = -8 then proc passed else proc failed
+pln -2^3 =##62$ -8: #status$
 x = 2^3^2
 if x = 512 then proc passed else proc failed
 pln 2^3^2 =##62$ 512: #status$
