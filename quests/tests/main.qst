@@ -11,6 +11,7 @@ pln These are tests to ensure the UrqW engine is working correctly.
 invkill
 varkill
 btn operators, Operators
+btn constructs, System constructs
 btn ui, User interface
 end
 
@@ -153,6 +154,83 @@ end
 :operators_goto
 x = x + 1
 if x < 5 then goto operators_goto
+end
+
+
+:constructs
+pln <h3>System Constructs</h3>
+pln These are automatic tests of programming language system constructs.
+pln All tests must be passed (green).
+pln #/$
+x = 123
+y = "test"
+pln Let x = #x$ and y = "#y$"
+
+construct = "##35$x##36$"
+result = 123
+proc constructs_check
+construct = "##35$y##36$"
+result = "test"
+proc constructs_check
+construct = "##35$%x##36$"
+result = 123
+proc constructs_check
+construct = "##35$%y##36$"
+result = "test"
+proc constructs_check
+construct = "##35$##36$"
+result = " "
+proc constructs_check
+construct = "##35$%##36$"
+result = " "
+proc constructs_check
+construct = "##35$/##36$"
+result = "<br>"
+proc constructs_check
+construct = "##35$%/##36$"
+result = "<br>"
+proc constructs_check
+construct = "##35$##35$42##36$"
+javascript = "new DOMParser().parseFromString('##38$##35$42;', 'text/html').body.textContent;"
+result = javascript
+proc constructs_check
+construct = "##35$##35$8381##36$"
+javascript = "new DOMParser().parseFromString('##38$##35$8381;', 'text/html').body.textContent;"
+result = javascript
+proc constructs_check
+
+x = 1 & x = x + 1
+if x = 2 then proc passed else proc failed
+pln x = 1 ##38$ x = x + 1 =##62$ x = 2: #status$
+x = 1 & x = x + 1 & x = x + 1 & x = x + 1
+if x = 4 then proc passed else proc failed
+pln x = 1 ##38$ x = x + 1 ##38$ x = x + 1 ##38$ x = x + 1 =##62$ x = 4: #status$
+pln #/$
+x = 1
+/*
+x = 2
+*/
+if x = 1 then proc passed else proc failed
+pln x = 1
+pln ##47$*
+pln x = 2
+pln *##47$ =##62$ x = 1: #status$
+pln #/$
+x = 1 + 2
+	_ + 3
+if x = 6 then proc passed else proc failed
+pln x = 1 + 2
+pln ##9$_ + 3 =##62$ x = 6: #status$
+
+proc total
+btn start, Back
+end
+
+
+:constructs_check
+p #construct$:
+javascript = "compareResults(Parser.prototype.openTags(new DOMParser().parseFromString('#construct$', 'text/html').body.textContent), '#result$');"
+pln #$#status$
 end
 
 
