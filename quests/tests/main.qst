@@ -182,6 +182,42 @@ pln not unknown_variable =##62$ true: #status$
 if not (not x) then proc passed else proc failed
 pln not (not x) =##62$ true: #status$
 
+pln <h4>Conditional</h4>
+x = 1
+y = 2
+z = 3
+pln Let x = #x$, y = #y$, and z = #z$
+if -(x + y)*2 - z > -4*z then res = 1
+if res = 1 then proc passed else proc failed
+pln if -(x + y)*2 - z > -4*z then res = 1 =##62$ res = 1: #status$
+if x then res = 2
+if res = 2 then proc passed else proc failed
+pln if x then res = 2 =##62$ res = 2: #status$
+if not x then res = 0 else res = 3
+if res = 3 then proc passed else proc failed
+pln if not x then res = 0 else res = 3 =##62$ res = 3: #status$
+if (not x) then res =  else res = 4
+if res = 4 then proc passed else proc failed
+pln if (not x) then res =  else res = 4 =##62$ res = 4: #status$
+if not (x+y-z) then res = 5
+if res = 5 then proc passed else proc failed
+pln if not (x+y-z) then res = 5 =##62$ res = 5: #status$
+if (not (x+y-z)) then res = 6
+if res = 6 then proc passed else proc failed
+pln if (not (x+y-z)) then res = 6 =##62$ res = 6: #status$
+if not (x+y-z*2) then res = 7
+if res = 7 then proc passed else proc failed
+pln if not (x+y-z*2) then res = 7 =##62$ res = 7: #status$
+if (not (x+y-z*2)) then res = 8
+if res = 8 then proc passed else proc failed
+pln if (not (x+y-z*2)) then res = 8 =##62$ res = 8: #status$
+if x = 2 then y = 1 & z = 1 else res = 9
+if y = 2 and z = 3 and res = 9 then proc passed else proc failed
+pln if x = 2 then y = 1 ##38$ z = 1 else res = 9 =##62$ y = 2, z = 3, res = 9: #status$
+if x = 1 then res = 10 else y = 1 & z = 1
+if y = 2 and z = 3 and res = 10 then proc passed else proc failed
+pln if x = 1 then res = 10 else y = 1 ##38$ z = 1 =##62$ y = 2, z = 3, res = 10: #status$
+
 pln <h4>Compound Assignment</h4>
 a = 1
 b = 2
