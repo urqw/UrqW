@@ -43,9 +43,11 @@ Parser.prototype.parse = function(line) {
             els = line.substring(line.indexOf(' else ') + 6);
         }
 
-        var conditionResult = new Expression(this.openTags(cond)).calc();
+        var conditionalExpression = new Expression(this.openTags(cond));
+        var conditionResult = conditionalExpression.calc();
+        var isTrue = conditionalExpression.isTrue(conditionResult);
 
-        if (conditionResult === true || conditionResult > 0) {
+        if (isTrue) {
             this.parse(then);
         } else {
             if (els) {

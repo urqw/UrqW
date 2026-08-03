@@ -160,7 +160,7 @@ function Expression(str) {
                 if (/*token == '!' ||*/ token == 'not') {
                     var variable = temp.pop();
 
-                    result = !(variable === true || variable > 0);
+                    result = !(this.isTrue(variable));
                 } else {
                     var a = temp.pop();
                     var b = temp.pop();
@@ -219,11 +219,11 @@ function Expression(str) {
                             break;
                         case '&&':
                         case 'and':
-                            result = (b === true || b > 0) && (a === true || a > 0)
+                            result = this.isTrue(b) && this.isTrue(a)
                             break;
                         case '||':
                         case 'or':
-                            result = (b === true || b > 0) || (a === true || a > 0)
+                            result = this.isTrue(b) || this.isTrue(a)
                             break;
                     }
                 }
@@ -235,6 +235,18 @@ function Expression(str) {
         }
         
         return temp.pop();
+    };
+
+    /**
+     * @param value
+     * @returns {{boolean}
+     */
+    this.isTrue = function (value) {
+        return (
+            value === true ||
+            (typeof value === 'number' && value > 0) ||
+            (typeof value === 'string' && value.length > 0)
+        );
     };
 
     /**

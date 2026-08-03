@@ -35,6 +35,7 @@
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
+	+ Changed: Any non-empty string in a boolean context (e.g., in the condition of the `if` operator) is interpreted as true.
 	+ Changed: Initializing a variable using the instr operator without assigning a value initializes the variable with a value of the empty string rather than being ignored.
 	+ Changed: When assigning a string value to a variable using the instr operator, leading and trailing whitespace characters in the value string are removed. You can restore the previous behavior of preserving spaces using the instr_leave_spc system variable.
 	+ Fixed: Incorrect handling of unary operators `-` and `+` to the left of variables and parentheses.
