@@ -244,7 +244,7 @@ function Expression(str) {
     this.isTrue = function (value) {
         return (
             value === true ||
-            (typeof value === 'number' && value > 0) ||
+            (typeof value === 'number' && value !== 0) ||
             (typeof value === 'string' && value.length > 0)
         );
     };

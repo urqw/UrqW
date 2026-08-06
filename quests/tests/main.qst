@@ -205,12 +205,12 @@ pln if not (x+y-z) then res = 5 =##62$ res = 5: #status$
 if (not (x+y-z)) then res = 6
 if res = 6 then proc passed else proc failed
 pln if (not (x+y-z)) then res = 6 =##62$ res = 6: #status$
-if not (x+y-z*2) then res = 7
+if not (x+y-z*2) then res = 0 else res = 7
 if res = 7 then proc passed else proc failed
-pln if not (x+y-z*2) then res = 7 =##62$ res = 7: #status$
-if (not (x+y-z*2)) then res = 8
+pln if not (x+y-z*2) then res = 0 else res = 7 =##62$ res = 7: #status$
+if (not (x+y-z*2)) then res = 0 else res = 8
 if res = 8 then proc passed else proc failed
-pln if (not (x+y-z*2)) then res = 8 =##62$ res = 8: #status$
+pln if (not (x+y-z*2)) then res = 0 else res = 8 =##62$ res = 8: #status$
 if x = 2 then y = 1 & z = 1 else res = 9
 if y = 2 and z = 3 and res = 9 then proc passed else proc failed
 pln if x = 2 then y = 1 ##38$ z = 1 else res = 9 =##62$ y = 2, z = 3, res = 9: #status$
@@ -238,9 +238,9 @@ pln if not '' then res = 16 =##62$ res = 16: #status$
 if not 'x' then res = 0 else res = 17
 if res = 17 then proc passed else proc failed
 pln if not 'x' then res = 0 else res = 17 =##62$ res = 17: #status$
-if -5 then res = 0 else res = 18
+if -5 then res = 18
 if res = 18 then proc passed else proc failed
-pln if -5 then res = 0 else res = 18 =##62$ res = 18: #status$
+pln if -5 then res = 18 =##62$ res = 18: #status$
 if '-5' then res = 19
 if res = 19 then proc passed else proc failed
 pln if '-5' then res = 19 =##62$ res = 19: #status$
