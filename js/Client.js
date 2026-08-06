@@ -370,7 +370,7 @@ Client.prototype.drawItem = function (itemName, quantity) {
     var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
     var isExamineItem = false;
 
-    if (actions.length == 0 && itemName != 'inv' || (Game.getVar('hide_use_' + itemName) > 0)) {
+    if (actions.length == 0 && itemName != 'inv' || toBoolean(Game.getVar('hide_use_' + itemName))) {
         if (quantity > 1) {
             itemDisplayName = itemDisplayName + ' (' + quantity + ')';
         }
@@ -409,7 +409,7 @@ var ul = $('<ul role="menu" class="dropdown-menu">');
                 isExamineItem = true;
             }
 
-            if (Game.getVar('hide_use_' + itemName + '_' + actions[i][0]) == 0) {
+            if (!toBoolean(Game.getVar('hide_use_' + itemName + '_' + actions[i][0]))) {
                 displayName = Game.getVar('display_use_' + itemName + '_' + actions[i][0]);
                 var actionDisplayName;
                 if (displayName) {

@@ -206,7 +206,7 @@ Parser.prototype.parse = function(line) {
             if (line.indexOf('=') > 0) {
                 instrName = line.substring(0, line.indexOf('=')).trim();
                 instrVal = new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc();
-                if (Game.getVar('instr_leave_spc') === 0) {
+                if (!toBoolean(Game.getVar('instr_leave_spc'))) {
                     instrVal = instrVal.trim();
                 }
             } else {
@@ -316,7 +316,7 @@ if (exp.indexOf('|') > 0) {
                     var label;
                     for (var i = 0; i < command2.length; i++) {
                         label = command + command2[i].trim();
-                        if (Game.getVar('hide_' + label) > 0) {
+                        if (toBoolean(Game.getVar('hide_' + label))) {
                             continue;
                         }
                         if (Game.getLabel(label)) {
