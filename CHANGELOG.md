@@ -36,8 +36,8 @@
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true.
-	+ Changed: Initializing a variable using the instr operator without assigning a value initializes the variable with a value of the empty string rather than being ignored.
-	+ Changed: When assigning a string value to a variable using the instr operator, leading and trailing whitespace characters in the value string are removed. You can restore the previous behavior of preserving spaces using the instr_leave_spc system variable.
+	+ Changed: Initializing a variable using the `instr` operator without assigning a value now results in the variable being initialized with a value of an empty string rather than being ignored.
+	+ Changed: When assigning a string value to a variable using the instr operator, leading and trailing whitespace characters in the value string are now removed. You can restore the previous behavior of preserving spaces using the instr_leave_spc system variable.
 	+ Fixed: Incorrect handling of unary operators `-` and `+` to the left of variables and parentheses.
 	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: If there is a space before the equal sign when assigning a value to the image or the music system variables, the construct is mistakenly interpreted as executing the operators of the same name with an incorrect file path.
@@ -85,17 +85,17 @@
 	+ Added: Display information about unsupported game format and the process of unpacking the uploaded game.
 	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening games in .qs1, .qs2 and .qsz formats.
-	+ Changed: Inventory item usage options are displayed when the item receives system focus, not just when the mouse is hovering over it.
-	+ Changed: Inventory item usage options generated from use labels names are displayed with spaces instead of underscores.
-	+ Changed: When the game over through the quit operator, links and buttons are deleted instead of just stopping response to user actions.
-	+ Changed: When launching a game by identifier, preference is given to the game identifier from the id get parameter (support for launching a game by fragment identifier (hash) is retained, but only if the id GET parameter is absent).
-	+ Changed: When loading a game from an archive, files named style.css and script.js are read and loaded as plugins (as documented), rather than all .css and .js files (as was actually the case).
-	+ Changed: When launching a game by identifier from a folder, the player searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
-	+ Changed: When launching a game by identifier from a folder, the manifest.json and iFiction record files, and plugin files (style.css and script.js) are loaded and processed first, and only then the main.qst game file.
-	+ Changed: A new sound played using the play operator stops the previous one (the original behavior of RipURQ, URQ_DOS (WCL), and AkURQ), rather than playing in parallel.
-	+ Changed: Game sounds initiated via the play operator at zero volume begin playing at zero volume instead of being ignored.
-	+ Changed: UI areas for inventory, text, and choice  buttons are only redrawn when the content being displayed changes, rather than every time the game state changes.
-	+ Changed: Keypress tracking by key code instead of character code.
+	+ Changed: Inventory item usage options are now displayed when the item receives system focus, not just when the mouse is hovering over it.
+	+ Changed: Inventory item usage options generated from use labels names are now displayed with spaces instead of underscores.
+	+ Changed: When the game over through the quit operator, links and buttons are now deleted instead of just stopping response to user actions.
+	+ Changed: When launching a game by identifier, preference is now given to the game identifier from the id get parameter (support for launching a game by fragment identifier (hash) is retained, but only if the id GET parameter is absent).
+	+ Changed: When loading a game from an archive, files named style.css and script.js are now read and loaded as plugins (as documented), rather than all .css and .js files (as was actually the case).
+	+ Changed: When launching a game by identifier from a folder, the player now searches for the urqw/main.qst file and, if not found, then main.qst, instead of the quest.qst file. The directory where main.qst is located is considered the game directory.
+	+ Changed: When launching a game by identifier from a folder, the manifest.json and iFiction record files, as well as plugin files (style.css and script.js) are now loaded and processed first, and only then is the main.qst game file loaded.
+	+ Changed: A new sound played using the play operator now stops the previous one (the original behavior of RipURQ, URQ_DOS (WCL), and AkURQ), rather than playing in parallel.
+	+ Changed: Game sounds initiated via the play operator at zero volume now begin playing at zero volume instead of being ignored.
+	+ Changed: UI areas for inventory, text, and choice  buttons are now only redrawn when the content being displayed changes, rather than every time the game state changes.
+	+ Changed: Now, keypress tracking by key code instead of character code.
 	+ Changed: Layout optimization, including for HTML validity and search engine optimization.
 	+ Changed: Minor adjustment to informative window indentation.
 	+ Fixed: Links disappear from the text when loading a saved game.
@@ -115,7 +115,7 @@
 		- Added: Customizable images focusability using the keyboard.
 		- Added: Inventory panel links that do not perform any actions have the aria-disabled attribute, which indicates that there is no associated action but does not suppress the element focusability.
 		- Added: Designation for assistive technologies whether an inventory item has a drop-down menu.
-		- Changed: Each link in the drop-down menu of an inventory item has the role of a menu item.
+		- Changed: Each link in the drop-down menu of an inventory item now has the role of a menu item.
 		- Changed: Text labels for player graphic icons.
 		- Fixed: Links in game text are not focusable with keyboard, and do not have link role.
 		- Fixed: Incorrect paragraph representation in game text for screen readers.
@@ -137,8 +137,8 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
-	+ Changed: All games in the catalog are added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
-	+ Changed: Supported plugins with usage examples (functional tests) are added as submodules from separate repositories and placed in the quests directory as game packages.
+	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
+	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.
 	+ Changed: Tests to ensure the engine is working correctly have been moved to the quests/tests directory.
 
 ## Version 1.0 (from 2017-01-20)
