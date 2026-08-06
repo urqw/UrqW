@@ -66,6 +66,18 @@ inv+ 5, Item
 invkill
 if item = 0 then proc passed else proc failed
 pln invkill: #status$
+instr_leave_spc="test" & instr str = hello
+if str = " hello" then proc passed else proc failed
+pln instr_leave_spc="test" ##38$ instr str = hello =##62$ str = " hello": #status$
+instr_leave_spc=1 & instr str = hello
+if str = " hello" then proc passed else proc failed
+pln instr_leave_spc=1 ##38$ instr str = hello =##62$ str = " hello": #status$
+instr_leave_spc=-1 & instr str = hello
+if str = " hello" then proc passed else proc failed
+pln instr_leave_spc=-1 ##38$ instr str = hello =##62$ str = " hello": #status$
+instr_leave_spc=0 & instr str = hello
+if str = "hello" then proc passed else proc failed
+pln instr_leave_spc=0 ##38$ instr str = hello =##62$ str = "hello": #status$
 
 pln <h4>Mathematical</h4>
 x = 3
