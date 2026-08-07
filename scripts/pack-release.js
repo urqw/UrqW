@@ -10,6 +10,8 @@ const { exec } = require('child_process');
 const archiver = require('archiver');
 const { promisify } = require('util');
 
+const { urqwURL, urqwRepoURL } = require('./common');
+
 // Convert exec to promise
 const execPromise = promisify(exec);
 
@@ -143,8 +145,8 @@ const packagePath = path.join(rootPath, 'package.json');
         const readmeContent = 'UrqW\n\n'
             + `UrqW is an open source engine for text-based games and interactive fiction, available free of charge.\n\n`
             + 'To run the web application, open the index.html file in your browser.\n\n'
-            + '- Home page: https://urqw.github.io/UrqW\n'
-            + '- Source code: https://github.com/urqw/UrqW\n'
+            + `- Home page: ${urqwURL}\n`
+            + `- Source code: ${urqwRepoURL}\n`
             + `- Version: ${version}\n`
             + `- Build date: ${buildDate}\n`
             + `- Commit hash: ${commitHash}\n`;
