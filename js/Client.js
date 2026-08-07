@@ -312,12 +312,10 @@ Client.prototype.drawButtons = function () {
 Client.prototype.drawInventory = function () {
     var me = this;
 
-    // If the inventory hasn't changed, then don't redraw it
-    if (JSON.stringify(Game.items) === me.previousRenderedInventory) {
-        return;
-    } else {
-        me.previousRenderedInventory = JSON.stringify(Game.items);
-    }
+    // The inventory is redrawn in any case, unlike text and buttons,
+    // because with the same set of items, the inventory state may be
+    // different due to changes in the hide_use_* variables,
+    // which determine additional actions drawn in the drawItem () method.
 
     this.crtlInventory.empty();
     this.crtlInventory.append(this.drawItem('inv', 1));
