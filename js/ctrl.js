@@ -337,18 +337,24 @@ $(function() {
     // Make a variable global so that a function is available in other namespaces
     window.loadGameFromData = loadGameFromData;
 
-    // Function to reset an Audio object
     var resetAudio = function(audio) {
-        if (!audio.paused) {
+        if (audio === window.gameMusic && window.urqwMidi) {
+            window.urqwMidi.stop();
+        }
+        if (audio && !audio.paused) {
             audio.pause();
         }
-        audio.currentTime = 0;
-        audio.loop = false;
-        audio.volume = Number(settings['volume'])/100*volumeMultiplier;
-        audio.src = '';
-        audio.srcUrqW = '';
-        audio.load();
+        if (audio) {
+            audio.currentTime = 0;
+            audio.loop = false;
+            audio.volume = Number(settings['volume'])/100*volumeMultiplier;
+            audio.src = '';
+            audio.srcUrqW = '';
+            audio.load();
+        }
     }
+
+    // Function to reset an Audio object
     // Make a variable global so that a function is available in other namespaces
     window.resetAudio = resetAudio;
 
@@ -389,7 +395,7 @@ $(function() {
 
         gameMusic.volume = volumeLevel;
         gameSound.volume = volumeLevel;
-
+        if (window.urqwMidi) window.urqwMidi.setVolume(volumeLevel);
         var labelStr = i18next.t(labelID);
         spanLnk.addClass(glyphiconClass);
         muteLnk.attr('aria-label', labelStr);
@@ -410,7 +416,6 @@ $(function() {
 
             resetAudio(gameMusic);
             resetAudio(gameSound);
-
             Game.init();
 
             GlobalPlayer = new Player();
@@ -556,6 +561,7 @@ $(function() {
         var volumeLevel = currentValue/100*volumeMultiplier;
         gameMusic.volume = volumeLevel;
         gameSound.volume = volumeLevel;
+        if (window.urqwMidi) window.urqwMidi.setVolume(volumeLevel);
         var name = 'volume';
         settings[name] = currentValue;
         localStorage.setItem(name, JSON.stringify(currentValue));

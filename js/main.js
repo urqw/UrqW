@@ -1331,3 +1331,16 @@ var parser = new DOMParser();
         }
     }
 });
+
+function resolveFile(fileName, defaultExt) {
+    fileName = fileName.toString().trim();
+    if (fileName.indexOf('.') !== -1) return normalizeInternalPath(fileName);
+    var exts = [defaultExt, ".wav", ".mp3", ".ogg", ".mid", ".midi"];
+    for (var i = 0; i < exts.length; i++) {
+        var testPath = normalizeInternalPath(fileName + exts[i]);
+        if (window.files && window.files[testPath]) {
+            return testPath;
+        }
+    }
+    return normalizeInternalPath(fileName + defaultExt);
+}

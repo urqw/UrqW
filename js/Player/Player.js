@@ -377,38 +377,49 @@ Player.prototype.fileURL = function(filePath) {
  * @param {Boolean} loop
  */
 Player.prototype.playMusic = function(src, loop) {
-    if (src) {
-        var filePath = normalizeInternalPath(src);
-        var fileURL = getGameFileURL(filePath);
-   
-        if (loop) {
-            // Music is played in a loop using the system variable
-            if (gameMusic.paused) {
-                // Music is not currently playing
-                resetAudio(gameMusic);
-                gameMusic.src = fileURL;
-                gameMusic.srcUrqW = filePath;
-                gameMusic.loop = true;
-                gameMusic.play();
-            } else {
-                // Music is currently playing
-                if (gameMusic.getAttribute('src') != fileURL || !gameMusic.loop) {
-                    // The file has changed or the file is not playing in a loop
-                    resetAudio(gameMusic);
-                    gameMusic.src = fileURL;
-                    gameMusic.srcUrqW = filePath;
-                    gameMusic.loop = true;
-                    gameMusic.play();
-                }
-            }
-        } else {
-            // Music is played once using the operator
-            resetAudio(gameMusic);
-            gameMusic.src = fileURL;
-            gameMusic.srcUrqW = filePath;
-            gameMusic.play();
+    if (!src) {
+        if (window.urqwMidi) window.urqwMidi.stop();
+        resetAudio(gameMusic);
+        return;
+    }
+    var resolvedPath = resolveFile(src, ".mid");
+    var fileURL = getGameFileURL(resolvedPath);
+    if (window.urqwMidi && window.urqwMidi.currentUrl === fileURL) {
+        return;
+    }
+    var ext = resolvedPath.split('.').pop().toLowerCase();
+    if (ext === 'mid' || ext === 'midi') {
+        resetAudio(gameMusic);
+        if (window.urqwMidi) {
+            window.urqwMidi.play(fileURL, loop);
         }
     } else {
-        resetAudio(gameMusic);
+        if (window.urqwMidi) window.urqwMidi.stop();        
+        if (gameMusic.src !== fileURL || gameMusic.loop !== !!loop) {
+            gameMusic.src = fileURL;
+            gameMusic.srcUrqW = resolvedPath;
+            gameMusic.loop = !!loop;
+            var p = gameMusic.play();
+            if (p && p.catch) p.catch(function() {});
+        }
+    }
+};
+
+/**
+ * @param {String} src
+ */
+Player.prototype.playSound = function(src) {
+    if (!src) return;    
+    var resolvedPath = resolveFile(src, ".wav");
+    var fileURL = getGameFileURL(resolvedPath);
+    var ext = resolvedPath.split('.').pop().toLowerCase();
+    if (ext === 'mid' || ext === 'midi') {
+        if (window.urqwMidi) window.urqwMidi.play(fileURL, false);
+    } else {
+        resetAudio(gameSound);
+        gameSound.src = fileURL;
+        gameSound.srcUrqW = resolvedPath;
+        var p = gameSound.play();
+        if (p && p.catch) p.catch(function() {});
     }
 };
