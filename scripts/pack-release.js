@@ -37,15 +37,17 @@ async function packRelease() {
         const rootPath = path.resolve(__dirname, '..');
         const releasePath = path.join(rootPath, 'release');
 
+        // Get name and version of package
+const packagePath = path.join(rootPath, 'package.json');
+        const packageData = await fs.promises.readFile(packagePath, 'utf8');
+        const { name, version } = JSON.parse(packageData);
+
         // If argument is passed, use it as build name
         const customBuildName = process.argv[2];
         let buildName;
         if (customBuildName) {
             buildName = customBuildName;
         } else {
-            const packagePath = path.join(rootPath, 'package.json');
-            const packageData = await fs.promises.readFile(packagePath, 'utf8');
-            const { name, version } = JSON.parse(packageData);
             buildName = `${name}_${version}`;
         }
         const buildPath = path.join(releasePath, buildName);
@@ -60,6 +62,28 @@ async function packRelease() {
 
         await fs.promises.mkdir(releasePath);
         await fs.promises.mkdir(buildPath);
+
+        // Define commit hash
+        let commitHash = 'unknown';
+        const gitHeadPath = path.join(rootPath, '.git', 'HEAD');
+        try {
+            const headContent = await fs.promises.readFile(gitHeadPath, 'utf8');
+            const refLine = headContent.trim();
+            if (refLine.startsWith('ref: ')) {
+                // Scenario 1: Git on a branch (e.g., ref: refs/heads/master)
+                // Get the path to the file with the hash (refs/heads/master -> .git/refs/heads/master)
+                const relativeRefPath = refLine.substring(5); 
+                const fullRefPath = path.join(rootPath, '.git', relativeRefPath);
+                const hashContent = await fs.promises.readFile(fullRefPath, 'utf8');
+                commitHash = hashContent.trim();
+            } else {
+                // Scenario 2: Detached HEAD (Git directly on the commit)
+                // The HEAD file contains the commit hash
+                commitHash = refLine;
+            }
+        } catch (err) {
+            console.warn('Failed to read .git files directly. Using placeholder.');
+        }
 
         // Define files and directories to copy to release
         const filesAndDirsToCopy = [
@@ -108,6 +132,22 @@ async function packRelease() {
         // Create games.json file
         const gamesJsonPath = path.join(buildPath, 'games.json');
         await fs.promises.writeFile(gamesJsonPath, '[\n]');
+        // Create README.txt file
+        const readmePath = path.join(buildPath, 'README.txt');
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const buildDate = `${year}-${month}-${day}`;
+        const readmeContent = 'UrqW\n\n'
+            + `UrqW is an open source engine for text-based games and interactive fiction, available free of charge.\n\n`
+            + 'To run the web application, open the index.html file in your browser.\n\n'
+            + '- Home page: https://urqw.github.io/UrqW\n'
+            + '- Source code: https://github.com/urqw/UrqW\n'
+            + `- Version: ${version}\n`
+            + `- Build date: ${buildDate}\n`
+            + `- Commit hash: ${commitHash}\n`;
+        await fs.promises.writeFile(readmePath, readmeContent, 'utf8');
 
         // Create an archive
         const output = fs.createWriteStream(path.join(releasePath, `${buildName}.zip`));
