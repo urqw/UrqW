@@ -99,6 +99,7 @@ const packagePath = path.join(rootPath, 'package.json');
             'logo.svg',
             'package.json',
             'package-lock.json',
+            'rss.svg',
             'third-party_components.txt'
         ];
 
