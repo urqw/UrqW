@@ -35,6 +35,18 @@ var isFloat =function (n){
     return n === Number(n) && n % 1 !== 0;
 };
 
+// Safely converts a Uint8Array to a string in chunks to avoid RangeError: Maximum call stack size exceeded.
+// Intended  for single-byte encodings like Windows-1251.
+function safeUint8ArrayToString(uint8Array) {
+    var chunkSize = 10000;
+    var byteString = '';
+    for (var i = 0; i < uint8Array.length; i += chunkSize) {
+        var end = Math.min(i + chunkSize, uint8Array.length);
+        byteString += String.fromCharCode(...uint8Array.slice(i, end));
+    }
+    return byteString;
+}
+
 function win2unicode(str) {
     var charmap   = unescape(
         "%u0402%u0403%u201A%u0453%u201E%u2026%u2020%u2021%u20AC%u2030%u0409%u2039%u040A%u040C%u040B%u040F"+

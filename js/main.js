@@ -385,7 +385,7 @@ $(function() {
                 if (fileEncoding === 'CP1251') {
                     var arrayBuffer = await response.arrayBuffer();
                     var uint8Array = new Uint8Array(arrayBuffer);
-                    var byteString = String.fromCharCode.apply(null, uint8Array);
+                    var byteString = safeUint8ArrayToString(uint8Array);
                     return win2unicode(byteString);
                 } else {
                     return await response.text();
@@ -558,7 +558,7 @@ if (styleFile) {
                         var decoder = new TextDecoder(encoding);
                         questPart = decoder.decode(uint8Array);
                     } else {
-                        var byteString = String.fromCharCode.apply(null, uint8Array);
+                        var byteString = safeUint8ArrayToString(uint8Array);
                         questPart = win2unicode(byteString);
                     }
                 }
@@ -1133,7 +1133,7 @@ var parser = new DOMParser();
                     var decoder = new TextDecoder(encoding);
                     qstText = decoder.decode(uint8Array);
                 } else {
-                    var byteString = String.fromCharCode.apply(null, uint8Array);
+                    var byteString = safeUint8ArrayToString(uint8Array);
                     qstText = win2unicode(byteString);
                 }
             }

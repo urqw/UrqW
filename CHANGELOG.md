@@ -32,6 +32,7 @@
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace characters at the beginning of any lines.
 	+ Added: Automatic normalization of internal file paths: reverse soliduses (backslashes are replaced with soliduses (slashes), and all soliduses at the beginning of the path are removed.
+	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
