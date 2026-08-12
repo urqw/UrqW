@@ -62,6 +62,10 @@ The following project automation tools have been implemented:
 	```
 	npm run check-locale ru
 	```
+* Build the production version of the engine (combining all necessary CSS and JS files into one bundle, minifying, and creating index.html):
+	```
+	npm run build-urqw
+	```
 * Validate the /games.json file:
 	```
 	npm run valid-json
@@ -102,11 +106,11 @@ The following project automation tools have been implemented:
 	```
 	npm run pack-release -- build_name
 	```
-* Build UrqW for production environments with the games catalog (sequential execution of valid-json, pack-games, gen-rss, gen-license-report, gen-docs, and gen-sitemap scripts):
+* Build UrqW for production environments with the games catalog (sequential execution of build-urqw, valid-json, pack-games, gen-rss, gen-license-report, gen-docs, and gen-sitemap scripts):
 	```
 	npm run build
 	```
-* Build UrqW for release without the games catalog (sequential execution of gen-license-report, gen-docs, and pack-release scripts):
+* Build UrqW for release without the games catalog (sequential execution of build-urqw, gen-license-report, gen-docs, and pack-release scripts):
 	```
 	npm run release
 	```

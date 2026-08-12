@@ -128,6 +128,7 @@
 	+ Changed: Updating the main Russian-language documentation.
 * Development and maintenance infrastructure:
 	+ Added: Automate the build and deployment of UrqW with a game catalog via GitHub Actions on GitHub Pages when changes are made to master.
+	+ Added: build-urqw script to building the production version of the engine.
 	+ Added: check-locale script to check completeness of localization.
 	+ Added: valid-json script to validate the games.json file.
 	+ Added: pack-games script to package games from the games directory for the catalog.
@@ -139,6 +140,8 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
+	+ Changed: All separately included .css style files and .js script files are now combined and minified into a single file, which is included in the production build of the engine as a single bundle.
+	+ Changed: Web interface development is now carried out in the index-dev.html file, and the index.html file is created automatically when building the production version of the engine.
 	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.
 	+ Changed: Tests to ensure the engine is working correctly have been moved to the quests/tests directory.

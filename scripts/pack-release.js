@@ -12,9 +12,6 @@ const { promisify } = require('util');
 
 const { urqwURL, urqwRepoURL } = require('./common');
 
-// Convert exec to promise
-const execPromise = promisify(exec);
-
 // Function to recursive copying of directories
 async function copyDirectory(source, destination) {
     await fs.promises.mkdir(destination, { recursive: true });
@@ -89,18 +86,14 @@ const packagePath = path.join(rootPath, 'package.json');
 
         // Define files and directories to copy to release
         const filesAndDirsToCopy = [
-            'css',
+            'dist',
             'docs',
-            'js',
-            'locale',
             'CHANGELOG.html',
             'favicon.png',
             'index.html',
             'LICENSE-CC.txt',
             'LICENSE-GPL.txt',
             'logo.svg',
-            'package.json',
-            'package-lock.json',
             'rss.svg',
             'third-party_components.txt'
         ];
@@ -110,26 +103,14 @@ const packagePath = path.join(rootPath, 'package.json');
             const source = path.join(rootPath, item);
             const destination = path.join(buildPath, item);
 
-            try {
-                const stats = await fs.promises.lstat(source);
-                if (stats.isDirectory()) {
-                    await copyDirectory(source, destination);
-                } else {
-                    await fs.promises.copyFile(source, destination);
-                }
-            } catch (err) {
-                // If there is no file/directory, skip it
+            const stats = await fs.promises.lstat(source);
+            if (stats.isDirectory()) {
+                await copyDirectory(source, destination);
+            } else {
+                await fs.promises.copyFile(source, destination);
             }
         }
 
-        // Install production npm dependencies
-        await execPromise('npm install --production', {
-            cwd: buildPath
-        });
-
-        // Delete package.json and package-lock.json
-        await fs.promises.unlink(path.join(buildPath, 'package.json'));
-        await fs.promises.unlink(path.join(buildPath, 'package-lock.json'));
         // Create quests directory
         await fs.promises.mkdir(path.join(buildPath, 'quests'));
         // Create games.json file

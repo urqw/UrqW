@@ -71,7 +71,7 @@ Adding a new localization:
 3. Open the new localization file and edit its contents:
 	* Rename the translation string object according to the target language code, for example, `var ru` for Russian.
 	* Translate all values of keys into the target language.
-4. Open the /index.html file and connect the new localization file in the `<head>` container next to the other localizations.
+4. Open the /index-dev.html file and connect the new localization file in the `<head>` container next to the other localizations.
 5. Open the /js/i18n.js file and edit its contents:
 	* Add information about the new localization as an object within the availableLangs object, for example, for Russian:
 	```javascript
@@ -136,7 +136,7 @@ var formattedDate = date.toLocaleDateString(lang);
 		`npm run check-locale`
 	* Try to ensure 100% translation for all localizations before releasing.
 2. Update and synchronize the UrqW version in the following project files:
-	* In the urqw_version variable in the /index.html file.
+	* In the urqw_version variable in the /index-dev.html file.
 	* In the version parameter in the /package.json file.
 	* In the /package-lock.json file, automatically updating it after editing package.json with the `npm install` command.
 3. Edit the [/CHANGELOG.md](CHANGELOG.md) file:

@@ -7,6 +7,7 @@
     "doc": "md"
   },
   "scripts": {
+    "build-urqw": "node scripts/build-urqw.js",
     "check-locale": "node scripts/check-locale.js",
     "gen-docs": "node scripts/gen-docs.js",
     "gen-license-report": "node scripts/gen-license-report.js",
@@ -15,8 +16,8 @@
     "pack-games": "node scripts/pack-games.js",
     "valid-json": "node scripts/valid-json.js",
     "pack-release": "node scripts/pack-release.js",
-    "build": "npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report && npm run gen-docs && npm run gen-sitemap",
-    "release": "npm run gen-license-report && npm run gen-docs && npm run pack-release",
+    "build": "npm run build-urqw && npm run valid-json && npm run pack-games && npm run gen-rss && npm run gen-license-report && npm run gen-docs && npm run gen-sitemap",
+    "release": "npm run build-urqw && npm run gen-license-report && npm run gen-docs && npm run pack-release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akela <tinycoyote@gmail.com>",
@@ -50,10 +51,12 @@
   },
   "devDependencies": {
     "archiver": "^7.0.1",
+    "csso": "^5.0.5",
     "license-checker": "^25.0.1",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-table-of-contents": "^0.9.0",
-    "moment": "^2.30.1"
+    "moment": "^2.30.1",
+    "terser": "^5.50.0"
   }
 }
