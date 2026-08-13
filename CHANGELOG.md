@@ -60,7 +60,7 @@
 	+ Added: Games added to the catalog have separate URLs for identification and indexing by search engines.
 	+ Added: Tag with canonical URL (separate URLs for the main page with a game catalog and for each game launched by identifier).
 	+ Added: Sitemap for search engines.
-	+ Added: Ability to set a game to load on any opening of index.html.
+	+ Added: Ability to set a game to load on any opening of index.html or index-dev.html.
 	+ Added: New keys of a game object in the games.json file:
 		- date - to specify the game's first publication date.
 		- lang - to specify one or more game languages.
@@ -140,8 +140,7 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
-	+ Changed: All separately included .css style files and .js script files are now combined and minified into a single file, which is included in the production build of the engine as a single bundle.
-	+ Changed: Web interface development is now carried out in the index-dev.html file, and the index.html file is created automatically when building the production version of the engine.
+	+ Changed: For production builds of the engine, all separately included .css style files and .js script files are now minified and combined into single bundles, the index.html file is also minified. Development is carried out in separate .css and .js files, as well as in the index-dev.html file.
 	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.
 	+ Changed: Tests to ensure the engine is working correctly have been moved to the quests/tests directory.

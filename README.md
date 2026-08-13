@@ -62,7 +62,7 @@ The following project automation tools have been implemented:
 	```
 	npm run check-locale ru
 	```
-* Build the production version of the engine (combining all necessary CSS and JS files into one bundle, minifying, and creating index.html):
+* Build the production version of the engine (combining all necessary CSS and JS files into minified bundles and creating minified index.html):
 	```
 	npm run build-urqw
 	```

@@ -9,6 +9,7 @@ const path = require('path');
 const { readFileSync, writeFileSync, readdirSync, unlinkSync, rmdirSync, mkdirSync } = fs;
 const { minify: terserMinify } = require('terser');
 const csso = require('csso');
+const { minify: htmlMinify } = require('html-minifier-terser');
 
 // Utilities
 
@@ -190,6 +191,7 @@ function isLibraryFile(filePath) {
     }
 
     // HTML Generation
+    console.log('Processing HTML content from index-dev.html:');
     let updatedHtml = htmlContent;
 
     const newCssTag = `<link href="dist/style.min.css" rel="stylesheet">`;
@@ -197,6 +199,7 @@ function isLibraryFile(filePath) {
 
     // Processing CSS links
     if (cssFiles.length > 0) {
+        console.log('  Replacing links to CSS files...');
         updatedHtml = updatedHtml.replace(cssRegex, newCssTag);
         const firstCssIndex = updatedHtml.indexOf(newCssTag);
         if (firstCssIndex !== -1) {
@@ -210,6 +213,7 @@ function isLibraryFile(filePath) {
 
     // Processing JS links
     if (jsFiles.length > 0) {
+        console.log('  Replacing links to JS files...');
         updatedHtml = updatedHtml.replace(jsRegex, newJsTag);
         const firstJsIndex = updatedHtml.indexOf(newJsTag);
         if (firstJsIndex !== -1) {
@@ -222,12 +226,36 @@ function isLibraryFile(filePath) {
     }
 
     // Replacing links to index file
-    const finalHtml = updatedHtml.replace(/href=["']index-dev\.html["']/gi, `href="index.html"`);
+    console.log('  Replacing links to index-dev.html...');
+    updatedHtml = updatedHtml.replace(/href=["']index-dev\.html["']/gi, `href="index.html"`);
 
+    // Minification HTML
+    console.log('  Minifying HTML content...');
     try {
-        writeFileSync(prodIndexPath, finalHtml, 'utf-8');
+        const minifiedHtml = await htmlMinify(updatedHtml, {
+            collapseWhitespace: true, // Delete extra spaces and line breaks between tags
+            removeComments: true, // Delete comments
+            removeAttributeQuotes: false, // Leave quotes around attributes (safer and more readable)
+            minifyJS: true, // Minify JS inside <script>
+            minifyCSS: false, // Do not minify CSS inside <style>
+            caseSensitive: false, // Ignore case of letters when processing
+            keepClosingSlash: false,               // Delete closing slashes from self-closing tags
+            sortAttributes: false, // Do not sort attributes (keep original order)
+            sortClassName: false // Do not sort class names in the class attribute (keep original order)
+        });
+
+        if (typeof minifiedHtml !== 'string') {
+            fail('HTML minification returned non-string data');
+        }
+
+        try {
+            writeFileSync(prodIndexPath, minifiedHtml, 'utf-8');
+            console.log(`Final HTML content saved: ${prodIndexPath}`);
+        } catch (err) {
+            fail(`Failed to write index.html: ${err.message}`);
+        }
     } catch (err) {
-        fail(`Failed to write index.html: ${err.message}`);
+        fail(`HTML minification error: ${err.message}`);
     }
 
     console.log('The UrqW engine has been successfully built.');
