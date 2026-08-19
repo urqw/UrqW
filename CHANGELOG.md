@@ -20,6 +20,7 @@
 		- location - get the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
 		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ).
 		- time - get the current time.
+		- urq_inv - get the number of items in the inventory.
 		- urq_type - always has a value 1 (only for compatibility mode with akURQ).
 		- urqw_game_ifid - get the game's IFID (or an empty string if it lacks one).
 		- urqw_game_lang - set or get the game content language.
