@@ -88,8 +88,9 @@
 	+ Added: Display information about unsupported game format and the process of unpacking the uploaded game.
 	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening games in .qs1, .qs2 and .qsz formats.
+	+ Changed: Names of inventory items generated from names of variables are now displayed with capital letters and without spaces at the ends.
 	+ Changed: Inventory item usage options are now displayed when the item receives system focus, not just when the mouse is hovering over it.
-	+ Changed: Inventory item usage options generated from use labels names are now displayed with spaces instead of underscores.
+	+ Changed: Names of inventory item usage options generated from names of use labels are now displayed with spaces instead of underscores and without spaces at the ends.
 	+ Changed: When the game over through the quit operator, links and buttons are now deleted instead of just stopping response to user actions.
 	+ Changed: When launching a game by identifier, preference is now given to the game identifier from the id get parameter (support for launching a game by fragment identifier (hash) is retained, but only if the id GET parameter is absent).
 	+ Changed: When loading a game from an archive, files named style.css and script.js are now read and loaded as plugins (as documented), rather than all .css and .js files (as was actually the case).
