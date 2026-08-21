@@ -14,6 +14,7 @@
 		- date - get the current date (only when urq_mode specific rules are absent).
 		- file_content - get the contents of a file from a game package as text by its internal path.
 		- file_url - get the relative URL of a file from a game package by its internal path.
+		- hide_use - hide or show all usage options for all inventory items.
 		- image_caption - set or get the visible caption for an image.
 		- instr_leave_spc - set or get the space handling mode for the instr operator.
 		- last_btn_caption - get the name of the last activated choice button or link in the text.

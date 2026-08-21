@@ -370,7 +370,10 @@ Client.prototype.drawItem = function (itemName, quantity) {
     var lang = document.getElementsByTagName('HTML')[0].getAttribute('lang');
     var isExamineItem = false;
 
-    if (actions.length == 0 && itemName != 'inv' || toBoolean(Game.getVar('hide_use_' + itemName))) {
+    if (itemName != 'inv' && (actions.length == 0
+        || toBoolean(Game.getVar('hide_use_' + itemName))
+        || toBoolean(Game.getVar('hide_use')))
+    ) {
         if (quantity > 1) {
             itemDisplayName = itemDisplayName + ' (' + quantity + ')';
         }
