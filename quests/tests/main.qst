@@ -63,8 +63,12 @@ inv- 3, Item
 if item = 0 then proc passed else proc failed
 pln inv- 3, Item: #status$
 inv+ 5, Item
+inv+ 3, Item2
+invkill Item
+if item = 0 and item2 = 3 then proc passed else proc failed
+pln invkill item: #status$
 invkill
-if item = 0 then proc passed else proc failed
+if item2 = 0 then proc passed else proc failed
 pln invkill: #status$
 instr_leave_spc="test" & instr str = hello
 if str = " hello" then proc passed else proc failed
@@ -386,6 +390,7 @@ pln <h3>User Interface</h3>
 pln These are non-automated tests of the player's user interface.
 btn ui_anykey, anykey
 btn ui_input, input
+btn ui_inv, Inventory
 btn ui_quit, quit
 btn start, Back
 end
@@ -407,6 +412,144 @@ pln Enter something:
 input x
 pln This is what you entered: #x$
 btn ui, Back
+end
+
+
+:ui_inv
+invkill
+varkill
+pln Action: Open the inventory panel.
+pln Result: Inventory is empty (the "[empty]" text depends on the UrqW interface language).
+btn ui_inv_non_clickable, Non-clickable item
+btn ui_inv_clickable, Clickable item
+btn ui_inv_multiple, Multiple item
+btn ui_inv_actions, Item with actions
+btn ui, Back
+end
+
+
+:ui_inv_non_clickable
+if count_#current_loc$ = 1 then proc ui_inv_non_clickable_prep
+pln Action 1: Open the inventory panel.
+pln Result 1: There are 2 items in the inventory: a copper coin and a wallet (in exactly that order).
+pln Action 2: Focus (pointer or keyboard) on any item and press on it.
+pln Result 2: When pressing the item, nothing happens (the item has the aria-disabled attribute, and screen readers describe it as not interactable).
+pln Action 3: Press the Drop a copper coin button.
+pln Result 3: There is 1 item in the inventory: a wallet.
+pln Action 4: Press the Take a copper coin button.
+pln Result 4: There are 2 items in the inventory: a wallet and a copper coin (in exactly that order).
+if inv_coin1 then btn invkill coin1 & cls & goto #current_loc$, Drop a copper coin
+if not inv_coin1 then btn inv+ coin1 & cls & goto #current_loc$, Take a copper coin
+btn ui_inv, Back
+end
+
+
+:ui_inv_non_clickable_prep
+display_use_coin1 = "Copper coin"
+inv+ coin1
+inv+ wallet
+end
+
+
+:ui_inv_clickable
+if count_#current_loc$ = 1 then proc ui_inv_clickable_prep
+pln Action 1: Open the inventory panel.
+pln Result 1: There is 1 item in the inventory: a silver coin.
+pln Action 2: Focus (pointer or keyboard) on the item and press on it several times.
+pln Result 2: After each pressing on the item, text with its description is added below.
+btn ui_inv, Back
+end
+
+
+:ui_inv_clickable_prep
+display_use_coin2 = "Silver coin"
+inv+ coin2
+end
+
+
+:use_coin2
+pln This is a silver coin.
+end
+
+
+:ui_inv_multiple
+if count_#current_loc$ = 1 then proc ui_inv_multiple_pref
+pln Action 1: Open the inventory panel.
+pln Result 1: There is 1 item in the inventory: a gold coin (5 pieces).
+pln Action 2: Press the Drop 3 gold coins button 2 times.
+pln Result 2: After the first pressing, 2 gold coins remain in the inventory, after the second the inventory is empty.
+pln Action 3: Press the Take a gold coin button 1 time.
+pln Result 3: There is 1 item in the inventory: a gold coin (without specifying the quantity in brackets).
+if inv_coin3 then btn inv_coin3 -= 3 & cls & goto #current_loc$, Drop 3 gold coins
+if inv_coin3 < 5 then btn inv_coin3 += 1 & cls & goto #current_loc$, Take a gold coin
+btn ui_inv, Back
+end
+
+
+:ui_inv_multiple_pref
+display_use_coin3 = "Gold coin"
+inv+ 5, coin3
+end
+
+
+:ui_inv_actions
+if count_#current_loc$ = 1 then proc ui_inv_actions_pref
+pln Action 1: Open the inventory panel.
+pln Result 1: There are 2 items in the inventory: an eraser and a dull coin.
+pln Action 2: Focus (pointer or keyboard) on all items and press on them one after the other.
+pln Result 2: When pressing the items, nothing happens (all items have the aria-disabled attribute, and screen readers describe them as not interactable).
+pln Action 3: Press the Make inventory interactable button and focus on the dull coin item.
+pln Result 3: A drop-down menu with 3 actions appeared: examine (depends on the UrqW interface language), bite to test and polish to a shine.
+pln Action 4: Press the polish to a shine action in the item's action drop-down menu.
+pln Result 4: There are 2 items in the inventory: an eraser and a shiny coin.
+pln Action 5: Focus on the shiny coin item.
+pln Result 5: A drop-down menu with 2 actions appeared: examine (depends on the UrqW interface language) and bite to test.
+pln Action 6: Press the Make the coin not interactable button, focus on the shiny coin item again and press it.
+pln Result 6: When focusing and pressing the item, nothing happens (the item has the aria-disabled attribute, and screen readers describe it as not interactable).
+if hide_use then btn hide_use = 0 & cls & goto #current_loc$, Make inventory interactable
+if not hide_use and not hide_use_coin4 then btn hide_use_coin4 = 1 & cls & goto #current_loc$, Make the coin not interactable
+btn ui_inv, Back
+end
+
+
+:ui_inv_actions_pref
+hide_use = 1
+display_use_eraser_polish = "polish a coin"
+inv+ eraser
+display_use_coin4 = "Dull coin"
+display_use_coin4_bite = "bite to test"
+display_use_coin4_polish = "polish to a shine"
+inv+ coin4
+end
+
+
+:use_eraser
+p This is an eraser
+if hide_use_coin4_polish then pln . else pln #$that can be used to polish a coin.
+end
+
+
+:use_eraser_polish
+proc use_coin4_polish
+end
+
+
+:use_coin4
+if hide_use_coin4_polish then coin_state = "shiny" else coin_state = "dull"
+pln This is a #coin_state$ coin.
+end
+
+
+:use_coin4_bite
+pln Dentists don't approve of this.
+end
+
+
+:use_coin4_polish
+display_use_coin4 = "Shiny coin"
+hide_use_coin4_polish = 1
+hide_use_eraser_polish = 1
+pln Swish-swish...
 end
 
 
