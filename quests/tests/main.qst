@@ -43,32 +43,38 @@ pln All tests must be passed (green).
 
 pln <h4>URQL</h4>
 x = 5
+y = 5
 varkill
-if x = 5 then proc failed else proc passed
+if x = 0 and y = 0 and urq_mode then proc passed else proc failed
 pln varkill: #status$
+x = 5
+y = 5
+varkill X
+if x = 0 and y = 5 then proc passed else proc failed
+pln varkill variable: #status$
 x = 0
 proc operators_goto
 if x = 5 then proc passed else proc failed
 pln goto: #status$
 inv+ Item
-if item = 1 then proc passed else proc failed
+if inv_item = 1 and item = 1 then proc passed else proc failed
 pln inv+ Item: #status$
 inv+ 2, Item
-if item = 3 then proc passed else proc failed
+if inv_item = 3 and item = 3 then proc passed else proc failed
 pln inv+ 2, Item: #status$
 inv- Item
-if item = 2 then proc passed else proc failed
+if inv_item = 2 and item = 2 then proc passed else proc failed
 pln inv- Item: #status$
 inv- 3, Item
-if item = 0 then proc passed else proc failed
+if inv_item = 0 and item = 0 then proc passed else proc failed
 pln inv- 3, Item: #status$
-inv+ 5, Item
-inv+ 3, Item2
-invkill Item
-if item = 0 and item2 = 3 then proc passed else proc failed
+inv+ 2, Item2
+inv+ 3, Item3
+invkill IteM2
+if inv_item2 = 0 and item2 = 0 and inv_item3 = 3 and item3 = 3 then proc passed else proc failed
 pln invkill item: #status$
 invkill
-if item2 = 0 then proc passed else proc failed
+if inv_item3 = 0 and item3 = 0 then proc passed else proc failed
 pln invkill: #status$
 instr_leave_spc="test" & instr str = hello
 if str = " hello" then proc passed else proc failed

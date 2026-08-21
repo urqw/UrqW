@@ -151,8 +151,8 @@ Parser.prototype.parse = function(line) {
         case 'input': return GlobalPlayer.input(command.toString().trim());
         case 'quit': return GlobalPlayer.quit();
         case 'invkill': return GlobalPlayer.invkill(command.toString().trim().length > 0 ? command.toString().trim() : null);
-        case 'perkill': return GlobalPlayer.perkill();
-        case 'varkill': return GlobalPlayer.perkill();
+        case 'varkill': return GlobalPlayer.varkill(command.toString().trim().length > 0 ? command.toString().trim() : null);
+        case 'perkill': return GlobalPlayer.varkill();
         case 'inv-':
             var item = command.split(',');
             var quantity = 1;

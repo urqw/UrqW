@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015, 2017 Akela <akela88@bk.ru>
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -58,27 +58,36 @@ Player.prototype.goto = function(labelName, type) {
 };
 
 /**
- * Deleting variables
+ * Deleting a specific variable or all variables
+ *
+ * @param {string} varName
  */
-Player.prototype.perkill = function() {
-    var urqwTitle = Game.getVar('urqw_title');
-    var urqwGameLang = Game.getVar('urqw_game_lang');
-    var urqMode = Game.getVar('urq_mode');
-    
-    Game.vars = {};
-
-    if (urqwTitle) {
-        this.setVar('urqw_title', urqwTitle);
+Player.prototype.varkill = function(varName) {
+    if (varName != null) {
+        varName = varName.toLowerCase();
     }
-    if (urqwGameLang) {
-        this.setVar('urqw_game_lang', urqwGameLang);
-    }
-    this.setVar('urq_mode', urqMode);
+    if (varName != null && !['urqw_title', 'urqw_game_lang', 'urq_mode'].includes(varName)) {
+        delete Game.vars[varName];
+    } else {
+        var urqwTitle = Game.getVar('urqw_title');
+        var urqwGameLang = Game.getVar('urqw_game_lang');
+        var urqMode = Game.getVar('urq_mode');
 
-    $.each(Game.items, function(index, value) {
-        Game.setVar(index, parseInt(value));
-    });
-};
+        Game.vars = {};
+
+        if (urqwTitle) {
+            this.setVar('urqw_title', urqwTitle);
+        }
+        if (urqwGameLang) {
+            this.setVar('urqw_game_lang', urqwGameLang);
+        }
+        this.setVar('urq_mode', urqMode);
+
+        $.each(Game.items, function(index, value) {
+            Game.setVar(index, parseInt(value));
+        });
+    }
+}
 
 /**
  * cls

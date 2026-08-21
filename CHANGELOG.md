@@ -29,7 +29,7 @@
 		- urqw_version - get the UrqW version.
 	+ Added: The clst operator to clear the screen of text.
 	+ Added: The clsl operator to clear links from the text.
-	+ Added: The varkill operator (a direct counterpart of the perkill operator).
+	+ Added: The varkill operator to delete a specific variable or all variables.
 	+ Added: Ability to set arbitrary names for inventory items, for inventory item usage options, and for drop-down menu items of links in text instead of names based on variable and labels names (special variables with the `display_` prefix are used).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace characters at the beginning of any lines.
