@@ -173,8 +173,8 @@ if "abc"=="a?c" then proc passed else proc failed
 pln "abc"=="a?c" =##62$ true: #status$
 if "abc"=="a*" then proc passed else proc failed
 pln "abc"=="a*" =##62$ true: #status$
-if "abc"=="ABC" then proc faild else proc passed
-pln "abc"=="ABC" =##62$ false: #status$
+if "abc"=="ABC" then proc passed else proc failed
+pln "abc"=="ABC" =##62$ true: #status$
 
 pln <h4>Logical</h4>
 x = 1
