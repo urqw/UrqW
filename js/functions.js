@@ -86,6 +86,17 @@ var functions = {
             throw new Error(`Invalid argument for round() function: ${num}`);
         }
         return result;
+    },
+
+    sqrt(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The sqrt() function takes 1 argument.');
+        }
+        var result = Math.sqrt(num);
+        if (Number.isNaN(result)) {
+            throw new Error(`Invalid argument for sqrt() function: ${num}`);
+        }
+        return result;
     }
 
 }
