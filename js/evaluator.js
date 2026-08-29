@@ -171,7 +171,13 @@ function Expression(str) {
             consume('OPERATOR');
             var right = parseAddSub();
             var res = false;
-            if (op === '=' || op === '==') {
+            if (op === '=') {
+                if ((typeof value === 'string') && (typeof right === 'string')) {
+                    res = value.toLowerCase() == right.toLowerCase();
+                } else {
+                    res = value == right;
+                }
+            } else if (op === '==') {
                 if ((typeof value === 'string') && (typeof right === 'string')) {
                     var reg = new RegExp('^' + right.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$', 'i');
                     res = value.search(reg) != -1;
