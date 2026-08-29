@@ -366,6 +366,17 @@ pln Round(2.125, 2) =##62$ 2.13: #status$
 if Sqrt(144) = 12 then proc passed else proc failed
 pln Sqrt(144) =##62$ 12: #status$
 
+pln <h4>Expressions with Functions</h4>
+a = 1
+b = 2
+c = 3
+pln Let a = #a$, b = #b$, and c = #c$
+x = a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c)))
+if x = -3 then proc passed else proc failed
+pln a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c))) =##62$ -3: #status$
+if Pow(b, c) > Max(a, b, c) then proc passed else proc failed
+pln Pow(b, c) > Max(a, b, c) =##62$ true: #status$
+
 proc total
 btn start, Back
 end
