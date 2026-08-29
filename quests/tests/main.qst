@@ -11,6 +11,7 @@ pln These are tests to ensure the UrqW engine is working correctly.
 invkill
 varkill
 btn operators, Operators
+btn functions, Functions
 btn constructs, System constructs
 btn ui, User interface
 end
@@ -309,6 +310,64 @@ end
 :operators_goto
 x = x + 1
 if x < 5 then goto operators_goto
+end
+
+
+:functions
+pln <h3>Functions</h3>
+pln These are automatic tests of programming language built-in functions.
+pln All tests must be passed (green).
+
+pln <h4>Mathematical</h4>
+if Abs(-5) = 5 then proc passed else proc failed
+pln Abs(-5) =##62$ 5: #status$
+if Ceil(2) = 2 then proc passed else proc failed
+pln Ceil(2) =##62$ 2: #status$
+if Ceil(2.1) = 3 then proc passed else proc failed
+pln Ceil(2.1) =##62$ 3: #status$
+if Exp(0) = 1 then proc passed else proc failed
+pln Exp(0) =##62$ 1: #status$
+if Floor(2) = 2 then proc passed else proc failed
+pln Floor(2) =##62$ 2: #status$
+if Floor(2.9) = 2 then proc passed else proc failed
+pln Floor(2.9) =##62$ 2: #status$
+if Int(2.3) = 2 then proc passed else proc failed
+pln Int(2.3) =##62$ 2: #status$
+if Invert(0) = 1 then proc passed else proc failed
+pln Invert(0) =##62$ 1: #status$
+if Invert(1) = 0 then proc passed else proc failed
+pln Invert(1) =##62$ 0: #status$
+if Invert("hello") = 0 then proc passed else proc failed
+pln Invert("hello") =##62$ 0: #status$
+if Invert("") = 1 then proc passed else proc failed
+pln Invert("") =##62$ 1: #status$
+if Invert(5) = 0 then proc passed else proc failed
+pln Invert(5) =##62$ 0: #status$
+if Invert(-5) = 0 then proc passed else proc failed
+pln Invert(-5) =##62$ 0: #status$
+if Log(1) = 0 and not error then proc passed else proc failed
+pln Log(1) =##62$ 0: #status$
+if Log(Exp(3)) = 3 then proc passed else proc failed
+pln Log(Exp(3)) =##62$ 3: #status$
+if Log10(100) = 2 then proc passed else proc failed
+pln Log10(100) =##62$ 2: #status$
+if Log2(8) = 3 then proc passed else proc failed
+pln Log2(8) =##62$ 3: #status$
+if Max(1,2 ,3, 4 , 5) = 5 then proc passed else proc failed
+pln Max(1,2 ,3, 4 , 5) =##62$ 5: #status$
+if Min(1, 2, -3, 4, 5) = -3 then proc passed else proc failed
+pln Min(1, 2, -3, 4, 5) =##62$ -3: #status$
+if Pow(3, 4) = 81 then proc passed else proc failed
+pln Pow(3, 4) =##62$ 81: #status$
+if Round(2.5) = 3 then proc passed else proc failed
+pln Round(2.5) =##62$ 3: #status$
+if Round(2.125, 2) = 2.13 then proc passed else proc failed
+pln Round(2.125, 2) =##62$ 2.13: #status$
+if Sqrt(144) = 12 then proc passed else proc failed
+pln Sqrt(144) =##62$ 12: #status$
+
+proc total
+btn start, Back
 end
 
 
