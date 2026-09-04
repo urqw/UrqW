@@ -366,6 +366,36 @@ pln Round(2.125, 2) =##62$ 2.13: #status$
 if Sqrt(144) = 12 then proc passed else proc failed
 pln Sqrt(144) =##62$ 12: #status$
 
+pln <h4>Checking</h4>
+declared_variable = 1
+pln let declared_variable = #declared_variable$
+if IsArray('[1, "two"]') = 1 then proc passed else proc failed
+pln IsArray('[1, "two"]') =##62$ 1: #status$
+if IsBoolean(1) then proc passed else proc failed
+pln IsBoolean(1) =##62$ 1: #status$
+if IsBoolean("1") = 0 and not error then proc passed else proc failed
+pln IsBoolean("1") =##62$ 0: #status$
+if IsDeclared("declared_variable") = 1 then proc passed else proc failed
+pln IsDeclared("declared_variable") =##62$ 1: #status$
+if IsDeclared("  DeClArEd_VaRiAbLe  ") = 1 then proc passed else proc failed
+pln IsDeclared("  DeClArEd_VaRiAbLe  ") =##62$ 1: #status$
+if IsDeclared("undeclared variable") = 0 and not error then proc passed else proc failed
+pln IsDeclared("undeclared_variable") =##62$ 0: #status$
+if IsNumber(12.3) = 1 then proc passed else proc failed
+pln IsNumber(12.3) =##62$ 1: #status$
+if IsNumber("1") = 0 and not error then proc passed else proc failed
+pln IsNumber("1") =##62$ 0: #status$
+if IsNumber(1 + "1") = 0 and not error then proc passed else proc failed
+pln IsNumber(1 + "1") =##62$ 0: #status$
+if IsObject('{"one": 1}') = 1 then proc passed else proc failed
+pln IsObject('{"one": 1}') =##62$ 1: #status$
+if IsObject('[1, "two"]') = 0 and not error then proc passed else proc failed
+pln IsObject('[1, "two"]') =##62$ 0: #status$
+if IsString("abc") = 1 then proc passed else proc failed
+pln IsString("abc") =##62$ 1: #status$
+if IsString(1 + "1") = 1 then proc passed else proc failed
+pln IsString(1 + "1") =##62$ 1: #status$
+
 pln <h4>Expressions with Functions</h4>
 a = 1
 b = 2
