@@ -121,7 +121,7 @@ var functions = {
         if (args.length === 0) {
             throw new Error('The max() function requires at least 1 argument.');
         }
-        result = Math.max(...args);
+        var result = Math.max(...args);
         if (Number.isNaN(result)) {
             throw new Error('Invalid arguments for max() function: all must be numbers');
         }
@@ -133,7 +133,7 @@ var functions = {
         if (args.length === 0) {
             throw new Error('The min() function requires at least 1 argument.');
         }
-        result = Math.min(...args);
+        var result = Math.min(...args);
         if (Number.isNaN(result)) {
             throw new Error('Invalid arguments for min() function: all must be numbers');
         }
@@ -178,6 +178,79 @@ var functions = {
             throw new Error(`Invalid argument for sqrt() function: ${num}`);
         }
         return result;
+    },
+
+    /**
+     * Value and variable state check functions
+     */
+
+    // Checks whether the value has the derived type array.
+    isarray(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isarray() function takes 1 argument.');
+        }
+        if (typeof val !== 'string') {
+            return 0;
+        }
+        try {
+            var parsed = JSON.parse(val);
+            return Array.isArray(parsed) ? 1 : 0;
+        } catch (e) {
+            return 0;
+        }
+    },
+
+    // Checks whether the value has the derived type boolean.
+    isboolean(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isboolean() function takes 1 argument.');
+        }
+        return (val === 1 || val === 0) ? 1 : 0;
+    },
+
+    // Checks whether a variable with the given name is defined.
+    isdeclared(varName) {
+        if (arguments.length !== 1) {
+            throw new Error('The isdeclared() function takes 1 argument.');
+        }
+        if (typeof varName !== 'string') {
+            throw new Error('Invalid argument for isdeclared() function: it must be string');
+        }
+        varName = varName.toLowerCase().trim();
+var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
+        return exists ? 1 : 0;
+    },
+
+    // Checks whether the value has the primitive type number.
+    isnumber(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isnumber() function takes 1 argument.');
+        }
+        return typeof val === 'number' ? 1 : 0;
+    },
+
+    // Checks whether the value has the derived type object.
+    isobject(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isobject() function takes 1 argument.');
+        }
+        if (typeof val !== 'string') {
+            return 0;
+        }
+        try {
+            var parsed = JSON.parse(val);
+            return (parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed)) ? 1 : 0;
+        } catch (e) {
+            return 0;
+        }
+    },
+
+    // Checks whether the value has the primitive type string.
+    isstring(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isstring() function takes 1 argument.');
+        }
+        return typeof val === 'string' ? 1 : 0;
     }
 
 }
