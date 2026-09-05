@@ -366,6 +366,30 @@ pln Round(2.125, 2) =##62$ 2.13: #status$
 if Sqrt(144) = 12 then proc passed else proc failed
 pln Sqrt(144) =##62$ 12: #status$
 
+pln <h4>Type Conversion</h4>
+if Boolean(5) = 1 then proc passed else proc failed
+pln Boolean(5) =##62$ 1: #status$
+if Boolean(-5) = 1 then proc passed else proc failed
+pln Boolean(-5) =##62$ 1: #status$
+if Boolean(0) = 0 and not error then proc passed else proc failed
+pln Boolean(0) =##62$ 0: #status$
+if Boolean("abc") = 1 then proc passed else proc failed
+pln Boolean("abc") =##62$ 1: #status$
+if Boolean("") = 0 and not error then proc passed else proc failed
+pln Boolean("") =##62$ 0: #status$
+if Number("2.5") = 2.5 then proc passed else proc failed
+pln Number("2.5") =##62$ 2.5: #status$
+if Number("2,5") = 0 and not error then proc passed else proc failed
+pln Number("2,5") =##62$ 0: #status$
+if Number("abc") = 0 and not error then proc passed else proc failed
+pln Number("abc") =##62$ 0: #status$
+if Number(" ") = 0 and not error then proc passed else proc failed
+pln Number(" ") =##62$ 0: #status$
+if Number("") = 0 and not error then proc passed else proc failed
+pln Number("") =##62$ 0: #status$
+if String(2.5) = "2.5" then proc passed else proc failed
+pln String(2.5) =##62$ "2.5": #status$
+
 pln <h4>Checking</h4>
 declared_variable = 1
 pln let declared_variable = #declared_variable$

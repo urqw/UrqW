@@ -181,6 +181,38 @@ var functions = {
     },
 
     /**
+     * Type Conversion Functions
+     */
+
+    // Returns the boolean representation of a value.
+    boolean(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The boolean() function takes 1 argument.');
+        }
+        return toBoolean(val) ? 1 : 0;
+    },
+
+    // Returns the number representation of a value.
+    number(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The number() function takes 1 argument.');
+        }
+        var result = Number(val);
+        if (Number.isNaN(result)) {
+            result = 0;
+        }
+        return result;
+    },
+
+    // Returns the string representation of a value.
+    string(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The string() function takes 1 argument.');
+        }
+        return String(val);
+    },
+
+    /**
      * Value and variable state check functions
      */
 
