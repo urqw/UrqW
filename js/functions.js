@@ -283,6 +283,30 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
             throw new Error('The isstring() function takes 1 argument.');
         }
         return typeof val === 'string' ? 1 : 0;
+    },
+
+    /**
+     * Other Functions
+     */
+
+    // Executes JavaScript code.
+    javascript(code) {
+        if (arguments.length !== 1) {
+            throw new Error('The javascript() function takes 1 argument.');
+        }
+        var result;
+        try {
+            result = eval(code);
+        } catch (e) {
+            throw new Error('The code passed to the javascript() function failed.');
+        }
+        if (typeof result === 'number' || typeof result === 'string') {
+            if (typeof result === 'number' && Number.isNaN(result)) {
+                result = String(result);
+            }
+            return result;
+        }
+        return String(result);
     }
 
 }

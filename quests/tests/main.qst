@@ -434,6 +434,14 @@ pln IsString("abc") =##62$ 1: #status$
 if IsString(1 + "1") = 1 then proc passed else proc failed
 pln IsString(1 + "1") =##62$ 1: #status$
 
+pln <h4>Others</h4>
+if JavaScript("' abc '.toUpperCase().trim();") = "ABC" then proc passed else proc failed
+pln JavaScript("' abc '.toUpperCase().trim();") =##62$ "ABC": #status$
+if JavaScript("Math.sqrt(-1);") = "NaN" then proc passed else proc failed
+pln JavaScript("Math.sqrt(-1);") =##62$ "NaN": #status$
+if JavaScript("2 === 1;") = "false" then proc passed else proc failed
+pln JavaScript("2 === 1;") =##62$ "false": #status$
+
 pln <h4>Expressions with Functions</h4>
 a = 1
 b = 2
