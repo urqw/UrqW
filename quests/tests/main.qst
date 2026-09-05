@@ -433,6 +433,12 @@ if IsString("abc") = 1 then proc passed else proc failed
 pln IsString("abc") =##62$ 1: #status$
 if IsString(1 + "1") = 1 then proc passed else proc failed
 pln IsString(1 + "1") =##62$ 1: #status$
+if TypeOf(2.5) = "number" then proc passed else proc failed
+pln TypeOf(2.5) =##62$ "number": #status$
+if TypeOf(declared_variable) = "number" then proc passed else proc failed
+pln TypeOf(declared_variable) =##62$ "number": #status$
+if TypeOf(1 + "1") = "string" then proc passed else proc failed
+pln TypeOf(1 + "1") =##62$ "string": #status$
 
 pln <h4>Others</h4>
 if JavaScript("' abc '.toUpperCase().trim();") = "ABC" then proc passed else proc failed

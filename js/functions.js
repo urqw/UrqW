@@ -246,7 +246,7 @@ var functions = {
             throw new Error('The isdeclared() function takes 1 argument.');
         }
         if (typeof varName !== 'string') {
-            throw new Error('Invalid argument for isdeclared() function: it must be string');
+            throw new Error('Invalid argument for isdeclared() function: it must be string.');
         }
         varName = varName.toLowerCase().trim();
 var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
@@ -283,6 +283,14 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
             throw new Error('The isstring() function takes 1 argument.');
         }
         return typeof val === 'string' ? 1 : 0;
+    },
+
+    // Returns the type of a value.
+    typeof(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The typeof() function takes 1 argument.');
+        }
+        return typeof val;
     },
 
     /**
