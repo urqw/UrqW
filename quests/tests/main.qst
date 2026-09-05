@@ -394,6 +394,8 @@ pln Number(" ") =##62$ 0: #status$
 error = 1
 if Number("") = 0 and not error then proc passed else proc failed
 pln Number("") =##62$ 0: #status$
+if Number(" 5 ") = 5 then proc passed else proc failed
+pln Number(" 5 ") =##62$ 5: #status$
 if String(2.5) = "2.5" then proc passed else proc failed
 pln String(2.5) =##62$ "2.5": #status$
 
