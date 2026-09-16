@@ -157,8 +157,8 @@ var functions = {
 
     // Returns a number rounded to a specified number of decimal places.
     round(num, decimals = 0) {
-        if (arguments.length !== 1 && arguments.length !== 2) {
-            throw new Error('The round() function takes 1 or 2 argument.');
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The round() function takes 1 or 2 arguments.');
         }
         var factor = 10 ** decimals;
         var result = Math.round(num * factor) / factor;
@@ -291,6 +291,176 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
             throw new Error('The typeof() function takes 1 argument.');
         }
         return typeof val;
+    },
+
+    /**
+     * String Functions
+     */
+
+    // TODO: stringinstr
+
+    // Returns a number of characters from the left-hand side of a string.
+    stringleft(str, count) {
+        if (arguments.length !== 2) {
+            throw new Error('The stringleft() function takes 2 arguments.');
+        }
+        if (count <= 0) {
+            return '';
+        }
+        str = String(str);
+        if (count >= str.length) {
+            return str;
+        }
+        return str.slice(0, count);
+    },
+
+    // Returns the number of characters in a string.
+    stringlen(str) {
+        if (arguments.length !== 1) {
+            throw new Error('The stringlen() function takes 1 argument.');
+        }
+        return String(str).length;
+    },
+
+    // Converts a string to lowercase using locale-specific rules.
+    stringlocalelower(str, locale) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringlocalelower() function takes 1 or 2 arguments.');
+        }
+        if (arguments.length === 1) {
+            locale = Game.getVar('urqw_game_lang');;
+            if (!locale) {
+                locale = document.documentElement.lang;
+            }
+        }
+        return String(str).toLocaleLowerCase(locale);
+    },
+
+    // Converts a string to uppercase using locale-specific rules.
+    stringlocaleupper(str, locale) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringlocaleupper() function takes 1 or 2 arguments.');
+        }
+        if (arguments.length === 1) {
+            locale = Game.getVar('urqw_game_lang');;
+            if (!locale) {
+                locale = document.documentElement.lang;
+            }
+        }
+        return String(str).toLocaleUpperCase(locale);
+    },
+
+    // Converts a string to lowercase.
+    stringlower(str) {
+        if (arguments.length !== 1) {
+            throw new Error('The stringlower() function takes 1 argument.');
+        }
+        return String(str).toLowerCase();
+    },
+
+    // Extracts a number of characters from a string.
+    stringmid(str, start, count) {
+        if (arguments.length < 2 && arguments.length > 3) {
+            throw new Error('The stringmid() function takes 2 or 3 arguments.');
+        }
+        str = String(str);
+        if (start < 0 || start >= str.length) {
+            return '';
+            }
+        if (arguments.length === 2) {
+            return str.slice(start);
+        }
+        if (count <= 0) {
+            return '';
+        }
+        return str.slice(start, start + count);
+    },
+
+    // TODO: stringregexp
+    // TODO: stringregexpreplace
+    // TODO: stringreplace
+
+    // Returns a number of characters from the right-hand side of a string.
+    stringright(str, count) {
+        if (arguments.length !== 2) {
+            throw new Error('The stringright() function takes 2 arguments.');
+        }
+        if (count <= 0) {
+            return '';
+        }
+        str = String(str);
+        if (count >= str.length) {
+            return str;
+        }
+        return str.slice(-count);
+    },
+
+    // Splits up a string into substrings depending on the given delimiter.
+    stringsplit(str, delimiter) {
+        if (arguments.length !== 2) {
+            throw new Error('The stringsplit() function takes 2 arguments.');
+        }
+        str = String(str);
+        delimiter = String(delimiter);
+        var parts = str.split(delimiter);
+        return JSON.stringify(parts);
+    },
+
+    // Trims whitespace characters or a number of characters from the beginning and end of a string.
+    stringtrim(str, count) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringtrim() function takes 1 or 2 arguments.');
+        }
+        str = String(str);
+        if (arguments.length === 1) {
+            return str.trim();
+        }
+        if (count <= 0) {
+            return str;
+        }
+        var len = str.length;
+        if (count*2 >= len) {
+            return '';
+        }
+        return str.slice(count, len - count);
+    },
+
+    // Trims either whitespace characters or a number of characters from the right hand side of a string.
+    stringtrimleft(str, count) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringtrimleft() function takes 1 or 2 arguments.');
+        }
+        str = String(str);
+        if (arguments.length === 1) {
+            return str.replace(/^\s+/, '');
+        }
+        if (count <= 0) {
+            return str;
+        }
+        return count >= str.length ? '' : str.slice(count);
+    },
+
+    // Trims either whitespace characters or a number of characters from the left hand side of a string.
+    stringtrimright(str, count) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringtrimright() function takes 1 or 2 arguments.');
+        }
+        str = String(str);
+        if (arguments.length === 1) {
+            return str.replace(/\s+$/, '');
+        }
+        if (count <= 0) {
+            return str;
+        }
+        return count >= str.length ? '' : str.slice(0, str.length - count);
+    },
+
+    // Converts a string to uppercase.
+    stringupper(str) {
+        if (arguments.length !== 1) {
+            throw new Error('The stringupper() function takes 1 argument.');
+        }
+        return String(str).toUpperCase();
     },
 
     /**
