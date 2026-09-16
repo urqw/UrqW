@@ -440,6 +440,22 @@ pln TypeOf(declared_variable) =##62$ "number": #status$
 if TypeOf(1 + "1") = "string" then proc passed else proc failed
 pln TypeOf(1 + "1") =##62$ "string": #status$
 
+pln <h4>Object</h4>
+if ObjectDel('{"key1":1,"key2":2}', "key1") = '{"key2":2}' then proc passed else proc failed
+pln ObjectDel('{"key1":1,"key2":2}', "key1") =##62$ '{"key2":2}': #status$
+if ObjectEntries('{"key1":1,"key2":2}') = '[["key1",1],["key2",2]]' then proc passed else proc failed
+pln ObjectEntries('{"key1":1,"key2":2}') =##62$ '##91$["key1",1],["key2",2]##93$': #status$
+if ObjectGet('{"key":"value"}', "key") = "value" then proc passed else proc failed
+pln ObjectGet('{"key":"value"}', "key") =##62$ "value": #status$
+if ObjectKeys('{"key1":1,"key2":2}') = '["key1","key2"]' then proc passed else proc failed
+pln ObjectKeys('{"key1":1,"key2":2}') =##62$ '["key1","key2"]': #status$
+if ObjectSet("{}", "key", "value") = '{"key":"value"}' then proc passed else proc failed
+pln ObjectSet("{}", "key", "value") =##62$ '{"key":"value"}': #status$
+if ObjectSet('{"key":"value"}', "key", "new value") = '{"key":"new value"}' then proc passed else proc failed
+pln ObjectSet('{"key":"value"}', "key", "new value") =##62$ '{"key":"new value"}': #status$
+if ObjectValues('{"key1":1,"key2":"2"}') = '[1,"2"]' then proc passed else proc failed
+pln ObjectValues('{"key1":1,"key2":"2"}') =##62$ '[1,"2"]': #status$
+
 pln <h4>String</h4>
 if StringLeft("abcde", 3) = "abc" then proc passed else proc failed
 pln StringLeft("abcde", 3) =##62$ "abc": #status$

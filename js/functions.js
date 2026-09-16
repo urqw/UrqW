@@ -294,6 +294,115 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
     },
 
     /**
+     * Object Functions
+     */
+
+    // Deletes a key from an object.
+    objectdel(json, key) {
+        if (arguments.length !== 2) {
+            throw new Error('The objectdel() function takes 2 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                throw new Error('Invalid argument for objectdel() function: it must be object.');
+            }
+            delete parsed[key];
+            return JSON.stringify(parsed);
+        } catch (e) {
+            throw new Error(`Invalid argument for objecdel() function: it must be object. ${e}`);
+        }
+    },
+
+    // Returns an array of object key-value pairs.
+    objectentries(json) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectentries() function takes 1 argument.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                throw new Error('Invalid argument for objectentries() function: it must be object.');
+            }
+            var pairs = Object.entries(parsed);
+            return JSON.stringify(pairs);
+        } catch (e) {
+            throw new Error(`Invalid argument for objectentries() function: it must be object. ${e}`);
+        }
+    },
+
+    // Returns the value of a key from an object.
+    objectget(json, key) {
+        if (arguments.length !== 2) {
+            throw new Error('The objectget() function takes 2 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                throw new Error('Invalid argument for objectget() function: it must be object.');
+            }
+            var val = parsed[key];
+            if (typeof val !== 'string' && typeof val !== 'number') {
+                val = JSON.stringify(parsed);
+            }
+            return val;
+        } catch (e) {
+            throw new Error(`Invalid argument for objectget() function: it must be object. ${e}`);
+        }
+    },
+
+    // Returns an array of object keys.
+    objectkeys(json) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectkeys() function takes 1 argument.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                throw new Error('Invalid argument for objectkeys() function: it must be object.');
+            }
+            var keys = Object.keys(parsed);
+            return JSON.stringify(keys);
+        } catch (e) {
+            throw new Error(`Invalid argument for objectkeys() function: it must be object. ${e}`);
+        }
+    },
+
+    // Sets the value of a key in an object.
+    objectset(json, key, val) {
+        if (arguments.length !== 3) {
+            throw new Error('The objectset() function takes 3 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                throw new Error('Invalid argument for objectset() function: it must be object.');
+            }
+            parsed[key] = val;
+            return JSON.stringify(parsed);
+        } catch (e) {
+            throw new Error(`Invalid argument for objectset() function: it must be object. ${e}`);
+        }
+    },
+
+    // Returns an array of object values.
+    objectvalues(json) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectvalues() function takes 1 argument.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+                throw new Error('Invalid argument for objectvalues() function: it must be object.');
+            }
+            var values = Object.values(parsed);
+            return JSON.stringify(values);
+        } catch (e) {
+            throw new Error(`Invalid argument for objectvalues() function: it must be object. ${e}`);
+        }
+    },
+
+    /**
      * String Functions
      */
 
