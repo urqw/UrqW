@@ -473,16 +473,16 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
             throw new Error('The stringmid() function takes 2 or 3 arguments.');
         }
         str = String(str);
-        if (start < 0 || start >= str.length) {
+        if (start <= 0 || start > str.length) {
             return '';
             }
         if (arguments.length === 2) {
-            return str.slice(start);
+            return str.slice(start - 1);
         }
         if (count <= 0) {
             return '';
         }
-        return str.slice(start, start + count);
+        return str.slice(start - 1, start - 1 + count);
     },
 
     // TODO: stringregexp
