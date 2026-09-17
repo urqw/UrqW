@@ -116,7 +116,7 @@ var functions = {
         return Math.pow(base, exponent);
     },
 
-    // Returns a number rounded to a specified number of decimal places.
+    // Returns a number rounded to the specified number of decimal places.
     round(num, decimals = 0) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The round() function takes 1 or 2 arguments.');
@@ -169,7 +169,7 @@ var functions = {
      * Value and variable state check functions
      */
 
-    // Checks whether the value has the derived type array.
+    // Checks whether a value has the derived type array.
     isarray(val) {
         if (arguments.length !== 1) {
             throw new Error('The isarray() function takes 1 argument.');
@@ -185,7 +185,7 @@ var functions = {
         }
     },
 
-    // Checks whether the value has the derived type boolean.
+    // Checks whether a value has the derived type boolean.
     isboolean(val) {
         if (arguments.length !== 1) {
             throw new Error('The isboolean() function takes 1 argument.');
@@ -206,7 +206,7 @@ var functions = {
         return exists ? 1 : 0;
     },
 
-    // Checks whether the value has the primitive type number.
+    // Checks whether a value has the primitive type number.
     isnumber(val) {
         if (arguments.length !== 1) {
             throw new Error('The isnumber() function takes 1 argument.');
@@ -214,7 +214,7 @@ var functions = {
         return typeof val === 'number' ? 1 : 0;
     },
 
-    // Checks whether the value has the derived type object.
+    // Checks whether a value has the derived type object.
     isobject(val) {
         if (arguments.length !== 1) {
             throw new Error('The isobject() function takes 1 argument.');
@@ -230,7 +230,7 @@ var functions = {
         }
     },
 
-    // Checks whether the value has the primitive type string.
+    // Checks whether a value has the primitive type string.
     isstring(val) {
         if (arguments.length !== 1) {
             throw new Error('The isstring() function takes 1 argument.');
@@ -250,7 +250,7 @@ var functions = {
      * Object Functions
      */
 
-    // Deletes a key from an object.
+    // Deletes the key from the object.
     objectdel(json, key) {
         if (arguments.length !== 2) {
             throw new Error('The objectdel() function takes 2 arguments.');
@@ -296,7 +296,7 @@ var functions = {
         }
     },
 
-    // Returns the value of a key from an object.
+    // Returns a value of the key from the object.
     objectget(json, key) {
         if (arguments.length !== 2) {
             throw new Error('The objectget() function takes 2 arguments.');
@@ -333,7 +333,7 @@ var functions = {
         }
     },
 
-    // Sets the value of a key in an object.
+    // Sets the value of the key in the object.
     objectset(json, key, val) {
         if (arguments.length !== 3) {
             throw new Error('The objectset() function takes 3 arguments.');
@@ -373,7 +373,7 @@ var functions = {
 
     // TODO: stringinstr
 
-    // Returns a number of characters from the left-hand side of a string.
+    // Returns a number of characters from the left-hand side of the string.
     stringleft(str, count) {
         if (arguments.length !== 2) {
             throw new Error('The stringleft() function takes 2 arguments.');
@@ -388,7 +388,7 @@ var functions = {
         return str.slice(0, count);
     },
 
-    // Returns the number of characters in a string.
+    // Returns a number of characters in the string.
     stringlen(str) {
         if (arguments.length !== 1) {
             throw new Error('The stringlen() function takes 1 argument.');
@@ -396,7 +396,7 @@ var functions = {
         return String(str).length;
     },
 
-    // Converts a string to lowercase using locale-specific rules.
+    // Converts the string to lowercase using locale-specific rules.
     stringlocalelower(str, locale) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringlocalelower() function takes 1 or 2 arguments.');
@@ -410,7 +410,7 @@ var functions = {
         return String(str).toLocaleLowerCase(locale);
     },
 
-    // Converts a string to uppercase using locale-specific rules.
+    // Converts the string to uppercase using locale-specific rules.
     stringlocaleupper(str, locale) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringlocaleupper() function takes 1 or 2 arguments.');
@@ -424,7 +424,7 @@ var functions = {
         return String(str).toLocaleUpperCase(locale);
     },
 
-    // Converts a string to lowercase.
+    // Converts the string to lowercase.
     stringlower(str) {
         if (arguments.length !== 1) {
             throw new Error('The stringlower() function takes 1 argument.');
@@ -432,7 +432,7 @@ var functions = {
         return String(str).toLowerCase();
     },
 
-    // Extracts a number of characters from a string.
+    // Extracts a number of characters from the string.
     stringmid(str, start, count) {
         if (arguments.length < 2 || arguments.length > 3) {
             throw new Error('The stringmid() function takes 2 or 3 arguments.');
@@ -454,7 +454,7 @@ var functions = {
     // TODO: stringregexpreplace
     // TODO: stringreplace
 
-    // Returns a number of characters from the right-hand side of a string.
+    // Returns a number of characters from the right-hand side of the string.
     stringright(str, count) {
         if (arguments.length !== 2) {
             throw new Error('The stringright() function takes 2 arguments.');
@@ -469,7 +469,7 @@ var functions = {
         return str.slice(-count);
     },
 
-    // Splits up a string into substrings depending on the given delimiter.
+    // Splits up the string into substrings depending on the given delimiter.
     stringsplit(str, delimiter) {
         if (arguments.length !== 2) {
             throw new Error('The stringsplit() function takes 2 arguments.');
@@ -480,7 +480,7 @@ var functions = {
         return JSON.stringify(parts);
     },
 
-    // Trims whitespace characters or a number of characters from the beginning and end of a string.
+    // Trims whitespace characters or a number of characters from the beginning and end of the string.
     stringtrim(str, count) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringtrim() function takes 1 or 2 arguments.');
@@ -499,7 +499,7 @@ var functions = {
         return str.slice(count, len - count);
     },
 
-    // Trims either whitespace characters or a number of characters from the left hand side of a string.
+    // Trims either whitespace characters or a number of characters from the left hand side of the string.
     stringtrimleft(str, count) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringtrimleft() function takes 1 or 2 arguments.');
@@ -514,7 +514,7 @@ var functions = {
         return count >= str.length ? '' : str.slice(count);
     },
 
-    // Trims either whitespace characters or a number of characters from the right hand side of a string.
+    // Trims either whitespace characters or a number of characters from the right hand side of the string.
     stringtrimright(str, count) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringtrimright() function takes 1 or 2 arguments.');
@@ -529,7 +529,7 @@ var functions = {
         return count >= str.length ? '' : str.slice(0, str.length - count);
     },
 
-    // Converts a string to uppercase.
+    // Converts the string to uppercase.
     stringupper(str) {
         if (arguments.length !== 1) {
             throw new Error('The stringupper() function takes 1 argument.');
