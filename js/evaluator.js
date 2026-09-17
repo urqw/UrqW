@@ -329,7 +329,8 @@ function Expression(str) {
                 } catch (e) {
                     // If function throws an exception, set global error
                     setGlobalError(1, e.message);
-                    return 0;
+                    // The caller (DSL engine) should handle this exception if needed.
+                    throw e;
                 }
             }
             return Game.getVar(lower);
