@@ -126,12 +126,6 @@ function Expression(str) {
         return t;
     }
 
-    // Set global error flags via GlobalPlayer.setVar
-    function setGlobalError(code, msg) {
-        GlobalPlayer.setVar('error', code);
-        GlobalPlayer.setVar('error_desc', msg);
-    }
-
     // Parse logical OR (lowest precedence): A || B | or
     function parseLogicalOr() {
         var value = parseLogicalAnd();
@@ -364,4 +358,21 @@ function toBoolean(value) {
         (typeof value === 'number' && value !== 0) ||
         (typeof value === 'string' && value.length > 0)
     );
+}
+
+/**
+ * Set or clear global error flags in the variable store
+ * @param {number} code - Error code; 0 clears variables
+ * @param {string} [msg=''] - Error description message
+ * @returns {void}
+ */
+// Set global error flags via GlobalPlayer.setVar
+function setGlobalError(code, msg = '') {
+    if (code === 0) {
+        GlobalPlayer.varkill('error');
+        GlobalPlayer.varkill('error_desc');
+    } else {
+        GlobalPlayer.setVar('error', code);
+        GlobalPlayer.setVar('error_desc', msg);
+    }
 }
