@@ -134,6 +134,118 @@ var functions = {
     },
 
     /**
+     * Array Functions
+     */
+
+    // Adds the element to the array.
+    arrayadd(json, elem) {
+        if (arguments.length !== 2) {
+            throw new Error('The arrayadd() function takes 2 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (!Array.isArray(parsed)) {
+                throw new Error('Invalid argument #1 for function arrayadd(): it must be an array.');
+            }
+            parsed.push(elem);
+            return JSON.stringify(parsed);
+        } catch (e) {
+            throw new Error(`Invalid argument #1 for function arrayadd(): it must be an array. ${e}`);
+        }
+    },
+
+    // Deletes the element from the array by index.
+    arraydel(json, ind) {
+        if (arguments.length !== 2) {
+            throw new Error('The arraydel() function takes 2 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (!Array.isArray(parsed)) {
+                throw new Error('Invalid argument #1 for function arraydel(): it must be an array.');
+            }
+            if (typeof ind !== 'number' || !Number.isInteger(ind)) {
+                throw new Error('Invalid argument #2 for function arraydel(): it must be an integer index.');
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind <= 0 || ind > parsed.length) {
+                throw new Error('Invalid argument #2 for function arraydel(): index out of bounds.');
+            }
+            parsed.splice(ind - 1, 1);
+            return JSON.stringify(parsed);
+        } catch (e) {
+            throw new Error(`Invalid argument #1 for function arraydel(): it must be an array. ${e}`);
+        }
+    },
+
+    // Returns the element from the array by index.
+    arrayget(json, ind) {
+        if (arguments.length !== 2) {
+            throw new Error('The arrayget() function takes 2 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (!Array.isArray(parsed)) {
+                throw new Error('Invalid argument #1 for function arrayget(): it must be an array.');
+            }
+            if (typeof ind !== 'number' || !Number.isInteger(ind)) {
+                throw new Error('Invalid argument #2 for function arrayget(): it must be an integer index.');
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind <= 0 || ind > parsed.length) {
+                throw new Error('Invalid argument #2 for function arrayget(): index out of bounds.');
+            }
+            var val = parsed[ind - 1];
+            if (typeof val !== 'string' && typeof val !== 'number') {
+                val = JSON.stringify(val);
+            }
+            return val;
+        } catch (e) {
+            throw new Error(`Invalid argument #1 for function arrayget(): it must be an array. ${e}`);
+        }
+    },
+
+    // Returns the number of elements in the array.
+    arraylen(json) {
+        if (arguments.length !== 1) {
+            throw new Error('The arraylen() function takes 1 argument.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (!Array.isArray(parsed)) {
+                throw new Error('Invalid argument #1 for function arraylen(): it must be an array.');
+            }
+            return parsed.length;
+        } catch (e) {
+            throw new Error(`Invalid argument #1 for function arraylen(): it must be an array. ${e}`);
+        }
+    },
+
+    // Sets the value of the element in the array by index.
+    arrayset(json, ind, val) {
+        if (arguments.length !== 3) {
+            throw new Error('The arrayset() function takes 3 arguments.');
+        }
+        try {
+            var parsed = JSON.parse(json);
+            if (!Array.isArray(parsed)) {
+                throw new Error('Invalid argument #1 for function arrayset(): it must be an array.');
+            }
+            if (typeof ind !== 'number' || !Number.isInteger(ind)) {
+                throw new Error('Invalid argument #2 for function arrayset(): it must be an integer index.');
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind <= 0 || ind > parsed.length) {
+                throw new Error('Invalid argument #2 for function arrayset(): index out of bounds.');
+            }
+            parsed[ind - 1] = val;
+            return JSON.stringify(parsed);
+        } catch (e) {
+            throw new Error(`Invalid argument #1 for function arrayset(): it must be an array. ${e}`);
+        }
+    },
+
+    /**
      * Type Conversion Functions
      */
 
@@ -199,7 +311,7 @@ var functions = {
             throw new Error('The isdeclared() function takes 1 argument.');
         }
         if (typeof varName !== 'string') {
-            throw new Error('Invalid argument for isdeclared() function: it must be a string.');
+            throw new Error('Invalid argument #1 for function isdeclared(): it must be a string.');
         }
         varName = varName.toLowerCase().trim();
         var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
@@ -258,7 +370,7 @@ var functions = {
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectdel() function: it must be an object.');
+                throw new Error('Invalid argument #1 for function objectdel(): it must be an object.');
             }
             var exists = Object.prototype.hasOwnProperty.call(parsed, key);
             var deleted = delete parsed[key];
@@ -275,7 +387,7 @@ var functions = {
             }
             return JSON.stringify(parsed);
         } catch (e) {
-            throw new Error(`Invalid argument for objectdel() function: it must be an object. ${e}`);
+            throw new Error(`Invalid argument #1 for function objectdel(): it must be an object. ${e}`);
         }
     },
 
@@ -287,12 +399,12 @@ var functions = {
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectentries() function: it must be an object.');
+                throw new Error('Invalid argument #1 for function objectentries(): it must be an object.');
             }
             var pairs = Object.entries(parsed);
             return JSON.stringify(pairs);
         } catch (e) {
-            throw new Error(`Invalid argument for objectentries() function: it must be an object. ${e}`);
+            throw new Error(`Invalid argument #1 for function objectentries(): it must be an object. ${e}`);
         }
     },
 
@@ -304,7 +416,7 @@ var functions = {
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectget() function: it must be an object.');
+                throw new Error('Invalid argument #1 for function objectget(): it must be an object.');
             }
             var val = parsed[key];
             if (typeof val !== 'string' && typeof val !== 'number') {
@@ -312,7 +424,7 @@ var functions = {
             }
             return val;
         } catch (e) {
-            throw new Error(`Invalid argument for objectget() function: it must be an object. ${e}`);
+            throw new Error(`Invalid argument #1 for function objectget(): it must be an object. ${e}`);
         }
     },
 
@@ -324,12 +436,12 @@ var functions = {
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectkeys() function: it must be an object.');
+                throw new Error('Invalid argument #1 for function objectkeys(): it must be an object.');
             }
             var keys = Object.keys(parsed);
             return JSON.stringify(keys);
         } catch (e) {
-            throw new Error(`Invalid argument for objectkeys() function: it must be an object. ${e}`);
+            throw new Error(`Invalid argument #1 for function objectkeys(): it must be an object. ${e}`);
         }
     },
 
@@ -341,12 +453,12 @@ var functions = {
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectset() function: it must be an object.');
+                throw new Error('Invalid argument #1 for function objectset(): it must be an object.');
             }
             parsed[key] = val;
             return JSON.stringify(parsed);
         } catch (e) {
-            throw new Error(`Invalid argument for objectset() function: it must be an object. ${e}`);
+            throw new Error(`Invalid argument #1 for function objectset(): it must be an object. ${e}`);
         }
     },
 
@@ -358,12 +470,12 @@ var functions = {
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectvalues() function: it must be an object.');
+                throw new Error('Invalid argument #1 for function objectvalues(): it must be an object.');
             }
             var values = Object.values(parsed);
             return JSON.stringify(values);
         } catch (e) {
-            throw new Error(`Invalid argument for objectvalues() function: it must be an object. ${e}`);
+            throw new Error(`Invalid argument #1 for function objectvalues(): it must be an object. ${e}`);
         }
     },
 
