@@ -318,7 +318,9 @@ function Expression(str) {
                     // If function executes successfully, reset error flags.
                     // This overrides any errors that occurred in argument evaluation,
                     // ensuring the final state reflects the last successful call.
-                    setGlobalError(0, ''); 
+                    if (Game.getVar('error') === 0) {
+                        setGlobalError(0, '');
+                    }
                     
                     return result;
                 } catch (e) {
