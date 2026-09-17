@@ -316,8 +316,9 @@ function Expression(str) {
                     
                     // Handle NaN return values explicitly
                     if (typeof result === 'number' && isNaN(result)) {
-                        setGlobalError(1, "Function '" + name + "' returned NaN");
-                        return 0;
+                        var errorDesc = `The ${lower}() function returned NaN. The call was likely made with invalid arguments: ${String(args)}`;
+                        setGlobalError(1, errorDesc);
+                        throw new Error(errorDesc);
                     }
 
                     // If function executes successfully, reset error flags.
