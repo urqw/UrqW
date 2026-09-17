@@ -5,6 +5,15 @@
  */
 
 var functions = {
+    /**
+     * If the function's (method's) result is NaN,
+     * the general expression evaluator treats this as an error,
+     * so there is no need to handle the NaN result
+     * within the function implementation itself.
+     * Only arity errors and function-specific errors
+     * should be handled inside the functions.
+     */
+
     // All method names must be in lowercase
 
     /**
@@ -16,11 +25,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The abs() function takes 1 argument.');
         }
-        var result = Math.abs(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for abs() function: ${num}`);
-        }
-        return result;
+        return Math.abs(num);
     },
 
     // Returns a number rounded up to the next integer.
@@ -28,11 +33,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The ceil() function takes 1 argument.');
         }
-        var result = Math.ceil(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for ceil() function: ${num}`);
-        }
-        return result;
+        return Math.ceil(num);
     },
 
     // Calculates e to the power of a number.
@@ -40,11 +41,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The exp() function takes 1 argument.');
         }
-        var result = Math.exp(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for exp() function: ${num}`);
-        }
-        return result;
+        return Math.exp(num);
     },
 
     // Returns a number rounded down to the closest integer.
@@ -52,11 +49,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The floor() function takes 1 argument.');
         }
-        var result = Math.floor(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for floor() function: ${num}`);
-        }
-        return result;
+        return Math.floor(num);
     },
 
     // Returns the integer part of a number by removing any fractional digits.
@@ -64,11 +57,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The int() function takes 1 argument.');
         }
-        var result = Math.trunc(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for int() function: ${num}`);
-        }
-        return result;
+        return Math.trunc(num);
     },
 
     // Inverts the Boolean representation of a value.
@@ -76,8 +65,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The invert() function takes 1 argument.');
         }
-        var result = !toBoolean(val) ? 1 : 0;
-        return result;
+        return !toBoolean(val) ? 1 : 0;
     },
 
     // Calculates the natural logarithm of a number.
@@ -85,11 +73,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The log() function takes 1 argument.');
         }
-        var result = Math.log(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for log() function: ${num}`);
-        }
-        return result;
+        return Math.log(num);
     },
 
     // Calculates the common (decimal) logarithm of a number.
@@ -97,11 +81,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The log10() function takes 1 argument.');
         }
-        var result = Math.log10(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for log10() function: ${num}`);
-        }
-        return result;
+        return Math.log10(num);
     },
 
     // Calculates the binary logarithm of a number.
@@ -109,11 +89,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The log2() function takes 1 argument.');
         }
-        var result = Math.log2(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for log2() function: ${num}`);
-        }
-        return result;
+        return Math.log2(num);
     },
 
     // Returns the largest of the passed numbers.
@@ -121,11 +97,7 @@ var functions = {
         if (args.length === 0) {
             throw new Error('The max() function requires at least 1 argument.');
         }
-        var result = Math.max(...args);
-        if (Number.isNaN(result)) {
-            throw new Error('Invalid arguments for max() function: all must be numbers');
-        }
-        return result;
+        return Math.max(...args);
     },
 
     // Returns the smallest of the passed numbers.
@@ -133,11 +105,7 @@ var functions = {
         if (args.length === 0) {
             throw new Error('The min() function requires at least 1 argument.');
         }
-        var result = Math.min(...args);
-        if (Number.isNaN(result)) {
-            throw new Error('Invalid arguments for min() function: all must be numbers');
-        }
-        return result;
+        return Math.min(...args);
     },
 
     // Calculates a number to a power.
@@ -145,14 +113,7 @@ var functions = {
         if (arguments.length !== 2) {
             throw new Error('The pow() function takes 2 arguments.');
         }
-        var result = Math.pow(base, exponent);
-        if (Number.isNaN(result)) {
-            throw new Error(`Result of pow(${base}, ${exponent}) is NaN`);
-        }
-        if (!Number.isFinite(result)) {
-            throw new Error(`Result of pow(${base}, ${exponent}) is too large (Infinity)`);
-        }
-        return result;
+        return Math.pow(base, exponent);
     },
 
     // Returns a number rounded to a specified number of decimal places.
@@ -161,11 +122,7 @@ var functions = {
             throw new Error('The round() function takes 1 or 2 arguments.');
         }
         var factor = 10 ** decimals;
-        var result = Math.round(num * factor) / factor;
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid arguments for round() function: ${num} and ${decimals}`);
-        }
-        return result;
+        return Math.round(num * factor) / factor;
     },
 
     // Calculates the square-root of a number.
@@ -173,11 +130,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The sqrt() function takes 1 argument.');
         }
-        var result = Math.sqrt(num);
-        if (Number.isNaN(result)) {
-            throw new Error(`Invalid argument for sqrt() function: ${num}`);
-        }
-        return result;
+        return Math.sqrt(num);
     },
 
     /**
@@ -246,10 +199,10 @@ var functions = {
             throw new Error('The isdeclared() function takes 1 argument.');
         }
         if (typeof varName !== 'string') {
-            throw new Error('Invalid argument for isdeclared() function: it must be string.');
+            throw new Error('Invalid argument for isdeclared() function: it must be a string.');
         }
         varName = varName.toLowerCase().trim();
-var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
+        var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         return exists ? 1 : 0;
     },
 
@@ -305,12 +258,24 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectdel() function: it must be object.');
+                throw new Error('Invalid argument for objectdel() function: it must be an object.');
             }
-            delete parsed[key];
+            var exists = Object.prototype.hasOwnProperty.call(parsed, key);
+            var deleted = delete parsed[key];
+            var errorCode, errorDesc;
+            if (!exists) {
+                errorCode = 1;
+                errorDesc = `The key '${key}' does not exist in the object.`;
+            } else if (!deleted) {
+                errorCode = 1;
+                errorDesc = `Failed to delete the key '${key}'.`;
+            }
+            if (errorCode) {
+                setGlobalError(errorCode, errorDesc);
+            }
             return JSON.stringify(parsed);
         } catch (e) {
-            throw new Error(`Invalid argument for objecdel() function: it must be object. ${e}`);
+            throw new Error(`Invalid argument for objectdel() function: it must be an object. ${e}`);
         }
     },
 
@@ -322,12 +287,12 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectentries() function: it must be object.');
+                throw new Error('Invalid argument for objectentries() function: it must be an object.');
             }
             var pairs = Object.entries(parsed);
             return JSON.stringify(pairs);
         } catch (e) {
-            throw new Error(`Invalid argument for objectentries() function: it must be object. ${e}`);
+            throw new Error(`Invalid argument for objectentries() function: it must be an object. ${e}`);
         }
     },
 
@@ -339,15 +304,15 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectget() function: it must be object.');
+                throw new Error('Invalid argument for objectget() function: it must be an object.');
             }
             var val = parsed[key];
             if (typeof val !== 'string' && typeof val !== 'number') {
-                val = JSON.stringify(parsed);
+                val = JSON.stringify(val);
             }
             return val;
         } catch (e) {
-            throw new Error(`Invalid argument for objectget() function: it must be object. ${e}`);
+            throw new Error(`Invalid argument for objectget() function: it must be an object. ${e}`);
         }
     },
 
@@ -359,12 +324,12 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectkeys() function: it must be object.');
+                throw new Error('Invalid argument for objectkeys() function: it must be an object.');
             }
             var keys = Object.keys(parsed);
             return JSON.stringify(keys);
         } catch (e) {
-            throw new Error(`Invalid argument for objectkeys() function: it must be object. ${e}`);
+            throw new Error(`Invalid argument for objectkeys() function: it must be an object. ${e}`);
         }
     },
 
@@ -376,12 +341,12 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectset() function: it must be object.');
+                throw new Error('Invalid argument for objectset() function: it must be an object.');
             }
             parsed[key] = val;
             return JSON.stringify(parsed);
         } catch (e) {
-            throw new Error(`Invalid argument for objectset() function: it must be object. ${e}`);
+            throw new Error(`Invalid argument for objectset() function: it must be an object. ${e}`);
         }
     },
 
@@ -393,12 +358,12 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         try {
             var parsed = JSON.parse(json);
             if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument for objectvalues() function: it must be object.');
+                throw new Error('Invalid argument for objectvalues() function: it must be an object.');
             }
             var values = Object.values(parsed);
             return JSON.stringify(values);
         } catch (e) {
-            throw new Error(`Invalid argument for objectvalues() function: it must be object. ${e}`);
+            throw new Error(`Invalid argument for objectvalues() function: it must be an object. ${e}`);
         }
     },
 
@@ -437,7 +402,7 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
             throw new Error('The stringlocalelower() function takes 1 or 2 arguments.');
         }
         if (arguments.length === 1) {
-            locale = Game.getVar('urqw_game_lang');;
+            locale = Game.getVar('urqw_game_lang');
             if (!locale) {
                 locale = document.documentElement.lang;
             }
@@ -451,7 +416,7 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
             throw new Error('The stringlocaleupper() function takes 1 or 2 arguments.');
         }
         if (arguments.length === 1) {
-            locale = Game.getVar('urqw_game_lang');;
+            locale = Game.getVar('urqw_game_lang');
             if (!locale) {
                 locale = document.documentElement.lang;
             }
@@ -469,7 +434,7 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
 
     // Extracts a number of characters from a string.
     stringmid(str, start, count) {
-        if (arguments.length < 2 && arguments.length > 3) {
+        if (arguments.length < 2 || arguments.length > 3) {
             throw new Error('The stringmid() function takes 2 or 3 arguments.');
         }
         str = String(str);
@@ -534,7 +499,7 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         return str.slice(count, len - count);
     },
 
-    // Trims either whitespace characters or a number of characters from the right hand side of a string.
+    // Trims either whitespace characters or a number of characters from the left hand side of a string.
     stringtrimleft(str, count) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringtrimleft() function takes 1 or 2 arguments.');
@@ -549,7 +514,7 @@ var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
         return count >= str.length ? '' : str.slice(count);
     },
 
-    // Trims either whitespace characters or a number of characters from the left hand side of a string.
+    // Trims either whitespace characters or a number of characters from the right hand side of a string.
     stringtrimright(str, count) {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The stringtrimright() function takes 1 or 2 arguments.');

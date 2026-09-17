@@ -441,8 +441,12 @@ if TypeOf(1 + "1") = "string" then proc passed else proc failed
 pln TypeOf(1 + "1") =##62$ "string": #status$
 
 pln <h4>Object</h4>
-if ObjectDel('{"key1":1,"key2":2}', "key1") = '{"key2":2}' then proc passed else proc failed
+error = 1
+if ObjectDel('{"key1":1,"key2":2}', "key1") = '{"key2":2}' and not error then proc passed else proc failed
 pln ObjectDel('{"key1":1,"key2":2}', "key1") =##62$ '{"key2":2}': #status$
+error = 0
+if ObjectDel('{"key1":1}', "key2") = '{"key1":1}' and error then proc passed else proc failed
+pln ObjectDel('{"key1":1}', "key2") =##62$ '{"key1":1}' and error = 1: #status$
 if ObjectEntries('{"key1":1,"key2":2}') = '[["key1",1],["key2",2]]' then proc passed else proc failed
 pln ObjectEntries('{"key1":1,"key2":2}') =##62$ '##91$["key1",1],["key2",2]##93$': #status$
 if ObjectGet('{"key":"value"}', "key") = "value" then proc passed else proc failed
