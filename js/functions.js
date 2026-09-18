@@ -318,6 +318,14 @@ var functions = {
         return exists ? 1 : 0;
     },
 
+    // Checks whether a value is an integer.
+    isinteger(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isinteger() function takes 1 argument.');
+        }
+        return Number.isInteger(val) ? 1 : 0;
+    },
+
     // Checks whether a value has the primitive type number.
     isnumber(val) {
         if (arguments.length !== 1) {
