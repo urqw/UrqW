@@ -490,6 +490,9 @@ var functions = {
         if (arguments.length !== 2) {
             throw new Error('The stringleft() function takes 2 arguments.');
         }
+        if (typeof count !== 'number' || !Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringleft(): it must be an integer.');
+        }
         if (count <= 0) {
             return '';
         }
@@ -549,12 +552,18 @@ var functions = {
         if (arguments.length < 2 || arguments.length > 3) {
             throw new Error('The stringmid() function takes 2 or 3 arguments.');
         }
+        if (typeof start !== 'number' || !Number.isInteger(start)) {
+            throw new Error('Invalid argument #2 for function stringmid(): it must be an integer.');
+        }
         str = String(str);
         if (start <= 0 || start > str.length) {
             return '';
             }
         if (arguments.length === 2) {
             return str.slice(start - 1);
+        }
+        if (typeof count !== 'number' || !Number.isInteger(count)) {
+            throw new Error('Invalid argument #3 for function stringmid(): it must be an integer.');
         }
         if (count <= 0) {
             return '';
@@ -570,6 +579,9 @@ var functions = {
     stringright(str, count) {
         if (arguments.length !== 2) {
             throw new Error('The stringright() function takes 2 arguments.');
+        }
+        if (typeof count !== 'number' || !Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringright(): it must be an integer.');
         }
         if (count <= 0) {
             return '';
@@ -601,6 +613,9 @@ var functions = {
         if (arguments.length === 1) {
             return str.trim();
         }
+        if (typeof count !== 'number' || !Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringtrim(): it must be an integer.');
+        }
         if (count <= 0) {
             return str;
         }
@@ -620,6 +635,9 @@ var functions = {
         if (arguments.length === 1) {
             return str.replace(/^\s+/, '');
         }
+        if (typeof count !== 'number' || !Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringtrimleft(): it must be an integer.');
+        }
         if (count <= 0) {
             return str;
         }
@@ -634,6 +652,9 @@ var functions = {
         str = String(str);
         if (arguments.length === 1) {
             return str.replace(/\s+$/, '');
+        }
+        if (typeof count !== 'number' || !Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringtrimright(): it must be an integer.');
         }
         if (count <= 0) {
             return str;
