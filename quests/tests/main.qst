@@ -404,6 +404,19 @@ pln Number(" 5 ") =##62$ 5: #status$
 if String(2.5) = "2.5" then proc passed else proc failed
 pln String(2.5) =##62$ "2.5": #status$
 
+pln <h4>File</h4>
+if FileContent("test.txt") = "test 🧪" then proc passed else proc failed
+pln FileContent("test.txt") =##62$ "test 🧪": #status$
+if FileContent("non-existent_file.txt") = "" and error then proc passed else proc failed
+pln FileContent("non-existent_file.txt") =##62$ "" and error =##62$ true: #status$
+if FileExists("test.txt") = 1 then proc passed else proc failed
+pln FileExists("test.txt") =##62$ 1: #status$
+if FileExists("non-existent_file.txt") = 0 then proc passed else proc failed
+pln FileExists("non-existent_file.txt") =##62$ 0: #status$
+url = FileURL("test.txt")
+if StringLen(url) >0 then proc passed else proc failed
+pln StringLen(FileURL("test.txt")) ##62$ 0 =##62$ true (URL: #url$): #status$
+
 pln <h4>Checking</h4>
 declared_variable = 1
 pln let declared_variable = #declared_variable$
@@ -450,7 +463,7 @@ if ObjectDel('{"key1":1,"key2":2}', "key1") = '{"key2":2}' and not error then pr
 pln ObjectDel('{"key1":1,"key2":2}', "key1") =##62$ '{"key2":2}': #status$
 error = 0
 if ObjectDel('{"key1":1}', "key2") = '{"key1":1}' and error then proc passed else proc failed
-pln ObjectDel('{"key1":1}', "key2") =##62$ '{"key1":1}' and error = 1: #status$
+pln ObjectDel('{"key1":1}', "key2") =##62$ '{"key1":1}' and error =##62$ true: #status$
 if ObjectEntries('{"key1":1,"key2":2}') = '[["key1",1],["key2",2]]' then proc passed else proc failed
 pln ObjectEntries('{"key1":1,"key2":2}') =##62$ '##91$["key1",1],["key2",2]##93$': #status$
 if ObjectGet('{"key":"value"}', "key") = "value" then proc passed else proc failed

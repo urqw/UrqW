@@ -278,6 +278,94 @@ var functions = {
     },
 
     /**
+     * File Functions
+     */
+
+    // Returns the text content of a file from a game package.
+    filecontent(filePath) {
+        if (arguments.length !== 1) {
+            throw new Error('The filecontent() function takes 1 argument.');
+        }
+        var result = '';
+        var errorDesc;
+        filePath = String(filePath);
+        if (filePath) {
+            var fileURL = getGameFileURL(normalizeInternalPath(filePath));
+            if (fileURL) {
+                $.ajax({
+                    url: fileURL,
+                    method: 'GET',
+                    dataType: 'text',
+                    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+                    async: false,
+                    success: function(data) {
+                        result = data;
+                    },
+                    error: function(xhr, status, error) {
+                        errorDesc = error;
+                    }
+                });
+            } else {
+                errorDesc = 'File not found.';
+            }
+        } else {
+            errorDesc = 'The file path is empty.';
+        }
+        if (errorDesc) {
+            setGlobalError(1, errorDesc);
+        }
+        return result;
+},
+
+    // Checks if a file exists in a game package.
+    fileexists(filePath) {
+        if (arguments.length !== 1) {
+            throw new Error('The fileexists() function takes 1 argument.');
+        }
+        filePath = String(filePath);
+        if (!filePath) {
+            setGlobalError(1, 'The file path is empty.');
+            return 0;
+        }
+        var fileURL = getGameFileURL(normalizeInternalPath(filePath));
+        if (!fileURL) {
+            return 0;
+        }
+        var existence = false;
+            if (files === null) {
+            $.ajax({
+                url: fileURL,
+                type: 'HEAD',
+                async: false,
+                success: function() {
+                    existence = true;
+                },
+                error: function(xhr, status, error) {
+                    existence = false;
+                }
+            });
+        } else {
+            existence = true;
+        }
+        return existence ? 1 : 0;
+    },
+
+    // Returns the relative URL of a file from a game package.
+    fileurl(filePath) {
+        if (arguments.length !== 1) {
+            throw new Error('The fileurl() function takes 1 argument.');
+        }
+        filePath = String(filePath);
+        var result;
+        if (filePath) {
+            result = getGameFileURL(normalizeInternalPath(filePath));
+        } else {
+            setGlobalError(1, 'The file path is empty.');
+        }
+        return result ? result : '';
+    },
+
+    /**
      * Value and variable state check functions
      */
 
