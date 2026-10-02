@@ -11,6 +11,7 @@ pln These are tests to ensure the UrqW engine is working correctly.
 invkill
 varkill
 btn operators, Operators
+btn functions, Functions
 btn constructs, System constructs
 btn ui, User interface
 end
@@ -309,6 +310,262 @@ end
 :operators_goto
 x = x + 1
 if x < 5 then goto operators_goto
+end
+
+
+:functions
+pln <h3>Functions</h3>
+pln These are automatic tests of programming language built-in functions.
+pln All tests must be passed (green).
+
+pln <h4>Mathematical</h4>
+if Abs(-5) = 5 then proc passed else proc failed
+pln Abs(-5) =##62$ 5: #status$
+if Ceil(2) = 2 then proc passed else proc failed
+pln Ceil(2) =##62$ 2: #status$
+if Ceil(2.1) = 3 then proc passed else proc failed
+pln Ceil(2.1) =##62$ 3: #status$
+if Exp(0) = 1 then proc passed else proc failed
+pln Exp(0) =##62$ 1: #status$
+if Floor(2) = 2 then proc passed else proc failed
+pln Floor(2) =##62$ 2: #status$
+if Floor(2.9) = 2 then proc passed else proc failed
+pln Floor(2.9) =##62$ 2: #status$
+if Int(2.3) = 2 then proc passed else proc failed
+pln Int(2.3) =##62$ 2: #status$
+if Invert(0) = 1 then proc passed else proc failed
+pln Invert(0) =##62$ 1: #status$
+if Invert(1) = 0 then proc passed else proc failed
+pln Invert(1) =##62$ 0: #status$
+if Invert("hello") = 0 then proc passed else proc failed
+pln Invert("hello") =##62$ 0: #status$
+if Invert("") = 1 then proc passed else proc failed
+pln Invert("") =##62$ 1: #status$
+if Invert(5) = 0 then proc passed else proc failed
+pln Invert(5) =##62$ 0: #status$
+if Invert(-5) = 0 then proc passed else proc failed
+pln Invert(-5) =##62$ 0: #status$
+if Log(1) = 0 then proc passed else proc failed
+pln Log(1) =##62$ 0: #status$
+if Log(Exp(3)) = 3 then proc passed else proc failed
+pln Log(Exp(3)) =##62$ 3: #status$
+if Log10(100) = 2 then proc passed else proc failed
+pln Log10(100) =##62$ 2: #status$
+if Log2(8) = 3 then proc passed else proc failed
+pln Log2(8) =##62$ 3: #status$
+if Max(1,2 ,3, 4 , 5) = 5 then proc passed else proc failed
+pln Max(1,2 ,3, 4 , 5) =##62$ 5: #status$
+if Min(1, 2, -3, 4, 5) = -3 then proc passed else proc failed
+pln Min(1, 2, -3, 4, 5) =##62$ -3: #status$
+if Pow(3, 4) = 81 then proc passed else proc failed
+pln Pow(3, 4) =##62$ 81: #status$
+if Round(2.5) = 3 then proc passed else proc failed
+pln Round(2.5) =##62$ 3: #status$
+if Round(2.125, 2) = 2.13 then proc passed else proc failed
+pln Round(2.125, 2) =##62$ 2.13: #status$
+if Sqrt(144) = 12 then proc passed else proc failed
+pln Sqrt(144) =##62$ 12: #status$
+
+pln <h4>Array</h4>
+if ArrayAdd('[1,2]', 3) = '[1,2,3]' then proc passed else proc failed
+pln ArrayAdd('[1,2]', 3) =##62$ '[1,2,3]': #status$
+if ArrayDel('[1,2,3]', 2) = '[1,3]' then proc passed else proc failed
+pln ArrayDel('[1,2,3]', 2) = '[1,3]': #status$
+if ArrayGet('[1,2,3]', 2) = 2 then proc passed else proc failed
+pln ArrayGet('[1,2,3]', 2) =##62$ 2: #status$
+if ArrayLen('[1,2,3]') = 3 then proc passed else proc failed
+pln ArrayLen('[1,2,3]') =##62$ 3: #status$
+if ArraySet('[1,2,3]', 2, 'two') = '[1,"two",3]' then proc passed else proc failed
+pln ArraySet('[1,2,3]', 2, 'two') =##62$ '[1,"two",3]': #status$
+
+pln <h4>Type Conversion</h4>
+if Boolean(5) = 1 then proc passed else proc failed
+pln Boolean(5) =##62$ 1: #status$
+if Boolean(-5) = 1 then proc passed else proc failed
+pln Boolean(-5) =##62$ 1: #status$
+if Boolean(0) = 0 then proc passed else proc failed
+pln Boolean(0) =##62$ 0: #status$
+if Boolean("abc") = 1 then proc passed else proc failed
+pln Boolean("abc") =##62$ 1: #status$
+if Boolean("") = 0 then proc passed else proc failed
+pln Boolean("") =##62$ 0: #status$
+if Number("2.5") = 2.5 then proc passed else proc failed
+pln Number("2.5") =##62$ 2.5: #status$
+if Number("2,5") = 0 then proc passed else proc failed
+pln Number("2,5") =##62$ 0: #status$
+if Number("abc") = 0 then proc passed else proc failed
+pln Number("abc") =##62$ 0: #status$
+if Number(" ") = 0 then proc passed else proc failed
+pln Number(" ") =##62$ 0: #status$
+if Number("") = 0 then proc passed else proc failed
+pln Number("") =##62$ 0: #status$
+if Number(" 5 ") = 5 then proc passed else proc failed
+pln Number(" 5 ") =##62$ 5: #status$
+if String(2.5) = "2.5" then proc passed else proc failed
+pln String(2.5) =##62$ "2.5": #status$
+
+pln <h4>File</h4>
+if FileContent("test.txt") = "test 🧪" then proc passed else proc failed
+pln FileContent("test.txt") =##62$ "test 🧪": #status$
+if FileContent("non-existent_file.txt") = "" and error then proc passed else proc failed
+pln FileContent("non-existent_file.txt") =##62$ "" and error =##62$ true: #status$
+if FileExists("test.txt") = 1 then proc passed else proc failed
+pln FileExists("test.txt") =##62$ 1: #status$
+if FileExists("non-existent_file.txt") = 0 then proc passed else proc failed
+pln FileExists("non-existent_file.txt") =##62$ 0: #status$
+url = FileURL("test.txt")
+if StringLen(url) >0 then proc passed else proc failed
+pln StringLen(FileURL("test.txt")) ##62$ 0 =##62$ true (URL: #url$): #status$
+
+pln <h4>Checking</h4>
+declared_variable = 1
+pln let declared_variable = #declared_variable$
+if IsArray('[1, "two"]') = 1 then proc passed else proc failed
+pln IsArray('[1, "two"]') =##62$ 1: #status$
+if IsBoolean(1) then proc passed else proc failed
+pln IsBoolean(1) =##62$ 1: #status$
+if IsBoolean("1") = 0 then proc passed else proc failed
+pln IsBoolean("1") =##62$ 0: #status$
+if IsDeclared("declared_variable") = 1 then proc passed else proc failed
+pln IsDeclared("declared_variable") =##62$ 1: #status$
+if IsDeclared("  DeClArEd_VaRiAbLe  ") = 1 then proc passed else proc failed
+pln IsDeclared("  DeClArEd_VaRiAbLe  ") =##62$ 1: #status$
+if IsDeclared("undeclared variable") = 0 then proc passed else proc failed
+pln IsDeclared("undeclared_variable") =##62$ 0: #status$
+if IsInteger(3) = 1 then proc passed else proc failed
+pln IsInteger(3) =##62$ 1: #status$
+if IsInteger(2.5) = 0 then proc passed else proc failed
+pln IsInteger(2.5) =##62$ 0: #status$
+if IsNumber(12.3) = 1 then proc passed else proc failed
+pln IsNumber(12.3) =##62$ 1: #status$
+if IsNumber("1") = 0 then proc passed else proc failed
+pln IsNumber("1") =##62$ 0: #status$
+if IsNumber(1 + "1") = 0 then proc passed else proc failed
+pln IsNumber(1 + "1") =##62$ 0: #status$
+if IsObject('{"one": 1}') = 1 then proc passed else proc failed
+pln IsObject('{"one": 1}') =##62$ 1: #status$
+if IsObject('[1, "two"]') = 0 then proc passed else proc failed
+pln IsObject('[1, "two"]') =##62$ 0: #status$
+if IsString("abc") = 1 then proc passed else proc failed
+pln IsString("abc") =##62$ 1: #status$
+if IsString(1 + "1") = 1 then proc passed else proc failed
+pln IsString(1 + "1") =##62$ 1: #status$
+if TypeOf(2.5) = "number" then proc passed else proc failed
+pln TypeOf(2.5) =##62$ "number": #status$
+if TypeOf(declared_variable) = "number" then proc passed else proc failed
+pln TypeOf(declared_variable) =##62$ "number": #status$
+if TypeOf(1 + "1") = "string" then proc passed else proc failed
+pln TypeOf(1 + "1") =##62$ "string": #status$
+
+pln <h4>Object</h4>
+error = 1
+if ObjectDel('{"key1":1,"key2":2}', "key1") = '{"key2":2}' and not error then proc passed else proc failed
+pln ObjectDel('{"key1":1,"key2":2}', "key1") =##62$ '{"key2":2}': #status$
+error = 0
+if ObjectDel('{"key1":1}', "key2") = '{"key1":1}' and error then proc passed else proc failed
+pln ObjectDel('{"key1":1}', "key2") =##62$ '{"key1":1}' and error =##62$ true: #status$
+if ObjectEntries('{"key1":1,"key2":2}') = '[["key1",1],["key2",2]]' then proc passed else proc failed
+pln ObjectEntries('{"key1":1,"key2":2}') =##62$ '##91$["key1",1],["key2",2]##93$': #status$
+if ObjectGet('{"key":"value"}', "key") = "value" then proc passed else proc failed
+pln ObjectGet('{"key":"value"}', "key") =##62$ "value": #status$
+if ObjectKeys('{"key1":1,"key2":2}') = '["key1","key2"]' then proc passed else proc failed
+pln ObjectKeys('{"key1":1,"key2":2}') =##62$ '["key1","key2"]': #status$
+if ObjectSet("{}", "key", "value") = '{"key":"value"}' then proc passed else proc failed
+pln ObjectSet("{}", "key", "value") =##62$ '{"key":"value"}': #status$
+if ObjectSet('{"key":"value"}', "key", "new value") = '{"key":"new value"}' then proc passed else proc failed
+pln ObjectSet('{"key":"value"}', "key", "new value") =##62$ '{"key":"new value"}': #status$
+if ObjectValues('{"key1":1,"key2":"2"}') = '[1,"2"]' then proc passed else proc failed
+pln ObjectValues('{"key1":1,"key2":"2"}') =##62$ '[1,"2"]': #status$
+
+pln <h4>String</h4>
+if StringLeft("abcde", 3) = "abc" then proc passed else proc failed
+pln StringLeft("abcde", 3) =##62$ "abc": #status$
+if StringLeft("abcde", -1) = "" then proc passed else proc failed
+pln StringLeft("abcde", -1) =##62$ "": #status$
+if StringLeft("abcde", 7) = "abcde" then proc passed else proc failed
+pln StringLeft("abcde", 7) =##62$ "abcde": #status$
+if StringLen("abcde") = 5 then proc passed else proc failed
+pln StringLen("abcde") =##62$ 5: #status$
+if StringLen(123) = 3 then proc passed else proc failed
+pln StringLen(123) =##62$ 3: #status$
+if StringLocaleLower("İSTANBUL", "tr") = "istanbul" then proc passed else proc failed
+pln StringLocaleLower("İSTANBUL", "tr") =##62$ "istanbul": #status$
+if StringLocaleLower("İSTANBUL") = "i̇stanbul" then proc passed else proc failed
+pln StringLocaleLower("İSTANBUL") =##62$ "i̇stanbul": #status$
+if StringLocaleUpper("istanbul", "tr") = "İSTANBUL" then proc passed else proc failed
+pln StringLocaleUpper("istanbul", "tr") =##62$ "İSTANBUL": #status$
+if StringLocaleUpper("istanbul") = "ISTANBUL" then proc passed else proc failed
+pln StringLocaleUpper("istanbul") =##62$ "ISTANBUL": #status$
+if StringLower("ABC") = "abc" then proc passed else proc failed
+pln StringLower("ABC") =##62$ "abc": #status$
+if StringMid("abcde", 2, 3) = "bcd" then proc passed else proc failed
+pln StringMid("abcde", 2, 3) =##62$ "bcd": #status$
+if StringMid("abcde", 3) = "cde" then proc passed else proc failed
+pln StringMid("abcde", 3) =##62$ "cde": #status$
+if StringMid("abcde", 0) = "" then proc passed else proc failed
+pln StringMid("abcde", 0) =##62$ "": #status$
+if StringMid("abcde", 7) = "" then proc passed else proc failed
+pln StringMid("abcde", 7) =##62$ "": #status$
+if StringMid("abcde", 2, -2) = "" then proc passed else proc failed
+pln StringMid("abcde", 2, -2) =##62$ "": #status$
+if StringRight("abcde", 3) = "cde" then proc passed else proc failed
+pln StringRight("abcde", 3) =##62$ "cde": #status$
+if StringRight("abcde", -1) = "" then proc passed else proc failed
+pln StringRight("abcde", -1) =##62$ "": #status$
+if StringRight("abcde", 7) = "abcde" then proc passed else proc failed
+pln StringRight("abcde", 7) =##62$ "abcde": #status$
+if StringSplit("a|b|c", "|") = '["a","b","c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", "|") =##62$ '["a","b","c"]': #status$
+if StringSplit("a|b|c", ",") = '["a|b|c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", ",") =##62$ '["a|b|c"]': #status$
+if StringSplit("a|b|c", "") = '["a","|","b","|","c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", "") =##62$ '["a","|","b","|","c"]': #status$
+if StringTrim("	  abc  	") = "abc" then proc passed else proc failed
+pln StringTrim("	  abc  	") =##62$ "abc": #status$
+if StringTrim("abcde", 2) = "c" then proc passed else proc failed
+pln StringTrim("abcde", 2) =##62$ "c": #status$
+if StringTrim("abcde", -1) = "abcde" then proc passed else proc failed
+pln StringTrim("abcde", -1) =##62$ "abcde": #status$
+if StringTrim("abcde", 3) = "" then proc passed else proc failed
+pln StringTrim("abcde", 3) =##62$ "": #status$
+if StringTrimLeft("	  abc  	") = "abc  	" then proc passed else proc failed
+pln StringTrimLeft("	  abc  	") =##62$ "abc  	": #status$
+if StringTrimLeft("abcde", 2) = "cde" then proc passed else proc failed
+pln StringTrimLeft("abcde", 2) =##62$ "cde": #status$
+if StringTrimLeft("abcde", -1) = "abcde" then proc passed else proc failed
+pln StringTrimLeft("abcde", -1) =##62$ "abcde": #status$
+if StringTrimLeft("abcde", 7) = "" then proc passed else proc failed
+pln StringTrimLeft("abcde", 7) =##62$ "": #status$
+if StringTrimRight("	  abc  	") = "	  abc" then proc passed else proc failed
+pln StringTrimRight("	  abc  	") =##62$ "	  abc": #status$
+if StringTrimRight("abcde", 2) = "abc" then proc passed else proc failed
+pln StringTrimRight("abcde", 2) =##62$ "abc": #status$
+if StringTrimRight("abcde", -1) = "abcde" then proc passed else proc failed
+pln StringTrimRight("abcde", -1) =##62$ "abcde": #status$
+if StringTrimRight("abcde", 7) = "" then proc passed else proc failed
+pln StringTrimRight("abcde", 7) =##62$ "": #status$
+
+pln <h4>Others</h4>
+if JavaScript("' abc '.toUpperCase().trim();") = "ABC" then proc passed else proc failed
+pln JavaScript("' abc '.toUpperCase().trim();") =##62$ "ABC": #status$
+if JavaScript("Math.sqrt(-1);") = "NaN" then proc passed else proc failed
+pln JavaScript("Math.sqrt(-1);") =##62$ "NaN": #status$
+if JavaScript("2 === 1;") = "false" then proc passed else proc failed
+pln JavaScript("2 === 1;") =##62$ "false": #status$
+
+pln <h4>Expressions with Functions</h4>
+a = 1
+b = 2
+c = 3
+pln Let a = #a$, b = #b$, and c = #c$
+x = a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c)))
+if x = -3 then proc passed else proc failed
+pln a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c))) =##62$ -3: #status$
+if Pow(b, c) > Max(a, b, c) then proc passed else proc failed
+pln Pow(b, c) > Max(a, b, c) =##62$ true: #status$
+
+proc total
+btn start, Back
 end
 
 

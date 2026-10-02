@@ -7,9 +7,13 @@
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
-	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
-	+ Added: Exponentiation operator `^` (right-associative).
+	+ Added: Support for built-in functions with any number of arguments.
+	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result.
 	+ Added: Compound assignment operators, such as `+=`, `-=`, `*=` and `/=`.
+	+ Added: The clst operator to clear the screen of text.
+	+ Added: The clsl operator to clear links from the text.
+	+ Added: The varkill operator to delete a specific variable or all variables.
+	+ Added: Exponentiation operator `^` (right-associative).
 	+ Added: System variables:
 		- date - get the current date (only when urq_mode specific rules are absent).
 		- file_content - get the contents of a file from a game package as text by its internal path.
@@ -27,9 +31,6 @@
 		- urqw_game_lang - set or get the game content language.
 		- urqw_title - set or get the UrqW page title.
 		- urqw_version - get the UrqW version.
-	+ Added: The clst operator to clear the screen of text.
-	+ Added: The clsl operator to clear links from the text.
-	+ Added: The varkill operator to delete a specific variable or all variables.
 	+ Added: Ability to set arbitrary names for inventory items, for inventory item usage options, and for drop-down menu items of links in text instead of names based on variable and labels names (special variables with the `display_` prefix are used).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace characters at the beginning of any lines.
@@ -143,6 +144,7 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
+	+ Changed: The expression evaluator has been migrated from the shunting yard algorithm and reverse Polish notation (rpn.js) to the recursive descent method (evaluator.js).
 	+ Changed: For production builds of the engine, all separately included .css style files and .js script files are now minified and combined into single bundles, the index.html file is also minified. Development is carried out in separate .css and .js files, as well as in the index-dev.html file.
 	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.
