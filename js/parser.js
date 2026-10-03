@@ -43,7 +43,7 @@ Parser.prototype.parse = function(line) {
             els = line.substring(line.indexOf(' else ') + 6);
         }
 
-        var conditionResult = new Expression(this.openTags(cond)).calc();
+        var conditionResult = Expression(this.openTags(cond));
 
         if (toBoolean(conditionResult)) {
             this.parse(then);
@@ -80,7 +80,7 @@ Parser.prototype.parse = function(line) {
         var operator = match[2];
         var expr = match[3];
         var currentValue = Game.getVar(variable);
-        var rightValue = new Expression(expr).calc();
+        var rightValue = Expression(expr);
         var newValue;
         switch (operator) {
             case '+=':
@@ -115,7 +115,7 @@ Parser.prototype.parse = function(line) {
             // An operator or an assignment of a value to a variable of the same name
             if (command.trim().startsWith('=')) {
                 // Assigning a value to a variable
-                GlobalPlayer.setVar(operand, new Expression(command.slice(command.indexOf('=') + 1)).calc());
+                GlobalPlayer.setVar(operand, Expression(command.slice(command.indexOf('=') + 1)));
                 return;
             } else {
                 // Operator execution
@@ -125,7 +125,7 @@ Parser.prototype.parse = function(line) {
             // An operator or an assignment of a value to a variable of the same name
             if (command.trim().startsWith('=')) {
                 // Assigning a value to a variable
-                GlobalPlayer.setVar(operand, new Expression(command.slice(command.indexOf('=') + 1)).calc());
+                GlobalPlayer.setVar(operand, Expression(command.slice(command.indexOf('=') + 1)));
                 return;
             } else {
                 // Operator execution
@@ -190,7 +190,7 @@ Parser.prototype.parse = function(line) {
                 reg = new RegExp('[' + (Game.getVar('tokens_delim')).replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") + ']', 'gi');
             }
 
-            var str = (new Expression(command.trim())).calc().split(reg);
+            var str = (Expression(command.trim())).split(reg);
 
             GlobalPlayer.setVar('tokens_num', str.length);
 
@@ -205,7 +205,7 @@ Parser.prototype.parse = function(line) {
             var instrName, instrVal;
             if (line.indexOf('=') > 0) {
                 instrName = line.substring(0, line.indexOf('=')).trim();
-                instrVal = new Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'').calc();
+                instrVal = Expression('\'' + line.substr(line.indexOf('=') + 1) + '\'');
                 if (!toBoolean(Game.getVar('instr_leave_spc'))) {
                     instrVal = instrVal.trim();
                 }
@@ -222,7 +222,7 @@ Parser.prototype.parse = function(line) {
         default:
             //  Is this an expression?
             if (line.indexOf('=') > 0) {
-                GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), new Expression(line.substr(line.indexOf('=') + 1)).calc());
+                GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), Expression(line.substr(line.indexOf('=') + 1)));
             } else {
                 console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');
             }
@@ -276,7 +276,7 @@ Parser.prototype.openTags = function (line) {
             } else {
                 exp = exp.substr(1, (exp.length - 2));
             }
-            var result = new Expression(exp).calc();
+            var result = Expression(exp);
 
             return isFloat(result) ? result.toFixed(2) : result;
         });

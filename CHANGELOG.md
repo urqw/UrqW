@@ -7,8 +7,8 @@
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
-	+ Added: Support for built-in functions with any number of arguments.
-	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result.
+	+ Added: Support for built-in functions with any number of arguments (only when urq_mode specific rules are absent).
+	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result (only when urq_mode specific rules are absent).
 	+ Added: Compound assignment operators, such as `+=`, `-=`, `*=` and `/=`.
 	+ Added: The clst operator to clear the screen of text.
 	+ Added: The clsl operator to clear links from the text.
@@ -38,6 +38,7 @@
 	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
 	+ Added: Compatibility mode with AkURQ.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
+	+ Changed: Whitespace characters in variable names are now only supported in compatibility modes with RipURQ, URQ_DOS and AkURQ.
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true.
 	+ Changed: The values of the system variables `hide_*` and `instr_leave_spc` are now implicitly converted to a boolean value during evaluation, according to URQL standard coercion rules.
@@ -144,7 +145,7 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
-	+ Changed: The expression evaluator has been migrated from the shunting yard algorithm and reverse Polish notation (rpn.js) to the recursive descent method (evaluator.js).
+	+ Changed: For compatibility with older URQL dialects, the interpreter uses the legacy expression evaluator (shunting yard + reverse Polish notation). The default mode uses a new evaluator based on recursive descent.
 	+ Changed: For production builds of the engine, all separately included .css style files and .js script files are now minified and combined into single bundles, the index.html file is also minified. Development is carried out in separate .css and .js files, as well as in the index-dev.html file.
 	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.
