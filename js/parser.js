@@ -220,8 +220,12 @@ Parser.prototype.parse = function(line) {
 
         // If nothing helped ^w^w^w is not operator
         default:
-            //  Is this an expression?
-            if (line.indexOf('=') > 0) {
+            //  Is this an function call?
+            if (Game.getVar('urq_mode') == 'urqw' && /^\S+\s*\(.*\)$/.test(line.trim())) {
+                Expression(line);
+            }
+            //  Is this an assignment statement?
+            else if (line.indexOf('=') > 0) {
                 GlobalPlayer.setVar(line.substring(0, line.indexOf('=')).trim(), Expression(line.substr(line.indexOf('=') + 1)));
             } else {
                 console.log('Unknown operand: ' + operand + ' ignored (line: ' + line + ')');

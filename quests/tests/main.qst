@@ -832,9 +832,9 @@ pln <h3>Performance</h3>
 pln These are automatic tests to compare the performance of some resource-intensive operations in URQL and JavaScript.
 n = 1000
 arr = "[]"
-tmp = JavaScript("window.arr = [];")
+JavaScript("window.arr = [];")
 obj = "{}"
-tmp = JavaScript("window.obj = {};")
+JavaScript("window.obj = {};")
 
 time_start = JavaScript("performance.now();")
 i = 1
@@ -843,7 +843,7 @@ if i <= n then goto performance_loop_array_creation_iteration
 time_end = JavaScript("performance.now();")
 urql_array_creation = time_end - time_start
 time_start = JavaScript("performance.now();")
-tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.push(i); }")
+JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.push(i); }")
 time_end = JavaScript("performance.now();")
 js_array_creation = time_end - time_start
 
@@ -854,7 +854,7 @@ if i <= n then goto performance_loop_array_reading_iteration
 time_end = JavaScript("performance.now();")
 urql_array_reading = time_end - time_start
 time_start = JavaScript("performance.now();")
-tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { let element = window.arr[i]; }")
+JavaScript("for(let i = 0; i < " + n + "; i++) { let element = window.arr[i]; }")
 time_end = JavaScript("performance.now();")
 js_array_reading = time_end - time_start
 
@@ -865,7 +865,7 @@ if i <= n then goto performance_loop_array_deletion_iteration
 time_end = JavaScript("performance.now();")
 urql_array_deletion = time_end - time_start
 time_start = JavaScript("performance.now();")
-tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.splice(0, 1); }")
+JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.splice(0, 1); }")
 time_end = JavaScript("performance.now();")
 js_array_deletion = time_end - time_start
 
@@ -876,7 +876,7 @@ if i <= n then goto performance_loop_object_creation_iteration
 time_end = JavaScript("performance.now();")
 urql_object_creation = time_end - time_start
 time_start = JavaScript("performance.now();")
-tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { window.obj['key' + i] = 'value' + i; }")
+JavaScript("for(let i = 0; i < " + n + "; i++) { window.obj['key' + i] = 'value' + i; }")
 time_end = JavaScript("performance.now();")
 js_object_creation = time_end - time_start
 
@@ -887,7 +887,7 @@ if i <= n then goto performance_loop_object_reading_iteration
 time_end = JavaScript("performance.now();")
 urql_object_reading = time_end - time_start
 time_start = JavaScript("performance.now();")
-tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { let value = window.obj['key' + i]; }")
+JavaScript("for(let i = 0; i < " + n + "; i++) { let value = window.obj['key' + i]; }")
 time_end = JavaScript("performance.now();")
 js_object_reading = time_end - time_start
 
@@ -898,7 +898,7 @@ if i <= n then goto performance_loop_object_deletion_iteration
 time_end = JavaScript("performance.now();")
 urql_object_deletion = time_end - time_start
 time_start = JavaScript("performance.now();")
-tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { delete window.obj['key' + i]; }")
+JavaScript("for(let i = 0; i < " + n + "; i++) { delete window.obj['key' + i]; }")
 time_end = JavaScript("performance.now();")
 js_object_deletion = time_end - time_start
 
