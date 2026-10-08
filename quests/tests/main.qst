@@ -14,6 +14,7 @@ btn operators, Operators
 btn functions, Functions
 btn constructs, System constructs
 btn ui, User interface
+btn performance, Performance
 end
 
 
@@ -822,4 +823,141 @@ pln If you don't see the Back choice button, the test has passed.
 pln Use the Restart game icon in the toolbar.
 quit
 btn ui, Back
+end
+
+
+:performance
+varkill
+pln <h3>Performance</h3>
+pln These are automatic tests to compare the performance of some resource-intensive operations in URQL and JavaScript.
+n = 1000
+arr = "[]"
+tmp = JavaScript("window.arr = [];")
+obj = "{}"
+tmp = JavaScript("window.obj = {};")
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_array_creation
+if i <= n then goto performance_loop_array_creation_iteration
+time_end = JavaScript("performance.now();")
+urql_array_creation = time_end - time_start
+time_start = JavaScript("performance.now();")
+tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.push(i); }")
+time_end = JavaScript("performance.now();")
+js_array_creation = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_array_reading
+if i <= n then goto performance_loop_array_reading_iteration
+time_end = JavaScript("performance.now();")
+urql_array_reading = time_end - time_start
+time_start = JavaScript("performance.now();")
+tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { let element = window.arr[i]; }")
+time_end = JavaScript("performance.now();")
+js_array_reading = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_array_deletion
+if i <= n then goto performance_loop_array_deletion_iteration
+time_end = JavaScript("performance.now();")
+urql_array_deletion = time_end - time_start
+time_start = JavaScript("performance.now();")
+tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.splice(0, 1); }")
+time_end = JavaScript("performance.now();")
+js_array_deletion = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_object_creation
+if i <= n then goto performance_loop_object_creation_iteration
+time_end = JavaScript("performance.now();")
+urql_object_creation = time_end - time_start
+time_start = JavaScript("performance.now();")
+tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { window.obj['key' + i] = 'value' + i; }")
+time_end = JavaScript("performance.now();")
+js_object_creation = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_object_reading
+if i <= n then goto performance_loop_object_reading_iteration
+time_end = JavaScript("performance.now();")
+urql_object_reading = time_end - time_start
+time_start = JavaScript("performance.now();")
+tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { let value = window.obj['key' + i]; }")
+time_end = JavaScript("performance.now();")
+js_object_reading = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_object_deletion
+if i <= n then goto performance_loop_object_deletion_iteration
+time_end = JavaScript("performance.now();")
+urql_object_deletion = time_end - time_start
+time_start = JavaScript("performance.now();")
+tmp = JavaScript("for(let i = 0; i < " + n + "; i++) { delete window.obj['key' + i]; }")
+time_end = JavaScript("performance.now();")
+js_object_deletion = time_end - time_start
+
+pln <table class="table table-bordered">
+_ <thead>
+_ <tr> <th scope="col">Test</th> <th scope="col">URQL</th> <th scope="col">JavaScript</th> </tr>
+_ </thead>
+_ <tbody>
+_ <tr> <th scope="row">Iterative creation of a #n$-element array</th> <td>#urql_array_creation$ ms</td> <td>#js_array_creation$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative reading of a #n$-element array</th> <td>#urql_array_reading$ ms</td> <td>#js_array_reading$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative deletion of all elements from a #n$-element array</th> <td>#urql_array_deletion$ ms</td> <td>#js_array_deletion$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative creation of a #n$-property object</th> <td>#urql_object_creation$ ms</td> <td>#js_object_creation$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative reading of a #n$-property object</th> <td>#urql_object_reading$ ms</td> <td>#js_object_reading$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative deletion of all properties from a #n$-property object</th> <td>#urql_object_deletion$ ms</td> <td>#js_object_deletion$ ms</td> </tr>
+_ </tbody>
+_ </table>
+
+btn performance, Repeat
+btn start, Back
+end
+
+
+:performance_loop_array_creation_iteration
+arr = ArrayAdd(arr, i)
+i += 1
+goto performance_loop_array_creation
+end
+
+
+:performance_loop_array_reading_iteration
+element = ArrayGet(arr, i)
+i += 1
+goto performance_loop_array_reading
+end
+
+
+:performance_loop_array_deletion_iteration
+arr = ArrayDel(arr, 1)
+i += 1
+goto performance_loop_array_deletion
+end
+
+
+:performance_loop_object_creation_iteration
+obj = ObjectSet(obj, "key" + i, "value" + i)
+i += 1
+goto performance_loop_object_creation
+end
+
+
+:performance_loop_object_reading_iteration
+value = ObjectGet(obj, "key" + i)
+i += 1
+goto performance_loop_object_reading
+end
+
+
+:performance_loop_object_deletion_iteration
+obj = ObjectDel(obj, "key" + i)
+i += 1
+goto performance_loop_object_deletion
 end
