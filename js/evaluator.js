@@ -15,7 +15,7 @@ function Expression(exp) {
     // (e.g., it supports spaces in variable names,
     // but does not support built-in functions).
     var result;
-    if (['ripurq', 'dosurq', 'akurq'].includes(Game.getVar('urq_mode'))) {
+    if (['ripurq', 'dosurq', 'akurq', 'urqw1'].includes(Game.getVar('urq_mode'))) {
         result = new ShuntingYardEvaluator(exp).calc();
     } else {
         result = new RecursiveDescentEvaluator(exp).calc();

@@ -36,7 +36,7 @@
 	+ Added: Ignore whitespace characters at the beginning of any lines.
 	+ Added: Automatic normalization of internal file paths: reverse soliduses (backslashes are replaced with soliduses (slashes), and all soliduses at the beginning of the path are removed.
 	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
-	+ Added: Compatibility mode with AkURQ.
+	+ Added: Compatibility modes with AkURQ and UrqW 1.x.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
 	+ Changed: Whitespace characters in variable names are now only supported in compatibility modes with RipURQ, URQ_DOS and AkURQ.
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
@@ -71,7 +71,7 @@
 	+ Added: Ability to set player settings using GET parameters:
 		- Identifier of a game to launch - id (value: identifier).
 		- Interface language - lang (value: localization code).
-		- URQ mode - mode (value: "urqw", "ripurq", "dosurq" or "akurq").
+		- URQ mode - mode (value: "urqw", "urqw1", "ripurq", "dosurq" or "akurq").
 		- Game encoding - encoding (value: "UTF-8" or "CP1251").
 		- URL for game opening - url (value: URL string).
 		- Display of the game debugging section in the menu - debug with value "1".

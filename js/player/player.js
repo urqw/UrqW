@@ -226,7 +226,7 @@ Player.prototype.setVar = function(variable, value) {
     } else
     if (variable.toLowerCase() === 'urq_mode') {
         // When attempting to assign an unknown value, forcefully assign the value 'urqw'
-        if (!['urqw', 'ripurq', 'dosurq', 'akurq'].includes(value)) {
+        if (!['urqw', 'urqw1', 'ripurq', 'dosurq', 'akurq'].includes(value)) {
             value = 'urqw';
         }
         if (value == 'dosurq') {
