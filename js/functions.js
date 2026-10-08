@@ -451,7 +451,12 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The typeof() function takes 1 argument.');
         }
-        return typeof val;
+        var type = typeof val;
+        // Check whether an object is an array, and if so, refine the type
+        if (type === 'object' || Array.isArray(val)) {
+            type = 'array';
+        }
+        return type;
     },
 
     /**
@@ -781,8 +786,11 @@ var functions = {
         } catch (e) {
             throw new Error('The code passed to the javascript() function failed.');
         }
-        if (typeof result === 'number' || typeof result === 'string') {
+        if (['number', 'object', 'string'].includes(typeof result)) {
             if (typeof result === 'number' && Number.isNaN(result)) {
+                result = String(result);
+            }
+            if (typeof result === 'object' && result === null) {
                 result = String(result);
             }
             return result;

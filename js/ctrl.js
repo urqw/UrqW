@@ -455,9 +455,13 @@ $(function() {
             tableRows = $();
             keys.reverse().forEach(key => {
                 var value = Game.vars[key];
-                var type = typeof value;
-                // String variable values may contain HTML that needs to be escaped
-                if (type === 'string') {
+                var type = functions.typeof(value);
+                // Display array and object variable values ??as JSON
+                if (type === 'array' || type === 'object') {
+                    value = JSON.stringify(value);
+                }
+                // Array, object and string variable values may contain HTML that needs to be escaped
+                if (type === 'string' || type === 'array' || type === 'object') {
                     value = $('<div>').text(value).html();
                 }
                 var row = $(`
