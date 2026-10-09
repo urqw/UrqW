@@ -833,7 +833,7 @@ pln These are automatic tests to compare the performance of some resource-intens
 n = 1000
 arr = JavaScript("[];")
 JavaScript("window.arr = [];")
-obj = "{}"
+obj = JavaScript("({});")
 JavaScript("window.obj = {};")
 
 time_start = JavaScript("performance.now();")

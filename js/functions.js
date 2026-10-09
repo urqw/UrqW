@@ -428,7 +428,7 @@ var functions = {
         }
         var type = typeof val;
         // Check whether an object is an array, and if so, refine the type
-        if (type === 'object' || Array.isArray(val)) {
+        if (Array.isArray(val)) {
             type = 'array';
         }
         return type;
@@ -438,121 +438,88 @@ var functions = {
      * Object Functions
      */
 
-    // Deletes the key from the object.
-    objectdel(json, key) {
+    // Deletes a property (key-value pair) from the object.
+    objectdel(obj, key) {
         if (arguments.length !== 2) {
             throw new Error('The objectdel() function takes 2 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function objectdel(): it must be an object.');
-            }
-            var exists = Object.prototype.hasOwnProperty.call(parsed, key);
-            var deleted = delete parsed[key];
-            var errorCode, errorDesc;
-            if (!exists) {
-                errorCode = 1;
-                errorDesc = `The key '${key}' does not exist in the object.`;
-            } else if (!deleted) {
-                errorCode = 1;
-                errorDesc = `Failed to delete the key '${key}'.`;
-            }
-            if (errorCode) {
-                setGlobalError(errorCode, errorDesc);
-            }
-            return JSON.stringify(parsed);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function objectdel(): it must be an object. ${e}`);
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectdel(): it must be an object.');
         }
+        var exists = Object.prototype.hasOwnProperty.call(obj, key);
+        var deleted = delete obj[key];
+        var errorCode, errorDesc;
+        if (!exists) {
+            errorCode = 1;
+            errorDesc = `The key '${key}' does not exist in the object.`;
+        } else if (!deleted) {
+            errorCode = 1;
+            errorDesc = `Failed to delete the key '${key}'.`;
+        }
+        if (errorCode) {
+            setGlobalError(errorCode, errorDesc);
+        }
+        return obj;
     },
 
-    // Returns an array of object key-value pairs.
-    objectentries(json) {
+    // Returns an array of object properties (key-value pairs).
+    objectentries(obj) {
         if (arguments.length !== 1) {
             throw new Error('The objectentries() function takes 1 argument.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function objectentries(): it must be an object.');
-            }
-            var pairs = Object.entries(parsed);
-            return JSON.stringify(pairs);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function objectentries(): it must be an object. ${e}`);
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectentries(): it must be an object.');
         }
+        return Object.entries(obj);
     },
 
-    // Returns a value of the key from the object.
-    objectget(json, key) {
+    // Returns a value of the property (key) from the object.
+    objectget(obj, key) {
         if (arguments.length !== 2) {
             throw new Error('The objectget() function takes 2 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function objectget(): it must be an object.');
-            }
-            var val = parsed[key];
-            if (typeof val !== 'string' && typeof val !== 'number') {
-                val = JSON.stringify(val);
-            }
-            return val;
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function objectget(): it must be an object. ${e}`);
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectget(): it must be an object.');
         }
+        var val = obj[key];
+        if (val === null || !['number', 'string', 'object'].includes(typeof val)) {
+            val = JSON.stringify(val);
+        }
+        return val;
     },
 
-    // Returns an array of object keys.
-    objectkeys(json) {
+    // Returns an array of object property names (keys).
+    objectkeys(obj) {
         if (arguments.length !== 1) {
             throw new Error('The objectkeys() function takes 1 argument.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function objectkeys(): it must be an object.');
-            }
-            var keys = Object.keys(parsed);
-            return JSON.stringify(keys);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function objectkeys(): it must be an object. ${e}`);
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectkeys(): it must be an object.');
         }
+        return keys = Object.keys(obj);
     },
 
-    // Sets the value of the key in the object.
-    objectset(json, key, val) {
+    // Sets the value of the property (key) in the object.
+    objectset(obj, key, val) {
         if (arguments.length !== 3) {
             throw new Error('The objectset() function takes 3 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function objectset(): it must be an object.');
-            }
-            parsed[key] = val;
-            return JSON.stringify(parsed);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function objectset(): it must be an object. ${e}`);
-        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectset(): it must be an object.');
+          }
+        obj[key] = val;
+        return obj;
     },
 
-    // Returns an array of object values.
-    objectvalues(json) {
+    // Returns an array of object property values.
+    objectvalues(obj) {
         if (arguments.length !== 1) {
             throw new Error('The objectvalues() function takes 1 argument.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function objectvalues(): it must be an object.');
-            }
-            var values = Object.values(parsed);
-            return JSON.stringify(values);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function objectvalues(): it must be an object. ${e}`);
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectvalues(): it must be an object.');
         }
+        return Object.values(obj);
     },
 
     /**
