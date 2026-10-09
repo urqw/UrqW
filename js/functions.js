@@ -786,13 +786,10 @@ var functions = {
         } catch (e) {
             throw new Error('The code passed to the javascript() function failed.');
         }
+        if (result === null || Number.isNaN(result)) {
+            return String(result);
+        }
         if (['number', 'object', 'string'].includes(typeof result)) {
-            if (typeof result === 'number' && Number.isNaN(result)) {
-                result = String(result);
-            }
-            if (typeof result === 'object' && result === null) {
-                result = String(result);
-            }
             return result;
         }
         return String(result);
