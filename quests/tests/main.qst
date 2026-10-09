@@ -831,7 +831,7 @@ varkill
 pln <h3>Performance</h3>
 pln These are automatic tests to compare the performance of some resource-intensive operations in URQL and JavaScript.
 n = 1000
-arr = "[]"
+arr = JavaScript("[];")
 JavaScript("window.arr = [];")
 obj = "{}"
 JavaScript("window.obj = {};")

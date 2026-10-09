@@ -138,111 +138,86 @@ var functions = {
      */
 
     // Adds the element to the array.
-    arrayadd(json, elem) {
+    arrayadd(arr, elem) {
         if (arguments.length !== 2) {
             throw new Error('The arrayadd() function takes 2 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (!Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function arrayadd(): it must be an array.');
-            }
-            parsed.push(elem);
-            return JSON.stringify(parsed);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function arrayadd(): it must be an array. ${e}`);
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayadd(): it must be an array.');
         }
+        arr.push(elem);
+        return arr;
     },
 
     // Deletes the element from the array by index.
-    arraydel(json, ind) {
+    arraydel(arr, ind) {
         if (arguments.length !== 2) {
             throw new Error('The arraydel() function takes 2 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (!Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function arraydel(): it must be an array.');
-            }
-            if (typeof ind !== 'number' || !Number.isInteger(ind)) {
-                throw new Error('Invalid argument #2 for function arraydel(): it must be an integer index.');
-            }
-            // Indexing in URQL arrays starts from 1
-            if (ind <= 0 || ind > parsed.length) {
-                throw new Error('Invalid argument #2 for function arraydel(): index out of bounds.');
-            }
-            parsed.splice(ind - 1, 1);
-            return JSON.stringify(parsed);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function arraydel(): it must be an array. ${e}`);
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arraydel(): it must be an array.');
         }
+        if (!Number.isInteger(ind)) {
+            throw new Error('Invalid argument #2 for function arraydel(): it must be an integer index.');
+        }
+        // Indexing in URQL arrays starts from 1
+        if (ind <= 0 || ind > arr.length) {
+            throw new Error('Invalid argument #2 for function arraydel(): index out of bounds.');
+        }
+        arr.splice(ind - 1, 1);
+        return arr;
     },
 
     // Returns the element from the array by index.
-    arrayget(json, ind) {
+    arrayget(arr, ind) {
         if (arguments.length !== 2) {
             throw new Error('The arrayget() function takes 2 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (!Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function arrayget(): it must be an array.');
-            }
-            if (typeof ind !== 'number' || !Number.isInteger(ind)) {
-                throw new Error('Invalid argument #2 for function arrayget(): it must be an integer index.');
-            }
-            // Indexing in URQL arrays starts from 1
-            if (ind <= 0 || ind > parsed.length) {
-                throw new Error('Invalid argument #2 for function arrayget(): index out of bounds.');
-            }
-            var val = parsed[ind - 1];
-            if (typeof val !== 'string' && typeof val !== 'number') {
-                val = JSON.stringify(val);
-            }
-            return val;
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function arrayget(): it must be an array. ${e}`);
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayget(): it must be an array.');
         }
+        if (!Number.isInteger(ind)) {
+            throw new Error('Invalid argument #2 for function arrayget(): it must be an integer index.');
+        }
+        // Indexing in URQL arrays starts from 1
+        if (ind <= 0 || ind > arr.length) {
+            throw new Error('Invalid argument #2 for function arrayget(): index out of bounds.');
+        }
+        var val = arr[ind - 1];
+        if (val === null || !['number', 'string', 'object'].includes(typeof val)) {
+            val = JSON.stringify(val);
+        }
+        return val;
     },
 
     // Returns the number of elements in the array.
-    arraylen(json) {
+    arraylen(arr) {
         if (arguments.length !== 1) {
             throw new Error('The arraylen() function takes 1 argument.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (!Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function arraylen(): it must be an array.');
-            }
-            return parsed.length;
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function arraylen(): it must be an array. ${e}`);
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arraylen(): it must be an array.');
         }
+        return arr.length;
     },
 
     // Sets the value of the element in the array by index.
-    arrayset(json, ind, val) {
+    arrayset(arr, ind, val) {
         if (arguments.length !== 3) {
             throw new Error('The arrayset() function takes 3 arguments.');
         }
-        try {
-            var parsed = JSON.parse(json);
-            if (!Array.isArray(parsed)) {
-                throw new Error('Invalid argument #1 for function arrayset(): it must be an array.');
-            }
-            if (typeof ind !== 'number' || !Number.isInteger(ind)) {
-                throw new Error('Invalid argument #2 for function arrayset(): it must be an integer index.');
-            }
-            // Indexing in URQL arrays starts from 1
-            if (ind <= 0 || ind > parsed.length) {
-                throw new Error('Invalid argument #2 for function arrayset(): index out of bounds.');
-            }
-            parsed[ind - 1] = val;
-            return JSON.stringify(parsed);
-        } catch (e) {
-            throw new Error(`Invalid argument #1 for function arrayset(): it must be an array. ${e}`);
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayset(): it must be an array.');
         }
+        if (!Number.isInteger(ind)) {
+            throw new Error('Invalid argument #2 for function arrayset(): it must be an integer index.');
+        }
+        // Indexing in URQL arrays starts from 1
+        if (ind <= 0 || ind > arr.length) {
+            throw new Error('Invalid argument #2 for function arrayset(): index out of bounds.');
+        }
+        arr[ind - 1] = val;
+        return arr;
     },
 
     /**
