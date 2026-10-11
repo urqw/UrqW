@@ -368,6 +368,37 @@ if Sqrt(144) = 12 then proc passed else proc failed
 pln Sqrt(144) =##62$ 12: #status$
 
 pln <h4>Array</h4>
+arr = "[1]"
+pln let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+x = ArrayAdd(arr, 2)
+if x = 2 and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,2]" then proc passed else proc failed
+pln ArrayAdd(arr, 2) =##62$ 2 and arr =##62$ [1,2]: #status$
+x = ArrayAdd(arr, "3", 4)
+if x = 4 and JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,2,"3",4]' then proc passed else proc failed
+pln ArrayAdd(arr, "3", 4) =##62$ 4 and arr =##62$ [1,2,"3",4]: #status$
+arr = "[1,2,3,4,5,6,7]"
+pln let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+x = ArrayDel(arr, 6)
+if JavaScript("JSON.stringify(Game.vars['x']);") = "[6,7]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,2,3,4,5]" then proc passed else proc failed
+pln ArrayDel(arr, 6) =##62$ [6,7] and arr =##62$ [1,2,3,4,5]: #status$)
+x = ArrayDel(arr, -4, 2)
+if JavaScript("JSON.stringify(Game.vars['x']);") = "[2,3]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,4,5]" then proc passed else proc failed
+pln ArrayDel(arr, -4, 2) =##62$ [2,3] and arr =##62$ [1,4,5]: #status$)
+x = ArrayDel(arr, 2, 1)
+if JavaScript("JSON.stringify(Game.vars['x']);") = "[4]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,5]" then proc passed else proc failed
+pln ArrayDel(arr, 2, 1) =##62$ [4] and arr =##62$ [1,5]: #status$)
+arr = "['a',['b','c',['d','e','f']]]"
+pln let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+x = ArrayGet(arr, 1)
+if x = "a" then proc passed else proc failed
+pln ArrayGet(arr, 1) =##62$ "a": #status$)
+x = ArrayGet(arr, 2, 3, -1)
+if x = "f" then proc passed else proc failed
+pln ArrayGet(arr, 2, 3, -1) =##62$ "f": #status$)
+
 /*
 if ArrayAdd('[1,2]', 3) = '[1,2,3]' then proc passed else proc failed
 pln ArrayAdd('[1,2]', 3) =##62$ '[1,2,3]': #status$

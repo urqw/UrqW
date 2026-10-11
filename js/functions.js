@@ -148,40 +148,65 @@ var functions = {
         return arr.push(...elems);
     },
 
-    // Deletes the element from the array by index.
-    arraydel(arr, ind) {
-        if (arguments.length !== 2) {
-            throw new Error('The arraydel() function takes 2 arguments.');
+    // Deletes the element or elements from the array.
+    arraydel(arr, start, count) {
+        if (arguments.length < 2 || arguments.length > 3) {
+            throw new Error('The arraydel() function takes 2 or 3 arguments.');
         }
         if (!Array.isArray(arr)) {
             throw new Error('Invalid argument #1 for function arraydel(): it must be an array.');
         }
-        if (!Number.isInteger(ind)) {
+        if (!Number.isInteger(start)) {
             throw new Error('Invalid argument #2 for function arraydel(): it must be an integer index.');
         }
         // Indexing in URQL arrays starts from 1
-        if (ind <= 0 || ind > arr.length) {
+        if (start === 0 || Math.abs(start) > arr.length) {
             throw new Error('Invalid argument #2 for function arraydel(): index out of bounds.');
         }
-        return arr.splice(ind - 1, 1);
+        if (start > 0) {
+            start -= 1;
+        }
+        if (arguments.length === 3) {
+            if (!Number.isInteger(count) || count < 1) {
+                throw new Error('Invalid argument #3 for function arraydel(): it must be a positive integer.');
+            }
+            return arr.splice(start, count);
+        }
+        return arr.splice(start);
     },
 
-    // Returns the element from the array by index.
-    arrayget(arr, ind) {
-        if (arguments.length !== 2) {
-            throw new Error('The arrayget() function takes 2 arguments.');
+    // Returns the element from the array.
+    arrayget(arr, ...inds) {
+        if (arguments.length < 2) {
+            throw new Error('The arrayget() function takes at least 2 arguments.');
         }
         if (!Array.isArray(arr)) {
             throw new Error('Invalid argument #1 for function arrayget(): it must be an array.');
         }
-        if (!Number.isInteger(ind)) {
-            throw new Error('Invalid argument #2 for function arrayget(): it must be an integer index.');
+        var current = arr;
+        var ind, normalizedInd;
+        for (var i = 0; i < inds.length; i++) {
+            ind = inds[i];
+            if (!Number.isInteger(ind)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): it must be an integer index.`);
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind === 0) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): index out of bounds.`);
+            }
+            normalizedInd = ind < 0 ? current.length + ind + 1: ind;
+            if (Math.abs(normalizedInd) > current.length) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): index out of bounds.`);
+            }
+            current = current[normalizedInd - 1];
+            if (i === inds.length - 1) {
+                break;
+            }
+            if (!Array.isArray(current)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): failed to retrieve the array element by index ${ind} (the data must be an array, not a ${typeof current}.).`);
+            }
         }
-        // Indexing in URQL arrays starts from 1
-        if (ind <= 0 || ind > arr.length) {
-            throw new Error('Invalid argument #2 for function arrayget(): index out of bounds.');
-        }
-        var val = arr[ind - 1];
+        var val = current;
         if (val === null || !['number', 'string', 'object'].includes(typeof val)) {
             val = JSON.stringify(val);
         }
