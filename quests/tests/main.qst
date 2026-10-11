@@ -926,7 +926,7 @@ end
 
 
 :performance_loop_array_creation_iteration
-arr = ArrayAdd(arr, i)
+ArrayAdd(arr, i)
 i += 1
 goto performance_loop_array_creation
 end
@@ -940,7 +940,7 @@ end
 
 
 :performance_loop_array_deletion_iteration
-arr = ArrayDel(arr, 1)
+ArrayDel(arr, 1)
 i += 1
 goto performance_loop_array_deletion
 end

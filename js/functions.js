@@ -137,16 +137,15 @@ var functions = {
      * Array Functions
      */
 
-    // Adds the element to the array.
-    arrayadd(arr, elem) {
-        if (arguments.length !== 2) {
-            throw new Error('The arrayadd() function takes 2 arguments.');
+    // Adds the element or elements to the array.
+    arrayadd(arr, ...elems) {
+        if (arguments.length < 2) {
+            throw new Error('The arrayadd() function takes at least 2 arguments.');
         }
         if (!Array.isArray(arr)) {
             throw new Error('Invalid argument #1 for function arrayadd(): it must be an array.');
         }
-        arr.push(elem);
-        return arr;
+        return arr.push(...elems);
     },
 
     // Deletes the element from the array by index.
@@ -164,8 +163,7 @@ var functions = {
         if (ind <= 0 || ind > arr.length) {
             throw new Error('Invalid argument #2 for function arraydel(): index out of bounds.');
         }
-        arr.splice(ind - 1, 1);
-        return arr;
+        return arr.splice(ind - 1, 1);
     },
 
     // Returns the element from the array by index.
