@@ -191,13 +191,10 @@ var functions = {
                 throw new Error(`Invalid argument #${i + 2} for function arrayget(): it must be an integer index.`);
             }
             // Indexing in URQL arrays starts from 1
-            if (ind === 0) {
+            if (ind === 0 || Math.abs(ind) > current.length) {
                 throw new Error(`Invalid argument #${i + 2} for function arrayget(): index out of bounds.`);
             }
             normalizedInd = ind < 0 ? current.length + ind + 1: ind;
-            if (Math.abs(normalizedInd) > current.length) {
-                throw new Error(`Invalid argument #${i + 2} for function arrayget(): index out of bounds.`);
-            }
             current = current[normalizedInd - 1];
             if (i === inds.length - 1) {
                 break;
