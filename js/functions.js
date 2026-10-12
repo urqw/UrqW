@@ -148,6 +148,17 @@ var functions = {
         return arr.push(...elems);
     },
 
+    // Creates a completely independent copy of the array.
+    arraycopy(arr) {
+        if (arguments.length !== 1) {
+            throw new Error('The arraycopy() function takes 1 argument.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arraycopy(): it must be an array.');
+        }
+        return deepCopy(arr);
+    },
+
     // Creates an array of the specified length or based on JSON
     arraycreate(instr, val = '') {
         if (arguments.length > 2) {

@@ -377,6 +377,12 @@ pln ArrayAdd(arr, 2) =##62$ 2 and arr =##62$ [1,2]: #status$
 x = ArrayAdd(arr, "3", 4)
 if x = 4 and JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,2,"3",4]' then proc passed else proc failed
 pln ArrayAdd(arr, "3", 4) =##62$ 4 and arr =##62$ [1,2,"3",4]: #status$
+arr1 = ArrayCreate()
+ArrayAdd(arr1, 1, 2, 3)
+arr2 = ArrayCopy(arr1)
+ArraySet(arr1, 2, 0)
+if ArrayGet(arr1, 2) = 0 and ArrayGet(arr2, 2) = 2 then proc passed else proc failed
+pln ArrayCopy: #status$
 arr = ArrayCreate()
 if JavaScript("JSON.stringify(Game.vars['arr']);") = "[]" then proc passed else proc failed
 pln ArrayCreate() =##62$ []: #status$

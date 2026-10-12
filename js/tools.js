@@ -229,6 +229,32 @@ function getGameFileURL(filePath) {
     return filePath;
 }
 
+// Creates a completely independent copy of the entire structure,
+// including nested arrays and plain (data) objects.
+function deepCopy(source) {
+    // If it is an array, copy it as an array
+    if (Array.isArray(source)) {
+        var result = [];
+        for (var i = 0; i < source.length; i++) {
+            result[i] = deepCopy(source[i]); // Recursion
+        }
+        return result;
+  }
+    // If it is an object (but not null or an array), copy properties
+    if (typeof source === 'object' && source !== null) {
+        var result = {};
+        // Iterate only over own properties (excluding prototypes)
+        for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+                result[key] = deepCopy(source[key]); // Recursion
+            }
+        }
+        return result;
+    }
+    // All primitives are returned as is
+    return source;
+}
+
 /**
  * Converts qs1 to qst
  * @param {Uint8Array} data - encoded data
