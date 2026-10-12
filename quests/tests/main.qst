@@ -971,7 +971,7 @@ end
 
 
 :performance_loop_array_deletion_iteration
-ArrayDel(arr, 1)
+ArrayDel(arr, 1, 1)
 i += 1
 goto performance_loop_array_deletion
 end
