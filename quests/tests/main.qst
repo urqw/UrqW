@@ -398,16 +398,29 @@ pln ArrayGet(arr, 1) =##62$ "a": #status$)
 x = ArrayGet(arr, 2, 3, -1)
 if x = "f" then proc passed else proc failed
 pln ArrayGet(arr, 2, 3, -1) =##62$ "f": #status$)
+arr1 = "[1,2,3]"
+arr2 = "[]"
+pln Let arr1 =##62$ #arr1$ and arr2 =##62$ #arr2$
+arr1 = JavaScript(arr1 + ";")
+arr2 = JavaScript(arr2 + ";")
+if ArrayLen(arr1) = 3 then proc passed else proc failed
+pln ArrayLen(arr1) = 3: #status$
+if ArrayLen(arr2) = 0 then proc passed else proc failed
+pln ArrayLen(arr2) = 0: #status$
+arr = ArrayMake()
+if JavaScript("JSON.stringify(Game.vars['arr']);") = "[]" then proc passed else proc failed
+pln ArrayMake() =##62$ []: #status$
+arr = ArrayMake(2)
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '["",""]' then proc passed else proc failed
+pln ArrayMake(2) =##62$ ["",""]: #status$
+arr = ArrayMake(3, 0)
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '[0,0,0]' then proc passed else proc failed
+pln ArrayMake(3, 0) =##62$ [0,0,0]: #status$
+arr = ArrayMake('[1,"two"]')
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,"two"]' then proc passed else proc failed
+pln ArrayMake('[1,"two"]') =##62$ [1,"two"]: #status$
 
 /*
-if ArrayAdd('[1,2]', 3) = '[1,2,3]' then proc passed else proc failed
-pln ArrayAdd('[1,2]', 3) =##62$ '[1,2,3]': #status$
-if ArrayDel('[1,2,3]', 2) = '[1,3]' then proc passed else proc failed
-pln ArrayDel('[1,2,3]', 2) = '[1,3]': #status$
-if ArrayGet('[1,2,3]', 2) = 2 then proc passed else proc failed
-pln ArrayGet('[1,2,3]', 2) =##62$ 2: #status$
-if ArrayLen('[1,2,3]') = 3 then proc passed else proc failed
-pln ArrayLen('[1,2,3]') =##62$ 3: #status$
 if ArraySet('[1,2,3]', 2, 'two') = '[1,"two",3]' then proc passed else proc failed
 pln ArraySet('[1,2,3]', 2, 'two') =##62$ '[1,"two",3]': #status$
 */
