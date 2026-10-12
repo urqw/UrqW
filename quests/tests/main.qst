@@ -377,6 +377,18 @@ pln ArrayAdd(arr, 2) =##62$ 2 and arr =##62$ [1,2]: #status$
 x = ArrayAdd(arr, "3", 4)
 if x = 4 and JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,2,"3",4]' then proc passed else proc failed
 pln ArrayAdd(arr, "3", 4) =##62$ 4 and arr =##62$ [1,2,"3",4]: #status$
+arr = ArrayCreate()
+if JavaScript("JSON.stringify(Game.vars['arr']);") = "[]" then proc passed else proc failed
+pln ArrayCreate() =##62$ []: #status$
+arr = ArrayCreate(2)
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '["",""]' then proc passed else proc failed
+pln ArrayCreate(2) =##62$ ["",""]: #status$
+arr = ArrayCreate(3, 0)
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '[0,0,0]' then proc passed else proc failed
+pln ArrayCreate(3, 0) =##62$ [0,0,0]: #status$
+arr = ArrayCreate('[1,"two"]')
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,"two"]' then proc passed else proc failed
+pln ArrayCreate('[1,"two"]') =##62$ [1,"two"]: #status$
 arr = "[1,2,3,4,5,6,7]"
 pln let arr =##62$ #arr$
 arr = JavaScript(arr + ";")
@@ -407,18 +419,6 @@ if ArrayLen(arr1) = 3 then proc passed else proc failed
 pln ArrayLen(arr1) = 3: #status$
 if ArrayLen(arr2) = 0 then proc passed else proc failed
 pln ArrayLen(arr2) = 0: #status$
-arr = ArrayMake()
-if JavaScript("JSON.stringify(Game.vars['arr']);") = "[]" then proc passed else proc failed
-pln ArrayMake() =##62$ []: #status$
-arr = ArrayMake(2)
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '["",""]' then proc passed else proc failed
-pln ArrayMake(2) =##62$ ["",""]: #status$
-arr = ArrayMake(3, 0)
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '[0,0,0]' then proc passed else proc failed
-pln ArrayMake(3, 0) =##62$ [0,0,0]: #status$
-arr = ArrayMake('[1,"two"]')
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,"two"]' then proc passed else proc failed
-pln ArrayMake('[1,"two"]') =##62$ [1,"two"]: #status$
 
 /*
 if ArraySet('[1,2,3]', 2, 'two') = '[1,"two",3]' then proc passed else proc failed
@@ -879,7 +879,7 @@ varkill
 pln <h3>Performance</h3>
 pln These are automatic tests to compare the performance of some resource-intensive operations in URQL and JavaScript.
 n = 1000
-arr = ArrayMake()
+arr = ArrayCreate()
 JavaScript("window.arr = [];")
 obj = ObjectMake()
 JavaScript("window.obj = {};")

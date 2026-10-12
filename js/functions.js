@@ -148,6 +148,40 @@ var functions = {
         return arr.push(...elems);
     },
 
+    // Creates an array of the specified length or based on JSON
+    arraycreate(instr, val = '') {
+        if (arguments.length > 2) {
+            throw new Error('The arraycreate() function takes no more than 2 arguments.');
+        }
+        // Create an empty array
+        if (arguments.length == 0) {
+        return [];
+        }
+        // Create an array of the specified length
+        if (typeof instr === 'number') {
+            if (!Number.isInteger(instr) || instr <= 0) {
+                throw new Error('Invalid argument #1 for function arraycreate(): it must be a positive integer.');
+            }
+            return new Array(instr).fill(val);
+        }
+        // Create an array based on JSON
+        if (typeof instr === 'string') {
+            if (arguments.length != 1) {
+                throw new Error('The arraycreate() function takes 1 argument if it is a string.');
+            }
+            try {
+                var parsed = JSON.parse(instr);
+                if (!Array.isArray(parsed)) {
+                    throw new Error('Invalid argument #1 for function arraycreate(): it must be an array as a string with JSON.');
+                }
+                return parsed;
+            } catch (e) {
+                throw new Error(`Invalid argument #1 for function arraycreate(): it must be an array as a string with JSON. ${e}`);
+            }
+        }
+        throw new Error('Invalid argument #1 for function arraycreate(): it must be a positive integer or a string with JSON.');
+    },
+
     // Deletes the element or elements from the array.
     arraydel(arr, start, count) {
         if (arguments.length < 2 || arguments.length > 3) {
@@ -219,40 +253,6 @@ var functions = {
             throw new Error('Invalid argument #1 for function arraylen(): it must be an array.');
         }
         return arr.length;
-    },
-
-    // Creates an array of the specified length or based on JSON
-    arraymake(instr, val = '') {
-        if (arguments.length > 2) {
-            throw new Error('The arraymake() function takes no more than 2 arguments.');
-        }
-        // Create an empty array
-        if (arguments.length == 0) {
-        return [];
-        }
-        // Create an array of the specified length
-        if (typeof instr === 'number') {
-            if (!Number.isInteger(instr) || instr <= 0) {
-                throw new Error('Invalid argument #1 for function arraymake(): it must be a positive integer.');
-            }
-            return new Array(instr).fill(val);
-        }
-        // Create an array based on JSON
-        if (typeof instr === 'string') {
-            if (arguments.length != 1) {
-                throw new Error('The arraymake() function takes 1 argument if it is a string.');
-            }
-            try {
-                var parsed = JSON.parse(instr);
-                if (!Array.isArray(parsed)) {
-                    throw new Error('Invalid argument #1 for function arraymake(): it must be an array as a string with JSON.');
-                }
-                return parsed;
-            } catch (e) {
-                throw new Error(`Invalid argument #1 for function arraymake(): it must be an array as a string with JSON. ${e}`);
-            }
-        }
-        throw new Error('Invalid argument #1 for function arraymake(): it must be a positive integer or a string with JSON.');
     },
 
     // Sets the value of the element in the array by index.
@@ -556,7 +556,7 @@ var functions = {
     // Creates an object based on JSON
     objectmake(json) {
         if (arguments.length > 1) {
-            throw new Error('The arraymake() function takes no more than 1 argument.');
+            throw new Error('The objectcreate() function takes no more than 1 argument.');
         }
         // Create an empty object
         if (arguments.length == 0) {
@@ -567,14 +567,14 @@ var functions = {
             try {
                 var parsed = JSON.parse(instr);
                 if (typeof parsed !== 'object' || Array.isArray(parsed) || parsed === null) {
-                    throw new Error('Invalid argument #1 for function arraymake(): it must be an object as a string with JSON.');
+                    throw new Error('Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON.');
                 }
                 return parsed;
             } catch (e) {
-                throw new Error(`Invalid argument #1 for function arraymake(): it must be an object as a string with JSON. ${e}`);
+                throw new Error(`Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON. ${e}`);
             }
         }
-        throw new Error('Invalid argument #1 for function arraymake(): it must be a string with JSON.');
+        throw new Error('Invalid argument #1 for function objectcreate(): it must be a string with JSON.');
     },
 
     // Sets the value of the property (key) in the object.
