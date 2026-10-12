@@ -255,22 +255,35 @@ var functions = {
         return arr.length;
     },
 
-    // Sets the value of the element in the array by index.
-    arrayset(arr, ind, val) {
-        if (arguments.length !== 3) {
-            throw new Error('The arrayset() function takes 3 arguments.');
+    // Sets the value of the element in the array.
+    arrayset(arr, ...params) {
+        if (arguments.length < 3) {
+            throw new Error('The arrayset() function takes at least 3 arguments.');
         }
         if (!Array.isArray(arr)) {
             throw new Error('Invalid argument #1 for function arrayset(): it must be an array.');
         }
-        if (!Number.isInteger(ind)) {
-            throw new Error('Invalid argument #2 for function arrayset(): it must be an integer index.');
+        var current = arr;
+        var ind, normalizedInd;
+        for (var i = 0; i < params.length - 1; i++) {
+            ind = params[i];
+            if (!Number.isInteger(ind)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayset(): it must be an integer index.`);
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind === 0 || Math.abs(ind) > current.length) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayset(): index out of bounds.`);
+            }
+            normalizedInd = ind < 0 ? current.length + ind + 1: ind;
+            if (i === params.length - 2) {
+                break;
+            }
+            current = current[normalizedInd - 1];
+            if (!Array.isArray(current)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayset(): failed to retrieve the array element by index ${ind} (the data must be an array, not a ${typeof current}.).`);
+            }
         }
-        // Indexing in URQL arrays starts from 1
-        if (ind <= 0 || ind > arr.length) {
-            throw new Error('Invalid argument #2 for function arrayset(): index out of bounds.');
-        }
-        arr[ind - 1] = val;
+        current[normalizedInd - 1] = params[params.length - 1];
         return arr;
     },
 

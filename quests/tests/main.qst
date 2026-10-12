@@ -401,7 +401,7 @@ pln ArrayDel(arr, -4, 2) =##62$ [2,3] and arr =##62$ [1,4,5]: #status$)
 x = ArrayDel(arr, 2, 1)
 if JavaScript("JSON.stringify(Game.vars['x']);") = "[4]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,5]" then proc passed else proc failed
 pln ArrayDel(arr, 2, 1) =##62$ [4] and arr =##62$ [1,5]: #status$)
-arr = "['a',['b','c',['d','e','f']]]"
+arr = '["a",["b","c",["d","e","f"]]]'
 pln let arr =##62$ #arr$
 arr = JavaScript(arr + ";")
 x = ArrayGet(arr, 1)
@@ -419,11 +419,15 @@ if ArrayLen(arr1) = 3 then proc passed else proc failed
 pln ArrayLen(arr1) = 3: #status$
 if ArrayLen(arr2) = 0 then proc passed else proc failed
 pln ArrayLen(arr2) = 0: #status$
-
-/*
-if ArraySet('[1,2,3]', 2, 'two') = '[1,"two",3]' then proc passed else proc failed
-pln ArraySet('[1,2,3]', 2, 'two') =##62$ '[1,"two",3]': #status$
-*/
+arr = '["a",["b","c",["d","e","f"]]]'
+pln Let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+ArraySet(arr, 1, 1)
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,["b","c",["d","e","f"]]]' then proc passed else proc failed
+pln ArraySet(arr, 1, 1) =##62$ [1,["b","c",["d","e","f"]]]: #status$
+ArraySet(arr, 2, 3, -1, "x")
+if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,["b","c",["d","e","x"]]]' then proc passed else proc failed
+pln ArraySet(arr, 2, 3, -1, "x") =##62$ [1,["b","c",["d","e","x"]]]: #status$
 
 pln <h4>Type Conversion</h4>
 if Boolean(5) = 1 then proc passed else proc failed
