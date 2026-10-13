@@ -516,6 +516,41 @@ var functions = {
      * Object Functions
      */
 
+    // Creates a completely independent copy of the object.
+    objectcopy(obj) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectcopy() function takes 1 argument.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectcopy(): it must be an object.');
+        }
+        return deepCopy(obj);
+    },
+
+    // Creates an object: either empty or based on JSON.
+    objectcreate(json) {
+        if (arguments.length > 1) {
+            throw new Error('The objectcreate() function takes no more than 1 argument.');
+        }
+        // Create an empty object
+        if (arguments.length == 0) {
+        return ({});
+        }
+        // Create an object based on JSON
+        if (typeof json === 'string') {
+            try {
+                var parsed = JSON.parse(json);
+                if (typeof parsed !== 'object' || Array.isArray(parsed) || parsed === null) {
+                    throw new Error('Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON.');
+                }
+                return parsed;
+            } catch (e) {
+                throw new Error(`Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON. ${e}`);
+            }
+        }
+        throw new Error('Invalid argument #1 for function objectcreate(): it must be a string with JSON.');
+    },
+
     // Deletes a property (key-value pair) from the object.
     objectdel(obj, key) {
         if (arguments.length !== 2) {
@@ -536,8 +571,9 @@ var functions = {
         }
         if (errorCode) {
             setGlobalError(errorCode, errorDesc);
+            return 0;
         }
-        return obj;
+        return 1;
     },
 
     // Returns an array of object properties (key-value pairs).
@@ -552,14 +588,38 @@ var functions = {
     },
 
     // Returns a value of the property (key) from the object.
-    objectget(obj, key) {
-        if (arguments.length !== 2) {
-            throw new Error('The objectget() function takes 2 arguments.');
+    objectget(obj, ...keys) {
+        if (arguments.length < 2) {
+            throw new Error('The objectget() function takes at least 2 arguments.');
         }
         if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
             throw new Error('Invalid argument #1 for function objectget(): it must be an object.');
         }
-        var val = obj[key];
+        var current = obj;
+        var key;
+        for (var i = 0; i < keys.length; i++) {
+            key = keys[i];
+            if (typeof key !== 'string') {
+                throw new Error(`Invalid argument #${i + 2} for function objectget(): it must be a string key.`);
+            }
+            if (!Object.hasOwn(current, key)) {
+                setGlobalError(1, `Problem with argument #${i + 2} for function objectget(): failed to retrieve the property value by key '${key}' (the key does not exist).`);
+                return 0;
+            }
+            current = current[key];
+            if (i === keys.length - 1) {
+                break;
+            }
+            if (current === null || typeof current !== 'object' || Array.isArray(current)) {
+                setGlobalError(1, `Problem with argument #${i + 2} for function objectget(): failed to retrieve the property value by key '${key}' (the data turned out to be a ${typeof current} rather than an object).`);
+                if (current === null || !['number', 'string', 'object'].includes(typeof current)) {
+                    return JSON.stringify(current);
+                } else {
+                    return current;
+                }
+            }
+        }
+        var val = current;
         if (val === null || !['number', 'string', 'object'].includes(typeof val)) {
             val = JSON.stringify(val);
         }
@@ -577,40 +637,32 @@ var functions = {
         return keys = Object.keys(obj);
     },
 
-    // Creates an object based on JSON
-    objectmake(json) {
-        if (arguments.length > 1) {
-            throw new Error('The objectcreate() function takes no more than 1 argument.');
-        }
-        // Create an empty object
-        if (arguments.length == 0) {
-        return ({});
-        }
-        // Create an object based on JSON
-        if (typeof instr === 'string') {
-            try {
-                var parsed = JSON.parse(instr);
-                if (typeof parsed !== 'object' || Array.isArray(parsed) || parsed === null) {
-                    throw new Error('Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON.');
-                }
-                return parsed;
-            } catch (e) {
-                throw new Error(`Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON. ${e}`);
-            }
-        }
-        throw new Error('Invalid argument #1 for function objectcreate(): it must be a string with JSON.');
-    },
-
     // Sets the value of the property (key) in the object.
-    objectset(obj, key, val) {
-        if (arguments.length !== 3) {
-            throw new Error('The objectset() function takes 3 arguments.');
+    objectset(obj, ...params) {
+        if (arguments.length < 3) {
+            throw new Error('The objectset() function takes at least 3 arguments.');
         }
         if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
             throw new Error('Invalid argument #1 for function objectset(): it must be an object.');
           }
-        obj[key] = val;
-        return obj;
+        var current = obj;
+        var key;
+        for (var i = 0; i < params.length - 1; i++) {
+            key = params[i];
+            if (typeof key !== 'string') {
+                throw new Error(`Invalid argument #${i + 2} for function objectset(): it must be a string key.`);
+            }
+            if (i === params.length - 2) {
+                break;
+            }
+            current = current[key];
+            if (current === null || typeof current !== 'object' || Array.isArray(current)) {
+                setGlobalError(1, `Problem with argument #${i + 2} for function objectset(): failed to retrieve the property value by key '${key}' (the data turned out to be a ${typeof current} rather than an object).`);
+                return 0;
+            }
+        }
+        current[key] = params[params.length - 1];
+        return 1;
     },
 
     // Returns an array of object property values.
