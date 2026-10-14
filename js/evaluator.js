@@ -113,6 +113,28 @@ function RecursiveDescentEvaluator(str) {
                 }
             }
 
+            // Handle Boolean literals (true and false)
+            // Check for 'true' literal (case-insensitive) before treating as identifier
+            if (lowerSub.startsWith('true')) {
+                var nextChar = input[i + 4]; // Length of "true" is 4
+                // Ensure it's a whole word, not part of another word (e.g., "trueness")
+                if (!/[a-z0-9_]/.test(nextChar)) {
+                    result.push({ type: 'BOOLEAN', value: true });
+                    i += 4;
+                    continue;
+                }
+            }
+            // Check for 'false' literal (case-insensitive) before treating as identifier
+            if (lowerSub.startsWith('false')) {
+                var nextChar = input[i + 5]; // Length of "false" is 5
+                // Ensure it's a whole word
+                if (!/[a-z0-9_]/.test(nextChar)) {
+                    result.push({ type: 'BOOLEAN', value: false });
+                    i += 5;
+                    continue;
+                }
+            }
+
             // Handle identifiers (variables/functions): consume until delimiter
             var start = i;
             while (i < len) {
@@ -275,6 +297,10 @@ function RecursiveDescentEvaluator(str) {
         var t = peek();
         if (t && t.type === 'NUMBER') { consume('NUMBER'); return t.value; }
         if (t && t.type === 'STRING') { consume('STRING'); return t.value; }
+        if (t && t.type === 'BOOLEAN') {
+            consume('BOOLEAN');
+            return t.value; // Returns native JS boolean (true/false)
+        }
         if (t && t.type === 'OPERATOR' && t.value === '(') {
             consume('OPERATOR');
             var val = parseLogicalOr();
