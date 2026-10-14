@@ -46,14 +46,64 @@ function RecursiveDescentEvaluator(str) {
             // Skip whitespace
             if (/\s/.test(char)) { i++; continue; }
 
-            // Handle string literals (double or single quotes)
+            // Handle string literals (double or single quotes) with escape sequence support
             if (char === '"' || char === "'") {
                 var quote = char;
-                var start = ++i;
-                while (i < len && input[i] !== quote) i++;
-                if (i >= len) throw new Error("Unclosed string literal");
-                result.push({ type: 'STRING', value: input.substring(start, i) });
-                i++; 
+                var start = ++i; // Move past the opening quote
+                var resultChars = []; 
+                var closed = false; // Flag to track if the closing quote found
+
+                while (i < len) {
+                    var current = input[i];
+
+                    // Check for escape sequence
+                    if (current === '\\') {
+                        // ERROR CASE 1: Backslash at the very end of the input
+                        if (i + 1 >= len) {
+                            throw new Error("Invalid escape sequence at end of string");
+                        }
+
+                        var next = input[i + 1];
+
+                        // CASE A: Escaping the closing quote
+                        if (next === quote) {
+                            resultChars.push(next);
+                            i += 2; 
+                            continue;
+                        }
+
+                        // CASE B: Escaping the backslash itself
+                        if (next === '\\') {
+                            resultChars.push('\\'); 
+                            i += 2; 
+                            continue;
+                        }
+
+                        // CASE C: Any other character (leave as-is)
+                        resultChars.push(current);
+                        i++; 
+                        continue;
+                    }
+
+                    // Check for closing quote
+                    if (current === quote) {
+                        i++; // Move past the closing quote
+                        closed = true; // Mark as successfully closed
+                        break; // Exit loop
+                    }
+
+                    // Regular character
+                    resultChars.push(current);
+                    i++;
+                }
+
+                // ERROR CASE 2: Check if string was actually closed
+                // If the end of input (i >= len) AND the flag 'closed' is false
+                if (!closed) {
+                    throw new Error("Unclosed string literal");
+                }
+
+                result.push({ type: 'STRING', value: resultChars.join('') });
                 continue;
             }
 
