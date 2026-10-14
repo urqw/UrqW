@@ -166,9 +166,13 @@ function RecursiveDescentEvaluator(str) {
             // Handle Boolean literals (true and false)
             // Check for 'true' literal (case-insensitive) before treating as identifier
             if (lowerSub.startsWith('true')) {
-                var nextChar = input[i + 4]; // Length of "true" is 4
-                // Ensure it's a whole word, not part of another word (e.g., "trueness")
-                if (!/[a-z0-9_]/.test(nextChar)) {
+                var nextIdx = i + 4;
+                // Safely get next char: null if out of bounds (avoids undefined issues)
+                var nextChar = (nextIdx < len) ? input[nextIdx] : null;
+                // Determine if it's a whole word boundary
+                // True if: no next char OR next char is not alphanumeric/underscore
+                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                if (isBoundary) {
                     result.push({ type: 'BOOLEAN', value: true });
                     i += 4;
                     continue;
@@ -176,9 +180,12 @@ function RecursiveDescentEvaluator(str) {
             }
             // Check for 'false' literal (case-insensitive) before treating as identifier
             if (lowerSub.startsWith('false')) {
-                var nextChar = input[i + 5]; // Length of "false" is 5
-                // Ensure it's a whole word
-                if (!/[a-z0-9_]/.test(nextChar)) {
+                var nextIdx = i + 5;
+                // Safely get next char: null if out of bounds
+                var nextChar = (nextIdx < len) ? input[nextIdx] : null;
+                // Determine if it's a whole word boundary
+                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                if (isBoundary) {
                     result.push({ type: 'BOOLEAN', value: false });
                     i += 5;
                     continue;
