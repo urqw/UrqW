@@ -31,7 +31,7 @@ end
 
 
 :total
-pln <h4>Total</h4>
+pln <h4 id="total">Total</h4>
 pln Tests: #passed + failed$
 pln Passed: #passed$
 pln Failed: #failed$
@@ -42,6 +42,7 @@ end
 pln <h3>Operators</h3>
 pln These are automatic tests of programming language operators.
 pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
 
 pln <h4>URQL</h4>
 x = 5
@@ -351,6 +352,7 @@ end
 pln <h3>Functions</h3>
 pln These are automatic tests of programming language built-in functions.
 pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
 
 pln <h4>Mathematical</h4>
 if Abs(-5) = 5 then proc passed else proc failed
@@ -481,24 +483,56 @@ if Boolean("") = 0 then proc passed else proc failed
 pln Boolean("") =##62$ 0: #status$
 if Number("2.5") = 2.5 then proc passed else proc failed
 pln Number("2.5") =##62$ 2.5: #status$
-if Number("2,5") = 0 then proc passed else proc failed
-pln Number("2,5") =##62$ 0: #status$
-if Number("abc") = 0 then proc passed else proc failed
-pln Number("abc") =##62$ 0: #status$
-if Number(" ") = 0 then proc passed else proc failed
-pln Number(" ") =##62$ 0: #status$
-if Number("") = 0 then proc passed else proc failed
-pln Number("") =##62$ 0: #status$
+error = 0
+x = Number("2,5")
+if error = 1 then proc passed else proc failed
+pln Number("2,5") =##62$ error = 1: #status$
+error = 0
+x = Number("abc")
+if error = 1 then proc passed else proc failed
+pln Number("abc") =##62$ error = 1: #status$
+error = 0
+x = Number(" ")
+if error = 1 then proc passed else proc failed
+pln Number(" ") =##62$ error = 1: #status$
+error = 0
+x = Number("")
+if error = 1 then proc passed else proc failed
+pln Number("") =##62$ error = 1: #status$
 if Number(" 5 ") = 5 then proc passed else proc failed
 pln Number(" 5 ") =##62$ 5: #status$
+arr1 = "[]"
+arr2 = "[1]"
+arr3 = "[2,3]"
+obj = "{}"
+pln Let arr1 = #arr1$, arr2 = #arr2$, arr3 = #arr3$, and obj = #obj$
+arr1 = JavaScript(arr1 + ";")
+arr2 = JavaScript(arr2 + ";")
+arr3 = JavaScript(arr3 + ";")
+obj = JavaScript(obj + ";")
+error = 0
+x = Number(arr1)
+if error = 1 then proc passed else proc failed
+pln Number(arr1) =##62$ error = 1: #status$
+if Number(arr2) = 1 then proc passed else proc failed
+pln Number(arr2) =##62$ 1: #status$
+error = 0
+x = Number(arr3)
+if error = 1 then proc passed else proc failed
+pln Number(arr3) =##62$ error = 1: #status$
+error = 0
+x = Number(obj)
+if error = 1 then proc passed else proc failed
+pln Number(obj) =##62$ error = 1: #status$
 if String(2.5) = "2.5" then proc passed else proc failed
 pln String(2.5) =##62$ "2.5": #status$
 
 pln <h4>File</h4>
 if FileContent("test.txt") = "test 🧪" then proc passed else proc failed
 pln FileContent("test.txt") =##62$ "test 🧪": #status$
-if FileContent("non-existent_file.txt") = "" and error then proc passed else proc failed
-pln FileContent("non-existent_file.txt") =##62$ "" and error =##62$ true: #status$
+error = 0
+if FileContent("non-existent_file.txt") = "" and error = 1 then proc passed else proc failed
+pln FileContent("non-existent_file.txt") =##62$ "" and error = 1: #status$
 if FileExists("test.txt") = 1 then proc passed else proc failed
 pln FileExists("test.txt") =##62$ 1: #status$
 if FileExists("non-existent_file.txt") = 0 then proc passed else proc failed
@@ -569,8 +603,8 @@ if not error and x = 1 and JavaScript("JSON.stringify(Game.vars['obj']);") = "{}
 pln ObjectDel(obj, "key") =##62$ 1 and obj =##62$ {} and error =##62$ false: #status$
 error = 0
 x = ObjectDel(obj, "non-existent key")
-if error and x = 0 = 1 then proc passed else proc failed
-pln ObjectDel(obj, "non-existent key") =##62$ 0 and error =##62$ true: #status$
+if error = 1 and x = 0 = 1 then proc passed else proc failed
+pln ObjectDel(obj, "non-existent key") =##62$ 0 and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
@@ -590,12 +624,12 @@ if not error and x = "d" then proc passed else proc failed
 pln ObjectGet(obj, "k2", "k3", "k1") =##62$ "d" and error =##62$ false: #status$
 error = 0
 x = ObjectGet(obj, "k2", "k4")
-if error and x = 0 then proc passed else proc failed
-pln ObjectGet(obj, "k2", "k4") =##62$ 0 and error =##62$ true: #status$
+if error = 1 and x = 0 then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k4") =##62$ 0 and error = 1: #status$
 error = 0
 x = ObjectGet(obj, "k2", "k1", "k1")
-if error and x = "b" then proc passed else proc failed
-pln ObjectGet(obj, "k2", "k1", "k1") =##62$ "b" and error =##62$ true: #status$
+if error = 1 and x = "b" then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k1", "k1") =##62$ "b" and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
@@ -615,8 +649,8 @@ if not error and x = 1 and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"
 pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ 1 and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
 error = 0
 x = ObjectSet(obj, "k2", "k1", "k1", "x")
-if error and x = 0 and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
-pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ 0 and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error =##62$ true: #status$
+if error = 1 and x = 0 and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ 0 and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
@@ -695,10 +729,14 @@ pln StringTrimRight("abcde", 7) =##62$ "": #status$
 pln <h4>Others</h4>
 if JavaScript("' abc '.toUpperCase().trim();") = "ABC" then proc passed else proc failed
 pln JavaScript("' abc '.toUpperCase().trim();") =##62$ "ABC": #status$
-if JavaScript("Math.sqrt(-1);") = "NaN" then proc passed else proc failed
-pln JavaScript("Math.sqrt(-1);") =##62$ "NaN": #status$
-if JavaScript("2 === 1;") = "false" then proc passed else proc failed
-pln JavaScript("2 === 1;") =##62$ "false": #status$
+if JavaScript("undefined;") = "undefined" then proc passed else proc failed
+pln JavaScript("undefined;") =##62$ "undefined": #status$
+if JavaScript("null;") = "null" then proc passed else proc failed
+pln JavaScript("null;") =##62$ "null": #status$
+if JavaScript("Symbol('id');") = "Symbol(id)" then proc passed else proc failed
+pln JavaScript("Symbol('id');") =##62$ "Symbol(id)": #status$
+if JavaScript("() => {};") = "() => {}" then proc passed else proc failed
+pln JavaScript("() => {};") =##62$ "() => {}": #status$
 
 pln <h4>Expressions with Functions</h4>
 a = 1

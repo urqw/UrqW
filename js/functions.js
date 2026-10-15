@@ -315,11 +315,19 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The number() function takes 1 argument.');
         }
-        var result = Number(val);
-        if (Number.isNaN(result)) {
-            result = 0;
+        if (typeof val === 'string') {
+            val = val.trim();
+            if (val === '') {
+                return NaN;
+            }
         }
-        return result;
+        if (Array.isArray(val) && val.length === 0) {
+            return NaN;
+        }
+        if (val === null) {
+            return NaN;
+        }
+        return Number(val);
     },
 
     // Returns the string representation of a value.
@@ -882,7 +890,7 @@ var functions = {
         } catch (e) {
             throw new Error('The code passed to the javascript() function failed.');
         }
-        if (result === null || Number.isNaN(result) || !['boolean', 'number', 'object', 'string'].includes(typeof result)) {
+        if (result === null || !['boolean', 'number', 'object', 'string'].includes(typeof result)) {
             return String(result);
         }
         return result;
