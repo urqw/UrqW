@@ -579,9 +579,9 @@ var functions = {
         }
         if (errorCode) {
             setGlobalError(errorCode, errorDesc);
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     },
 
     // Returns an array of object properties (key-value pairs).
@@ -612,7 +612,7 @@ var functions = {
             }
             if (!Object.hasOwn(current, key)) {
                 setGlobalError(1, `Problem with argument #${i + 2} for function objectget(): failed to retrieve the property value by key '${key}' (the key does not exist).`);
-                return 0;
+                return false;
             }
             current = current[key];
             if (i === keys.length - 1) {
@@ -666,11 +666,11 @@ var functions = {
             current = current[key];
             if (current === null || typeof current !== 'object' || Array.isArray(current)) {
                 setGlobalError(1, `Problem with argument #${i + 2} for function objectset(): failed to retrieve the property value by key '${key}' (the data turned out to be a ${typeof current} rather than an object).`);
-                return 0;
+                return false;
             }
         }
         current[key] = params[params.length - 1];
-        return 1;
+        return true;
     },
 
     // Returns an array of object property values.

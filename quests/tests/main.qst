@@ -599,12 +599,12 @@ pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectDel(obj, "key")
-if not error and x = 1 and JavaScript("JSON.stringify(Game.vars['obj']);") = "{}" then proc passed else proc failed
-pln ObjectDel(obj, "key") =##62$ 1 and obj =##62$ {} and error =##62$ false: #status$
+if not error and x = true and JavaScript("JSON.stringify(Game.vars['obj']);") = "{}" then proc passed else proc failed
+pln ObjectDel(obj, "key") =##62$ true and obj =##62$ {} and error =##62$ false: #status$
 error = 0
 x = ObjectDel(obj, "non-existent key")
-if error = 1 and x = 0 = 1 then proc passed else proc failed
-pln ObjectDel(obj, "non-existent key") =##62$ 0 and error = 1: #status$
+if error = 1 and x = false then proc passed else proc failed
+pln ObjectDel(obj, "non-existent key") =##62$ false and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
@@ -624,8 +624,8 @@ if not error and x = "d" then proc passed else proc failed
 pln ObjectGet(obj, "k2", "k3", "k1") =##62$ "d" and error =##62$ false: #status$
 error = 0
 x = ObjectGet(obj, "k2", "k4")
-if error = 1 and x = 0 then proc passed else proc failed
-pln ObjectGet(obj, "k2", "k4") =##62$ 0 and error = 1: #status$
+if error = 1 and x = false then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k4") =##62$ false and error = 1: #status$
 error = 0
 x = ObjectGet(obj, "k2", "k1", "k1")
 if error = 1 and x = "b" then proc passed else proc failed
@@ -641,16 +641,16 @@ pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectSet(obj, "k1", 1)
-if not error and x = 1 and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
-pln ObjectSet(obj, "k1", 1) =##62$ 1 and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
+if not error and x = true and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k1", 1) =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
 error = 1
 x = ObjectSet(obj, "k2", "k3", "k1", "x")
-if not error and x = 1 and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
-pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ 1 and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
+if not error and x = true and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
 error = 0
 x = ObjectSet(obj, "k2", "k1", "k1", "x")
-if error = 1 and x = 0 and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
-pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ 0 and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 1: #status$
+if error = 1 and x = false and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ false and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
