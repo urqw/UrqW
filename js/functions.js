@@ -307,7 +307,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The boolean() function takes 1 argument.');
         }
-        return toBoolean(val) ? 1 : 0;
+        return toBoolean(val);
     },
 
     // Returns the number representation of a value.
