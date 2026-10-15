@@ -163,7 +163,7 @@ function RecursiveDescentEvaluator(str) {
                 }
             }
 
-            // Handle Boolean literals (true and false)
+            // Handle boolean literals (true and false)
             // Check for 'true' literal (case-insensitive) before treating as identifier
             if (lowerSub.startsWith('true')) {
                 var nextIdx = i + 4;
@@ -188,6 +188,29 @@ function RecursiveDescentEvaluator(str) {
                 if (isBoundary) {
                     result.push({ type: 'BOOLEAN', value: false });
                     i += 5;
+                    continue;
+                }
+            }
+
+            // Handle numeric literals (nan and infinity)
+            // in the same way as true and false above
+            if (lowerSub.startsWith('nan')) {
+                var nextIdx = i + 3;
+                var nextChar = (nextIdx < len) ? input[nextIdx] : null;
+                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                if (isBoundary) {
+                    result.push({ type: 'NUMBER', value: NaN });
+                    i += 3;
+                    continue;
+                }
+            }
+            if (lowerSub.startsWith('infinity')) {
+                var nextIdx = i + 8;
+                var nextChar = (nextIdx < len) ? input[nextIdx] : null;
+                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                if (isBoundary) {
+                    result.push({ type: 'NUMBER', value: Infinity });
+                    i += 8;
                     continue;
                 }
             }
@@ -737,7 +760,7 @@ function ShuntingYardEvaluator(str) {
 function toBoolean(value) {
     return (
         value === true ||
-        (typeof value === 'number' && value !== 0) ||
+        (typeof value === 'number' && value !== 0 && !Number.isNaN(value)) ||
         (typeof value === 'string' && value.length > 0)
     );
 }

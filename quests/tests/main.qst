@@ -149,6 +149,15 @@ pln 1 + TRUE =##62$ 2: #status$
 z = 8^false-5
 if z = -4 then proc passed else proc failed
 pln 8^false-5 =##62$ -4: #status$
+z = infinity + 5
+if z = INFINITY then proc passed else proc failed
+pln infinity + 5 =##62$ Infinity: #status$
+z = 1/0
+if z = infinity then proc passed else proc failed
+pln 1/0 =##62$ infinity: #status$
+z = -1/0
+if z = -infinity then proc passed else proc failed
+pln -1/0 =##62$ -infinity: #status$
 
 pln <h4>Comparison</h4>
 if 1<2 then proc passed else proc failed
@@ -181,6 +190,16 @@ if true then proc passed else proc failed
 pln true =##62$ true: #status$
 if false then proc failed else proc passed
 pln false =##62$ false: #status$
+if NaN then proc failed else proc passed
+pln NaN =##62$ false: #status$
+if NaN=NaN then proc failed else proc passed
+pln NaN=NaN =##62$ false: #status$
+if -infinity then proc passed else proc failed
+pln -infinity =##62$ true: #status$
+if infinity=infinity then proc passed else proc failed
+pln infinity=infinity =##62$ true: #status$
+if infinity>1000000 then proc passed else proc failed
+pln infinity>1000000 =##62$ true: #status$
 if "abc"=="a?c" then proc passed else proc failed
 pln "abc"=="a?c" =##62$ true: #status$
 if "abc"=="a*" then proc passed else proc failed
