@@ -249,7 +249,7 @@ var functions = {
             }
         }
         var val = current;
-        if (val === null || !['number', 'string', 'object'].includes(typeof val)) {
+        if (val === null || !['boolean', 'number', 'object', 'string'].includes(typeof val)) {
             val = JSON.stringify(val);
         }
         return val;
@@ -612,7 +612,7 @@ var functions = {
             }
             if (current === null || typeof current !== 'object' || Array.isArray(current)) {
                 setGlobalError(1, `Problem with argument #${i + 2} for function objectget(): failed to retrieve the property value by key '${key}' (the data turned out to be a ${typeof current} rather than an object).`);
-                if (current === null || !['number', 'string', 'object'].includes(typeof current)) {
+                if (current === null || !['boolean', 'number', 'object', 'string'].includes(typeof current)) {
                     return JSON.stringify(current);
                 } else {
                     return current;
@@ -620,7 +620,7 @@ var functions = {
             }
         }
         var val = current;
-        if (val === null || !['number', 'string', 'object'].includes(typeof val)) {
+        if (val === null || !['boolean', 'number', 'object', 'string'].includes(typeof val)) {
             val = JSON.stringify(val);
         }
         return val;
@@ -882,13 +882,10 @@ var functions = {
         } catch (e) {
             throw new Error('The code passed to the javascript() function failed.');
         }
-        if (result === null || Number.isNaN(result)) {
+        if (result === null || Number.isNaN(result) || !['boolean', 'number', 'object', 'string'].includes(typeof result)) {
             return String(result);
         }
-        if (['number', 'object', 'string'].includes(typeof result)) {
-            return result;
-        }
-        return String(result);
+        return result;
     }
 
 }
