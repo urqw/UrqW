@@ -7,15 +7,16 @@
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
-	+ Added: Support for built-in functions with any number of arguments (only when urq_mode specific rules are absent).
-	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result (only when urq_mode specific rules are absent).
+	+ Added: New data types: boolean, array, and object (only without special compatibility modes).
+	+ Added: Support for built-in functions with any number of arguments (only without special compatibility modes).
+	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result (only without special compatibility modes).
 	+ Added: Compound assignment operators, such as `+=`, `-=`, `*=` and `/=`.
 	+ Added: The clst operator to clear the screen of text.
 	+ Added: The clsl operator to clear links from the text.
 	+ Added: The varkill operator to delete a specific variable or all variables.
 	+ Added: Exponentiation operator `^` (right-associative).
 	+ Added: System variables:
-		- date - get the current date (only when urq_mode specific rules are absent).
+		- date - get the current date (only without special compatibility modes).
 		- file_content - get the contents of a file from a game package as text by its internal path.
 		- file_url - get the relative URL of a file from a game package by its internal path.
 		- hide_use - hide or show all usage options for all inventory items.
@@ -38,7 +39,7 @@
 	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
 	+ Added: Compatibility modes with AkURQ and UrqW 1.x.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
-	+ Changed: Whitespace characters in variable names are now only supported in compatibility modes with RipURQ, URQ_DOS and AkURQ.
+	+ Changed: Whitespace characters in variable names are now only supported in compatibility modes with RipURQ, URQ_DOS, AkURQ, and UrqW 1.x.
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true.
 	+ Changed: The values of the system variables `hide_*` and `instr_leave_spc` are now implicitly converted to a boolean value during evaluation, according to URQL standard coercion rules.
