@@ -287,14 +287,10 @@ function RecursiveDescentEvaluator(str) {
             var right = parseAddSub();
             var res = false;
             if (op === '=') {
-                if ((typeof value === 'string') && (typeof right === 'string')) {
-                    res = value.toLowerCase() == right.toLowerCase();
-                } else {
-                    res = value == right;
-                }
+                res = value == right;
             } else if (op === '==') {
                 if ((typeof value === 'string') && (typeof right === 'string')) {
-                    var reg = new RegExp('^' + right.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$', 'i');
+                    var reg = new RegExp('^' + right.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$');
                     res = value.search(reg) != -1;
                 } else {
                     res = value == right;
@@ -653,16 +649,40 @@ function ShuntingYardEvaluator(str) {
                             break;
                         case '==':
                             if ((typeof b == 'string') && (typeof a == 'string')) {
-                                var reg = new RegExp('^' + a.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$', 'i');
+                                if (Game.getVar('urq_mode') !== 'akurq') {
+                                    b = b.toLowerCase();
+                                    a = a.toLowerCase();
+                                }
+                                var reg = new RegExp('^' + a.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&").replace(/\\\*/g, '.*').replace(/\\\?/g, '.') + '$');
                                 result = b.search(reg) != -1;
                             } else {
+                                if (Game.getVar('urq_mode') === 'dosurq') {
+                                    if (typeof b === 'string') {
+                                        b = b.length;
+                                    }
+                                    if (typeof a === 'string') {
+                                        a = a.length;
+                                    }
+                                }
                                 result = b == a;
                             }
                             break;
                         case '=':
                             if ((typeof b == 'string') && (typeof a == 'string')) {
-                                result = b.toLowerCase() == a.toLowerCase();
+                                if (Game.getVar('urq_mode') !== 'akurq') {
+                                    b = b.toLowerCase();
+                                    a = a.toLowerCase();
+                                }
+                                result = b == a;
                             } else {
+                                if (Game.getVar('urq_mode') === 'dosurq') {
+                                    if (typeof b === 'string') {
+                                        b = b.length;
+                                    }
+                                    if (typeof a === 'string') {
+                                        a = a.length;
+                                    }
+                                }
                                 result = b == a;
                             }
                             break;
