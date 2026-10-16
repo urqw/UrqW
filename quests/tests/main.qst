@@ -201,12 +201,22 @@ if infinity=infinity then proc passed else proc failed
 pln infinity=infinity =##62$ true: #status$
 if infinity>1000000 then proc passed else proc failed
 pln infinity>1000000 =##62$ true: #status$
+if "5"=5 then proc passed else proc failed
+pln "5"=5 =##62$ true: #status$
+if "5"==5 then proc passed else proc failed
+pln "5"==5 =##62$ true: #status$
+if "5"===5 then proc failed else proc passed
+pln "5"===5 =##62$ false: #status$
 if "abc"=="a?c" then proc passed else proc failed
 pln "abc"=="a?c" =##62$ true: #status$
 if "abc"=="a*" then proc passed else proc failed
 pln "abc"=="a*" =##62$ true: #status$
-if "abc"=="ABC" then proc passed else proc failed
-pln "abc"=="ABC" =##62$ true: #status$
+if "abc"=="ABC" then proc failed else proc passed
+pln "abc"=="ABC" =##62$ false: #status$
+if 1 = true then proc passed else proc failed
+pln 1 = true =##62$ true: #status$
+if 1 === true then proc failed else proc passed
+pln 1 === true =##62$ false: #status$
 
 pln <h4>Logical</h4>
 x = 1

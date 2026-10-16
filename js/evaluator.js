@@ -121,6 +121,7 @@ function RecursiveDescentEvaluator(str) {
             var remaining = input.substring(i);
             
             // Handle multi-character operators
+            if (remaining.startsWith('===')) { result.push({ type: 'OPERATOR', value: '===' }); i += 3; continue; }
             if (remaining.startsWith('&&')) { result.push({ type: 'OPERATOR', value: '&&' }); i += 2; continue; }
             if (remaining.startsWith('||')) { result.push({ type: 'OPERATOR', value: '||' }); i += 2; continue; }
             if (remaining.startsWith('==')) { result.push({ type: 'OPERATOR', value: '==' }); i += 2; continue; }
@@ -280,8 +281,9 @@ function RecursiveDescentEvaluator(str) {
             var t = peek();
             if (!t || t.type !== 'OPERATOR') break;
             var op = t.value;
-            if (op !== '<' && op !== '>' && op !== '<=' && op !== '>=' && 
-                op !== '==' && op !== '=' && op !== '!=' && op !== '<>') break;
+            if (op !== '<' && op !== '>' && op !== '<=' && op !== '>=' &&
+                op !== '==' && op !== '=' && op !== '!=' && op !== '<>' &&
+                op !== '===') break;
             
             consume('OPERATOR');
             var right = parseAddSub();
@@ -295,6 +297,8 @@ function RecursiveDescentEvaluator(str) {
                 } else {
                     res = value == right;
                 }
+            } if (op === '===') {
+                res = value === right;
             } else if (op === '!=' || op === '<>') {
                 if ((typeof value === 'string') && (typeof right === 'string')) {
                     res = value.toLowerCase() != right.toLowerCase();
