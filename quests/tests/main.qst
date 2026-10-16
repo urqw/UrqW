@@ -407,10 +407,10 @@ arr = "[1]"
 pln let arr =##62$ #arr$
 arr = JavaScript(arr + ";")
 x = ArrayAdd(arr, 2)
-if x = 2 and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,2]" then proc passed else proc failed
+if x = 2 and JSONStringify(arr) = "[1,2]" then proc passed else proc failed
 pln ArrayAdd(arr, 2) =##62$ 2 and arr =##62$ [1,2]: #status$
 x = ArrayAdd(arr, "3", 4)
-if x = 4 and JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,2,"3",4]' then proc passed else proc failed
+if x = 4 and JSONStringify(arr) = '[1,2,"3",4]' then proc passed else proc failed
 pln ArrayAdd(arr, "3", 4) =##62$ 4 and arr =##62$ [1,2,"3",4]: #status$
 arr1 = ArrayCreate()
 ArrayAdd(arr1, 1, 2, 3)
@@ -419,28 +419,28 @@ ArraySet(arr1, 2, 0)
 if ArrayGet(arr1, 2) = 0 and ArrayGet(arr2, 2) = 2 then proc passed else proc failed
 pln ArrayCopy: #status$
 arr = ArrayCreate()
-if JavaScript("JSON.stringify(Game.vars['arr']);") = "[]" then proc passed else proc failed
+if JSONStringify(arr) = "[]" then proc passed else proc failed
 pln ArrayCreate() =##62$ []: #status$
 arr = ArrayCreate(2)
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '["",""]' then proc passed else proc failed
+if JSONStringify(arr) = '["",""]' then proc passed else proc failed
 pln ArrayCreate(2) =##62$ ["",""]: #status$
 arr = ArrayCreate(3, 0)
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '[0,0,0]' then proc passed else proc failed
+if JSONStringify(arr) = '[0,0,0]' then proc passed else proc failed
 pln ArrayCreate(3, 0) =##62$ [0,0,0]: #status$
 arr = ArrayCreate('[1,"two"]')
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,"two"]' then proc passed else proc failed
+if JSONStringify(arr) = '[1,"two"]' then proc passed else proc failed
 pln ArrayCreate('[1,"two"]') =##62$ [1,"two"]: #status$
 arr = "[1,2,3,4,5,6,7]"
 pln let arr =##62$ #arr$
 arr = JavaScript(arr + ";")
 x = ArrayDel(arr, 6)
-if JavaScript("JSON.stringify(Game.vars['x']);") = "[6,7]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,2,3,4,5]" then proc passed else proc failed
+if JSONStringify(x) = "[6,7]" and JSONStringify(arr) = "[1,2,3,4,5]" then proc passed else proc failed
 pln ArrayDel(arr, 6) =##62$ [6,7] and arr =##62$ [1,2,3,4,5]: #status$
 x = ArrayDel(arr, -4, 2)
-if JavaScript("JSON.stringify(Game.vars['x']);") = "[2,3]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,4,5]" then proc passed else proc failed
+if JSONStringify(x) = "[2,3]" and JSONStringify(arr) = "[1,4,5]" then proc passed else proc failed
 pln ArrayDel(arr, -4, 2) =##62$ [2,3] and arr =##62$ [1,4,5]: #status$
 x = ArrayDel(arr, 2, 1)
-if JavaScript("JSON.stringify(Game.vars['x']);") = "[4]" and JavaScript("JSON.stringify(Game.vars['arr']);") = "[1,5]" then proc passed else proc failed
+if JSONStringify(x) = "[4]" and JSONStringify(arr) = "[1,5]" then proc passed else proc failed
 pln ArrayDel(arr, 2, 1) =##62$ [4] and arr =##62$ [1,5]: #status$
 arr = '["a",["b","c",["d","e","f"]]]'
 pln let arr =##62$ #arr$
@@ -464,10 +464,10 @@ arr = '["a",["b","c",["d","e","f"]]]'
 pln Let arr =##62$ #arr$
 arr = JavaScript(arr + ";")
 ArraySet(arr, 1, 1)
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,["b","c",["d","e","f"]]]' then proc passed else proc failed
+if JSONStringify(arr) = '[1,["b","c",["d","e","f"]]]' then proc passed else proc failed
 pln ArraySet(arr, 1, 1) =##62$ [1,["b","c",["d","e","f"]]]: #status$
 ArraySet(arr, 2, 3, -1, "x")
-if JavaScript("JSON.stringify(Game.vars['arr']);") = '[1,["b","c",["d","e","x"]]]' then proc passed else proc failed
+if JSONStringify(arr) = '[1,["b","c",["d","e","x"]]]' then proc passed else proc failed
 pln ArraySet(arr, 2, 3, -1, "x") =##62$ [1,["b","c",["d","e","x"]]]: #status$
 
 pln <h4>Type Conversion</h4>
@@ -589,17 +589,17 @@ ObjectSet(obj1, "key", "new value")
 if ObjectGet(obj1, "key") = "new value" and ObjectGet(obj2, "key") = "value" then proc passed else proc failed
 pln ObjectCopy: #status$
 obj = ObjectCreate()
-if JavaScript("JSON.stringify(Game.vars['obj']);") = "{}" then proc passed else proc failed
+if JSONStringify(obj) = "{}" then proc passed else proc failed
 pln ObjectCreate() =##62$ {}: #status$
 obj = ObjectCreate('{"key": "value"}')
-if JavaScript("JSON.stringify(Game.vars['obj']);") = '{"key":"value"}' then proc passed else proc failed
+if JSONStringify(obj) = '{"key":"value"}' then proc passed else proc failed
 pln ObjectCreate('{"key": "value"}') =##62$ {"key":"value"}: #status$
 obj = '{"key":"value"}'
 pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectDel(obj, "key")
-if not error and x = true and JavaScript("JSON.stringify(Game.vars['obj']);") = "{}" then proc passed else proc failed
+if not error and x = true and JSONStringify(obj) = "{}" then proc passed else proc failed
 pln ObjectDel(obj, "key") =##62$ true and obj =##62$ {} and error =##62$ false: #status$
 error = 0
 x = ObjectDel(obj, "non-existent key")
@@ -609,7 +609,7 @@ obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 x = ObjectEntries(obj)
-if JavaScript("JSON.stringify(Game.vars['x']);") = '[["key1",1],["key2",2]]' then proc passed else proc failed
+if JSONStringify(x) = '[["key1",1],["key2",2]]' then proc passed else proc failed
 pln ObjectEntries(obj) =##62$ '##91$["key1",1],["key2",2]##93$': #status$
 obj = '{"k1":"a","k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}'
 pln let obj =##62$ #obj$
@@ -634,28 +634,28 @@ obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 x = ObjectKeys(obj)
-if JavaScript("JSON.stringify(Game.vars['x']);") = '["key1","key2"]' then proc passed else proc failed
+if JSONStringify(x) = '["key1","key2"]' then proc passed else proc failed
 pln ObjectKeys(obj) =##62$ ["key1","key2"]: #status$
 obj = '{"k1":"a","k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}'
 pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectSet(obj, "k1", 1)
-if not error and x = true and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
+if not error and x = true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
 pln ObjectSet(obj, "k1", 1) =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
 error = 1
 x = ObjectSet(obj, "k2", "k3", "k1", "x")
-if not error and x = true and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+if not error and x = true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
 pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
 error = 0
 x = ObjectSet(obj, "k2", "k1", "k1", "x")
-if error = 1 and x = false and JavaScript("JSON.stringify(Game.vars['obj']);") = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+if error = 1 and x = false and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
 pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ false and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 x = ObjectValues(obj)
-if JavaScript("JSON.stringify(Game.vars['x']);") = '[1,2]' then proc passed else proc failed
+if JSONStringify(x) = '[1,2]' then proc passed else proc failed
 pln ObjectValues(obj) =##62$ [1,2]: #status$
 
 pln <h4>String</h4>
