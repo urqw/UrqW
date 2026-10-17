@@ -60,14 +60,6 @@ var functions = {
         return Math.trunc(num);
     },
 
-    // Inverts the Boolean representation of a value.
-    invert(val) {
-        if (arguments.length !== 1) {
-            throw new Error('The invert() function takes 1 argument.');
-        }
-        return !toBoolean(val) ? 1 : 0;
-    },
-
     // Calculates the natural logarithm of a number.
     log(num) {
         if (arguments.length !== 1) {
