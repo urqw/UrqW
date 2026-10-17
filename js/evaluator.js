@@ -783,11 +783,7 @@ function ShuntingYardEvaluator(str) {
  * @returns {boolean}
  */
 function toBoolean(value) {
-    return (
-        value === true ||
-        (typeof value === 'number' && value !== 0 && !Number.isNaN(value)) ||
-        (typeof value === 'string' && value.length > 0)
-    );
+    return Boolean(value);
 }
 
 /**

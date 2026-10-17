@@ -113,6 +113,11 @@ var functions = {
         if (arguments.length < 1 || arguments.length > 2) {
             throw new Error('The round() function takes 1 or 2 arguments.');
         }
+        if (arguments.length === 2) {
+            if (!Number.isInteger(decimals)) {
+                throw new Error('Invalid argument #2 for function round(): it must be an integer.');
+            }
+        }
         var factor = 10 ** decimals;
         return Math.round(num * factor) / factor;
     },
@@ -378,11 +383,11 @@ var functions = {
         filePath = String(filePath);
         if (!filePath) {
             setGlobalError(1, 'The file path is empty.');
-            return 0;
+            return false;
         }
         var fileURL = getGameFileURL(normalizeInternalPath(filePath));
         if (!fileURL) {
-            return 0;
+            return false;
         }
         var existence = false;
             if (files === null) {
@@ -400,7 +405,7 @@ var functions = {
         } else {
             existence = true;
         }
-        return existence ? 1 : 0;
+        return existence;
     },
 
     // Returns the relative URL of a file from a game package.

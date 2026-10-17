@@ -411,12 +411,24 @@ if Min(1, 2, -3, 4, 5) = -3 then proc passed else proc failed
 pln Min(1, 2, -3, 4, 5) =##62$ -3: #status$
 if Pow(3, 4) = 81 then proc passed else proc failed
 pln Pow(3, 4) =##62$ 81: #status$
+error = 0
+x = Pow(-4, 0.5)
+if error === 1 then proc passed else proc failed
+pln Pow(-4, 0.5) =##62$ error = 1: #status$
 if Round(2.5) = 3 then proc passed else proc failed
 pln Round(2.5) =##62$ 3: #status$
 if Round(2.125, 2) = 2.13 then proc passed else proc failed
 pln Round(2.125, 2) =##62$ 2.13: #status$
+if Round(123.4, -2) = 100 then proc passed else proc failed
+pln Round(123.4, -2) =##62$ 100: #status$
+if Round(123.4, -5) === 0 then proc passed else proc failed
+pln Round(123.4, -5) =##62$ 0: #status$
 if Sqrt(144) = 12 then proc passed else proc failed
 pln Sqrt(144) =##62$ 12: #status$
+error = 0
+x = Sqrt(-4)
+if error === 1 then proc passed else proc failed
+pln Sqrt(-4) =##62$ error = 1: #status$
 
 pln <h4>Array</h4>
 arr = "[1]"
@@ -487,33 +499,46 @@ if JSONStringify(arr) = '[1,["b","c",["d","e","x"]]]' then proc passed else proc
 pln ArraySet(arr, 2, 3, -1, "x") =##62$ [1,["b","c",["d","e","x"]]]: #status$
 
 pln <h4>Type Conversion</h4>
-if Boolean(5) = 1 then proc passed else proc failed
-pln Boolean(5) =##62$ 1: #status$
-if Boolean(-5) = 1 then proc passed else proc failed
-pln Boolean(-5) =##62$ 1: #status$
-if Boolean(0) = 0 then proc passed else proc failed
-pln Boolean(0) =##62$ 0: #status$
-if Boolean("abc") = 1 then proc passed else proc failed
-pln Boolean("abc") =##62$ 1: #status$
-if Boolean("") = 0 then proc passed else proc failed
-pln Boolean("") =##62$ 0: #status$
+arr = "[]"
+obj = "{}"
+pln Let arr = #arr$ and obj = #obj$
+arr = JavaScript(arr + ";")
+obj = JavaScript(obj + ";")
+if Boolean(arr) === true then proc passed else proc failed
+pln Boolean(arr) =##62$ true: #status$
+if Boolean(obj) === true then proc passed else proc failed
+pln Boolean(obj) =##62$ true: #status$
+if Boolean(5) === true then proc passed else proc failed
+pln Boolean(5) =##62$ true: #status$
+if Boolean(-5) === true then proc passed else proc failed
+pln Boolean(-5) =##62$ true: #status$
+if Boolean(0) === false then proc passed else proc failed
+pln Boolean(0) =##62$ false: #status$
+if Boolean(-0) === false then proc passed else proc failed
+pln Boolean(-0) =##62$ false: #status$
+if Boolean(NaN) === false then proc passed else proc failed
+pln Boolean(NaN) =##62$ false: #status$
+if Boolean("abc") === true then proc passed else proc failed
+pln Boolean("abc") =##62$ true: #status$
+if Boolean("") === false then proc passed else proc failed
+pln Boolean("") =##62$ false: #status$
 if Number("2.5") = 2.5 then proc passed else proc failed
 pln Number("2.5") =##62$ 2.5: #status$
 error = 0
 x = Number("2,5")
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number("2,5") =##62$ error = 1: #status$
 error = 0
 x = Number("abc")
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number("abc") =##62$ error = 1: #status$
 error = 0
 x = Number(" ")
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number(" ") =##62$ error = 1: #status$
 error = 0
 x = Number("")
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number("") =##62$ error = 1: #status$
 if Number(" 5 ") = 5 then proc passed else proc failed
 pln Number(" 5 ") =##62$ 5: #status$
@@ -528,17 +553,17 @@ arr3 = JavaScript(arr3 + ";")
 obj = JavaScript(obj + ";")
 error = 0
 x = Number(arr1)
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number(arr1) =##62$ error = 1: #status$
 if Number(arr2) = 1 then proc passed else proc failed
 pln Number(arr2) =##62$ 1: #status$
 error = 0
 x = Number(arr3)
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number(arr3) =##62$ error = 1: #status$
 error = 0
 x = Number(obj)
-if error = 1 then proc passed else proc failed
+if error === 1 then proc passed else proc failed
 pln Number(obj) =##62$ error = 1: #status$
 if String(2.5) = "2.5" then proc passed else proc failed
 pln String(2.5) =##62$ "2.5": #status$
@@ -547,15 +572,19 @@ pln <h4>File</h4>
 if FileContent("test.txt") = "test 🧪" then proc passed else proc failed
 pln FileContent("test.txt") =##62$ "test 🧪": #status$
 error = 0
-if FileContent("non-existent_file.txt") = "" and error = 1 then proc passed else proc failed
+if FileContent("non-existent_file.txt") = "" and error === 1 then proc passed else proc failed
 pln FileContent("non-existent_file.txt") =##62$ "" and error = 1: #status$
-if FileExists("test.txt") = 1 then proc passed else proc failed
-pln FileExists("test.txt") =##62$ 1: #status$
-if FileExists("non-existent_file.txt") = 0 then proc passed else proc failed
-pln FileExists("non-existent_file.txt") =##62$ 0: #status$
+if FileExists("test.txt") === true then proc passed else proc failed
+pln FileExists("test.txt") =##62$ true: #status$
+if FileExists("non-existent_file.txt") === false then proc passed else proc failed
+pln FileExists("non-existent_file.txt") =##62$ false: #status$
 url = FileURL("test.txt")
 if StringLen(url) >0 then proc passed else proc failed
-pln StringLen(FileURL("test.txt")) ##62$ 0 =##62$ true (URL: #url$): #status$
+pln FileURL("test.txt"): #status$
+error = 0
+x = FileURL("")
+if error === 1 then proc passed else proc failed
+pln FileURL("") =##62$ error = 1: #status$
 
 pln <h4>Checking</h4>
 declared_variable = 1
