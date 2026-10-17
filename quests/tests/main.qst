@@ -249,14 +249,24 @@ if x>y||y>z then proc failed else proc passed
 pln x##62$y##124$##124$y##62$z =##62$ false: #status$
 if not x then proc failed else proc passed
 pln not x =##62$ false: #status$
+if !x then proc failed else proc passed
+pln !x =##62$ false: #status$
 if not unknown_variable then proc passed else proc failed
 pln not unknown_variable =##62$ true: #status$
+if ! unknown_variable then proc passed else proc failed
+pln ! unknown_variable =##62$ true: #status$
 if not (not x) then proc passed else proc failed
 pln not (not x) =##62$ true: #status$
+if !(!x) then proc passed else proc failed
+pln !(!x) =##62$ true: #status$
 if not true then proc failed else proc passed
 pln not true =##62$ false: #status$
+if !true then proc failed else proc passed
+pln !true =##62$ false: #status$
 if not false then proc passed else proc failed
 pln not false =##62$ true: #status$
+if ! false then proc passed else proc failed
+pln ! false =##62$ true: #status$
 
 pln <h4>Conditional</h4>
 x = 1

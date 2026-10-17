@@ -133,7 +133,7 @@ function RecursiveDescentEvaluator(str) {
             if (remaining.startsWith('>=')) { result.push({ type: 'OPERATOR', value: '>=' }); i += 2; continue; }
 
             // Handle single-character operators
-            if (['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '='].indexOf(char) !== -1) {
+            if (['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '=', '!'].indexOf(char) !== -1) {
                 result.push({ type: 'OPERATOR', value: char });
                 i++;
                 continue;
@@ -365,7 +365,7 @@ function RecursiveDescentEvaluator(str) {
                 var op = parseUnary();
                 return (t.value === '-') ? -op : +op;
             }
-            if (t.value === 'not') {
+            if (t.value === 'not' || t.value === '!') {
                 consume('OPERATOR');
                 var op = parseUnary();
                 return !toBoolean(op);

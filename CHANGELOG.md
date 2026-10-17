@@ -16,6 +16,7 @@
 	+ Added: The clsl operator to clear links from the text.
 	+ Added: The varkill operator to delete a specific variable or all variables.
 	+ Added: Exponentiation operator `^` (right-associative).
+	+ Added: Negation operator `!` as a full synonym for `not` (only without special compatibility modes).
 	+ Added: The backslash character in string literals escapes quotes and itself (only without special compatibility modes).
 	+ Added: System variables:
 		- date - get the current date (only without special compatibility modes).
