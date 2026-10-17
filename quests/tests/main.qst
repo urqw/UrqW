@@ -213,6 +213,14 @@ if "abc"=="a*" then proc passed else proc failed
 pln "abc"=="a*" =##62$ true: #status$
 if "abc"=="ABC" then proc failed else proc passed
 pln "abc"=="ABC" =##62$ false: #status$
+if "one \"two\"" === 'one "two"' then proc passed else proc failed
+pln "one \"two\"" === 'one "two"' =##62$ true: #status$
+if 'one \'two\'' === "one 'two'" then proc passed else proc failed
+pln 'one \'two\'' === "one 'two'" =##62$ true: #status$
+if "one \'two\'" === "one 'two'" then proc passed else proc failed
+pln "one \'two\'" === "one 'two'" =##62$ true: #status$
+if "one\\\\\\" === JavaScript("String.fromCodePoint(111, 110, 101, 92, 92, 92);") then proc passed else proc failed
+pln "one\\\\\\": #status$
 if 1 = true then proc passed else proc failed
 pln 1 = true =##62$ true: #status$
 if 1 === true then proc failed else proc passed

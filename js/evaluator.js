@@ -65,23 +65,26 @@ function RecursiveDescentEvaluator(str) {
 
                         var next = input[i + 1];
 
-                        // CASE A: Escaping the closing quote
+                        // CASE A: Escaping the closing quote (e.g., "He said \"Hello\"" or 'It\'s fine')
                         if (next === quote) {
                             resultChars.push(next);
                             i += 2; 
                             continue;
                         }
 
-                        // CASE B: Escaping the backslash itself
+                        // CASE B: Escaping the backslash itself (e.g., "C:\\Users")
                         if (next === '\\') {
                             resultChars.push('\\'); 
                             i += 2; 
                             continue;
                         }
 
-                        // CASE C: Any other character (leave as-is)
-                        resultChars.push(current);
-                        i++; 
+                        // CASE C: Any other character (Standard JS behavior)
+                        // In JS, a backslash before any other character simply escapes it,
+                        // effectively removing the backslash from the final string.
+                        // Example: "a\b" -> "ab", "a\'" -> "a'"
+                        resultChars.push(next);
+                        i += 2; // Skip both the backslash and the escaped character
                         continue;
                     }
 
@@ -98,7 +101,6 @@ function RecursiveDescentEvaluator(str) {
                 }
 
                 // ERROR CASE 2: Check if string was actually closed
-                // If the end of input (i >= len) AND the flag 'closed' is false
                 if (!closed) {
                     throw new Error("Unclosed string literal");
                 }
