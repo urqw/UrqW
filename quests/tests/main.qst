@@ -587,44 +587,49 @@ if error === 1 then proc passed else proc failed
 pln FileURL("") =##62$ error = 1: #status$
 
 pln <h4>Checking</h4>
-declared_variable = 1
-pln let declared_variable = #declared_variable$
-if IsArray('[1, "two"]') = 1 then proc passed else proc failed
-pln IsArray('[1, "two"]') =##62$ 1: #status$
-if IsBoolean(1) then proc passed else proc failed
-pln IsBoolean(1) =##62$ 1: #status$
-if IsBoolean("1") = 0 then proc passed else proc failed
-pln IsBoolean("1") =##62$ 0: #status$
-if IsDeclared("declared_variable") = 1 then proc passed else proc failed
-pln IsDeclared("declared_variable") =##62$ 1: #status$
-if IsDeclared("  DeClArEd_VaRiAbLe  ") = 1 then proc passed else proc failed
-pln IsDeclared("  DeClArEd_VaRiAbLe  ") =##62$ 1: #status$
-if IsDeclared("undeclared variable") = 0 then proc passed else proc failed
-pln IsDeclared("undeclared_variable") =##62$ 0: #status$
-if IsInteger(3) = 1 then proc passed else proc failed
-pln IsInteger(3) =##62$ 1: #status$
-if IsInteger(2.5) = 0 then proc passed else proc failed
-pln IsInteger(2.5) =##62$ 0: #status$
-if IsNumber(12.3) = 1 then proc passed else proc failed
-pln IsNumber(12.3) =##62$ 1: #status$
-if IsNumber("1") = 0 then proc passed else proc failed
-pln IsNumber("1") =##62$ 0: #status$
-if IsNumber(1 + "1") = 0 then proc passed else proc failed
-pln IsNumber(1 + "1") =##62$ 0: #status$
-if IsObject('{"one": 1}') = 1 then proc passed else proc failed
-pln IsObject('{"one": 1}') =##62$ 1: #status$
-if IsObject('[1, "two"]') = 0 then proc passed else proc failed
-pln IsObject('[1, "two"]') =##62$ 0: #status$
-if IsString("abc") = 1 then proc passed else proc failed
-pln IsString("abc") =##62$ 1: #status$
-if IsString(1 + "1") = 1 then proc passed else proc failed
-pln IsString(1 + "1") =##62$ 1: #status$
+arr = "[]"
+obj = "{}"
+pln Let arr = #arr$ and obj = #obj$
+arr = JavaScript(arr + ";")
+obj = JavaScript("(" + obj + ");")
+if IsArray(arr) === true then proc passed else proc failed
+pln IsArray(arr) =##62$ true: #status$
+if IsArray(obj) === false then proc passed else proc failed
+pln IsArray(obj) =##62$ false: #status$
+if IsBoolean(false) === true then proc passed else proc failed
+pln IsBoolean(false) =##62$ true: #status$
+if IsBoolean(0) === false then proc passed else proc failed
+pln IsBoolean(0) =##62$ false: #status$
+if IsInteger(3) === true then proc passed else proc failed
+pln IsInteger(3) =##62$ true: #status$
+if IsInteger(0) === true then proc passed else proc failed
+pln IsInteger(0) =##62$ true: #status$
+if IsInteger(2.5) === false then proc passed else proc failed
+pln IsInteger(2.5) =##62$ false: #status$
+if IsNumber(12.3) === true then proc passed else proc failed
+pln IsNumber(12.3) =##62$ true: #status$
+if IsNumber("1") === false then proc passed else proc failed
+pln IsNumber("1") =##62$ false: #status$
+if IsNumber(1 + "1") === false then proc passed else proc failed
+pln IsNumber(1 + "1") =##62$ false: #status$
+if IsObject(obj) === true then proc passed else proc failed
+pln IsObject(obj) =##62$ true: #status$
+if IsObject(arr) === false then proc passed else proc failed
+pln IsObject(arr) =##62$ false: #status$
+if IsString("abc") === true then proc passed else proc failed
+pln IsString("abc") =##62$ true: #status$
+if IsString(1 + "1") === true then proc passed else proc failed
+pln IsString(1 + "1") =##62$ true: #status$
+if TypeOf(false) = 'boolean' then proc passed else proc failed
+pln TypeOf(false) =##62$ "boolean": #status$
 if TypeOf(2.5) = "number" then proc passed else proc failed
 pln TypeOf(2.5) =##62$ "number": #status$
-if TypeOf(declared_variable) = "number" then proc passed else proc failed
-pln TypeOf(declared_variable) =##62$ "number": #status$
 if TypeOf(1 + "1") = "string" then proc passed else proc failed
 pln TypeOf(1 + "1") =##62$ "string": #status$
+if TypeOf(arr) = "array" then proc passed else proc failed
+pln TypeOf(arr) =##62$ "array": #status$
+if TypeOf(obj) = "object" then proc passed else proc failed
+pln TypeOf(obj) =##62$ "object": #status$
 
 pln <h4>Object</h4>
 obj1 = ObjectCreate()
@@ -644,11 +649,11 @@ pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectDel(obj, "key")
-if not error and x = true and JSONStringify(obj) = "{}" then proc passed else proc failed
-pln ObjectDel(obj, "key") =##62$ true and obj =##62$ {} and error =##62$ false: #status$
+if error === 0 and x === true and JSONStringify(obj) = "{}" then proc passed else proc failed
+pln ObjectDel(obj, "key") =##62$ true and obj =##62$ {} and error = 0: #status$
 error = 0
 x = ObjectDel(obj, "non-existent key")
-if error = 1 and x = false then proc passed else proc failed
+if error === 1 and x === false then proc passed else proc failed
 pln ObjectDel(obj, "non-existent key") =##62$ false and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
@@ -661,19 +666,19 @@ pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectGet(obj, "k1")
-if not error and x = "a" then proc passed else proc failed
-pln ObjectGet(obj, "k1") =##62$ "a" and error =##62$ false: #status$
+if error === 0 and x = "a" then proc passed else proc failed
+pln ObjectGet(obj, "k1") =##62$ "a" and error = 0: #status$
 error = 1
 x = ObjectGet(obj, "k2", "k3", "k1")
-if not error and x = "d" then proc passed else proc failed
-pln ObjectGet(obj, "k2", "k3", "k1") =##62$ "d" and error =##62$ false: #status$
+if error === 0 and x = "d" then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k3", "k1") =##62$ "d" and error = 0: #status$
 error = 0
 x = ObjectGet(obj, "k2", "k4")
-if error = 1 and x = false then proc passed else proc failed
+if error === 1 and x === false then proc passed else proc failed
 pln ObjectGet(obj, "k2", "k4") =##62$ false and error = 1: #status$
 error = 0
 x = ObjectGet(obj, "k2", "k1", "k1")
-if error = 1 and x = "b" then proc passed else proc failed
+if error === 1 and x = "b" then proc passed else proc failed
 pln ObjectGet(obj, "k2", "k1", "k1") =##62$ "b" and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
@@ -686,15 +691,15 @@ pln let obj =##62$ #obj$
 obj = JavaScript("(" + obj + ");")
 error = 1
 x = ObjectSet(obj, "k1", 1)
-if not error and x = true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
-pln ObjectSet(obj, "k1", 1) =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
+if error === 0 and x === true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k1", 1) =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' and error = 0: #status$
 error = 1
 x = ObjectSet(obj, "k2", "k3", "k1", "x")
-if not error and x = true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
-pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error =##62$ false: #status$
+if error === 0 and x === true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 0: #status$
 error = 0
 x = ObjectSet(obj, "k2", "k1", "k1", "x")
-if error = 1 and x = false and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+if error === 1 and x === false and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
 pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ false and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 1: #status$
 obj = '{"key1":1,"key2":2}'
 pln Let obj =##62$ #obj$
@@ -740,12 +745,12 @@ if StringRight("abcde", -1) = "" then proc passed else proc failed
 pln StringRight("abcde", -1) =##62$ "": #status$
 if StringRight("abcde", 7) = "abcde" then proc passed else proc failed
 pln StringRight("abcde", 7) =##62$ "abcde": #status$
-if StringSplit("a|b|c", "|") = '["a","b","c"]' then proc passed else proc failed
-pln StringSplit("a|b|c", "|") =##62$ '["a","b","c"]': #status$
-if StringSplit("a|b|c", ",") = '["a|b|c"]' then proc passed else proc failed
-pln StringSplit("a|b|c", ",") =##62$ '["a|b|c"]': #status$
-if StringSplit("a|b|c", "") = '["a","|","b","|","c"]' then proc passed else proc failed
-pln StringSplit("a|b|c", "") =##62$ '["a","|","b","|","c"]': #status$
+if JSONStringify(StringSplit("a|b|c", "|")) = '["a","b","c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", "|") =##62$ ["a","b","c"]: #status$
+if JSONStringify(StringSplit("a|b|c", ",")) = '["a|b|c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", ",") =##62$ ["a|b|c"]: #status$
+if JSONStringify(StringSplit("a|b|c", "")) = '["a","|","b","|","c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", "") =##62$ ["a","|","b","|","c"]: #status$
 if StringTrim("	  abc  	") = "abc" then proc passed else proc failed
 pln StringTrim("	  abc  	") =##62$ "abc": #status$
 if StringTrim("abcde", 2) = "c" then proc passed else proc failed

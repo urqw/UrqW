@@ -427,28 +427,20 @@ var functions = {
      * Value and variable state check functions
      */
 
-    // Checks whether a value has the derived type array.
+    // Checks whether a value has the reference type array.
     isarray(val) {
         if (arguments.length !== 1) {
             throw new Error('The isarray() function takes 1 argument.');
         }
-        if (typeof val !== 'string') {
-            return 0;
-        }
-        try {
-            var parsed = JSON.parse(val);
-            return Array.isArray(parsed) ? 1 : 0;
-        } catch (e) {
-            return 0;
-        }
+        return Array.isArray(val);
     },
 
-    // Checks whether a value has the derived type boolean.
+    // Checks whether a value has the primitive type boolean.
     isboolean(val) {
         if (arguments.length !== 1) {
             throw new Error('The isboolean() function takes 1 argument.');
         }
-        return (val === 1 || val === 0) ? 1 : 0;
+        return typeof val === 'boolean';
     },
 
     // Checks whether a variable with the given name is defined.
@@ -469,7 +461,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The isinteger() function takes 1 argument.');
         }
-        return Number.isInteger(val) ? 1 : 0;
+        return Number.isInteger(val);
     },
 
     // Checks whether a value has the primitive type number.
@@ -477,23 +469,15 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The isnumber() function takes 1 argument.');
         }
-        return typeof val === 'number' ? 1 : 0;
+        return typeof val === 'number';
     },
 
-    // Checks whether a value has the derived type object.
+    // Checks whether a value has the reference type object.
     isobject(val) {
         if (arguments.length !== 1) {
             throw new Error('The isobject() function takes 1 argument.');
         }
-        if (typeof val !== 'string') {
-            return 0;
-        }
-        try {
-            var parsed = JSON.parse(val);
-            return (parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed)) ? 1 : 0;
-        } catch (e) {
-            return 0;
-        }
+        return (val !== null && typeof val === 'object' && !Array.isArray(val));
     },
 
     // Checks whether a value has the primitive type string.
@@ -501,7 +485,7 @@ var functions = {
         if (arguments.length !== 1) {
             throw new Error('The isstring() function takes 1 argument.');
         }
-        return typeof val === 'string' ? 1 : 0;
+        return typeof val === 'string';
     },
 
     // Returns the type of a value.
@@ -692,7 +676,7 @@ var functions = {
         if (arguments.length !== 2) {
             throw new Error('The stringleft() function takes 2 arguments.');
         }
-        if (typeof count !== 'number' || !Number.isInteger(count)) {
+        if (!Number.isInteger(count)) {
             throw new Error('Invalid argument #2 for function stringleft(): it must be an integer.');
         }
         if (count <= 0) {
@@ -754,7 +738,7 @@ var functions = {
         if (arguments.length < 2 || arguments.length > 3) {
             throw new Error('The stringmid() function takes 2 or 3 arguments.');
         }
-        if (typeof start !== 'number' || !Number.isInteger(start)) {
+        if (!Number.isInteger(start)) {
             throw new Error('Invalid argument #2 for function stringmid(): it must be an integer.');
         }
         str = String(str);
@@ -764,7 +748,7 @@ var functions = {
         if (arguments.length === 2) {
             return str.slice(start - 1);
         }
-        if (typeof count !== 'number' || !Number.isInteger(count)) {
+        if (!Number.isInteger(count)) {
             throw new Error('Invalid argument #3 for function stringmid(): it must be an integer.');
         }
         if (count <= 0) {
@@ -782,7 +766,7 @@ var functions = {
         if (arguments.length !== 2) {
             throw new Error('The stringright() function takes 2 arguments.');
         }
-        if (typeof count !== 'number' || !Number.isInteger(count)) {
+        if (!Number.isInteger(count)) {
             throw new Error('Invalid argument #2 for function stringright(): it must be an integer.');
         }
         if (count <= 0) {
@@ -802,8 +786,7 @@ var functions = {
         }
         str = String(str);
         delimiter = String(delimiter);
-        var parts = str.split(delimiter);
-        return JSON.stringify(parts);
+        return str.split(delimiter);
     },
 
     // Trims whitespace characters or a number of characters from the beginning and end of the string.
@@ -815,7 +798,7 @@ var functions = {
         if (arguments.length === 1) {
             return str.trim();
         }
-        if (typeof count !== 'number' || !Number.isInteger(count)) {
+        if (!Number.isInteger(count)) {
             throw new Error('Invalid argument #2 for function stringtrim(): it must be an integer.');
         }
         if (count <= 0) {
@@ -837,7 +820,7 @@ var functions = {
         if (arguments.length === 1) {
             return str.replace(/^\s+/, '');
         }
-        if (typeof count !== 'number' || !Number.isInteger(count)) {
+        if (!Number.isInteger(count)) {
             throw new Error('Invalid argument #2 for function stringtrimleft(): it must be an integer.');
         }
         if (count <= 0) {
@@ -855,7 +838,7 @@ var functions = {
         if (arguments.length === 1) {
             return str.replace(/\s+$/, '');
         }
-        if (typeof count !== 'number' || !Number.isInteger(count)) {
+        if (!Number.isInteger(count)) {
             throw new Error('Invalid argument #2 for function stringtrimright(): it must be an integer.');
         }
         if (count <= 0) {
