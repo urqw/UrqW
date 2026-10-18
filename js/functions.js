@@ -456,12 +456,28 @@ var functions = {
         return exists ? 1 : 0;
     },
 
+    // Checks whether the value is a finite number.
+    isfinite(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isfinite() function takes 1 argument.');
+        }
+        return Number.isFinite(val);
+    },
+
     // Checks whether a value is an integer.
     isinteger(val) {
         if (arguments.length !== 1) {
             throw new Error('The isinteger() function takes 1 argument.');
         }
         return Number.isInteger(val);
+    },
+
+    // Checks whether a value is NaN.
+    isnan(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isnan() function takes 1 argument.');
+        }
+        return Number.isNaN(val);
     },
 
     // Checks whether a value has the primitive type number.

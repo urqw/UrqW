@@ -600,12 +600,26 @@ if IsBoolean(false) === true then proc passed else proc failed
 pln IsBoolean(false) =##62$ true: #status$
 if IsBoolean(0) === false then proc passed else proc failed
 pln IsBoolean(0) =##62$ false: #status$
+if IsFinite(0) === true then proc passed else proc failed
+pln IsFinite(0) =##62$ true: #status$
+if IsFinite("1") === false then proc passed else proc failed
+pln IsFinite("1") =##62$ false: #status$
+if IsFinite(NaN) === false then proc passed else proc failed
+pln IsFinite(NaN) =##62$ false: #status$
+if IsFinite(infinity) === false then proc passed else proc failed
+pln IsFinite(infinity) =##62$ false: #status$
 if IsInteger(3) === true then proc passed else proc failed
 pln IsInteger(3) =##62$ true: #status$
 if IsInteger(0) === true then proc passed else proc failed
 pln IsInteger(0) =##62$ true: #status$
 if IsInteger(2.5) === false then proc passed else proc failed
 pln IsInteger(2.5) =##62$ false: #status$
+if IsNaN(NaN) === true then proc passed else proc failed
+pln IsNaN(NaN) =##62$ true: #status$
+if IsNaN("abc") === false then proc passed else proc failed
+pln IsNaN("abc") =##62$ false: #status$
+if IsNaN(infinity) === false then proc passed else proc failed
+pln IsNaN(infinity) =##62$ false: #status$
 if IsNumber(12.3) === true then proc passed else proc failed
 pln IsNumber(12.3) =##62$ true: #status$
 if IsNumber("1") === false then proc passed else proc failed
