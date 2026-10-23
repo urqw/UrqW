@@ -852,12 +852,10 @@ construct = "##35$%/##36$"
 result = "<br>"
 proc constructs_check
 construct = "##35$##35$42##36$"
-javascript = "new DOMParser().parseFromString('##38$##35$42;', 'text/html').body.textContent;"
-result = javascript
+result = JavaScript("new DOMParser().parseFromString('##38$##35$42;', 'text/html').body.textContent;")
 proc constructs_check
 construct = "##35$##35$8381##36$"
-javascript = "new DOMParser().parseFromString('##38$##35$8381;', 'text/html').body.textContent;"
-result = javascript
+result = JavaScript("new DOMParser().parseFromString('##38$##35$8381;', 'text/html').body.textContent;")
 proc constructs_check
 
 x = 1 & x = x + 1
@@ -890,7 +888,7 @@ end
 
 :constructs_check
 p #construct$:
-javascript = "compareResults(Parser.prototype.openTags(new DOMParser().parseFromString('#construct$', 'text/html').body.textContent), '#result$');"
+JavaScript("compareResults(Parser.prototype.openTags(new DOMParser().parseFromString('#construct$', 'text/html').body.textContent), '#result$');")
 pln #$#status$
 end
 

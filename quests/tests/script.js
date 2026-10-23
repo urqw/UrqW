@@ -12,6 +12,7 @@ functions.jsonstringify = function (val) {
     return JSON.stringify(val);
 };
 
+// Compares the actual and expected results and updates statistical variables.
 window.compareResults = function(actual, expected) {
     const result = actual === expected;
     if (result) {
