@@ -404,6 +404,10 @@ if Log(1) = 0 then proc passed else proc failed
 pln Log(1) =##62$ 0: #status$
 if Log(Exp(3)) = 3 then proc passed else proc failed
 pln Log(Exp(3)) =##62$ 3: #status$
+error = 0
+x = Log(0)
+if x = -infinity and error ===1 then proc passed else proc failed
+pln Log(0) =##62$ -Infinity and error = 1: #status$
 if Log10(100) = 2 then proc passed else proc failed
 pln Log10(100) =##62$ 2: #status$
 if Log2(8) = 3 then proc passed else proc failed

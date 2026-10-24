@@ -442,9 +442,9 @@ function RecursiveDescentEvaluator(str) {
                     
                     var result = func.apply(null, args);
                     
-                    // Handle NaN return values explicitly
-                    if (Number.isNaN(result)) {
-                        var errorDesc = `The ${lower}() function returned NaN. The call was likely made with invalid arguments: ${String(args)}`;
+                    // Handle return number values that are non-finite
+                    if (typeof result === 'number' && !Number.isFinite(result)) {
+                        var errorDesc = `The ${lower}() function returned non-finite number (${String(result)}). The call was likely made with invalid arguments: ${String(args)}`;
                         setGlobalError(1, errorDesc);
                     }
 
