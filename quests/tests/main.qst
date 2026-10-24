@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+/* The file encoding is UTF-8 without BOM */
+
 
 :start
 pln <h3>UrqW Tests</h3>
@@ -12,6 +14,7 @@ invkill
 varkill
 btn operators, Operators
 btn functions, Functions
+btn unicode, Unicode identifiers
 btn constructs, System constructs
 btn ui, User interface
 btn performance, Performance
@@ -812,6 +815,63 @@ if x = -3 then proc passed else proc failed
 pln a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c))) =##62$ -3: #status$
 if Pow(b, c) > Max(a, b, c) then proc passed else proc failed
 pln Pow(b, c) > Max(a, b, c) =##62$ true: #status$
+
+proc total
+btn start, Back
+end
+
+
+:unicode
+pln <h3>Unicode Identifiers</h3>
+
+х = 1
+у = 2
+pln Let х = #х$ and у = #у$
+if Х+У = 3 then proc passed else proc failed
+pln Х+У = 3: #status$
+тeсt = "Hello"
+pln Let тeсt = "#тeсt$"
+if тeсt + ", World!" = "Hello, World!" then proc passed else proc failed
+pln тeсt + ", World!" = "Hello, World!": #status$
+falseложь = 2
+ложьfalse = 3
+pln Let falseложь = #falseложь$ and ложьfalse = #ложьfalse$
+if falseложь + ложьfalse = 5 then proc passed else proc failed
+pln falseложь + ложьfalse = 5: #status$
+тест123 = 5
+pln Let тест123 = #тест123$
+if ТЕСТ123*2 = 10 then proc passed else proc failed
+pln ТЕСТ123*2 = 10: #status$
+/*
+and∧ = 3
+or∨ = and∧
+not¬ = and∧
+true👍 = and∧
+false👎 = and∧
+nan❓ = and∧
+infinity∞ = and∧
+pln Let and∧, or∨, not¬, true👍, false👎, nan❓, infinity∞ = #and∧$
+if and∧*2 = 6 then proc passed else proc failed
+pln and∧*2 = 6: #status$
+if or∨*2 = 6 then proc passed else proc failed
+pln or∨*2 = 6: #status$
+if not¬*2 = 6 then proc passed else proc failed
+pln not¬*2 = 6: #status$
+if true👍*2 = 6 then proc passed else proc failed
+pln true👍*2 = 6: #status$
+if false👎*2 = 6 then proc passed else proc failed
+pln false👎*2 = 6: #status$
+if NaN❓*2 = 6 then proc passed else proc failed
+pln NaN❓*2 = 6: #status$
+if infinity∞*2 = 6 then proc passed else proc failed
+pln infinity∞*2 = 6: #status$
+*/
+if Функция("Раз") = "Два" then proc passed else proc failed
+pln Функция("Раз") =##62$ "Два": #status$
+if Funcция("Раз") = "Два" then proc passed else proc failed
+pln Funcция("Раз") =##62$ "Два": #status$
+if Функtion("Раз") = "Два" then proc passed else proc failed
+pln Функtion("Раз") =##62$ "Два": #status$
 
 proc total
 btn start, Back
