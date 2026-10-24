@@ -270,6 +270,12 @@ if not false then proc passed else proc failed
 pln not false =##62$ true: #status$
 if ! false then proc passed else proc failed
 pln ! false =##62$ true: #status$
+if (3 - 5) and(5 - 3) then proc passed else proc failed
+pln (3 - 5) and(5 - 3) =##62$ true: #status$
+if not(3 - 3) then proc passed else proc failed
+pln not(3 - 3) =##62$ true: #status$
+if (3 - 3) or(5 - 3) then proc passed else proc failed
+pln (3 - 3) or(5 - 3) =##62$ true: #status$
 
 pln <h4>Conditional</h4>
 x = 1
