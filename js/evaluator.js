@@ -183,7 +183,7 @@ function RecursiveDescentEvaluator(str) {
                 // Safely get next char: null if out of bounds (avoids undefined issues)
                 var nextChar = (nextIdx < len) ? input[nextIdx] : null;
                 // Determine if it's a whole word boundary
-                // True if: no next char OR next char is not alphanumeric/underscore
+                // True if: no next char OR next char is a valid delimiter
                 var isBoundary = (nextChar === null) || isDelimiter(nextChar);
                 if (isBoundary) {
                     result.push({ type: 'BOOLEAN', value: true });
@@ -389,10 +389,7 @@ function RecursiveDescentEvaluator(str) {
         var t = peek();
         if (t && t.type === 'NUMBER') { consume('NUMBER'); return t.value; }
         if (t && t.type === 'STRING') { consume('STRING'); return t.value; }
-        if (t && t.type === 'BOOLEAN') {
-            consume('BOOLEAN');
-            return t.value; // Returns native JS boolean (true/false)
-        }
+        if (t && t.type === 'BOOLEAN') { consume('BOOLEAN'); return t.value; }
         if (t && t.type === 'OPERATOR' && t.value === '(') {
             consume('OPERATOR');
             var val = parseLogicalOr();
