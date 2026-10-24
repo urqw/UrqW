@@ -34,6 +34,16 @@ function RecursiveDescentEvaluator(str) {
     var tokens = [];
     var pos = 0;
 
+    // Checks whether a character is a delimiter (a stop character for an identifier name)
+    function isDelimiter(char) {
+        if (char === null || char === undefined) return true;
+        if (/\s/.test(char)) return true;
+        if (char === '"' || char === "'") return true;
+        // List of delimiters
+        var delimiters = ['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '=', '&', '|', '!'];
+        return delimiters.indexOf(char) !== -1;
+    }
+
     // Tokenize input string into a list of tokens (NUMBER, STRING, OPERATOR, IDENTIFIER)
     function tokenize(input) {
         var result = [];
@@ -143,7 +153,7 @@ function RecursiveDescentEvaluator(str) {
             var lowerSub = remaining.toLowerCase();
             if (lowerSub.startsWith('and')) {
                 var nextChar = input[i + 3];
-                if (!/[a-z0-9_]/.test(nextChar)) {
+                if (isDelimiter(nextChar)) {
                     result.push({ type: 'OPERATOR', value: 'and' });
                     i += 3;
                     continue;
@@ -151,7 +161,7 @@ function RecursiveDescentEvaluator(str) {
             }
             if (lowerSub.startsWith('or')) {
                 var nextChar = input[i + 2];
-                if (!/[a-z0-9_]/.test(nextChar)) {
+                if (isDelimiter(nextChar)) {
                     result.push({ type: 'OPERATOR', value: 'or' });
                     i += 2;
                     continue;
@@ -159,7 +169,7 @@ function RecursiveDescentEvaluator(str) {
             }
             if (lowerSub.startsWith('not')) {
                 var nextChar = input[i + 3];
-                if (!/[a-z0-9_]/.test(nextChar)) {
+                if (isDelimiter(nextChar)) {
                     result.push({ type: 'OPERATOR', value: 'not' });
                     i += 3;
                     continue;
@@ -174,7 +184,7 @@ function RecursiveDescentEvaluator(str) {
                 var nextChar = (nextIdx < len) ? input[nextIdx] : null;
                 // Determine if it's a whole word boundary
                 // True if: no next char OR next char is not alphanumeric/underscore
-                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                var isBoundary = (nextChar === null) || isDelimiter(nextChar);
                 if (isBoundary) {
                     result.push({ type: 'BOOLEAN', value: true });
                     i += 4;
@@ -187,7 +197,7 @@ function RecursiveDescentEvaluator(str) {
                 // Safely get next char: null if out of bounds
                 var nextChar = (nextIdx < len) ? input[nextIdx] : null;
                 // Determine if it's a whole word boundary
-                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                var isBoundary = (nextChar === null) || isDelimiter(nextChar);
                 if (isBoundary) {
                     result.push({ type: 'BOOLEAN', value: false });
                     i += 5;
@@ -200,7 +210,7 @@ function RecursiveDescentEvaluator(str) {
             if (lowerSub.startsWith('nan')) {
                 var nextIdx = i + 3;
                 var nextChar = (nextIdx < len) ? input[nextIdx] : null;
-                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                var isBoundary = (nextChar === null) || isDelimiter(nextChar);
                 if (isBoundary) {
                     result.push({ type: 'NUMBER', value: NaN });
                     i += 3;
@@ -210,7 +220,7 @@ function RecursiveDescentEvaluator(str) {
             if (lowerSub.startsWith('infinity')) {
                 var nextIdx = i + 8;
                 var nextChar = (nextIdx < len) ? input[nextIdx] : null;
-                var isBoundary = (nextChar === null) || !/[a-z0-9_]/.test(nextChar);
+                var isBoundary = (nextChar === null) || isDelimiter(nextChar);
                 if (isBoundary) {
                     result.push({ type: 'NUMBER', value: Infinity });
                     i += 8;

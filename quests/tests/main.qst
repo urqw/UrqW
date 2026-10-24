@@ -842,7 +842,6 @@ pln falseложь + ложьfalse = 5: #status$
 pln Let тест123 = #тест123$
 if ТЕСТ123*2 = 10 then proc passed else proc failed
 pln ТЕСТ123*2 = 10: #status$
-/*
 and∧ = 3
 or∨ = and∧
 not¬ = and∧
@@ -865,7 +864,6 @@ if NaN❓*2 = 6 then proc passed else proc failed
 pln NaN❓*2 = 6: #status$
 if infinity∞*2 = 6 then proc passed else proc failed
 pln infinity∞*2 = 6: #status$
-*/
 if Функция("Раз") = "Два" then proc passed else proc failed
 pln Функция("Раз") =##62$ "Два": #status$
 if Funcция("Раз") = "Два" then proc passed else proc failed
