@@ -42,7 +42,7 @@
 	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
 	+ Added: Compatibility modes with AkURQ and UrqW 1.x.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
-	+ Changed: Whitespace characters in variable names are now only supported in compatibility modes with RipURQ, URQ_DOS, AkURQ, and UrqW 1.x.
+	+ Changed: Variable names are now expected to consist of Latin letters, digits, underscores, and non-ASCII characters; however, the first character must not be a digit (only without special compatibility modes).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: When comparing two strings, the `=` and `==` operators now perform a case-sensitive comparison (only without special compatibility modes and for compatibility mode with akURQ).
 	+ Changed: When comparing a string with a number, the `=` and `==` operators now compare the length of the string to the number (only for compatibility mode with URQ_DOS).

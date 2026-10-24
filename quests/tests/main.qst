@@ -823,7 +823,10 @@ end
 
 :unicode
 pln <h3>Unicode Identifiers</h3>
-
+pln These are automatic tests for Unicode support in identifiers (variable and function names).
+pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
+pln #/$
 х = 1
 у = 2
 pln Let х = #х$ and у = #у$
@@ -880,6 +883,7 @@ end
 pln <h3>System Constructs</h3>
 pln These are automatic tests of programming language system constructs.
 pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
 pln #/$
 x = 123
 y = "test"

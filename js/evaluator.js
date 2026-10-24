@@ -37,11 +37,14 @@ function RecursiveDescentEvaluator(str) {
     // Checks whether a character is a delimiter (a stop character for an identifier name)
     function isDelimiter(char) {
         if (char === null || char === undefined) return true;
-        if (/\s/.test(char)) return true;
-        if (char === '"' || char === "'") return true;
-        // List of delimiters
-        var delimiters = ['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '=', '&', '|', '!'];
-        return delimiters.indexOf(char) !== -1;
+        // In identifier names, starting from the second character:
+        // Any non-ASCII characters are permitted
+        var code = char.charCodeAt(0);
+        if (code > 127) return false;
+        // Only letters, digits, and underscores are permitted among ASCII characters
+        if (/[A-Za-z0-9_]/.test(char)) return false;
+        // Everything else is considered a delimiter, which is not an identifier name
+        return true;
     }
 
     // Tokenize input string into a list of tokens (NUMBER, STRING, OPERATOR, IDENTIFIER)
@@ -231,10 +234,7 @@ function RecursiveDescentEvaluator(str) {
             // Handle identifiers (variables/functions): consume until delimiter
             var start = i;
             while (i < len) {
-                var c = input[i];
-                if (/\s/.test(c)) break;
-                if (c === '"' || c === "'") break;
-                if (['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '=', '&', '|', '!'].indexOf(c) !== -1) break;
+                if (isDelimiter(input[i])) break;
                 i++;
             }
             var name = input.substring(start, i);
