@@ -224,7 +224,7 @@ function RecursiveDescentEvaluator(str) {
                 var c = input[i];
                 if (/\s/.test(c)) break;
                 if (c === '"' || c === "'") break;
-                if (['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '=', '&', '|'].indexOf(c) !== -1) break;
+                if (['+', '-', '*', '/', '^', '(', ')', ',', '<', '>', '=', '&', '|', '!'].indexOf(c) !== -1) break;
                 i++;
             }
             var name = input.substring(start, i);
