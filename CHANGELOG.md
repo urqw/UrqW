@@ -46,7 +46,7 @@
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: When comparing two strings, the `=` and `==` operators now perform a case-sensitive comparison (only without special compatibility modes and for compatibility mode with akURQ).
 	+ Changed: When comparing a string with a number, the `=` and `==` operators now compare the length of the string to the number (only for compatibility mode with URQ_DOS).
-	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true.
+	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true. In compatibility mode with UrqW 1.x, the previous behavior is retained: positive numbers are interpreted as true, and zero and negative numbers are interpreted as false.
 	+ Changed: The values of the system variables `hide_*` and `instr_leave_spc` are now implicitly converted to a boolean value during evaluation, according to URQL standard coercion rules.
 	+ Changed: Initializing a variable using the `instr` operator without assigning a value now results in the variable being initialized with a value of an empty string rather than being ignored.
 	+ Changed: When assigning a string value to a variable using the instr operator, leading and trailing whitespace characters in the value string are now removed. You can restore the previous behavior of preserving spaces using the instr_leave_spc system variable.

@@ -790,6 +790,9 @@ function ShuntingYardEvaluator(str) {
  * @returns {boolean}
  */
 function toBoolean(value) {
+    if (Game.getVar('urq_mode') === 'urqw1' && typeof value === 'number') {
+        return value > 0;
+    }
     return Boolean(value);
 }
 
