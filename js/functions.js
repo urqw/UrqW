@@ -443,19 +443,6 @@ var functions = {
         return typeof val === 'boolean';
     },
 
-    // Checks whether a variable with the given name is defined.
-    isdeclared(varName) {
-        if (arguments.length !== 1) {
-            throw new Error('The isdeclared() function takes 1 argument.');
-        }
-        if (typeof varName !== 'string') {
-            throw new Error('Invalid argument #1 for function isdeclared(): it must be a string.');
-        }
-        varName = varName.toLowerCase().trim();
-        var exists = Object.prototype.hasOwnProperty.call(Game.vars, varName);
-        return exists ? 1 : 0;
-    },
-
     // Checks whether the value is a finite number.
     isfinite(val) {
         if (arguments.length !== 1) {
@@ -869,6 +856,30 @@ var functions = {
             throw new Error('The stringupper() function takes 1 argument.');
         }
         return String(str).toUpperCase();
+    },
+
+    /**
+     * Variable Functions
+     */
+
+    // Checks if a variable exists (is defined).
+    variableexists(name) {
+        if (arguments.length !== 1) {
+            throw new Error('The variableexists() function takes 1 argument.');
+        }
+        if (typeof name !== 'string') {
+            throw new Error('Invalid argument #1 for function variableexists(): it must be a string.');
+        }
+        name = name.toLowerCase().trim();
+        // Some system variables have values, even though they are missing
+        // from the variable storage (e.g., urqw_version)
+        if (Game.getVar(name) === 0) {
+            // Undefined variables are always equal to zero,
+            // so it is necessary to check for the actual existence of a property
+            return Object.prototype.hasOwnProperty.call(Game.vars, name);
+        } else {
+            return true;
+        }
     },
 
     /**

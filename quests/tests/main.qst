@@ -807,6 +807,16 @@ pln StringTrimRight("abcde", -1) =##62$ "abcde": #status$
 if StringTrimRight("abcde", 7) = "" then proc passed else proc failed
 pln StringTrimRight("abcde", 7) =##62$ "": #status$
 
+pln <h4>Variable</h4>
+existing_variable = 5
+pln Let existing_variable = #existing_variable$
+if VariableExists("EXISTING_VARIABLE") === true then proc passed else proc failed
+pln VariableExists("EXISTING_VARIABLE") =##62$ true: #status$
+if VariableExists("non_existing_variable") === false then proc passed else proc failed
+pln VariableExists("non_existing_variable") =##62$ false: #status$
+if VariableExists("urqw_version") === true and urqw_game_ifid = "" then proc passed else proc failed
+pln VariableExists("urqw_version") =##62$ true: #status$
+
 pln <h4>Others</h4>
 if JavaScript("' abc '.toUpperCase().trim();") = "ABC" then proc passed else proc failed
 pln JavaScript("' abc '.toUpperCase().trim();") =##62$ "ABC": #status$
