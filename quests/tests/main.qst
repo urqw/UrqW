@@ -585,6 +585,64 @@ pln Number(obj) =##62$ error = 1: #status$
 if String(2.5) = "2.5" then proc passed else proc failed
 pln String(2.5) =##62$ "2.5": #status$
 
+pln <h4>Date</h4>
+if IsInteger(Date()) === true then proc passed else proc failed
+pln Date(): #status$
+if Date("UTC", 2015, 10, 12, 9, 58) = 1444643880000 then proc passed else proc failed
+pln Date("UTC", 2015, 10, 12, 9, 58) =##62$ 1444643880000: #status$
+if Date("loc", 2015, 10, 12) === JavaScript("Number(new Date(2015, 9, 12));") then proc passed else proc failed
+pln Date("loc", 2015, 10, 12): #status$
+error = 0
+x = Date("utc", 2015, "abc")
+if error === 1 and IsNaN(x) === true then proc passed else proc failed
+pln Date("utc", 2015, "abc") =##62$ NaN and error = 1: #status$
+timestamp = 1485088245500 /* 2017-01-22T12:30:45.500Z */
+obj = DateObject(timestamp)
+pln Let obj = DateObject(#timestamp$)
+if ObjectGet(obj, "loc_year") = JavaScript("new Date(#timestamp$).getFullYear();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_year"): #status$
+if ObjectGet(obj, "loc_month") = JavaScript("new Date(#timestamp$).getMonth();") + 1 then proc passed else proc failed
+pln ObjectGet(obj, "loc_month"): #status$
+if ObjectGet(obj, "loc_date") = JavaScript("new Date(#timestamp$).getDate();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_date"): #status$
+if ObjectGet(obj, "loc_hours") = JavaScript("new Date(#timestamp$).getHours\();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_hours"): #status$
+if ObjectGet(obj, "loc_minutes") = JavaScript("new Date(#timestamp$).getMinutes();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_minutes"): #status$
+if ObjectGet(obj, "loc_seconds") = JavaScript("new Date(#timestamp$).getSeconds();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_seconds"): #status$
+if ObjectGet(obj, "loc_milliseconds") = JavaScript("new Date(#timestamp$).getMilliseconds();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_milliseconds"): #status$
+loc_day = JavaScript("new Date(#timestamp$).getDay();")
+if loc_day = 0 then loc_day = 7
+if ObjectGet(obj, "loc_day") = loc_day then proc passed else proc failed
+pln ObjectGet(obj, "loc_day"): #status$
+if ObjectGet(obj, "timezone_offset") = -180 then proc passed else proc failed
+pln ObjectGet(obj, "timezone_offset"): #status$
+if ObjectGet(obj, "utc_year") = 2017 then proc passed else proc failed
+pln ObjectGet(obj, "utc_year"): #status$
+if ObjectGet(obj, "utc_month") = 1 then proc passed else proc failed
+pln ObjectGet(obj, "utc_month"): #status$
+if ObjectGet(obj, "utc_date") = 22 then proc passed else proc failed
+pln ObjectGet(obj, "utc_date"): #status$
+if ObjectGet(obj, "utc_hours") = 12 then proc passed else proc failed
+if ObjectGet(obj, "utc_minutes") = 30 then proc passed else proc failed
+pln ObjectGet(obj, "utc_minutes"): #status$
+if ObjectGet(obj, "utc_seconds") = 45 then proc passed else proc failed
+pln ObjectGet(obj, "utc_seconds"): #status$
+if ObjectGet(obj, "utc_milliseconds") = 500 then proc passed else proc failed
+pln ObjectGet(obj, "utc_milliseconds"): #status$
+if ObjectGet(obj, "utc_day") = 7 then proc passed else proc failed
+pln ObjectGet(obj, "utc_day"): #status$
+if ObjectGet(obj, "iso") = "2017-01-22T12:30:45.500Z" then proc passed else proc failed
+pln ObjectGet(obj, "iso"): #status$
+if ObjectGet(obj, "timestamp") = timestamp then proc passed else proc failed
+pln ObjectGet(obj, "timestamp"): #status$
+error = 0
+x = DateObject(9007199254740992)
+if error === 1 and JSONStringify(x) = "{}" then proc passed else proc failed
+pln DateObject(9007199254740992) =##62$ {} anderror = 1:#status$
+
 pln <h4>File</h4>
 if FileContent("test.txt") = "test 🧪" then proc passed else proc failed
 pln FileContent("test.txt") =##62$ "test 🧪": #status$

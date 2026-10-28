@@ -336,6 +336,70 @@ var functions = {
     },
 
     /**
+     * Date Functions
+     */
+
+    // Returns a timestamp of the current or specified time.
+    date(mode, ...params) {
+        if (arguments.length !== 0 && (arguments.length < 3 || arguments.length > 8)) {
+            throw new Error('The date() function takes from 3 to 8 arguments, or 0 arguments.');
+        }
+        // Current time
+        if (arguments.length === 0) {
+            return Date.now();
+        }
+        // Specified time
+        mode = String(mode).toLowerCase();
+        if (mode !== 'utc' && mode !== 'loc') {
+            throw new Error('Invalid argument #1 for function date(): it must be "utc" or "loc".');
+        }
+        // Months are counted from 1
+        params[1] = Number(params[1]) - 1;
+        if (mode === 'utc') {
+            return Date.UTC(...params);
+        } else {
+            var dateObj = new Date(...params);
+            return dateObj.getTime();
+        }
+    },
+
+   // Returns an object with date information.
+   dateobject(timestamp) {
+        if (arguments.length !== 1) {
+            throw new Error('The dateobject() function takes 1 argument.');
+        }
+            if (!Number.isInteger(timestamp)) {
+                throw new Error('Invalid argument #1 for function dateobject(): it must be an integer.');
+            }
+            var dateObj = new Date(timestamp);
+            if (Number.isNaN(dateObj.getTime())) {
+                setGlobalError(1, 'Invalid date: timestamp out of range or malformed.');
+                return ({});
+            }
+            return ({
+                "loc_year": dateObj.getFullYear(),
+                "loc_month": dateObj.getMonth() + 1, // Months are counted from 1
+                "loc_date": dateObj.getDate(),
+                "loc_hours": dateObj.getHours(),
+                "loc_minutes": dateObj.getMinutes(),
+                "loc_seconds": dateObj.getSeconds(),
+                "loc_milliseconds": dateObj.getMilliseconds(),
+                "loc_day": dateObj.getDay() || 7, // Sunday is 7
+                "timezone_offset": dateObj.getTimezoneOffset(),
+                "utc_year": dateObj.getUTCFullYear(),
+                "utc_month": dateObj.getUTCMonth() + 1, // Months are counted from 1
+                "utc_date": dateObj.getUTCDate(),
+                "utc_hours": dateObj.getUTCHours(),
+                "utc_minutes": dateObj.getUTCMinutes(),
+                "utc_seconds": dateObj.getUTCSeconds(),
+                "utc_milliseconds": dateObj.getUTCMilliseconds(),
+                "utc_day": dateObj.getUTCDay() || 7, // Sunday is 7
+                "iso": dateObj.toISOString(),
+                "timestamp": dateObj.getTime()
+            });
+   },
+
+    /**
      * File Functions
      */
 
