@@ -88,6 +88,7 @@ const packagePath = path.join(rootPath, 'package.json');
         const filesAndDirsToCopy = [
             'dist',
             'docs',
+            'fonts',
             'CHANGELOG.html',
             'favicon.png',
             'index.html',

@@ -2,6 +2,7 @@
 /dist
 docs/*
 !docs/urql.html
+/fonts
 /node_modules
 quests/*.zip
 /release

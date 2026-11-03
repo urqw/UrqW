@@ -6,7 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { readFileSync, writeFileSync, readdirSync, unlinkSync, rmdirSync, mkdirSync } = fs;
+const { readFileSync, writeFileSync, readdirSync, unlinkSync, rmdirSync, mkdirSync, copyFileSync } = fs;
 const { minify: terserMinify } = require('terser');
 const csso = require('csso');
 const { minify: htmlMinify } = require('html-minifier-terser');
@@ -51,6 +51,42 @@ function isLibraryFile(filePath) {
     return filePath.includes('node_modules');
 }
 
+// Recursively copies the contents of one directory to another
+function copyDirRecursive(srcDir, destDir) {
+    ensureDir(destDir);
+    const entries = readdirSync(srcDir, { withFileTypes: true });
+    for (const entry of entries) {
+        const srcPath = path.join(srcDir, entry.name);
+        const destPath = path.join(destDir, entry.name);
+        if (entry.isDirectory()) {
+            copyDirRecursive(srcPath, destPath);
+        } else {
+            copyFileSync(srcPath, destPath);
+        }
+    }
+}
+
+// Copies fonts
+function copyFonts(projectRoot) {
+    const sourceFontsPath = path.join(projectRoot, 'node_modules', 'bootstrap', 'dist', 'fonts');
+    const destFontsPath = path.join(projectRoot, 'fonts');
+    // Check for the existence of the source directory
+    if (!fs.existsSync(sourceFontsPath)) {
+        fail(`Fonts source not found at ${sourceFontsPath}.`);
+    }
+    console.log(`Processing fonts from: ${sourceFontsPath}`);
+    // Clear the target directory
+    removeDirRecursiveSafe(destFontsPath);
+    ensureDir(destFontsPath);
+    // Copy files
+    try {
+        copyDirRecursive(sourceFontsPath, destFontsPath);
+        console.log(`Fonts successfully copied to: ${destFontsPath}`);
+    } catch (err) {
+        fail(`Failed to copy fonts: ${err.message}`);
+    }
+}
+
 // Basic logic
 
 (async () => {
@@ -66,6 +102,9 @@ function isLibraryFile(filePath) {
     // Clear dist
     removeDirRecursiveSafe(distDir);
     ensureDir(distDir);
+
+    // Copy fonts
+    copyFonts(projectRoot);
 
     let htmlContent;
     try {
