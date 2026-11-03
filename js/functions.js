@@ -1,0 +1,970 @@
+/**
+ * Copyright (C) 2026 Nikita Tseykovets <tseikovets@rambler.ru>
+ * This file is part of UrqW.
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+var functions = {
+    /**
+     * If the function's (method's) result is NaN,
+     * the general expression evaluator treats this as an error,
+     * so there is no need to handle the NaN result
+     * within the function implementation itself.
+     * Only arity errors and function-specific errors
+     * should be handled inside the functions.
+     */
+
+    // All method names must be in lowercase
+
+    /**
+     * Mathematical Functions
+     */
+
+    // Calculates the absolute value of a number.
+    abs(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The abs() function takes 1 argument.');
+        }
+        return Math.abs(num);
+    },
+
+    // Returns a number rounded up to the next integer.
+    ceil(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The ceil() function takes 1 argument.');
+        }
+        return Math.ceil(num);
+    },
+
+    // Calculates e to the power of a number.
+    exp(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The exp() function takes 1 argument.');
+        }
+        return Math.exp(num);
+    },
+
+    // Returns a number rounded down to the closest integer.
+    floor(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The floor() function takes 1 argument.');
+        }
+        return Math.floor(num);
+    },
+
+    // Returns the integer part of a number by removing any fractional digits.
+    int(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The int() function takes 1 argument.');
+        }
+        return Math.trunc(num);
+    },
+
+    // Calculates the natural logarithm of a number.
+    log(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The log() function takes 1 argument.');
+        }
+        return Math.log(num);
+    },
+
+    // Calculates the common (decimal) logarithm of a number.
+    log10(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The log10() function takes 1 argument.');
+        }
+        return Math.log10(num);
+    },
+
+    // Calculates the binary logarithm of a number.
+    log2(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The log2() function takes 1 argument.');
+        }
+        return Math.log2(num);
+    },
+
+    // Returns the largest of the passed numbers.
+    max(...args) {
+        if (args.length === 0) {
+            throw new Error('The max() function requires at least 1 argument.');
+        }
+        return Math.max(...args);
+    },
+
+    // Returns the smallest of the passed numbers.
+    min(...args) {
+        if (args.length === 0) {
+            throw new Error('The min() function requires at least 1 argument.');
+        }
+        return Math.min(...args);
+    },
+
+    // Calculates a number to a power.
+    pow(base, exponent) {
+        if (arguments.length !== 2) {
+            throw new Error('The pow() function takes 2 arguments.');
+        }
+        return Math.pow(base, exponent);
+    },
+
+    // Returns a number rounded to the specified number of decimal places.
+    round(num, decimals = 0) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The round() function takes 1 or 2 arguments.');
+        }
+        if (arguments.length === 2) {
+            if (!Number.isInteger(decimals)) {
+                throw new Error('Invalid argument #2 for function round(): it must be an integer.');
+            }
+        }
+        var factor = 10 ** decimals;
+        return Math.round(num * factor) / factor;
+    },
+
+    // Calculates the square-root of a number.
+    sqrt(num) {
+        if (arguments.length !== 1) {
+            throw new Error('The sqrt() function takes 1 argument.');
+        }
+        return Math.sqrt(num);
+    },
+
+    /**
+     * Array Functions
+     */
+
+    // Adds the element or elements to the array.
+    arrayadd(arr, ...elems) {
+        if (arguments.length < 2) {
+            throw new Error('The arrayadd() function takes at least 2 arguments.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayadd(): it must be an array.');
+        }
+        return arr.push(...elems);
+    },
+
+    // Creates a completely independent copy of the array.
+    arraycopy(arr) {
+        if (arguments.length !== 1) {
+            throw new Error('The arraycopy() function takes 1 argument.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arraycopy(): it must be an array.');
+        }
+        return deepCopy(arr);
+    },
+
+    // Creates an array of the specified length or based on JSON
+    arraycreate(instr, val = '') {
+        if (arguments.length > 2) {
+            throw new Error('The arraycreate() function takes no more than 2 arguments.');
+        }
+        // Create an empty array
+        if (arguments.length == 0) {
+        return [];
+        }
+        // Create an array of the specified length
+        if (typeof instr === 'number') {
+            if (!Number.isInteger(instr) || instr <= 0) {
+                throw new Error('Invalid argument #1 for function arraycreate(): it must be a positive integer.');
+            }
+            return new Array(instr).fill(val);
+        }
+        // Create an array based on JSON
+        if (typeof instr === 'string') {
+            if (arguments.length != 1) {
+                throw new Error('The arraycreate() function takes 1 argument if it is a string.');
+            }
+            try {
+                var parsed = JSON.parse(instr);
+                if (!Array.isArray(parsed)) {
+                    throw new Error('Invalid argument #1 for function arraycreate(): it must be an array as a string with JSON.');
+                }
+                return parsed;
+            } catch (e) {
+                throw new Error(`Invalid argument #1 for function arraycreate(): it must be an array as a string with JSON. ${e}`);
+            }
+        }
+        throw new Error('Invalid argument #1 for function arraycreate(): it must be a positive integer or a string with JSON.');
+    },
+
+    // Deletes the element or elements from the array.
+    arraydel(arr, start, count) {
+        if (arguments.length < 2 || arguments.length > 3) {
+            throw new Error('The arraydel() function takes 2 or 3 arguments.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arraydel(): it must be an array.');
+        }
+        if (!Number.isInteger(start)) {
+            throw new Error('Invalid argument #2 for function arraydel(): it must be an integer index.');
+        }
+        // Indexing in URQL arrays starts from 1
+        if (start === 0 || Math.abs(start) > arr.length) {
+            throw new Error('Invalid argument #2 for function arraydel(): index out of bounds.');
+        }
+        if (start > 0) {
+            start -= 1;
+        }
+        if (arguments.length === 3) {
+            if (!Number.isInteger(count) || count < 1) {
+                throw new Error('Invalid argument #3 for function arraydel(): it must be a positive integer.');
+            }
+            return arr.splice(start, count);
+        }
+        return arr.splice(start);
+    },
+
+    // Returns the element from the array.
+    arrayget(arr, ...inds) {
+        if (arguments.length < 2) {
+            throw new Error('The arrayget() function takes at least 2 arguments.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayget(): it must be an array.');
+        }
+        var current = arr;
+        var ind, normalizedInd;
+        for (var i = 0; i < inds.length; i++) {
+            ind = inds[i];
+            if (!Number.isInteger(ind)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): it must be an integer index.`);
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind === 0 || Math.abs(ind) > current.length) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): index out of bounds.`);
+            }
+            normalizedInd = ind < 0 ? current.length + ind + 1: ind;
+            current = current[normalizedInd - 1];
+            if (i === inds.length - 1) {
+                break;
+            }
+            if (!Array.isArray(current)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayget(): failed to retrieve the array element by index ${ind} (the data must be an array, not a ${typeof current}.).`);
+            }
+        }
+        var val = current;
+        if (val === null || !['boolean', 'number', 'object', 'string'].includes(typeof val)) {
+            val = JSON.stringify(val);
+        }
+        return val;
+    },
+
+    // Returns the number of elements in the array.
+    arraylen(arr) {
+        if (arguments.length !== 1) {
+            throw new Error('The arraylen() function takes 1 argument.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arraylen(): it must be an array.');
+        }
+        return arr.length;
+    },
+
+    // Sets the value of the element in the array.
+    arrayset(arr, ...params) {
+        if (arguments.length < 3) {
+            throw new Error('The arrayset() function takes at least 3 arguments.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayset(): it must be an array.');
+        }
+        var current = arr;
+        var ind, normalizedInd;
+        for (var i = 0; i < params.length - 1; i++) {
+            ind = params[i];
+            if (!Number.isInteger(ind)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayset(): it must be an integer index.`);
+            }
+            // Indexing in URQL arrays starts from 1
+            if (ind === 0 || Math.abs(ind) > current.length) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayset(): index out of bounds.`);
+            }
+            normalizedInd = ind < 0 ? current.length + ind + 1: ind;
+            if (i === params.length - 2) {
+                break;
+            }
+            current = current[normalizedInd - 1];
+            if (!Array.isArray(current)) {
+                throw new Error(`Invalid argument #${i + 2} for function arrayset(): failed to retrieve the array element by index ${ind} (the data must be an array, not a ${typeof current}.).`);
+            }
+        }
+        current[normalizedInd - 1] = params[params.length - 1];
+        return arr;
+    },
+
+    /**
+     * Type Conversion Functions
+     */
+
+    // Returns the boolean representation of a value.
+    boolean(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The boolean() function takes 1 argument.');
+        }
+        return toBoolean(val);
+    },
+
+    // Returns the number representation of a value.
+    number(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The number() function takes 1 argument.');
+        }
+        if (typeof val === 'string') {
+            val = val.trim();
+            if (val === '') {
+                return NaN;
+            }
+        }
+        if (Array.isArray(val) && val.length === 0) {
+            return NaN;
+        }
+        if (val === null) {
+            return NaN;
+        }
+        return Number(val);
+    },
+
+    // Returns the string representation of a value.
+    string(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The string() function takes 1 argument.');
+        }
+        return String(val);
+    },
+
+    /**
+     * Date Functions
+     */
+
+    // Returns a timestamp of the current or specified time.
+    date(mode, ...params) {
+        if (arguments.length !== 0 && (arguments.length < 3 || arguments.length > 8)) {
+            throw new Error('The date() function takes from 3 to 8 arguments, or 0 arguments.');
+        }
+        // Current time
+        if (arguments.length === 0) {
+            return Date.now();
+        }
+        // Specified time
+        mode = String(mode).toLowerCase();
+        if (mode !== 'utc' && mode !== 'loc') {
+            throw new Error('Invalid argument #1 for function date(): it must be "utc" or "loc".');
+        }
+        // Months are counted from 1
+        params[1] = Number(params[1]) - 1;
+        if (mode === 'utc') {
+            return Date.UTC(...params);
+        } else {
+            var dateObj = new Date(...params);
+            return dateObj.getTime();
+        }
+    },
+
+   // Returns an object with date information.
+   dateobject(timestamp) {
+        if (arguments.length !== 1) {
+            throw new Error('The dateobject() function takes 1 argument.');
+        }
+            if (!Number.isInteger(timestamp)) {
+                throw new Error('Invalid argument #1 for function dateobject(): it must be an integer.');
+            }
+            var dateObj = new Date(timestamp);
+            if (Number.isNaN(dateObj.getTime())) {
+                setGlobalError(1, 'Invalid date: timestamp out of range or malformed.');
+                return ({});
+            }
+            return ({
+                "loc_year": dateObj.getFullYear(),
+                "loc_month": dateObj.getMonth() + 1, // Months are counted from 1
+                "loc_date": dateObj.getDate(),
+                "loc_hours": dateObj.getHours(),
+                "loc_minutes": dateObj.getMinutes(),
+                "loc_seconds": dateObj.getSeconds(),
+                "loc_milliseconds": dateObj.getMilliseconds(),
+                "loc_day": dateObj.getDay() || 7, // Sunday is 7
+                "timezone_offset": dateObj.getTimezoneOffset(),
+                "utc_year": dateObj.getUTCFullYear(),
+                "utc_month": dateObj.getUTCMonth() + 1, // Months are counted from 1
+                "utc_date": dateObj.getUTCDate(),
+                "utc_hours": dateObj.getUTCHours(),
+                "utc_minutes": dateObj.getUTCMinutes(),
+                "utc_seconds": dateObj.getUTCSeconds(),
+                "utc_milliseconds": dateObj.getUTCMilliseconds(),
+                "utc_day": dateObj.getUTCDay() || 7, // Sunday is 7
+                "iso": dateObj.toISOString(),
+                "timestamp": dateObj.getTime()
+            });
+   },
+
+    /**
+     * File Functions
+     */
+
+    // Returns the text content of a file from a game package.
+    filecontent(filePath) {
+        if (arguments.length !== 1) {
+            throw new Error('The filecontent() function takes 1 argument.');
+        }
+        var result = '';
+        var errorDesc;
+        filePath = String(filePath);
+        if (filePath) {
+            var fileURL = getGameFileURL(normalizeInternalPath(filePath));
+            if (fileURL) {
+                $.ajax({
+                    url: fileURL,
+                    method: 'GET',
+                    dataType: 'text',
+                    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+                    async: false,
+                    success: function(data) {
+                        result = data;
+                    },
+                    error: function(xhr, status, error) {
+                        errorDesc = error;
+                    }
+                });
+            } else {
+                errorDesc = 'File not found.';
+            }
+        } else {
+            errorDesc = 'The file path is empty.';
+        }
+        if (errorDesc) {
+            setGlobalError(1, errorDesc);
+        }
+        return result;
+},
+
+    // Checks if a file exists in a game package.
+    fileexists(filePath) {
+        if (arguments.length !== 1) {
+            throw new Error('The fileexists() function takes 1 argument.');
+        }
+        filePath = String(filePath);
+        if (!filePath) {
+            setGlobalError(1, 'The file path is empty.');
+            return false;
+        }
+        var fileURL = getGameFileURL(normalizeInternalPath(filePath));
+        if (!fileURL) {
+            return false;
+        }
+        var existence = false;
+            if (files === null) {
+            $.ajax({
+                url: fileURL,
+                type: 'HEAD',
+                async: false,
+                success: function() {
+                    existence = true;
+                },
+                error: function(xhr, status, error) {
+                    existence = false;
+                }
+            });
+        } else {
+            existence = true;
+        }
+        return existence;
+    },
+
+    // Returns the relative URL of a file from a game package.
+    fileurl(filePath) {
+        if (arguments.length !== 1) {
+            throw new Error('The fileurl() function takes 1 argument.');
+        }
+        filePath = String(filePath);
+        var result;
+        if (filePath) {
+            result = getGameFileURL(normalizeInternalPath(filePath));
+        } else {
+            setGlobalError(1, 'The file path is empty.');
+        }
+        return result ? result : '';
+    },
+
+    /**
+     * Value and variable state check functions
+     */
+
+    // Checks whether a value has the reference type array.
+    isarray(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isarray() function takes 1 argument.');
+        }
+        return Array.isArray(val);
+    },
+
+    // Checks whether a value has the primitive type boolean.
+    isboolean(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isboolean() function takes 1 argument.');
+        }
+        return typeof val === 'boolean';
+    },
+
+    // Checks whether the value is a finite number.
+    isfinite(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isfinite() function takes 1 argument.');
+        }
+        return Number.isFinite(val);
+    },
+
+    // Checks whether a value is an integer.
+    isinteger(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isinteger() function takes 1 argument.');
+        }
+        return Number.isInteger(val);
+    },
+
+    // Checks whether a value is NaN.
+    isnan(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isnan() function takes 1 argument.');
+        }
+        return Number.isNaN(val);
+    },
+
+    // Checks whether a value has the primitive type number.
+    isnumber(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isnumber() function takes 1 argument.');
+        }
+        return typeof val === 'number';
+    },
+
+    // Checks whether a value has the reference type object.
+    isobject(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isobject() function takes 1 argument.');
+        }
+        return (val !== null && typeof val === 'object' && !Array.isArray(val));
+    },
+
+    // Checks whether a value has the primitive type string.
+    isstring(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The isstring() function takes 1 argument.');
+        }
+        return typeof val === 'string';
+    },
+
+    // Returns the type of a value.
+    typeof(val) {
+        if (arguments.length !== 1) {
+            throw new Error('The typeof() function takes 1 argument.');
+        }
+        var type = typeof val;
+        // Check whether an object is an array, and if so, refine the type
+        if (Array.isArray(val)) {
+            type = 'array';
+        }
+        return type;
+    },
+
+    /**
+     * Object Functions
+     */
+
+    // Creates a completely independent copy of the object.
+    objectcopy(obj) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectcopy() function takes 1 argument.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectcopy(): it must be an object.');
+        }
+        return deepCopy(obj);
+    },
+
+    // Creates an object: either empty or based on JSON.
+    objectcreate(json) {
+        if (arguments.length > 1) {
+            throw new Error('The objectcreate() function takes no more than 1 argument.');
+        }
+        // Create an empty object
+        if (arguments.length == 0) {
+        return ({});
+        }
+        // Create an object based on JSON
+        if (typeof json === 'string') {
+            try {
+                var parsed = JSON.parse(json);
+                if (typeof parsed !== 'object' || Array.isArray(parsed) || parsed === null) {
+                    throw new Error('Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON.');
+                }
+                return parsed;
+            } catch (e) {
+                throw new Error(`Invalid argument #1 for function objectcreate(): it must be an object as a string with JSON. ${e}`);
+            }
+        }
+        throw new Error('Invalid argument #1 for function objectcreate(): it must be a string with JSON.');
+    },
+
+    // Deletes a property (key-value pair) from the object.
+    objectdel(obj, key) {
+        if (arguments.length !== 2) {
+            throw new Error('The objectdel() function takes 2 arguments.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectdel(): it must be an object.');
+        }
+        var exists = Object.prototype.hasOwnProperty.call(obj, key);
+        var deleted = delete obj[key];
+        var errorCode, errorDesc;
+        if (!exists) {
+            errorCode = 1;
+            errorDesc = `The key '${key}' does not exist in the object.`;
+        } else if (!deleted) {
+            errorCode = 1;
+            errorDesc = `Failed to delete the key '${key}'.`;
+        }
+        if (errorCode) {
+            setGlobalError(errorCode, errorDesc);
+            return false;
+        }
+        return true;
+    },
+
+    // Returns an array of object properties (key-value pairs).
+    objectentries(obj) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectentries() function takes 1 argument.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectentries(): it must be an object.');
+        }
+        return Object.entries(obj);
+    },
+
+    // Returns a value of the property (key) from the object.
+    objectget(obj, ...keys) {
+        if (arguments.length < 2) {
+            throw new Error('The objectget() function takes at least 2 arguments.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectget(): it must be an object.');
+        }
+        var current = obj;
+        var key;
+        for (var i = 0; i < keys.length; i++) {
+            key = keys[i];
+            if (typeof key !== 'string') {
+                throw new Error(`Invalid argument #${i + 2} for function objectget(): it must be a string key.`);
+            }
+            if (!Object.hasOwn(current, key)) {
+                setGlobalError(1, `Problem with argument #${i + 2} for function objectget(): failed to retrieve the property value by key '${key}' (the key does not exist).`);
+                return false;
+            }
+            current = current[key];
+            if (i === keys.length - 1) {
+                break;
+            }
+            if (current === null || typeof current !== 'object' || Array.isArray(current)) {
+                setGlobalError(1, `Problem with argument #${i + 2} for function objectget(): failed to retrieve the property value by key '${key}' (the data turned out to be a ${typeof current} rather than an object).`);
+                if (current === null || !['boolean', 'number', 'object', 'string'].includes(typeof current)) {
+                    return JSON.stringify(current);
+                } else {
+                    return current;
+                }
+            }
+        }
+        var val = current;
+        if (val === null || !['boolean', 'number', 'object', 'string'].includes(typeof val)) {
+            val = JSON.stringify(val);
+        }
+        return val;
+    },
+
+    // Returns an array of object property names (keys).
+    objectkeys(obj) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectkeys() function takes 1 argument.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectkeys(): it must be an object.');
+        }
+        return keys = Object.keys(obj);
+    },
+
+    // Sets the value of the property (key) in the object.
+    objectset(obj, ...params) {
+        if (arguments.length < 3) {
+            throw new Error('The objectset() function takes at least 3 arguments.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectset(): it must be an object.');
+          }
+        var current = obj;
+        var key;
+        for (var i = 0; i < params.length - 1; i++) {
+            key = params[i];
+            if (typeof key !== 'string') {
+                throw new Error(`Invalid argument #${i + 2} for function objectset(): it must be a string key.`);
+            }
+            if (i === params.length - 2) {
+                break;
+            }
+            current = current[key];
+            if (current === null || typeof current !== 'object' || Array.isArray(current)) {
+                setGlobalError(1, `Problem with argument #${i + 2} for function objectset(): failed to retrieve the property value by key '${key}' (the data turned out to be a ${typeof current} rather than an object).`);
+                return false;
+            }
+        }
+        current[key] = params[params.length - 1];
+        return true;
+    },
+
+    // Returns an array of object property values.
+    objectvalues(obj) {
+        if (arguments.length !== 1) {
+            throw new Error('The objectvalues() function takes 1 argument.');
+        }
+        if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
+            throw new Error('Invalid argument #1 for function objectvalues(): it must be an object.');
+        }
+        return Object.values(obj);
+    },
+
+    /**
+     * String Functions
+     */
+
+    // TODO: stringinstr
+
+    // Returns a number of characters from the left-hand side of the string.
+    stringleft(str, count) {
+        if (arguments.length !== 2) {
+            throw new Error('The stringleft() function takes 2 arguments.');
+        }
+        if (!Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringleft(): it must be an integer.');
+        }
+        if (count <= 0) {
+            return '';
+        }
+        str = String(str);
+        if (count >= str.length) {
+            return str;
+        }
+        return str.slice(0, count);
+    },
+
+    // Returns a number of characters in the string.
+    stringlen(str) {
+        if (arguments.length !== 1) {
+            throw new Error('The stringlen() function takes 1 argument.');
+        }
+        return String(str).length;
+    },
+
+    // Converts the string to lowercase using locale-specific rules.
+    stringlocalelower(str, locale) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringlocalelower() function takes 1 or 2 arguments.');
+        }
+        if (arguments.length === 1) {
+            locale = Game.getVar('urqw_game_lang');
+            if (!locale) {
+                locale = document.documentElement.lang;
+            }
+        }
+        return String(str).toLocaleLowerCase(locale);
+    },
+
+    // Converts the string to uppercase using locale-specific rules.
+    stringlocaleupper(str, locale) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringlocaleupper() function takes 1 or 2 arguments.');
+        }
+        if (arguments.length === 1) {
+            locale = Game.getVar('urqw_game_lang');
+            if (!locale) {
+                locale = document.documentElement.lang;
+            }
+        }
+        return String(str).toLocaleUpperCase(locale);
+    },
+
+    // Converts the string to lowercase.
+    stringlower(str) {
+        if (arguments.length !== 1) {
+            throw new Error('The stringlower() function takes 1 argument.');
+        }
+        return String(str).toLowerCase();
+    },
+
+    // Extracts a number of characters from the string.
+    stringmid(str, start, count) {
+        if (arguments.length < 2 || arguments.length > 3) {
+            throw new Error('The stringmid() function takes 2 or 3 arguments.');
+        }
+        if (!Number.isInteger(start)) {
+            throw new Error('Invalid argument #2 for function stringmid(): it must be an integer.');
+        }
+        str = String(str);
+        if (start <= 0 || start > str.length) {
+            return '';
+            }
+        if (arguments.length === 2) {
+            return str.slice(start - 1);
+        }
+        if (!Number.isInteger(count)) {
+            throw new Error('Invalid argument #3 for function stringmid(): it must be an integer.');
+        }
+        if (count <= 0) {
+            return '';
+        }
+        return str.slice(start - 1, start - 1 + count);
+    },
+
+    // TODO: stringregexp
+    // TODO: stringregexpreplace
+    // TODO: stringreplace
+
+    // Returns a number of characters from the right-hand side of the string.
+    stringright(str, count) {
+        if (arguments.length !== 2) {
+            throw new Error('The stringright() function takes 2 arguments.');
+        }
+        if (!Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringright(): it must be an integer.');
+        }
+        if (count <= 0) {
+            return '';
+        }
+        str = String(str);
+        if (count >= str.length) {
+            return str;
+        }
+        return str.slice(-count);
+    },
+
+    // Splits up the string into substrings depending on the given delimiter.
+    stringsplit(str, delimiter) {
+        if (arguments.length !== 2) {
+            throw new Error('The stringsplit() function takes 2 arguments.');
+        }
+        str = String(str);
+        delimiter = String(delimiter);
+        return str.split(delimiter);
+    },
+
+    // Trims whitespace characters or a number of characters from the beginning and end of the string.
+    stringtrim(str, count) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringtrim() function takes 1 or 2 arguments.');
+        }
+        str = String(str);
+        if (arguments.length === 1) {
+            return str.trim();
+        }
+        if (!Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringtrim(): it must be an integer.');
+        }
+        if (count <= 0) {
+            return str;
+        }
+        var len = str.length;
+        if (count*2 >= len) {
+            return '';
+        }
+        return str.slice(count, len - count);
+    },
+
+    // Trims either whitespace characters or a number of characters from the left hand side of the string.
+    stringtrimleft(str, count) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringtrimleft() function takes 1 or 2 arguments.');
+        }
+        str = String(str);
+        if (arguments.length === 1) {
+            return str.replace(/^\s+/, '');
+        }
+        if (!Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringtrimleft(): it must be an integer.');
+        }
+        if (count <= 0) {
+            return str;
+        }
+        return count >= str.length ? '' : str.slice(count);
+    },
+
+    // Trims either whitespace characters or a number of characters from the right hand side of the string.
+    stringtrimright(str, count) {
+        if (arguments.length < 1 || arguments.length > 2) {
+            throw new Error('The stringtrimright() function takes 1 or 2 arguments.');
+        }
+        str = String(str);
+        if (arguments.length === 1) {
+            return str.replace(/\s+$/, '');
+        }
+        if (!Number.isInteger(count)) {
+            throw new Error('Invalid argument #2 for function stringtrimright(): it must be an integer.');
+        }
+        if (count <= 0) {
+            return str;
+        }
+        return count >= str.length ? '' : str.slice(0, str.length - count);
+    },
+
+    // Converts the string to uppercase.
+    stringupper(str) {
+        if (arguments.length !== 1) {
+            throw new Error('The stringupper() function takes 1 argument.');
+        }
+        return String(str).toUpperCase();
+    },
+
+    /**
+     * Variable Functions
+     */
+
+    // Checks if a variable exists (is defined).
+    variableexists(name) {
+        if (arguments.length !== 1) {
+            throw new Error('The variableexists() function takes 1 argument.');
+        }
+        if (typeof name !== 'string') {
+            throw new Error('Invalid argument #1 for function variableexists(): it must be a string.');
+        }
+        name = name.toLowerCase().trim();
+        // Some system variables have values, even though they are missing
+        // from the variable storage (e.g., urqw_version)
+        if (Game.getVar(name) === 0) {
+            // Undefined variables are always equal to zero,
+            // so it is necessary to check for the actual existence of a property
+            return Object.prototype.hasOwnProperty.call(Game.vars, name);
+        } else {
+            return true;
+        }
+    },
+
+    /**
+     * Other Functions
+     */
+
+    // Executes JavaScript code.
+    javascript(code) {
+        if (arguments.length !== 1) {
+            throw new Error('The javascript() function takes 1 argument.');
+        }
+        var result;
+        try {
+            result = eval(code);
+        } catch (e) {
+            throw new Error('The code passed to the javascript() function failed.');
+        }
+        if (result === null || !['boolean', 'number', 'object', 'string'].includes(typeof result)) {
+            return String(result);
+        }
+        return result;
+    }
+
+}

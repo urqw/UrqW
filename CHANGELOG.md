@@ -7,11 +7,19 @@
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.
 	+ Added: Ability to add a drop-down menu with a list of actions to links in the text and hide individual menu items depending on the values ??of special variables with the `hide_` prefix.
-	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result using the javascript system variable.
-	+ Added: Exponentiation operator `^` (right-associative).
+	+ Added: New data types: boolean, array, and object (only without special compatibility modes).
+	+ Added: Strict equality `===` and inequality `!==` operators (only without special compatibility modes).
+	+ Added: Support for built-in functions with any number of arguments (only without special compatibility modes).
+	+ Added: Ability to execute JavaScript code from URQL code and retrieve its result (only without special compatibility modes).
 	+ Added: Compound assignment operators, such as `+=`, `-=`, `*=` and `/=`.
+	+ Added: The clst operator to clear the screen of text.
+	+ Added: The clsl operator to clear links from the text.
+	+ Added: The varkill operator to delete a specific variable or all variables.
+	+ Added: Exponentiation operator `^` (right-associative).
+	+ Added: Negation operator `!` as a full synonym for `not` (only without special compatibility modes).
+	+ Added: The backslash character in string literals escapes quotes and itself (only without special compatibility modes).
 	+ Added: System variables:
-		- date - get the current date (only when urq_mode specific rules are absent).
+		- date - get the current date (only without special compatibility modes).
 		- file_content - get the contents of a file from a game package as text by its internal path.
 		- file_url - get the relative URL of a file from a game package by its internal path.
 		- hide_use - hide or show all usage options for all inventory items.
@@ -27,18 +35,18 @@
 		- urqw_game_lang - set or get the game content language.
 		- urqw_title - set or get the UrqW page title.
 		- urqw_version - get the UrqW version.
-	+ Added: The clst operator to clear the screen of text.
-	+ Added: The clsl operator to clear links from the text.
-	+ Added: The varkill operator to delete a specific variable or all variables.
 	+ Added: Ability to set arbitrary names for inventory items, for inventory item usage options, and for drop-down menu items of links in text instead of names based on variable and labels names (special variables with the `display_` prefix are used).
 	+ Added: Support for custom alternative text descriptions for images added using either the image system variable or the image operator.
 	+ Added: Ignore whitespace characters at the beginning of any lines.
 	+ Added: Automatic normalization of internal file paths: reverse soliduses (backslashes are replaced with soliduses (slashes), and all soliduses at the beginning of the path are removed.
 	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
-	+ Added: Compatibility mode with AkURQ.
+	+ Added: Compatibility modes with AkURQ and UrqW 1.x.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
+	+ Changed: Variable names are now expected to consist of Latin letters, digits, underscores, and non-ASCII characters; however, the first character must not be a digit (only without special compatibility modes).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
-	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true.
+	+ Changed: When comparing two strings, the `=` and `==` operators now perform a case-sensitive comparison (only without special compatibility modes and for compatibility mode with akURQ).
+	+ Changed: When comparing a string with a number, the `=` and `==` operators now compare the length of the string to the number (only for compatibility mode with URQ_DOS).
+	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true. In compatibility mode with UrqW 1.x, the previous behavior is retained: positive numbers are interpreted as true, and zero and negative numbers are interpreted as false.
 	+ Changed: The values of the system variables `hide_*` and `instr_leave_spc` are now implicitly converted to a boolean value during evaluation, according to URQL standard coercion rules.
 	+ Changed: Initializing a variable using the `instr` operator without assigning a value now results in the variable being initialized with a value of an empty string rather than being ignored.
 	+ Changed: When assigning a string value to a variable using the instr operator, leading and trailing whitespace characters in the value string are now removed. You can restore the previous behavior of preserving spaces using the instr_leave_spc system variable.
@@ -69,7 +77,7 @@
 	+ Added: Ability to set player settings using GET parameters:
 		- Identifier of a game to launch - id (value: identifier).
 		- Interface language - lang (value: localization code).
-		- URQ mode - mode (value: "urqw", "ripurq", "dosurq" or "akurq").
+		- URQ mode - mode (value: "urqw", "urqw1", "ripurq", "dosurq" or "akurq").
 		- Game encoding - encoding (value: "UTF-8" or "CP1251").
 		- URL for game opening - url (value: URL string).
 		- Display of the game debugging section in the menu - debug with value "1".
@@ -143,6 +151,7 @@
 	+ Added: `npm run build` command to build UrqW for production environments with the games catalog.
 	+ Added: `npm run release` command to build UrqW for release without the games catalog.
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
+	+ Changed: For compatibility with older URQL dialects, the interpreter uses the legacy expression evaluator (shunting yard + reverse Polish notation). The default mode uses a new evaluator based on recursive descent.
 	+ Changed: For production builds of the engine, all separately included .css style files and .js script files are now minified and combined into single bundles, the index.html file is also minified. Development is carried out in separate .css and .js files, as well as in the index-dev.html file.
 	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
 	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.

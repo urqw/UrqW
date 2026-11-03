@@ -895,7 +895,7 @@ var fileArray = [];
                 manifest['game_encoding'] = jsonObj.game_encoding;
             }
             if (jsonObj.urq_mode) {
-                if (!['urqw', 'ripurq', 'dosurq', 'akurq'].includes(jsonObj.urq_mode)) {
+                if (!['urqw', 'urqw1', 'ripurq', 'dosurq', 'akurq'].includes(jsonObj.urq_mode)) {
                     throw new Error('Invalid URQ mode');
                 }
                 manifest['urq_mode'] = jsonObj.urq_mode;

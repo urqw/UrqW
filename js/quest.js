@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2015, 2016, 2018 Akela <akela88@bk.ru>
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -350,7 +350,7 @@ Quest.prototype.save = function(slot) {
         buttons: GlobalPlayer.buttons,
         links: GlobalPlayer.links,
         items: this.items,
-        vars: this.vars,
+        vars: processDataBeforeJSONStringify(this.vars), // Special handling for non-finite
         music: {
             paused: gameMusic.paused,
             srcUrqW: gameMusic.srcUrqW || '',
@@ -378,7 +378,7 @@ Quest.prototype.load = function(data) {
     GlobalPlayer.buttons = data.buttons;
     GlobalPlayer.links = data.links;
     this.items = data.items;
-    this.vars = data.vars;
+    this.vars = processDataAfterJSONParse(data.vars); // Special handling for non-finite
     gameMusic.src = data.music.srcUrqW ? getGameFileURL(data.music.srcUrqW) : '';
     gameMusic.srcUrqW = data.music.srcUrqW;
     gameMusic.currentTime = data.music.currentTime;

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+/* The file encoding is UTF-8 without BOM */
+
 
 :start
 pln <h3>UrqW Tests</h3>
@@ -11,8 +13,11 @@ pln These are tests to ensure the UrqW engine is working correctly.
 invkill
 varkill
 btn operators, Operators
+btn functions, Functions
+btn unicode, Unicode identifiers
 btn constructs, System constructs
 btn ui, User interface
+btn performance, Performance
 end
 
 
@@ -29,7 +34,7 @@ end
 
 
 :total
-pln <h4>Total</h4>
+pln <h4 id="total">Total</h4>
 pln Tests: #passed + failed$
 pln Passed: #passed$
 pln Failed: #failed$
@@ -40,6 +45,7 @@ end
 pln <h3>Operators</h3>
 pln These are automatic tests of programming language operators.
 pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
 
 pln <h4>URQL</h4>
 x = 5
@@ -117,30 +123,45 @@ pln - y*2 =##62$ 6: #status$
 z = 10 -y*2
 if z = 16 then proc passed else proc failed
 pln 10 -y*2 =##62$ 16: #status$
-x = 1 + 2 +3+ 4+5
-if x = 15 then proc passed else proc failed
+z = 1 + 2 +3+ 4+5
+if z = 15 then proc passed else proc failed
 pln 1 + 2 +3+ 4+5 =##62$ 15: #status$
-x = 15 - 1 -2- 3-4
-if x = 5 then proc passed else proc failed
+z = 15 - 1 -2- 3-4
+if z = 5 then proc passed else proc failed
 pln 15 - 1 -2- 3-4 =##62$ 5: #status$
-x = 2.5*4
-if x = 10 then proc passed else proc failed
+z = 2.5*4
+if z = 10 then proc passed else proc failed
 pln 2.5*4 =##62$ 10: #status$
-x = 9/3
-if x = 3 then proc passed else proc failed
+z = 9/3
+if z = 3 then proc passed else proc failed
 pln 9/3 =##62$ 3: #status$
-x = 2^3
-if x = 8 then proc passed else proc failed
+z = 2^3
+if z = 8 then proc passed else proc failed
 pln 2^3 =##62$ 8: #status$
-x = -2^3
-if x = -8 then proc passed else proc failed
+z = -2^3
+if z = -8 then proc passed else proc failed
 pln -2^3 =##62$ -8: #status$
-x = 2^3^2
-if x = 512 then proc passed else proc failed
+z = 2^3^2
+if z = 512 then proc passed else proc failed
 pln 2^3^2 =##62$ 512: #status$
-x = 2*(2+2)^(3 - 1)
-if x = 32 then proc passed else proc failed
+z = 2*(2+2)^(3 - 1)
+if z = 32 then proc passed else proc failed
 pln 2*(2+2)^(3 - 1) =##62$ 32: #status$
+z = 1 + TRUE
+if z = 2 then proc passed else proc failed
+pln 1 + TRUE =##62$ 2: #status$
+z = 8^false-5
+if z = -4 then proc passed else proc failed
+pln 8^false-5 =##62$ -4: #status$
+z = infinity + 5
+if z = INFINITY then proc passed else proc failed
+pln infinity + 5 =##62$ Infinity: #status$
+z = 1/0
+if z = infinity then proc passed else proc failed
+pln 1/0 =##62$ infinity: #status$
+z = -1/0
+if z = -infinity then proc passed else proc failed
+pln -1/0 =##62$ -infinity: #status$
 
 pln <h4>Comparison</h4>
 if 1<2 then proc passed else proc failed
@@ -169,12 +190,48 @@ if 2=2 then proc passed else proc failed
 pln 2=2 =##62$ true: #status$
 if 1 = 2 then proc failed else proc passed
 pln 1 = 2 =##62$ false: #status$
+if true then proc passed else proc failed
+pln true =##62$ true: #status$
+if false then proc failed else proc passed
+pln false =##62$ false: #status$
+if NaN then proc failed else proc passed
+pln NaN =##62$ false: #status$
+if NaN=NaN then proc failed else proc passed
+pln NaN=NaN =##62$ false: #status$
+if -infinity then proc passed else proc failed
+pln -infinity =##62$ true: #status$
+if infinity=infinity then proc passed else proc failed
+pln infinity=infinity =##62$ true: #status$
+if infinity>1000000 then proc passed else proc failed
+pln infinity>1000000 =##62$ true: #status$
+if "5"=5 then proc passed else proc failed
+pln "5"=5 =##62$ true: #status$
+if "5"==5 then proc passed else proc failed
+pln "5"==5 =##62$ true: #status$
+if "5"===5 then proc failed else proc passed
+pln "5"===5 =##62$ false: #status$
+if "5"!=5 then proc failed else proc passed
+pln "5"!=5 =##62$ false: #status$
+if "5"!==5 then proc passed else proc failed
+pln "5"!==5 =##62$ true: #status$
 if "abc"=="a?c" then proc passed else proc failed
 pln "abc"=="a?c" =##62$ true: #status$
 if "abc"=="a*" then proc passed else proc failed
 pln "abc"=="a*" =##62$ true: #status$
-if "abc"=="ABC" then proc passed else proc failed
-pln "abc"=="ABC" =##62$ true: #status$
+if "abc"=="ABC" then proc failed else proc passed
+pln "abc"=="ABC" =##62$ false: #status$
+if "one \"two\"" === 'one "two"' then proc passed else proc failed
+pln "one \"two\"" === 'one "two"' =##62$ true: #status$
+if 'one \'two\'' === "one 'two'" then proc passed else proc failed
+pln 'one \'two\'' === "one 'two'" =##62$ true: #status$
+if "one \'two\'" === "one 'two'" then proc passed else proc failed
+pln "one \'two\'" === "one 'two'" =##62$ true: #status$
+if "one\\\\\\" === JavaScript("String.fromCodePoint(111, 110, 101, 92, 92, 92);") then proc passed else proc failed
+pln "one\\\\\\": #status$
+if 1 = true then proc passed else proc failed
+pln 1 = true =##62$ true: #status$
+if 1 === true then proc failed else proc passed
+pln 1 === true =##62$ false: #status$
 
 pln <h4>Logical</h4>
 x = 1
@@ -199,10 +256,30 @@ if x>y||y>z then proc failed else proc passed
 pln x##62$y##124$##124$y##62$z =##62$ false: #status$
 if not x then proc failed else proc passed
 pln not x =##62$ false: #status$
+if !x then proc failed else proc passed
+pln !x =##62$ false: #status$
 if not unknown_variable then proc passed else proc failed
 pln not unknown_variable =##62$ true: #status$
+if ! unknown_variable then proc passed else proc failed
+pln ! unknown_variable =##62$ true: #status$
 if not (not x) then proc passed else proc failed
 pln not (not x) =##62$ true: #status$
+if !(!x) then proc passed else proc failed
+pln !(!x) =##62$ true: #status$
+if not true then proc failed else proc passed
+pln not true =##62$ false: #status$
+if !true then proc failed else proc passed
+pln !true =##62$ false: #status$
+if not false then proc passed else proc failed
+pln not false =##62$ true: #status$
+if ! false then proc passed else proc failed
+pln ! false =##62$ true: #status$
+if (3 - 5) and(5 - 3) then proc passed else proc failed
+pln (3 - 5) and(5 - 3) =##62$ true: #status$
+if not(3 - 3) then proc passed else proc failed
+pln not(3 - 3) =##62$ true: #status$
+if (3 - 3) or(5 - 3) then proc passed else proc failed
+pln (3 - 3) or(5 - 3) =##62$ true: #status$
 
 pln <h4>Conditional</h4>
 x = 1
@@ -312,10 +389,583 @@ if x < 5 then goto operators_goto
 end
 
 
+:functions
+pln <h3>Functions</h3>
+pln These are automatic tests of programming language built-in functions.
+pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
+
+pln <h4>Mathematical</h4>
+if Abs(-5) = 5 then proc passed else proc failed
+pln Abs(-5) =##62$ 5: #status$
+if Ceil(2) = 2 then proc passed else proc failed
+pln Ceil(2) =##62$ 2: #status$
+if Ceil(2.1) = 3 then proc passed else proc failed
+pln Ceil(2.1) =##62$ 3: #status$
+if Exp(0) = 1 then proc passed else proc failed
+pln Exp(0) =##62$ 1: #status$
+if Floor(2) = 2 then proc passed else proc failed
+pln Floor(2) =##62$ 2: #status$
+if Floor(2.9) = 2 then proc passed else proc failed
+pln Floor(2.9) =##62$ 2: #status$
+if Int(2.3) = 2 then proc passed else proc failed
+pln Int(2.3) =##62$ 2: #status$
+if Log(1) = 0 then proc passed else proc failed
+pln Log(1) =##62$ 0: #status$
+if Log(Exp(3)) = 3 then proc passed else proc failed
+pln Log(Exp(3)) =##62$ 3: #status$
+error = 0
+x = Log(0)
+if x = -infinity and error ===1 then proc passed else proc failed
+pln Log(0) =##62$ -Infinity and error = 1: #status$
+if Log10(100) = 2 then proc passed else proc failed
+pln Log10(100) =##62$ 2: #status$
+if Log2(8) = 3 then proc passed else proc failed
+pln Log2(8) =##62$ 3: #status$
+if Max(1,2 ,3, 4 , 5) = 5 then proc passed else proc failed
+pln Max(1,2 ,3, 4 , 5) =##62$ 5: #status$
+if Min(1, 2, -3, 4, 5) = -3 then proc passed else proc failed
+pln Min(1, 2, -3, 4, 5) =##62$ -3: #status$
+if Pow(3, 4) = 81 then proc passed else proc failed
+pln Pow(3, 4) =##62$ 81: #status$
+error = 0
+x = Pow(-4, 0.5)
+if error === 1 then proc passed else proc failed
+pln Pow(-4, 0.5) =##62$ error = 1: #status$
+if Round(2.5) = 3 then proc passed else proc failed
+pln Round(2.5) =##62$ 3: #status$
+if Round(2.125, 2) = 2.13 then proc passed else proc failed
+pln Round(2.125, 2) =##62$ 2.13: #status$
+if Round(123.4, -2) = 100 then proc passed else proc failed
+pln Round(123.4, -2) =##62$ 100: #status$
+if Round(123.4, -5) === 0 then proc passed else proc failed
+pln Round(123.4, -5) =##62$ 0: #status$
+if Sqrt(144) = 12 then proc passed else proc failed
+pln Sqrt(144) =##62$ 12: #status$
+error = 0
+x = Sqrt(-4)
+if error === 1 then proc passed else proc failed
+pln Sqrt(-4) =##62$ error = 1: #status$
+
+pln <h4>Array</h4>
+arr = "[1]"
+pln let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+x = ArrayAdd(arr, 2)
+if x = 2 and JSONStringify(arr) = "[1,2]" then proc passed else proc failed
+pln ArrayAdd(arr, 2) =##62$ 2 and arr =##62$ [1,2]: #status$
+x = ArrayAdd(arr, "3", 4)
+if x = 4 and JSONStringify(arr) = '[1,2,"3",4]' then proc passed else proc failed
+pln ArrayAdd(arr, "3", 4) =##62$ 4 and arr =##62$ [1,2,"3",4]: #status$
+arr1 = ArrayCreate()
+ArrayAdd(arr1, 1, 2, 3)
+arr2 = ArrayCopy(arr1)
+ArraySet(arr1, 2, 0)
+if ArrayGet(arr1, 2) = 0 and ArrayGet(arr2, 2) = 2 then proc passed else proc failed
+pln ArrayCopy: #status$
+arr = ArrayCreate()
+if JSONStringify(arr) = "[]" then proc passed else proc failed
+pln ArrayCreate() =##62$ []: #status$
+arr = ArrayCreate(2)
+if JSONStringify(arr) = '["",""]' then proc passed else proc failed
+pln ArrayCreate(2) =##62$ ["",""]: #status$
+arr = ArrayCreate(3, 0)
+if JSONStringify(arr) = '[0,0,0]' then proc passed else proc failed
+pln ArrayCreate(3, 0) =##62$ [0,0,0]: #status$
+arr = ArrayCreate('[1,"two"]')
+if JSONStringify(arr) = '[1,"two"]' then proc passed else proc failed
+pln ArrayCreate('[1,"two"]') =##62$ [1,"two"]: #status$
+arr = "[1,2,3,4,5,6,7]"
+pln let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+x = ArrayDel(arr, 6)
+if JSONStringify(x) = "[6,7]" and JSONStringify(arr) = "[1,2,3,4,5]" then proc passed else proc failed
+pln ArrayDel(arr, 6) =##62$ [6,7] and arr =##62$ [1,2,3,4,5]: #status$
+x = ArrayDel(arr, -4, 2)
+if JSONStringify(x) = "[2,3]" and JSONStringify(arr) = "[1,4,5]" then proc passed else proc failed
+pln ArrayDel(arr, -4, 2) =##62$ [2,3] and arr =##62$ [1,4,5]: #status$
+x = ArrayDel(arr, 2, 1)
+if JSONStringify(x) = "[4]" and JSONStringify(arr) = "[1,5]" then proc passed else proc failed
+pln ArrayDel(arr, 2, 1) =##62$ [4] and arr =##62$ [1,5]: #status$
+arr = '["a",["b","c",["d","e","f"]]]'
+pln let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+x = ArrayGet(arr, 1)
+if x = "a" then proc passed else proc failed
+pln ArrayGet(arr, 1) =##62$ "a": #status$
+x = ArrayGet(arr, 2, 3, -1)
+if x = "f" then proc passed else proc failed
+pln ArrayGet(arr, 2, 3, -1) =##62$ "f": #status$
+arr1 = "[1,2,3]"
+arr2 = "[]"
+pln Let arr1 =##62$ #arr1$ and arr2 =##62$ #arr2$
+arr1 = JavaScript(arr1 + ";")
+arr2 = JavaScript(arr2 + ";")
+if ArrayLen(arr1) = 3 then proc passed else proc failed
+pln ArrayLen(arr1) = 3: #status$
+if ArrayLen(arr2) = 0 then proc passed else proc failed
+pln ArrayLen(arr2) = 0: #status$
+arr = '["a",["b","c",["d","e","f"]]]'
+pln Let arr =##62$ #arr$
+arr = JavaScript(arr + ";")
+ArraySet(arr, 1, 1)
+if JSONStringify(arr) = '[1,["b","c",["d","e","f"]]]' then proc passed else proc failed
+pln ArraySet(arr, 1, 1) =##62$ [1,["b","c",["d","e","f"]]]: #status$
+ArraySet(arr, 2, 3, -1, "x")
+if JSONStringify(arr) = '[1,["b","c",["d","e","x"]]]' then proc passed else proc failed
+pln ArraySet(arr, 2, 3, -1, "x") =##62$ [1,["b","c",["d","e","x"]]]: #status$
+
+pln <h4>Type Conversion</h4>
+arr = "[]"
+obj = "{}"
+pln Let arr = #arr$ and obj = #obj$
+arr = JavaScript(arr + ";")
+obj = JavaScript(obj + ";")
+if Boolean(arr) === true then proc passed else proc failed
+pln Boolean(arr) =##62$ true: #status$
+if Boolean(obj) === true then proc passed else proc failed
+pln Boolean(obj) =##62$ true: #status$
+if Boolean(5) === true then proc passed else proc failed
+pln Boolean(5) =##62$ true: #status$
+if Boolean(-5) === true then proc passed else proc failed
+pln Boolean(-5) =##62$ true: #status$
+if Boolean(0) === false then proc passed else proc failed
+pln Boolean(0) =##62$ false: #status$
+if Boolean(-0) === false then proc passed else proc failed
+pln Boolean(-0) =##62$ false: #status$
+if Boolean(NaN) === false then proc passed else proc failed
+pln Boolean(NaN) =##62$ false: #status$
+if Boolean("abc") === true then proc passed else proc failed
+pln Boolean("abc") =##62$ true: #status$
+if Boolean("") === false then proc passed else proc failed
+pln Boolean("") =##62$ false: #status$
+if Number("2.5") = 2.5 then proc passed else proc failed
+pln Number("2.5") =##62$ 2.5: #status$
+error = 0
+x = Number("2,5")
+if error === 1 then proc passed else proc failed
+pln Number("2,5") =##62$ error = 1: #status$
+error = 0
+x = Number("abc")
+if error === 1 then proc passed else proc failed
+pln Number("abc") =##62$ error = 1: #status$
+error = 0
+x = Number(" ")
+if error === 1 then proc passed else proc failed
+pln Number(" ") =##62$ error = 1: #status$
+error = 0
+x = Number("")
+if error === 1 then proc passed else proc failed
+pln Number("") =##62$ error = 1: #status$
+if Number(" 5 ") = 5 then proc passed else proc failed
+pln Number(" 5 ") =##62$ 5: #status$
+arr1 = "[]"
+arr2 = "[1]"
+arr3 = "[2,3]"
+obj = "{}"
+pln Let arr1 = #arr1$, arr2 = #arr2$, arr3 = #arr3$, and obj = #obj$
+arr1 = JavaScript(arr1 + ";")
+arr2 = JavaScript(arr2 + ";")
+arr3 = JavaScript(arr3 + ";")
+obj = JavaScript(obj + ";")
+error = 0
+x = Number(arr1)
+if error === 1 then proc passed else proc failed
+pln Number(arr1) =##62$ error = 1: #status$
+if Number(arr2) = 1 then proc passed else proc failed
+pln Number(arr2) =##62$ 1: #status$
+error = 0
+x = Number(arr3)
+if error === 1 then proc passed else proc failed
+pln Number(arr3) =##62$ error = 1: #status$
+error = 0
+x = Number(obj)
+if error === 1 then proc passed else proc failed
+pln Number(obj) =##62$ error = 1: #status$
+if String(2.5) = "2.5" then proc passed else proc failed
+pln String(2.5) =##62$ "2.5": #status$
+
+pln <h4>Date</h4>
+if IsInteger(Date()) === true then proc passed else proc failed
+pln Date(): #status$
+if Date("UTC", 2015, 10, 12, 9, 58) = 1444643880000 then proc passed else proc failed
+pln Date("UTC", 2015, 10, 12, 9, 58) =##62$ 1444643880000: #status$
+if Date("loc", 2015, 10, 12) === JavaScript("Number(new Date(2015, 9, 12));") then proc passed else proc failed
+pln Date("loc", 2015, 10, 12): #status$
+error = 0
+x = Date("utc", 2015, "abc")
+if error === 1 and IsNaN(x) === true then proc passed else proc failed
+pln Date("utc", 2015, "abc") =##62$ NaN and error = 1: #status$
+timestamp = 1485088245500 /* 2017-01-22T12:30:45.500Z */
+obj = DateObject(timestamp)
+pln Let obj = DateObject(#timestamp$)
+if ObjectGet(obj, "loc_year") = JavaScript("new Date(#timestamp$).getFullYear();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_year"): #status$
+if ObjectGet(obj, "loc_month") = JavaScript("new Date(#timestamp$).getMonth();") + 1 then proc passed else proc failed
+pln ObjectGet(obj, "loc_month"): #status$
+if ObjectGet(obj, "loc_date") = JavaScript("new Date(#timestamp$).getDate();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_date"): #status$
+if ObjectGet(obj, "loc_hours") = JavaScript("new Date(#timestamp$).getHours\();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_hours"): #status$
+if ObjectGet(obj, "loc_minutes") = JavaScript("new Date(#timestamp$).getMinutes();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_minutes"): #status$
+if ObjectGet(obj, "loc_seconds") = JavaScript("new Date(#timestamp$).getSeconds();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_seconds"): #status$
+if ObjectGet(obj, "loc_milliseconds") = JavaScript("new Date(#timestamp$).getMilliseconds();") then proc passed else proc failed
+pln ObjectGet(obj, "loc_milliseconds"): #status$
+loc_day = JavaScript("new Date(#timestamp$).getDay();")
+if loc_day = 0 then loc_day = 7
+if ObjectGet(obj, "loc_day") = loc_day then proc passed else proc failed
+pln ObjectGet(obj, "loc_day"): #status$
+if ObjectGet(obj, "timezone_offset") = -180 then proc passed else proc failed
+pln ObjectGet(obj, "timezone_offset"): #status$
+if ObjectGet(obj, "utc_year") = 2017 then proc passed else proc failed
+pln ObjectGet(obj, "utc_year"): #status$
+if ObjectGet(obj, "utc_month") = 1 then proc passed else proc failed
+pln ObjectGet(obj, "utc_month"): #status$
+if ObjectGet(obj, "utc_date") = 22 then proc passed else proc failed
+pln ObjectGet(obj, "utc_date"): #status$
+if ObjectGet(obj, "utc_hours") = 12 then proc passed else proc failed
+if ObjectGet(obj, "utc_minutes") = 30 then proc passed else proc failed
+pln ObjectGet(obj, "utc_minutes"): #status$
+if ObjectGet(obj, "utc_seconds") = 45 then proc passed else proc failed
+pln ObjectGet(obj, "utc_seconds"): #status$
+if ObjectGet(obj, "utc_milliseconds") = 500 then proc passed else proc failed
+pln ObjectGet(obj, "utc_milliseconds"): #status$
+if ObjectGet(obj, "utc_day") = 7 then proc passed else proc failed
+pln ObjectGet(obj, "utc_day"): #status$
+if ObjectGet(obj, "iso") = "2017-01-22T12:30:45.500Z" then proc passed else proc failed
+pln ObjectGet(obj, "iso"): #status$
+if ObjectGet(obj, "timestamp") = timestamp then proc passed else proc failed
+pln ObjectGet(obj, "timestamp"): #status$
+error = 0
+x = DateObject(9007199254740992)
+if error === 1 and JSONStringify(x) = "{}" then proc passed else proc failed
+pln DateObject(9007199254740992) =##62$ {} anderror = 1:#status$
+
+pln <h4>File</h4>
+if FileContent("test.txt") = "test 🧪" then proc passed else proc failed
+pln FileContent("test.txt") =##62$ "test 🧪": #status$
+error = 0
+if FileContent("non-existent_file.txt") = "" and error === 1 then proc passed else proc failed
+pln FileContent("non-existent_file.txt") =##62$ "" and error = 1: #status$
+if FileExists("test.txt") === true then proc passed else proc failed
+pln FileExists("test.txt") =##62$ true: #status$
+if FileExists("non-existent_file.txt") === false then proc passed else proc failed
+pln FileExists("non-existent_file.txt") =##62$ false: #status$
+url = FileURL("test.txt")
+if StringLen(url) >0 then proc passed else proc failed
+pln FileURL("test.txt"): #status$
+error = 0
+x = FileURL("")
+if error === 1 then proc passed else proc failed
+pln FileURL("") =##62$ error = 1: #status$
+
+pln <h4>Checking</h4>
+arr = "[]"
+obj = "{}"
+pln Let arr = #arr$ and obj = #obj$
+arr = JavaScript(arr + ";")
+obj = JavaScript("(" + obj + ");")
+if IsArray(arr) === true then proc passed else proc failed
+pln IsArray(arr) =##62$ true: #status$
+if IsArray(obj) === false then proc passed else proc failed
+pln IsArray(obj) =##62$ false: #status$
+if IsBoolean(false) === true then proc passed else proc failed
+pln IsBoolean(false) =##62$ true: #status$
+if IsBoolean(0) === false then proc passed else proc failed
+pln IsBoolean(0) =##62$ false: #status$
+if IsFinite(0) === true then proc passed else proc failed
+pln IsFinite(0) =##62$ true: #status$
+if IsFinite("1") === false then proc passed else proc failed
+pln IsFinite("1") =##62$ false: #status$
+if IsFinite(NaN) === false then proc passed else proc failed
+pln IsFinite(NaN) =##62$ false: #status$
+if IsFinite(infinity) === false then proc passed else proc failed
+pln IsFinite(infinity) =##62$ false: #status$
+if IsInteger(3) === true then proc passed else proc failed
+pln IsInteger(3) =##62$ true: #status$
+if IsInteger(0) === true then proc passed else proc failed
+pln IsInteger(0) =##62$ true: #status$
+if IsInteger(2.5) === false then proc passed else proc failed
+pln IsInteger(2.5) =##62$ false: #status$
+if IsNaN(NaN) === true then proc passed else proc failed
+pln IsNaN(NaN) =##62$ true: #status$
+if IsNaN("abc") === false then proc passed else proc failed
+pln IsNaN("abc") =##62$ false: #status$
+if IsNaN(infinity) === false then proc passed else proc failed
+pln IsNaN(infinity) =##62$ false: #status$
+if IsNumber(12.3) === true then proc passed else proc failed
+pln IsNumber(12.3) =##62$ true: #status$
+if IsNumber("1") === false then proc passed else proc failed
+pln IsNumber("1") =##62$ false: #status$
+if IsNumber(1 + "1") === false then proc passed else proc failed
+pln IsNumber(1 + "1") =##62$ false: #status$
+if IsObject(obj) === true then proc passed else proc failed
+pln IsObject(obj) =##62$ true: #status$
+if IsObject(arr) === false then proc passed else proc failed
+pln IsObject(arr) =##62$ false: #status$
+if IsString("abc") === true then proc passed else proc failed
+pln IsString("abc") =##62$ true: #status$
+if IsString(1 + "1") === true then proc passed else proc failed
+pln IsString(1 + "1") =##62$ true: #status$
+if TypeOf(false) = 'boolean' then proc passed else proc failed
+pln TypeOf(false) =##62$ "boolean": #status$
+if TypeOf(2.5) = "number" then proc passed else proc failed
+pln TypeOf(2.5) =##62$ "number": #status$
+if TypeOf(1 + "1") = "string" then proc passed else proc failed
+pln TypeOf(1 + "1") =##62$ "string": #status$
+if TypeOf(arr) = "array" then proc passed else proc failed
+pln TypeOf(arr) =##62$ "array": #status$
+if TypeOf(obj) = "object" then proc passed else proc failed
+pln TypeOf(obj) =##62$ "object": #status$
+
+pln <h4>Object</h4>
+obj1 = ObjectCreate()
+ObjectSet(obj1, "key", "value")
+obj2 = ObjectCopy(obj1)
+ObjectSet(obj1, "key", "new value")
+if ObjectGet(obj1, "key") = "new value" and ObjectGet(obj2, "key") = "value" then proc passed else proc failed
+pln ObjectCopy: #status$
+obj = ObjectCreate()
+if JSONStringify(obj) = "{}" then proc passed else proc failed
+pln ObjectCreate() =##62$ {}: #status$
+obj = ObjectCreate('{"key": "value"}')
+if JSONStringify(obj) = '{"key":"value"}' then proc passed else proc failed
+pln ObjectCreate('{"key": "value"}') =##62$ {"key":"value"}: #status$
+obj = '{"key":"value"}'
+pln let obj =##62$ #obj$
+obj = JavaScript("(" + obj + ");")
+error = 1
+x = ObjectDel(obj, "key")
+if error === 0 and x === true and JSONStringify(obj) = "{}" then proc passed else proc failed
+pln ObjectDel(obj, "key") =##62$ true and obj =##62$ {} and error = 0: #status$
+error = 0
+x = ObjectDel(obj, "non-existent key")
+if error === 1 and x === false then proc passed else proc failed
+pln ObjectDel(obj, "non-existent key") =##62$ false and error = 1: #status$
+obj = '{"key1":1,"key2":2}'
+pln Let obj =##62$ #obj$
+obj = JavaScript("(" + obj + ");")
+x = ObjectEntries(obj)
+if JSONStringify(x) = '[["key1",1],["key2",2]]' then proc passed else proc failed
+pln ObjectEntries(obj) =##62$ '##91$["key1",1],["key2",2]##93$': #status$
+obj = '{"k1":"a","k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}'
+pln let obj =##62$ #obj$
+obj = JavaScript("(" + obj + ");")
+error = 1
+x = ObjectGet(obj, "k1")
+if error === 0 and x = "a" then proc passed else proc failed
+pln ObjectGet(obj, "k1") =##62$ "a" and error = 0: #status$
+error = 1
+x = ObjectGet(obj, "k2", "k3", "k1")
+if error === 0 and x = "d" then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k3", "k1") =##62$ "d" and error = 0: #status$
+error = 0
+x = ObjectGet(obj, "k2", "k4")
+if error === 1 and x === false then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k4") =##62$ false and error = 1: #status$
+error = 0
+x = ObjectGet(obj, "k2", "k1", "k1")
+if error === 1 and x = "b" then proc passed else proc failed
+pln ObjectGet(obj, "k2", "k1", "k1") =##62$ "b" and error = 1: #status$
+obj = '{"key1":1,"key2":2}'
+pln Let obj =##62$ #obj$
+obj = JavaScript("(" + obj + ");")
+x = ObjectKeys(obj)
+if JSONStringify(x) = '["key1","key2"]' then proc passed else proc failed
+pln ObjectKeys(obj) =##62$ ["key1","key2"]: #status$
+obj = '{"k1":"a","k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}'
+pln let obj =##62$ #obj$
+obj = JavaScript("(" + obj + ");")
+error = 1
+x = ObjectSet(obj, "k1", 1)
+if error === 0 and x === true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k1", 1) =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"d","k2":"e","k3":"f"}}}' and error = 0: #status$
+error = 1
+x = ObjectSet(obj, "k2", "k3", "k1", "x")
+if error === 0 and x === true and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k2", "k3", "k1", "x") =##62$ true and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 0: #status$
+error = 0
+x = ObjectSet(obj, "k2", "k1", "k1", "x")
+if error === 1 and x === false and JSONStringify(obj) = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' then proc passed else proc failed
+pln ObjectSet(obj, "k2", "k1", "k1", "x") =##62$ false and obj = '{"k1":1,"k2":{"k1":"b","k2":"c","k3":{"k1":"x","k2":"e","k3":"f"}}}' and error = 1: #status$
+obj = '{"key1":1,"key2":2}'
+pln Let obj =##62$ #obj$
+obj = JavaScript("(" + obj + ");")
+x = ObjectValues(obj)
+if JSONStringify(x) = '[1,2]' then proc passed else proc failed
+pln ObjectValues(obj) =##62$ [1,2]: #status$
+
+pln <h4>String</h4>
+if StringLeft("abcde", 3) = "abc" then proc passed else proc failed
+pln StringLeft("abcde", 3) =##62$ "abc": #status$
+if StringLeft("abcde", -1) = "" then proc passed else proc failed
+pln StringLeft("abcde", -1) =##62$ "": #status$
+if StringLeft("abcde", 7) = "abcde" then proc passed else proc failed
+pln StringLeft("abcde", 7) =##62$ "abcde": #status$
+if StringLen("abcde") = 5 then proc passed else proc failed
+pln StringLen("abcde") =##62$ 5: #status$
+if StringLen(123) = 3 then proc passed else proc failed
+pln StringLen(123) =##62$ 3: #status$
+if StringLocaleLower("İSTANBUL", "tr") = "istanbul" then proc passed else proc failed
+pln StringLocaleLower("İSTANBUL", "tr") =##62$ "istanbul": #status$
+if StringLocaleLower("İSTANBUL") = "i̇stanbul" then proc passed else proc failed
+pln StringLocaleLower("İSTANBUL") =##62$ "i̇stanbul": #status$
+if StringLocaleUpper("istanbul", "tr") = "İSTANBUL" then proc passed else proc failed
+pln StringLocaleUpper("istanbul", "tr") =##62$ "İSTANBUL": #status$
+if StringLocaleUpper("istanbul") = "ISTANBUL" then proc passed else proc failed
+pln StringLocaleUpper("istanbul") =##62$ "ISTANBUL": #status$
+if StringLower("ABC") = "abc" then proc passed else proc failed
+pln StringLower("ABC") =##62$ "abc": #status$
+if StringMid("abcde", 2, 3) = "bcd" then proc passed else proc failed
+pln StringMid("abcde", 2, 3) =##62$ "bcd": #status$
+if StringMid("abcde", 3) = "cde" then proc passed else proc failed
+pln StringMid("abcde", 3) =##62$ "cde": #status$
+if StringMid("abcde", 0) = "" then proc passed else proc failed
+pln StringMid("abcde", 0) =##62$ "": #status$
+if StringMid("abcde", 7) = "" then proc passed else proc failed
+pln StringMid("abcde", 7) =##62$ "": #status$
+if StringMid("abcde", 2, -2) = "" then proc passed else proc failed
+pln StringMid("abcde", 2, -2) =##62$ "": #status$
+if StringRight("abcde", 3) = "cde" then proc passed else proc failed
+pln StringRight("abcde", 3) =##62$ "cde": #status$
+if StringRight("abcde", -1) = "" then proc passed else proc failed
+pln StringRight("abcde", -1) =##62$ "": #status$
+if StringRight("abcde", 7) = "abcde" then proc passed else proc failed
+pln StringRight("abcde", 7) =##62$ "abcde": #status$
+if JSONStringify(StringSplit("a|b|c", "|")) = '["a","b","c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", "|") =##62$ ["a","b","c"]: #status$
+if JSONStringify(StringSplit("a|b|c", ",")) = '["a|b|c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", ",") =##62$ ["a|b|c"]: #status$
+if JSONStringify(StringSplit("a|b|c", "")) = '["a","|","b","|","c"]' then proc passed else proc failed
+pln StringSplit("a|b|c", "") =##62$ ["a","|","b","|","c"]: #status$
+if StringTrim("	  abc  	") = "abc" then proc passed else proc failed
+pln StringTrim("	  abc  	") =##62$ "abc": #status$
+if StringTrim("abcde", 2) = "c" then proc passed else proc failed
+pln StringTrim("abcde", 2) =##62$ "c": #status$
+if StringTrim("abcde", -1) = "abcde" then proc passed else proc failed
+pln StringTrim("abcde", -1) =##62$ "abcde": #status$
+if StringTrim("abcde", 3) = "" then proc passed else proc failed
+pln StringTrim("abcde", 3) =##62$ "": #status$
+if StringTrimLeft("	  abc  	") = "abc  	" then proc passed else proc failed
+pln StringTrimLeft("	  abc  	") =##62$ "abc  	": #status$
+if StringTrimLeft("abcde", 2) = "cde" then proc passed else proc failed
+pln StringTrimLeft("abcde", 2) =##62$ "cde": #status$
+if StringTrimLeft("abcde", -1) = "abcde" then proc passed else proc failed
+pln StringTrimLeft("abcde", -1) =##62$ "abcde": #status$
+if StringTrimLeft("abcde", 7) = "" then proc passed else proc failed
+pln StringTrimLeft("abcde", 7) =##62$ "": #status$
+if StringTrimRight("	  abc  	") = "	  abc" then proc passed else proc failed
+pln StringTrimRight("	  abc  	") =##62$ "	  abc": #status$
+if StringTrimRight("abcde", 2) = "abc" then proc passed else proc failed
+pln StringTrimRight("abcde", 2) =##62$ "abc": #status$
+if StringTrimRight("abcde", -1) = "abcde" then proc passed else proc failed
+pln StringTrimRight("abcde", -1) =##62$ "abcde": #status$
+if StringTrimRight("abcde", 7) = "" then proc passed else proc failed
+pln StringTrimRight("abcde", 7) =##62$ "": #status$
+
+pln <h4>Variable</h4>
+existing_variable = 5
+pln Let existing_variable = #existing_variable$
+if VariableExists("EXISTING_VARIABLE") === true then proc passed else proc failed
+pln VariableExists("EXISTING_VARIABLE") =##62$ true: #status$
+if VariableExists("non_existing_variable") === false then proc passed else proc failed
+pln VariableExists("non_existing_variable") =##62$ false: #status$
+if VariableExists("urqw_version") === true and urqw_game_ifid = "" then proc passed else proc failed
+pln VariableExists("urqw_version") =##62$ true: #status$
+
+pln <h4>Others</h4>
+if JavaScript("' abc '.toUpperCase().trim();") = "ABC" then proc passed else proc failed
+pln JavaScript("' abc '.toUpperCase().trim();") =##62$ "ABC": #status$
+if JavaScript("undefined;") = "undefined" then proc passed else proc failed
+pln JavaScript("undefined;") =##62$ "undefined": #status$
+if JavaScript("null;") = "null" then proc passed else proc failed
+pln JavaScript("null;") =##62$ "null": #status$
+if JavaScript("Symbol('id');") = "Symbol(id)" then proc passed else proc failed
+pln JavaScript("Symbol('id');") =##62$ "Symbol(id)": #status$
+if JavaScript("() => {};") = "() => {}" then proc passed else proc failed
+pln JavaScript("() => {};") =##62$ "() => {}": #status$
+
+pln <h4>Expressions with Functions</h4>
+a = 1
+b = 2
+c = 3
+pln Let a = #a$, b = #b$, and c = #c$
+x = a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c)))
+if x = -3 then proc passed else proc failed
+pln a - Sqrt(352 / (Abs(b^2 - c*10) - Log10(81)/Log10(c))) =##62$ -3: #status$
+if Pow(b, c) > Max(a, b, c) then proc passed else proc failed
+pln Pow(b, c) > Max(a, b, c) =##62$ true: #status$
+
+proc total
+btn start, Back
+end
+
+
+:unicode
+pln <h3>Unicode Identifiers</h3>
+pln These are automatic tests for Unicode support in identifiers (variable and function names).
+pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
+pln #/$
+х = 1
+у = 2
+pln Let х = #х$ and у = #у$
+if Х+У = 3 then proc passed else proc failed
+pln Х+У = 3: #status$
+тeсt = "Hello"
+pln Let тeсt = "#тeсt$"
+if тeсt + ", World!" = "Hello, World!" then proc passed else proc failed
+pln тeсt + ", World!" = "Hello, World!": #status$
+falseложь = 2
+ложьfalse = 3
+pln Let falseложь = #falseложь$ and ложьfalse = #ложьfalse$
+if falseложь + ложьfalse = 5 then proc passed else proc failed
+pln falseложь + ложьfalse = 5: #status$
+тест123 = 5
+pln Let тест123 = #тест123$
+if ТЕСТ123*2 = 10 then proc passed else proc failed
+pln ТЕСТ123*2 = 10: #status$
+and∧ = 3
+or∨ = and∧
+not¬ = and∧
+true👍 = and∧
+false👎 = and∧
+nan❓ = and∧
+infinity∞ = and∧
+pln Let and∧, or∨, not¬, true👍, false👎, nan❓, infinity∞ = #and∧$
+if and∧*2 = 6 then proc passed else proc failed
+pln and∧*2 = 6: #status$
+if or∨*2 = 6 then proc passed else proc failed
+pln or∨*2 = 6: #status$
+if not¬*2 = 6 then proc passed else proc failed
+pln not¬*2 = 6: #status$
+if true👍*2 = 6 then proc passed else proc failed
+pln true👍*2 = 6: #status$
+if false👎*2 = 6 then proc passed else proc failed
+pln false👎*2 = 6: #status$
+if NaN❓*2 = 6 then proc passed else proc failed
+pln NaN❓*2 = 6: #status$
+if infinity∞*2 = 6 then proc passed else proc failed
+pln infinity∞*2 = 6: #status$
+if Функция("Раз") = "Два" then proc passed else proc failed
+pln Функция("Раз") =##62$ "Два": #status$
+if Funcция("Раз") = "Два" then proc passed else proc failed
+pln Funcция("Раз") =##62$ "Два": #status$
+if Функtion("Раз") = "Два" then proc passed else proc failed
+pln Функtion("Раз") =##62$ "Два": #status$
+
+proc total
+btn start, Back
+end
+
+
 :constructs
 pln <h3>System Constructs</h3>
 pln These are automatic tests of programming language system constructs.
 pln All tests must be passed (green).
+pln <a href="#total">Jump to Total</a>
 pln #/$
 x = 123
 y = "test"
@@ -346,12 +996,10 @@ construct = "##35$%/##36$"
 result = "<br>"
 proc constructs_check
 construct = "##35$##35$42##36$"
-javascript = "new DOMParser().parseFromString('##38$##35$42;', 'text/html').body.textContent;"
-result = javascript
+result = JavaScript("new DOMParser().parseFromString('##38$##35$42;', 'text/html').body.textContent;")
 proc constructs_check
 construct = "##35$##35$8381##36$"
-javascript = "new DOMParser().parseFromString('##38$##35$8381;', 'text/html').body.textContent;"
-result = javascript
+result = JavaScript("new DOMParser().parseFromString('##38$##35$8381;', 'text/html').body.textContent;")
 proc constructs_check
 
 x = 1 & x = x + 1
@@ -384,7 +1032,7 @@ end
 
 :constructs_check
 p #construct$:
-javascript = "compareResults(Parser.prototype.openTags(new DOMParser().parseFromString('#construct$', 'text/html').body.textContent), '#result$');"
+JavaScript("compareResults(Parser.prototype.openTags(new DOMParser().parseFromString('#construct$', 'text/html').body.textContent), '#result$');")
 pln #$#status$
 end
 
@@ -565,4 +1213,141 @@ pln If you don't see the Back choice button, the test has passed.
 pln Use the Restart game icon in the toolbar.
 quit
 btn ui, Back
+end
+
+
+:performance
+varkill
+pln <h3>Performance</h3>
+pln These are automatic tests to compare the performance of some resource-intensive operations in URQL and JavaScript.
+n = 1000
+arr = ArrayCreate()
+JavaScript("window.arr = [];")
+obj = ObjectCreate()
+JavaScript("window.obj = {};")
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_array_creation
+if i <= n then goto performance_loop_array_creation_iteration
+time_end = JavaScript("performance.now();")
+urql_array_creation = time_end - time_start
+time_start = JavaScript("performance.now();")
+JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.push(i); }")
+time_end = JavaScript("performance.now();")
+js_array_creation = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_array_reading
+if i <= n then goto performance_loop_array_reading_iteration
+time_end = JavaScript("performance.now();")
+urql_array_reading = time_end - time_start
+time_start = JavaScript("performance.now();")
+JavaScript("for(let i = 0; i < " + n + "; i++) { let element = window.arr[i]; }")
+time_end = JavaScript("performance.now();")
+js_array_reading = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_array_deletion
+if i <= n then goto performance_loop_array_deletion_iteration
+time_end = JavaScript("performance.now();")
+urql_array_deletion = time_end - time_start
+time_start = JavaScript("performance.now();")
+JavaScript("for(let i = 0; i < " + n + "; i++) { window.arr.splice(0, 1); }")
+time_end = JavaScript("performance.now();")
+js_array_deletion = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_object_creation
+if i <= n then goto performance_loop_object_creation_iteration
+time_end = JavaScript("performance.now();")
+urql_object_creation = time_end - time_start
+time_start = JavaScript("performance.now();")
+JavaScript("for(let i = 0; i < " + n + "; i++) { window.obj['key' + i] = 'value' + i; }")
+time_end = JavaScript("performance.now();")
+js_object_creation = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_object_reading
+if i <= n then goto performance_loop_object_reading_iteration
+time_end = JavaScript("performance.now();")
+urql_object_reading = time_end - time_start
+time_start = JavaScript("performance.now();")
+JavaScript("for(let i = 0; i < " + n + "; i++) { let value = window.obj['key' + i]; }")
+time_end = JavaScript("performance.now();")
+js_object_reading = time_end - time_start
+
+time_start = JavaScript("performance.now();")
+i = 1
+:performance_loop_object_deletion
+if i <= n then goto performance_loop_object_deletion_iteration
+time_end = JavaScript("performance.now();")
+urql_object_deletion = time_end - time_start
+time_start = JavaScript("performance.now();")
+JavaScript("for(let i = 0; i < " + n + "; i++) { delete window.obj['key' + i]; }")
+time_end = JavaScript("performance.now();")
+js_object_deletion = time_end - time_start
+
+pln <table class="table table-bordered">
+_ <thead>
+_ <tr> <th scope="col">Test</th> <th scope="col">URQL</th> <th scope="col">JavaScript</th> </tr>
+_ </thead>
+_ <tbody>
+_ <tr> <th scope="row">Iterative creation of a #n$-element array</th> <td>#urql_array_creation$ ms</td> <td>#js_array_creation$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative reading of a #n$-element array</th> <td>#urql_array_reading$ ms</td> <td>#js_array_reading$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative deletion of all elements from a #n$-element array</th> <td>#urql_array_deletion$ ms</td> <td>#js_array_deletion$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative creation of a #n$-property object</th> <td>#urql_object_creation$ ms</td> <td>#js_object_creation$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative reading of a #n$-property object</th> <td>#urql_object_reading$ ms</td> <td>#js_object_reading$ ms</td> </tr>
+_ <tr> <th scope="row">Iterative deletion of all properties from a #n$-property object</th> <td>#urql_object_deletion$ ms</td> <td>#js_object_deletion$ ms</td> </tr>
+_ </tbody>
+_ </table>
+
+btn performance, Repeat
+btn start, Back
+end
+
+
+:performance_loop_array_creation_iteration
+ArrayAdd(arr, i)
+i += 1
+goto performance_loop_array_creation
+end
+
+
+:performance_loop_array_reading_iteration
+element = ArrayGet(arr, i)
+i += 1
+goto performance_loop_array_reading
+end
+
+
+:performance_loop_array_deletion_iteration
+ArrayDel(arr, 1, 1)
+i += 1
+goto performance_loop_array_deletion
+end
+
+
+:performance_loop_object_creation_iteration
+ObjectSet(obj, "key" + i, "value" + i)
+i += 1
+goto performance_loop_object_creation
+end
+
+
+:performance_loop_object_reading_iteration
+value = ObjectGet(obj, "key" + i)
+i += 1
+goto performance_loop_object_reading
+end
+
+
+:performance_loop_object_deletion_iteration
+ObjectDel(obj, "key" + i)
+i += 1
+goto performance_loop_object_deletion
 end

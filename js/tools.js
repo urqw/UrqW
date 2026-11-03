@@ -229,6 +229,155 @@ function getGameFileURL(filePath) {
     return filePath;
 }
 
+// Creates a completely independent copy of the entire structure,
+// including nested arrays and plain (data) objects.
+function deepCopy(source) {
+    // If it is an array, copy it as an array
+    if (Array.isArray(source)) {
+        var result = [];
+        for (var i = 0; i < source.length; i++) {
+            result[i] = deepCopy(source[i]); // Recursion
+        }
+        return result;
+  }
+    // If it is an object (but not null or an array), copy properties
+    if (typeof source === 'object' && source !== null) {
+        var result = {};
+        // Iterate only over own properties (excluding prototypes)
+        for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+                result[key] = deepCopy(source[key]); // Recursion
+            }
+        }
+        return result;
+    }
+    // All primitives are returned as is
+    return source;
+}
+
+/**
+ * Special string literals used to represent non-finite numbers during JSON serialization.
+ * These strings are unique enough to avoid collisions with normal user data.
+ */
+var SPECIAL_STRINGS = {
+    NaN: 'NaN (a special string that is replaced by NaN upon deserialization from JSON)',
+    Infinity: 'Infinity (a special string that is replaced by Infinity upon deserialization from JSON)',
+    MinusInfinity: '-Infinity (a special string that is replaced by -Infinity upon deserialization from JSON)'
+};
+
+/**
+ * Internal helper function that performs the recursive traversal and transformation.
+ * It handles arrays, objects, primitives, and protects against cyclic references.
+ * @param {any} data - The data to process.
+ * @param {Function} transformFn - A function that takes a value and returns its transformed version.
+ * @param {WeakSet} visited - A set to track visited objects and prevent infinite loops.
+ * @returns {any} - The processed data.
+ */
+function _traverseAndTransform(data, transformFn, visited) {
+    // Base case: primitives, null, undefined
+    if (data === null || typeof data !== 'object') {
+        return transformFn(data);
+    }
+
+    // Prevent infinite recursion on cyclic references
+    if (visited.has(data)) {
+        return data;
+    }
+    visited.add(data);
+
+    // Handle Arrays
+    if (Array.isArray(data)) {
+        var result = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            // Apply transformation first
+            var transformedItem = transformFn(item);
+            // Then recurse if the result is still an object/array
+            // If transformFn returned a primitive (string), _traverseAndTransform will hit the base case above
+            result[i] = _traverseAndTransform(transformedItem, transformFn, visited);
+        }
+        return result;
+    }
+
+    // Handle Objects
+    var result = {};
+    for (var key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+            var value = data[key];
+            // Apply transformation first
+            var transformedValue = transformFn(value);
+            // Then recurse
+            result[key] = _traverseAndTransform(transformedValue, transformFn, visited);
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Transformation strategy for serialization: replaces non-finite numbers with strings.
+ * @param {any} value - The value to check.
+ * @returns {any} - The original value or the special string.
+ */
+function _serializeStrategy(value) {
+    if (typeof value === 'number') {
+        if (!Number.isFinite(value)) {
+            if (Number.isNaN(value)) {
+                return SPECIAL_STRINGS.NaN;
+            } else if (value === Infinity) {
+                return SPECIAL_STRINGS.Infinity;
+            } else if (value === -Infinity) {
+                return SPECIAL_STRINGS.MinusInfinity;
+            }
+        }
+    }
+    return value;
+}
+
+/**
+ * Transformation strategy for deserialization: restores non-finite numbers from strings.
+ * @param {any} value - The value to check.
+ * @returns {any} - The original value or the number (NaN/Infinity).
+ */
+function _deserializeStrategy(value) {
+    if (typeof value === 'string') {
+        if (value === SPECIAL_STRINGS.NaN) {
+            return NaN;
+        }
+        if (value === SPECIAL_STRINGS.Infinity) {
+            return Infinity;
+        }
+        if (value === SPECIAL_STRINGS.MinusInfinity) {
+            return -Infinity;
+        }
+    }
+    return value;
+}
+
+/**
+ * Prepares data for JSON serialization by replacing non-finite numbers
+ * with special string placeholders.
+ * This function handles nested structures of arbitrary depth and cyclic references.
+ * @param {any} data - The raw state data to serialize.
+ * @returns {any} - The processed data ready for JSON.stringify.
+ */
+function processDataBeforeJSONStringify(data) {
+    var visited = new WeakSet();
+    return _traverseAndTransform(data, _serializeStrategy, visited);
+}
+
+/**
+ * Restores data after JSON deserialization by converting special string placeholders
+ * back to their original non-finite number values.
+ * This function is the inverse of processDataBeforeJSONStringify.
+ * @param {any} data - The parsed JSON data (result of JSON.parse).
+ * @returns {any} - The restored state data with correct number types.
+ */
+function processDataAfterJSONParse(data) {
+    var visited = new WeakSet();
+    return _traverseAndTransform(data, _deserializeStrategy, visited);
+}
+
 /**
  * Converts qs1 to qst
  * @param {Uint8Array} data - encoded data
