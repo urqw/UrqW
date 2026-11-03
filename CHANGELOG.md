@@ -2,7 +2,7 @@
 
 (Changes to the game catalog is not recorded in this document.)
 
-## Version 1.1 (in development)
+## Version 2.0 (in development)
 
 * URQL interpreter:
 	+ Added: UTF-8 encoding support for games and plugins.

@@ -28,7 +28,7 @@ UrqW implements the URQL interpreter with additional features based on web techn
 
 ## Heading towards the new release
 
-Version 1.1 is in development with significant fixes and improvements (see [CHANGELOG.md](CHANGELOG.md)).
+Version 2.0 is in development with significant fixes and improvements (see [CHANGELOG.md](CHANGELOG.md)).
 
 Key tasks on the way to the new release:
 
