@@ -51,6 +51,7 @@
 	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable is equal to `true` in a boolean context (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: If there is a space before the equal sign when assigning a value to the image or the music system variables, the construct is mistakenly interpreted as executing the operators of the same name with an incorrect file path.
 	+ Fixed: The not operator immediately after the left parenthesis is processed incorrectly.
+	+ Fixed: The interpreter hangs when the program reached the end of the instruction set without encountering termination operators (now, reaching the end of the instruction set is treated as an implicit end statement).
 	+ Fixed: Incorrect processing of the tokens_delim variable.
 	+ Fixed: Incorrect processing of the goto operator in compatibility mode with URQ_DOS.
 * Game player:

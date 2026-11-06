@@ -67,6 +67,10 @@ function Quest(text) {
     }
     // Split the text into an array of lines
     this.quest = text.split(/[\n\r]+/);
+    // Add an `end` statement as the final command, so that the interpreter
+    // doesn’t hang if line-by-line execution reaches the end of the file
+    // due to an oversight by the author
+    this.quest.push('end');
 
     /**
      * @type {string} MurmurHash3 hash of the quest source code
