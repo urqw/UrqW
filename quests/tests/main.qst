@@ -514,6 +514,10 @@ pln ArraySet(arr, 1, 1) =##62$ [1,["b","c",["d","e","f"]]]: #status$
 ArraySet(arr, 2, 3, -1, "x")
 if JSONStringify(arr) = '[1,["b","c",["d","e","x"]]]' then proc passed else proc failed
 pln ArraySet(arr, 2, 3, -1, "x") =##62$ [1,["b","c",["d","e","x"]]]: #status$
+arr = ArrayCreate()
+ArrayAdd(arr, 1, 2, 3, 4, 5)
+if IsArray(ArrayShuffle(arr)) then proc passed else proc failed
+pln ArrayShuffle(): #status$
 
 pln <h4>Type Conversion</h4>
 arr = "[]"

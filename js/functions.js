@@ -295,6 +295,23 @@ var functions = {
         return arr;
     },
 
+    // Shuffles an array using the Fisher-Yates algorithm
+    arrayshuffle(arr) {
+        if (arguments.length !== 1) {
+            throw new Error('The arrayshuffle() function takes 1 argument.');
+        }
+        if (!Array.isArray(arr)) {
+            throw new Error('Invalid argument #1 for function arrayshuffle(): it must be an array.');
+        }
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+        }
+        return arr;
+    },
+
     /**
      * Type Conversion Functions
      */
