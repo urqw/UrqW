@@ -39,7 +39,7 @@
 	+ Added: more reliable loading of interpreted game files in Windows-1251 encoding in case of large data volumes.
 	+ Added: Compatibility modes with AkURQ and UrqW 1.x.
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
-	+ Changed: Variable names are now expected to consist of Latin letters, digits, underscores, and non-ASCII characters; however, the first character must not be a digit (only without special compatibility modes).
+	+ Changed: Variable names are now expected to consist of Latin letters, digits, underscores, and non-ASCII characters; however, the first character must not be a digit or underscore (only without special compatibility modes).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
 	+ Changed: When comparing two strings, the `=` and `==` operators now perform a case-sensitive comparison (only without special compatibility modes and for compatibility mode with akURQ).
 	+ Changed: When comparing a string with a number, the `=` and `==` operators now compare the length of the string to the number (only for compatibility mode with URQ_DOS).
@@ -48,7 +48,7 @@
 	+ Changed: Initializing a variable using the `instr` operator without assigning a value now results in the variable being initialized with a value of an empty string rather than being ignored.
 	+ Changed: When assigning a string value to a variable using the instr operator, leading and trailing whitespace characters in the value string are now removed. You can restore the previous behavior of preserving spaces using the instr_leave_spc system variable.
 	+ Fixed: Incorrect handling of unary operators `-` and `+` to the left of variables and parentheses.
-	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable has a positive value (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
+	+ Fixed: If an inventory item has an underscore character in its name (e.g., `inventory_item`), it has a use label without specifying an action (e.g., `use_inventory_item`), and the hide action variable is equal to `true` in a boolean context (e.g., `hide_use_inventory_item = 1`), then clicking on the item's link in the inventory panel will still trigger the action.
 	+ Fixed: If there is a space before the equal sign when assigning a value to the image or the music system variables, the construct is mistakenly interpreted as executing the operators of the same name with an incorrect file path.
 	+ Fixed: The not operator immediately after the left parenthesis is processed incorrectly.
 	+ Fixed: Incorrect processing of the tokens_delim variable.
