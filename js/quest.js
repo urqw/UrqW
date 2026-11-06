@@ -281,13 +281,6 @@ Quest.prototype.getVar = function(variable) {
         return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
     }
 
-    // Theoretically, in older games, "date" variable can be used as a user variable,
-    // so only support urq_mode without special rules
-    if (variable == 'date' && this.getVar('urq_mode') == 'urqw') {
-        var Datetime = new Date();
-        return Math.floor(Datetime.getTime() / (1000*60*60*24));
-    }
-
     if (variable == 'urq_inv') {
         return Object.keys(Game.items).length;
     }

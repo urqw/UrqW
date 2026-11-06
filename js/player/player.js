@@ -267,18 +267,6 @@ Player.prototype.setVar = function(variable, value) {
 
         this.image(file);
     } else
-    if (variable.toLowerCase() === 'javascript') {
-        this.javaScript(value);
-        return;
-    } else
-    if (variable.toLowerCase() === 'file_content') {
-        this.fileContent(value);
-        return;
-    } else
-    if (variable.toLowerCase() === 'file_url') {
-        this.fileURL(value);
-        return;
-    } else
     if (variable.toLowerCase() === 'music') {
         if (value === '') resetAudio(gameMusic);
     }
@@ -310,66 +298,6 @@ Player.prototype.image = function(src) {
         }
         this.print(imageHtml, true);
     }
-};
-
-/**
- * @param {String} code
- */
-    // todo Maybe move to client like image
-Player.prototype.javaScript = function(code) {
-    var result;
-    if (code) {
-        result = eval(code);
-    } else {
-        result = "";
-    }
-    Game.setVar('javascript', result);
-};
-
-/**
- * @param {String} filePath - internal file path
- */
-    // todo Maybe move to client like image
-Player.prototype.fileContent = function(filePath) {
-    var result = '';
-    var errorMessage;
-
-    if (filePath) {
-            var fileURL = getGameFileURL(normalizeInternalPath(filePath));
-            if (fileURL) {
-                $.ajax({
-                    url: fileURL,
-                    method: 'GET',
-                    dataType: 'text',
-                    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
-                    async: false,
-                    success: function(data) {
-                        result = data;
-                    },
-                    error: function(xhr, status, error) {
-                        errorMessage = error;
-                    }
-                });
-            } else {
-                errorMessage = 'File not found.';
-            }
-    } else {
-        errorMessage = 'The file path is empty.';
-    }
-
-    if (errorMessage) {
-        console.error('Error reading file:', errorMessage);
-    }
-
-    Game.setVar('file_content', result);
-};
-
-/**
- * @param {String} filePath - internal file path
- */
-    // todo Maybe move to client like image
-Player.prototype.fileURL = function(filePath) {
-    Game.setVar('file_url', getGameFileURL(normalizeInternalPath(filePath)));
 };
 
 /**

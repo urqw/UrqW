@@ -19,9 +19,6 @@
 	+ Added: Negation operator `!` as a full synonym for `not` (only without special compatibility modes).
 	+ Added: The backslash character in string literals escapes quotes and itself (only without special compatibility modes).
 	+ Added: System variables:
-		- date - get the current date (only without special compatibility modes).
-		- file_content - get the contents of a file from a game package as text by its internal path.
-		- file_url - get the relative URL of a file from a game package by its internal path.
 		- hide_use - hide or show all usage options for all inventory items.
 		- image_caption - set or get the visible caption for an image.
 		- instr_leave_spc - set or get the space handling mode for the instr operator.
