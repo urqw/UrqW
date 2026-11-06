@@ -23,11 +23,11 @@
 		- image_caption - set or get the visible caption for an image.
 		- instr_leave_spc - set or get the space handling mode for the instr operator.
 		- last_btn_caption - get the name of the last activated choice button or link in the text.
-		- location - get the name of the current location, regardless of the method of transition to this location (only for compatibility mode with akURQ).
-		- quest_path - always has a value of an empty string (only for compatibility mode with akURQ).
-		- time - get the current time.
+		- location - get the name of the current location, regardless of the method of transition to this location (only for compatibility mode with AkURQ).
+		- quest_path - always has a value of an empty string (only for compatibility mode with AkURQ).
+		- time - get the current time (only for compatibility modes with RipURQ, URQ_DOS, AkURQ, and UrqW 1.x).
 		- urq_inv - get the number of items in the inventory.
-		- urq_type - always has a value 1 (only for compatibility mode with akURQ).
+		- urq_type - always has a value 1 (only for compatibility mode with AkURQ).
 		- urqw_game_ifid - get the game's IFID (or an empty string if it lacks one).
 		- urqw_game_lang - set or get the game content language.
 		- urqw_title - set or get the UrqW page title.
@@ -41,7 +41,7 @@
 	+ Added: Automatic HTML escaping (enabled by default in compatibility modes with RipURQ and URQ_DOS).
 	+ Changed: Variable names are now expected to consist of Latin letters, digits, underscores, and non-ASCII characters; however, the first character must not be a digit or underscore (only without special compatibility modes).
 	+ Changed: The clsb operator now only removes buttons, but does not clear text from links.
-	+ Changed: When comparing two strings, the `=` and `==` operators now perform a case-sensitive comparison (only without special compatibility modes and for compatibility mode with akURQ).
+	+ Changed: When comparing two strings, the `=` and `==` operators now perform a case-sensitive comparison (only without special compatibility modes and for compatibility mode with AkURQ).
 	+ Changed: When comparing a string with a number, the `=` and `==` operators now compare the length of the string to the number (only for compatibility mode with URQ_DOS).
 	+ Changed: Any non-zero number and non-empty string in a boolean context (e.g., in the condition of the `if` operator) is now interpreted as true. In compatibility mode with UrqW 1.x, the previous behavior is retained: positive numbers are interpreted as true, and zero and negative numbers are interpreted as false.
 	+ Changed: The values of the system variables `hide_*` and `instr_leave_spc` are now implicitly converted to a boolean value during evaluation, according to URQL standard coercion rules.

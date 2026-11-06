@@ -276,7 +276,7 @@ Quest.prototype.getVar = function(variable) {
         return Math.floor(Math.random() * parseInt(variable.substr(3))) + 1;
     }
 
-    if (variable == 'time') {
+    if (variable == 'time' && ['ripurq', 'dosurq', 'akurq', 'urqw1'].includes(this.getVar('urq_mode'))) {
         var Datetime = new Date();
         return Datetime.getHours() * 3600 + Datetime.getMinutes() * 60 + Datetime.getSeconds();
     }
