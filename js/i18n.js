@@ -155,3 +155,24 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 });
+
+// Safely returns the localized name of a language based on its code
+function languageName(code, locales) {
+    if (typeof code !== 'string' || !code.trim()) {
+        return code;
+    }
+    locales = locales || i18next.language;
+    if (i18next.exists('language.' + code, { lng: i18next.options.fallbackLng })) {
+        return i18next.t('language.' + code);
+    }
+    if (typeof Intl === 'undefined' || typeof Intl.DisplayNames !== 'function') {
+        return code;
+    }
+    try {
+        var dn = new Intl.DisplayNames(locales, { type: 'language' });
+        var name = dn.of(code);
+        return name !== undefined && name !== null ? name : code;
+    } catch (e) {
+        return code;
+    }
+}

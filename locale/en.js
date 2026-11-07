@@ -29,7 +29,7 @@ var en = {
         es: "Spanish",
         ru: "Russian",
         uk: "Ukrainian",
-        any: "Any"
+        any: "any"
     },
     game_title: "Game title",
     sort: "Sort",

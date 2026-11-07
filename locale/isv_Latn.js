@@ -22,11 +22,11 @@ var isv_Latn = {
     filters: "Filtry",
     game_language: "Jezyk igry",
     language: {
-        be: "Bělorusky",
-        en: "Anglijsky",
-        ru: "Rusky",
-        uk: "Ukrajinsky",
-        any: "Vsaky"
+        be: "bělorusky",
+        en: "anglijsky",
+        ru: "rusky",
+        uk: "ukrajinsky",
+        any: "vsaky"
     },
     game_title: "Nazva igry",
     sort: "Sortovati",

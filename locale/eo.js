@@ -22,11 +22,11 @@ var eo = {
     filters: "Filtroj",
     game_language: "Lingvo de la ludo",
     language: {
-        be: "Belorusa",
-        en: "Angla",
-        ru: "Rusa",
-        uk: "Ukraina",
-        any: "Ajna"
+        be: "belorusa",
+        en: "angla",
+        ru: "rusa",
+        uk: "ukraina",
+        any: "ajna"
     },
     game_title: "Titolo de la ludo",
     sort: "Ordigi",

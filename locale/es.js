@@ -24,12 +24,12 @@ var es = {
     filters: "Filtros",
     game_language: "Idioma del juego",
     language: {
-        be: "Bielorruso",
-        en: "Inglés",
-        es: "Español",
-        ru: "Ruso",
-        uk: "Ucraniano",
-        any: "Cualquiera"
+        be: "bielorruso",
+        en: "inglés",
+        es: "español",
+        ru: "ruso",
+        uk: "ucraniano",
+        any: "cualquiera"
     },
     game_title: "Título del juego",
     sort: "Ordenar",

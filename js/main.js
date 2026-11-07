@@ -622,7 +622,7 @@ if (styleFile) {
             filterLangSelect.empty();
 
             var availableLangs = [
-                ...filterLangsUnique.map(lang => [lang, i18next.t('language.' + lang)])
+                ...filterLangsUnique.map(lang => [lang, languageName(lang)])
             ];
             var sortedAvailableLangs = availableLangs.sort((a, b) => a[1].localeCompare(b[1]));
             availableLangs = [['any', i18next.t('language.any')], ...sortedAvailableLangs];
@@ -1041,8 +1041,9 @@ var parser = new DOMParser();
                     case 'primary_language':
                         value = language;
                         // Add the language name if it is in the localization resources
-                        if (i18next.exists('language.' + language, { lng: i18next.options.fallbackLng })) {
-                            value += ` (<span data-i18n="language.${language}">${i18next.t('language.' + language)}</span>)`;
+                        var langName = languageName(language);
+                        if (language !== langName) {
+                            value += ` (<span data-i18n="language.${language}">${langName}</span>)`;
                         }
                         break;
                     case 'first_published':
