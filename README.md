@@ -1,12 +1,12 @@
 # UrqW: Web-Based Interactive Fiction Engine
 
-UrqW is an open source engine for text-based games and interactive fiction, available free of charge.
+UrqW is an engine for text-based games and interactive fiction (IF). It is free/libre and open source software (FLOSS), available at no cost to everyone.
 
 It is also a URQL interpreter that supports compatibility modes with the URQL dialects of RipURQ 1.4, URQ_DOS 1.35 and AkURQ 1.28.
 
-URQL, a domain-specific language from the URQ family of text-based game engines, is designed primarily for creating choice-based interactive fiction.
-URQ engines have been in existence since 2000 and are easy to learn for non-technical authors.
-UrqW implements the URQL interpreter with additional features based on web technologies.
+URQL is a domain-specific language (DSL) from the URQ family of text-based game engines. The URQ engines are designed primarily for creating choice-based interactive fiction. UrqW also supports the creation of hypertext fiction with inline links and can process user input.
+The URQ engines have been in existence since 2000 and are easy to learn for non-technical authors.
+UrqW implements an extended dialect of URQL and provides additional features based on web technologies.
 
 ## Briefly about UrqW
 
@@ -19,12 +19,12 @@ UrqW implements the URQL interpreter with additional features based on web techn
 
 ## Links
 
-* [UrqW Online instance incorporating latest changes](https://urqw.github.io/UrqW/)
-* [UrqW online documentation incorporating latest changes](https://urqw.github.io/UrqW/docs/index.html)
-* [UrqW local build incorporating latest changes](https://urqw.github.io/UrqW/release/urqw-master-build.zip) (for offline use and self-hosting)
+* [UrqW Online instance with the latest changes](https://urqw.github.io/UrqW/)
+* [UrqW online documentation with the latest changes](https://urqw.github.io/UrqW/docs/index.html)
+* [UrqW local build with the latest changes](https://urqw.github.io/UrqW/release/urqw-master-build.zip) (for offline use and self-hosting)
 * [List of all changes](https://urqw.github.io/UrqW/CHANGELOG.html)
 * [UrqW game template](https://github.com/urqw/game_template)
-* [Latest formal release of UrqW](https://github.com/urqw/UrqW/releases/latest) (hasn’t been updated for a long time)
+* [Latest stable release of UrqW](https://github.com/urqw/UrqW/releases/latest) (hasn’t been updated for a long time)
 
 ## Heading towards the new release
 
@@ -114,3 +114,19 @@ The following project automation tools have been implemented:
 	```
 	npm run release
 	```
+
+## License Notices
+
+### Source Code
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+### Documentation
+
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
+
+You should have received a copy of the Creative Commons Attribution-ShareAlike 4.0 International License  along with this work. If not, see <https://creativecommons.org/licenses/by-sa/4.0/>.
