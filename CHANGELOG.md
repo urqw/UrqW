@@ -95,6 +95,7 @@
 	+ Added: Display information about unsupported game format and the process of unpacking the uploaded game.
 	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening games in .qs1, .qs2 and .qsz formats.
+	+ Changed: Packed game files for the catalog must now have the .qsz extension.
 	+ Changed: Names of inventory items generated from names of variables are now displayed with capital letters and without spaces at the ends.
 	+ Changed: Inventory item usage options are now displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Names of inventory item usage options generated from names of use labels are now displayed with spaces instead of underscores and without spaces at the ends.

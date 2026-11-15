@@ -200,7 +200,7 @@ $(function() {
                 if (xhr.response) {
                     if (fileExtension === 'qst') {
                         start(xhr.response, url);
-                    } else if (['zip', 'qsz'].includes(fileExtension)) {
+                    } else if (['qsz', 'zip'].includes(fileExtension)) {
                         loadZip(xhr.response, url);
                     } else {
                         console.error('Unsupported file format for ', url);
@@ -271,7 +271,7 @@ $(function() {
                 );
             }
 
-            JSZipUtils.getBinaryContent('quests/' + name + '.zip', function(err, data) {
+            JSZipUtils.getBinaryContent('quests/' + name + '.qsz', function(err, data) {
                 if (err) {
                     loadFromFolder(name);
                 } else {
@@ -451,7 +451,7 @@ $(function() {
     }
 
     /**
-     * Load game data from ZIP file
+     * Load game data from ZIP file (*.qsz or *.zip)
      */
     function loadZip(data, gameName) {
         var zip = new JSZip(data);
@@ -742,11 +742,11 @@ if (styleFile) {
         files = {};
         var qst = [];
 
-        if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'qsz') {
+        if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'zip') {
             var fileName = selectedFiles[0].name.split('.').slice(0, -1).join('.');
             var newFile = new File(
                 [selectedFiles[0]],
-                `${fileName}.zip`,
+                `${fileName}.qsz`,
                     {
                         type: selectedFiles[0].type,
                         lastModified: selectedFiles[0].lastModified
@@ -755,7 +755,7 @@ if (styleFile) {
             selectedFiles[0] = newFile;
         }
 
-        if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'zip') {
+        if (selectedFiles.length == 1 && selectedFiles[0].name.split('.').pop().toLowerCase() == 'qsz') {
             var reader = new FileReader();
             var zip = selectedFiles[0];
 

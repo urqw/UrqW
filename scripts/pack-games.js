@@ -76,7 +76,7 @@ async function packageGames() {
         // Archive every game found
         for (const game of gameDirs) {
             let sourceDir = path.join(gamesDir, game);
-            const outputPath = path.join(rootDir, 'quests', `${game}.zip`);
+            const outputPath = path.join(rootDir, 'quests', `${game}.qsz`);
             
             // If game directory contains urqw directory, then only it is archived
             const urqwPath = path.join(sourceDir, 'urqw');
