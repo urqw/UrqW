@@ -4,7 +4,7 @@ UrqW is an engine for text-based games and interactive fiction (IF). It is free/
 
 It is also a URQL interpreter that supports compatibility modes with the URQL dialects of RipURQ 1.4, URQ_DOS 1.35 and AkURQ 1.28.
 
-URQL is a domain-specific language (DSL) from the URQ family of text-based game engines. The URQ engines are designed primarily for creating choice-based interactive fiction. UrqW also supports the creation of hypertext fiction with inline links and can process user input.
+URQL is a domain-specific language (DSL) from the URQ family of text-based game engines. The URQ engines are designed primarily for creating choice-based interactive fiction. UrqW also supports the creation of hypertext fiction with inline links and can process user text input.
 The URQ engines have been in existence since 2000 and are easy to learn for non-technical authors.
 UrqW implements an extended dialect of URQL and provides additional features based on web technologies.
 
