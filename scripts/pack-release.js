@@ -112,11 +112,11 @@ const packagePath = path.join(rootPath, 'package.json');
             }
         }
 
-        // Create quests directory
-        await fs.promises.mkdir(path.join(buildPath, 'quests'));
+        // Create games directory
+        await fs.promises.mkdir(path.join(buildPath, 'games'));
         // Create games.json file
         const gamesJsonPath = path.join(buildPath, 'games.json');
-        await fs.promises.writeFile(gamesJsonPath, '[\n]');
+        await fs.promises.writeFile(gamesJsonPath, '{\n}');
         // Create README.txt file
         const readmePath = path.join(buildPath, 'README.txt');
         const date = new Date();
@@ -125,7 +125,7 @@ const packagePath = path.join(rootPath, 'package.json');
         const day = String(date.getDate()).padStart(2, '0');
         const buildDate = `${year}-${month}-${day}`;
         const readmeContent = 'UrqW\n\n'
-            + `UrqW is an open source engine for text-based games and interactive fiction, available free of charge.\n\n`
+            + `UrqW is an engine for text-based games and interactive fiction (IF). It is free/libre and open source software (FLOSS), available at no cost to everyone.\n\n`
             + 'To run the web application, open the index.html file in your browser.\n\n'
             + `- Home page: ${urqwURL}\n`
             + `- Source code: ${urqwRepoURL}\n`

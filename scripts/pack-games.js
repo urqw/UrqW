@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -41,8 +41,8 @@ function wildcardToRegex(pattern) {
 // Main function
 async function packageGames() {
     try {
-        // Get list of all directories in games folder
-        const gamesDir = path.join(rootDir, 'games');
+        // Get list of all directories in packages folder
+        const gamesDir = path.join(rootDir, 'packages');
         const files = await fs.promises.readdir(gamesDir, { withFileTypes: true });
         
         // Filter only directories that match pattern
@@ -53,7 +53,12 @@ async function packageGames() {
         // Check if games were found
         if (gameDirs.length === 0) {
             console.log(`No games found matching template: ${pattern}`);
-            process.exit(1);
+            // Absence of games matching the '*' pattern is not considered an error
+            if (pattern === '*') {
+                process.exit(0);
+            } else {
+                process.exit(1);
+            }
         }
 
         // Initialize skipped directories counter
@@ -76,7 +81,7 @@ async function packageGames() {
         // Archive every game found
         for (const game of gameDirs) {
             let sourceDir = path.join(gamesDir, game);
-            const outputPath = path.join(rootDir, 'quests', `${game}.qsz`);
+            const outputPath = path.join(rootDir, 'games', `${game}.qsz`);
             
             // If game directory contains urqw directory, then only it is archived
             const urqwPath = path.join(sourceDir, 'urqw');

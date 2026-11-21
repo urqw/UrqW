@@ -69,9 +69,7 @@
 	+ Added: Tag with canonical URL (separate URLs for the main page with a game catalog and for each game launched by identifier).
 	+ Added: Sitemap for search engines.
 	+ Added: Ability to set a game to load on any opening of index.html or index-dev.html.
-	+ Added: New keys of a game object in the games.json file:
-		- date - to specify the game's first publication date.
-		- lang - to specify one or more game languages.
+	+ Added: Ability to specify a link to an external game package in the catalog; this package will be downloaded and launched.
 	+ Added: Ability to set player settings using GET parameters:
 		- Identifier of a game to launch - id (value: identifier).
 		- Interface language - lang (value: localization code).
@@ -96,6 +94,7 @@
 	+ Added: Titles for save and load game dialog boxes.
 	+ Added: Support for opening games in .qs1, .qs2 and .qsz formats.
 	+ Changed: Packed game files for the catalog must now have the .qsz extension.
+	+ Changed: The game database structure for the catalog in the games.json file.
 	+ Changed: Names of inventory items generated from names of variables are now displayed with capital letters and without spaces at the ends.
 	+ Changed: Inventory item usage options are now displayed when the item receives system focus, not just when the mouse is hovering over it.
 	+ Changed: Names of inventory item usage options generated from names of use labels are now displayed with spaces instead of underscores and without spaces at the ends.
@@ -137,7 +136,7 @@
 	+ Added: The guide for contributors (see the CONTRIBUTING.md file in the repository).
 	+ Changed: Updating the main Russian-language documentation.
 * Development and maintenance infrastructure:
-	+ Added: Automate the build and deployment of UrqW with a game catalog via GitHub Actions on GitHub Pages when changes are made to master.
+	+ Added: Automate the build and deployment of UrqW with a game catalog via GitHub Actions on GitHub Pages when changes are made to master branch.
 	+ Added: build-urqw script to building the production version of the engine.
 	+ Added: check-locale script to check completeness of localization.
 	+ Added: valid-json script to validate the games.json file.
@@ -152,9 +151,9 @@
 	+ Added: Expanded test coverage for the game player functionality and programming language constructs.
 	+ Changed: For compatibility with older URQL dialects, the interpreter uses the legacy expression evaluator (shunting yard + reverse Polish notation). The default mode uses a new evaluator based on recursive descent.
 	+ Changed: For production builds of the engine, all separately included .css style files and .js script files are now minified and combined into single bundles, the index.html file is also minified. Development is carried out in separate .css and .js files, as well as in the index-dev.html file.
-	+ Changed: All games in the catalog are now added as submodules from separate repositories and repackaged with manifest.json and iFiction record files.
-	+ Changed: Supported plugins with usage examples (functional tests) are now added as submodules from separate repositories and placed in the quests directory as game packages.
-	+ Changed: Tests to ensure the engine is working correctly have been moved to the quests/tests directory.
+	+ Changed: All games in the catalog are now added as external game packages from separate repositories and repackaged with manifest.json and iFiction record files.
+	+ Changed: The directory for internal game packages is now called "games" instead of "quests".
+	+ Changed: Tests to ensure the engine is working correctly have been moved to the games/tests directory.
 
 ## Version 1.0 (from 2017-01-20)
 

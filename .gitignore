@@ -3,9 +3,9 @@
 docs/*
 !docs/urql.html
 /fonts
+games/*.qsz
+games/*.zip
 /node_modules
-quests/*.qsz
-quests/*.zip
 /release
 .DS_Store
 changelog.html

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -18,23 +18,30 @@ const links = {};
 links[urqwURL] = '1.0';
 
 try {
-    // Process .zip files in the /quests directory
-    const questsDir = path.join(rootDir, 'quests');
-    const zipFiles = fs.readdirSync(questsDir).filter(file => file.endsWith('.zip'));
+    // Process folders in the /games directory
+    const gamesDir = path.join(rootDir, 'games');
+    const gameFolders = fs.readdirSync(gamesDir, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name);
+    gameFolders.forEach(folder => {
+        const url = `${urqwURL}?id=${folder}`;
+        links[url] = '0.9';
+    });
 
-    zipFiles.forEach(file => {
-        const name = file.slice(0, -4); // Delete .zip from the end
+    // Process .qsz files in the /games directory
+    const qszFiles = fs.readdirSync(gamesDir).filter(file => file.endsWith('.qsz'));
+    qszFiles.forEach(file => {
+        const name = file.slice(0, -4); // Delete .qsz from the end
         const url = `${urqwURL}?id=${name}`;
         links[url] = '0.9';
     });
 
-    // Process folders in the /quests directory
-    const questFolders = fs.readdirSync(questsDir, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => dirent.name);
-
-    questFolders.forEach(folder => {
-        const url = `${urqwURL}?id=${folder}`;
+    // Process games.json file
+    const gamesJSON = path.join(rootDir, 'games.json');
+    const gameDB = JSON.parse(fs.readFileSync(gamesJSON, 'utf-8'));
+    const games = Object.keys(gameDB);
+    games.forEach(id => {
+        const url = `${urqwURL}?id=${id}`;
         links[url] = '0.9';
     });
 

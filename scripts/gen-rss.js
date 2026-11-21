@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2025 Nikita Tseykovets <tseikovets@rambler.ru>
+ * Copyright (C) 2025, 2026 Nikita Tseykovets <tseikovets@rambler.ru>
  * This file is part of UrqW.
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
@@ -39,7 +39,13 @@ function escapeXml(text) {
 async function generateRSS() {
     try {
         const gamesJson = await fs.promises.readFile(gamesJsonPath, 'utf-8');
-        const games = JSON.parse(gamesJson);
+        const gameDB = JSON.parse(gamesJson);
+
+        // Convert the game database from an object into an array
+        const games = Object.entries(gameDB).map(([id, data]) => ({
+            id: id,
+            ...data
+        }));
 
         // Convert all dates to UTC+0
         const sortedGames = games
@@ -73,7 +79,7 @@ async function generateRSS() {
 
         latestGames.forEach(game => {
             const langCode = game.lang.split(';')[0];
-            const gameURL = `${channelLink}?id=${game.folder}`;
+            const gameURL = `${channelLink}?id=${game.id}`;
 
             // Format game date without taking into account local time
             const utcGameDate = moment.utc(game.date);

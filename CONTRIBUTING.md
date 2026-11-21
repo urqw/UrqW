@@ -6,9 +6,7 @@ You will need development tools like [Git](https://git-scm.com/) and [Node.js wi
 
 1. Fork the repository.
 2. Clone your fork: \
-	`git clone %url_repo%` \
-	or with submodules, if you plan to work with games in the catalog, supported plugins, and build the project for deployment in production environments: \
-	`git clone --recurse-submodules %url_repo%`
+	`git clone %url_repo%`
 3. Install project dependencies: \
 	`npm install`
 4. Build the project (if needed): \
@@ -25,36 +23,35 @@ You will need development tools like [Git](https://git-scm.com/) and [Node.js wi
 
 ## Adding or Updating a Game
 
-The recommended way to add games to the catalog and maintain them is to connect their repositories as Git submodules in the main UrqW repository.
+The recommended way to add games to the catalog and maintain them is to include information about the game in the /games.json file with a link to a prepared game package in .qsz format (via the `url` property). UrqW also supports adding games as submodules; however, games from third-party developers submitted in this format are not accepted into the engine's main repository.
 
 Follow the process as for making any other change (see "Making Changes").
 
 Adding a new game:
 
-1. Prepare the external repository of the game according to the following requirements:
-	* The game repository must contain a manifest.json file in the correct format and must include the IFID, located either in the root directory or in a directory with a maximum of one level of nesting. It is best to place it in the same directory where the main .qst file is located. The easiest way to generate a manifest.json file and the IFID is by using the corresponding script from the [UrqW Game Template](https://github.com/urqw/game_template).
-	* The game repository must contain an iFiction record file with the game's metadata in the correct format, located either in the root directory or in a directory with a maximum of one level of nesting. It is best to place it in the same directory where the main .qst file is located. The easiest way to generate an iFiction record file is by using the corresponding script from the [UrqW Game Template](https://github.com/urqw/game_template).
-	* The game repository must contain at least 1 .qst file with game code.
-	* The game repository can contain other files necessary for the game package.
-	* It is recommended to place all game data in a separate /urqw directory located in the root of the repository. In this case, only this directory will be archived for the catalog, not the entire repository. The [UrqW Game Template](https://github.com/urqw/game_template) already contains an optimal repository structure.
-	* It is highly desirable that the game repository does not contain files and directories with non-ASCII characters in their names.
-2. Add the external repository of the game as a Git submodule to the /games directory of the main UrqW repository: \
-	`git submodule add %url_game_repo% games/%game_name%` \
-	The game directory name (%game_name%) should be formatted in snake_case: ASCII characters in lowercase, separated by underscores if necessary. \
-	An alternative option is to add the game submodule to the /quests directory. This way, it won't be packaged, and its resources will be loaded asynchronously on demand during gameplay. This may be preferable for games with large game assets, as it will allow them to launch faster. However, in this case, all game code must be contained in a single main.qst file. For more information, see the UrqW documentation.
-3. Add information about the new game to the /games.json file in the main UrqW repository.
-4. Validate the edited /games.json file by running the command: \
+1. Prepare the game package according to the following requirements:
+	* The filename of the game package must be formatted in snake_case: ASCII characters in lowercase, separated by underscores if necessary.
+	* The game package must be in `.qsz` format.
+	* The game package must contain a manifest.json file in the correct format and must include the IFID, located either in the root directory or in a directory with a maximum of one level of nesting. It is best to place it in the same directory where the main .qs? (.qst/.qs1/.qs2) file is located. The easiest way to generate a manifest.json file and the IFID is by using the corresponding script from the [UrqW Game Template](https://github.com/urqw/game_template).
+	* The game package must contain an iFiction record file with the game's metadata in the correct format, located either in the root directory or in a directory with a maximum of one level of nesting. It is best to place it in the same directory where the main .qs? file is located. The easiest way to generate an iFiction record file is by using the corresponding script from the [UrqW Game Template](https://github.com/urqw/game_template).
+	* The game package must contain at least 1 .qs? file with game code.
+	* The game package can contain other files necessary for the game.
+	* It is recommended not to include in the game package any development artifacts that are required for development but are not needed for running the game program, such as Git metadata. The [UrqW Game Template](https://github.com/urqw/game_template) already contains an optimal repository structure.
+	* It is highly desirable that the game package does not contain files and directories with non-ASCII characters in their names.
+2. Add information about the new game to the /games.json file in the main UrqW repository according to the following requirements:
+	* The game identifier in /games.json must be formatted in snake_case: ASCII characters in lowercase, separated by underscores if necessary.
+	* The `lang` property must specify a language code (BCP 47) corresponding to the language in which the values ??of the `author`, `title`, and `description` properties are written. If a game is available in multiple languages, these should be listed separated by semicolons; however, the language corresponding to the text used in the aforementioned properties must be placed first.
+	* The `date` property must contain the date the game was first published, in yyyy-mm-dd format (ISO 8601). This data must match the corresponding data in the iFiction record file.
+	* The `url` property must specify a direct link to the prepared game package, from which it can be downloaded via a GET request from any origin without errors. This means the hosting server must: serve the file over HTTPS with a 200 OK response; include the CORS header Access-Control-Allow-Origin: * so that browsers allow cross-origin JavaScript requests from any domain; not require authentication, cookies, or referrer checks; respond with an appropriate Content-Type (e.g., application/zip, application/octet-stream); and avoid misconfigured redirects, hotlink protection, or CDN/WAF rules that block cross-site requests. Hosting on GitHub Pages is a suitable option. The [UrqW Game Template](https://github.com/urqw/game_template) already contains  a ready-to-use configuration file and instructions for setting up a workflow based on GitHub Actions.
+3. Validate the edited /games.json file by running the command: \
 	`npm run valid-json`
-5. Complete the changes to the main UrqW repository according to the general process (see "Making Changes").
+4. Complete the changes to the main UrqW repository according to the general process (see "Making Changes").
 
 Updating an already added game:
 
-1. Update the connected game submodule: \
-	`git submodule update --remote games/%game_name%` \
-	or
-	`git submodule update --recursive --remote games/%game_name%` \
-	if the game repository contains submodules.
-2. Complete the changes to the main UrqW repository according to the general process (see "Making Changes").
+* If you need to update a game's description in the catalog, please submit the changes to /games.json in accordance with the requirements for new games outlined above.
+* If you only need to update the contents of the game package, you simply need to publish the rebuilt package at the previously provided link.
+* Please be aware that games previously added to the catalog may be removed, for example, if the game package can no longer be downloaded from the provided link, if the game content has been altered in a way that no longer aligns with community standards, or for other administrative reasons.
 
 ## Adding or Updating a Localization
 

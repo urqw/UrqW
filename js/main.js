@@ -31,6 +31,8 @@ var mode;
 var encoding;
 var htmlSupport;
 var debug;
+// Database of games from the games.json file
+var gameDB;
 // Object for storing parameters of the manifest.json file
 var manifest = {};
 // iFiction record file key in the files object
@@ -271,7 +273,25 @@ $(function() {
                 );
             }
 
-            JSZipUtils.getBinaryContent('quests/' + name + '.qsz', function(err, data) {
+            var gameDBAvailable;
+            $.ajax({
+                url: 'games.json',
+                dataType: "json",
+                async: false
+            }).done(function(data) {
+                gameDB = data;
+                gameDBAvailable = true;
+            }).fail(function() {
+                gameDBAvailable = false;
+            });
+            if (gameDBAvailable && gameDB !== null && typeof gameDB === 'object'
+                && gameDB[name] !== null && typeof gameDB[name] === 'object'
+                && typeof gameDB[name]['url'] === 'string'
+            ) {
+                return loadFromURL(gameDB[name]['url']);
+            }
+
+            JSZipUtils.getBinaryContent('games/' + name + '.qsz', function(err, data) {
                 if (err) {
                     loadFromFolder(name);
                 } else {
@@ -359,10 +379,10 @@ $(function() {
      * Load game from folder
      */
     async function loadFromFolder(name) {
-        var folder = 'quests/' + name + '/urqw';
+        var folder = 'games/' + name + '/urqw';
         var mainURL = folder + '/main.qst';
         if (!checkFileAvailability(mainURL, false)) {
-            folder = 'quests/' + name;
+            folder = 'games/' + name;
             mainURL = folder + '/main.qst';
             if (!checkFileAvailability(mainURL, false)) {
                 loadFromCatalogFailed();
@@ -578,10 +598,28 @@ if (styleFile) {
     function loadFromCatalogFailed() {
         setCanonicalURL(rootURL);
         $('#gamelist').empty();
-        $.ajax({
-            url: 'games.json',
-            dataType: "json"
-        }).done(function(quests) {
+
+        if (typeof gameDB === 'object') {
+            drawGameList(gameDB);
+        } else {
+            $.ajax({
+                url: 'games.json',
+                dataType: "json"
+            }).done(function(data) {
+                drawGameList(data);
+            }).fail(function() {
+                drawGameList(false);
+            });
+        }
+
+        waitState(false);
+    }
+
+    /**
+     * Draw game list
+     */
+    function drawGameList(quests) {
+        if (quests !== null && typeof quests === 'object') {
             // $('#open_game_url_form').show();
             var rss = $('#rss');
             if (!rss.is(':visible')) {
@@ -608,6 +646,12 @@ if (styleFile) {
                 });
             }
             $('#filters_form').show();
+
+            // Convert the game database from an object into an array
+            quests = Object.entries(quests).map(([id, data]) => ({
+                id: id,
+                ...data
+            }));
 
             // Add unique game languages ??to dropdown list of filter
             var filterLangsUnique = [...new Set(quests
@@ -698,7 +742,7 @@ if (styleFile) {
                     date = new Date(quests[i].date);
                     $('#gamelist').append(
                         '<div class="list-group-item" role="listitem" lang="' + quests[i].lang.split(';')[0] + '">' +
-                        '<a href="?id=' + encodeURIComponent(quests[i].folder) + '" class="gamelink" data-game="' + quests[i].folder + '">' +
+                        '<a href="?id=' + encodeURIComponent(quests[i].id) + '" class="gamelink" data-game="' + quests[i].id + '">' +
                         '<div class="pull-right">' +
                         '<span class="text-muted">' + quests[i].author + '</span>' +
                         '</div>' +
@@ -717,11 +761,9 @@ if (styleFile) {
                     '</a></div>'
                 );
             }
-        }).fail(function() {
-            $('#gamelist').append('<p data-i18n="failed_load_game_list">' + i18next.t('failed_load_game_list') + '</p>')
-        });
-
-        waitState(false);
+        } else {
+            $('#gamelist').append('<p data-i18n="failed_load_game_list">' + i18next.t('failed_load_game_list') + '</p>');
+        }
     }
 
     /**
