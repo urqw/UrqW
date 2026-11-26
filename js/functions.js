@@ -944,12 +944,12 @@ var functions = {
      */
 
     // Checks if a variable exists (is defined).
-    variableexists(name) {
+    varexists(name) {
         if (arguments.length !== 1) {
-            throw new Error('The variableexists() function takes 1 argument.');
+            throw new Error('The varexists() function takes 1 argument.');
         }
         if (typeof name !== 'string') {
-            throw new Error('Invalid argument #1 for function variableexists(): it must be a string.');
+            throw new Error('Invalid argument #1 for function varexists(): it must be a string.');
         }
         name = name.toLowerCase().trim();
         // Some system variables have values, even though they are missing
