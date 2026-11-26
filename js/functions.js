@@ -940,6 +940,53 @@ var functions = {
     },
 
     /**
+     * User Interface Functions
+     */
+
+    // Hides and shows the player's UI controls
+    uihide(control, state) {
+        if (arguments.length !== 2) {
+            throw new Error('The uihide() function takes 2 arguments.');
+        }
+        if (typeof control !== 'string') {
+            throw new Error('Invalid argument #1 for function uihide(): it must be a string.');
+        }
+        if (typeof state !== 'boolean' && typeof state !== 'number') {
+            throw new Error('Invalid argument #2 for function uihide(): it must be a boolean or a number.');
+        }
+        var $control;
+        switch (control.toLowerCase()) {
+            case 'inv':
+            case 'inventory':
+                $control = $('.navbar-right');
+                break;
+            case 'load':
+                $control = $('#load');
+                break;
+            case 'save':
+                $control = $('#save');
+                break;
+            case 'mute':
+            case 'volume':
+                $control = $('#mute');
+                break;
+            default:
+                setGlobalError(1, 'Unknown control name.');
+                return false;
+        }
+        if ($control.length === 0) {
+            setGlobalError(1, 'Could not find the control element.');
+            return false;
+        }
+        if (state) {
+            $control.hide();
+        } else {
+            $control.show();
+        }
+        return true;
+    },
+
+    /**
      * Variable Functions
      */
 

@@ -869,6 +869,48 @@ pln StringTrimRight("abcde", -1) =##62$ "abcde": #status$
 if StringTrimRight("abcde", 7) = "" then proc passed else proc failed
 pln StringTrimRight("abcde", 7) =##62$ "": #status$
 
+pln <h4>User Interface</h4>
+id = ".navbar-right"
+name = "inv"
+state = true
+proc functions_uihide
+if before === false and result === true and after === true then proc passed else proc failed
+pln UIHide("#name$", #state$): #status$
+name = "inventory"
+state = 0
+proc functions_uihide
+if before === true and result === true and after === false then proc passed else proc failed
+pln UIHide("#name$", #state$): #status$
+id = "#load"
+name = "load"
+state = true
+proc functions_uihide
+if before === false and result === true and after === true then proc passed else proc failed
+pln UIHide("#name$", #state$): #status$
+id = "#mute"
+name = "MUTE"
+state = 1
+proc functions_uihide
+if before === false and result === true and after === true then proc passed else proc failed
+pln UIHide("#name$", #state$): #status$
+id = "#save"
+name = "save"
+state = true
+proc functions_uihide
+if before === false and result === true and after === true then proc passed else proc failed
+pln UIHide("#name$", #state$): #status$
+id = "#mute"
+name = "volume"
+state = false
+proc functions_uihide
+if before === true and result === true and after === false then proc passed else proc failed
+pln UIHide("#name$", #state$): #status$
+error = 0
+result = UIHide("unknown_control_name", true)
+if result === false and error === 1 then proc passed else proc failed
+pln UIHide("unknown_control_name", true): #status$
+UIHide("load", false) & UIHide("save", false)
+
 pln <h4>Variable</h4>
 existing_variable = 5
 pln Let existing_variable = #existing_variable$
@@ -904,6 +946,13 @@ pln Pow(b, c) > Max(a, b, c) =##62$ true: #status$
 
 proc total
 btn start, Back
+end
+
+
+:functions_uihide
+before = JavaScript("$('#id$').is(':hidden');")
+result = UIHide(name, state)
+after = JavaScript("$('#id$').is(':hidden');")
 end
 
 
