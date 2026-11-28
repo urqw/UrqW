@@ -156,7 +156,7 @@ var functions = {
         return deepCopy(arr);
     },
 
-    // Creates an array of the specified length or based on JSON
+    // Creates an array of the specified length or based on JSON.
     arraycreate(instr, val = '') {
         if (arguments.length > 2) {
             throw new Error('The arraycreate() function takes no more than 2 arguments.');
@@ -295,7 +295,7 @@ var functions = {
         return arr;
     },
 
-    // Shuffles an array using the Fisher-Yates algorithm
+    // Shuffles an array using the Fisher-Yates algorithm.
     arrayshuffle(arr) {
         if (arguments.length !== 1) {
             throw new Error('The arrayshuffle() function takes 1 argument.');
@@ -943,7 +943,7 @@ var functions = {
      * User Interface Functions
      */
 
-    // Hides and shows the player's UI controls
+    // Hides and shows the player's UI controls.
     uihide(control, state) {
         if (arguments.length !== 2) {
             throw new Error('The uihide() function takes 2 arguments.');
